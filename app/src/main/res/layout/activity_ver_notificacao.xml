@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".Notification.ver_notificacao">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_notificacoes"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/corToobar"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+    <TextView
+        android:id="@+id/texto_Lnotificacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#464646"
+        android:text="Menssagem" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        >
+
+
+        <TextView
+            android:id="@+id/lb_hora_Lnotificacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora da postagem :" />
+
+        <TextView
+            android:id="@+id/hora_Lnotificacao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+
+            android:text="hora" />
+    </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp">
+    <TextView
+        android:id="@+id/lb_nome_salao_Lnotificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salão: " />
+
+    <TextView
+        android:id="@+id/nome_salao_Lnotificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="salao" />
+
+</LinearLayout>
+
+
+    <Button
+        android:id="@+id/bt_excluir_Lnotificacao"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:text="Excluir Notificação"
+        />
+    </LinearLayout>
+</LinearLayout>

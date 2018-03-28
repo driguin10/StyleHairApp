@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.stylehair.nerdsolutions.stylehair">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/icone_app"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".splash"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".telas.introducao.Introducao"
+            android:theme="@style/FullscreenTheme" />
+        <activity android:name=".telas.login.logar" />
+        <activity android:name=".telas.login.esqueci_senha" />
+        <activity android:name=".telas.login.cadastrar_login" />
+        <activity
+            android:name=".telas.principal"
+            android:label="@string/title_activity_principal"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <service android:name=".Notification.backNotification.CDCInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Notification.backNotification.CDCMessasingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Notification.notificacao" />
+        <activity android:name=".Notification.ver_notificacao" />
+        <activity
+            android:name=".telas.minhaConta.minhaConta"
+            android:label="@string/title_activity_minha_conta"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".telas.cadastroSalao" />
+        <activity android:name=".telas.configuracaoApp" />
+        <activity android:name=".telas.saloesFavoritos" />
+        <activity android:name=".telas.minha_agenda"></activity>
+    </application>
+
+</manifest>

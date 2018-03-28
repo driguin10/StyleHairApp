@@ -1,0 +1,500 @@
+package com.stylehair.nerdsolutions.stylehair.telas;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+
+import android.database.Cursor;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
+
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuInflater;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.api.IApi;
+import com.stylehair.nerdsolutions.stylehair.api.INotification;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
+import com.stylehair.nerdsolutions.stylehair.Notification.Notification;
+import com.stylehair.nerdsolutions.stylehair.Notification.ReturnMessage;
+import com.stylehair.nerdsolutions.stylehair.Notification.Sender;
+import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
+import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
+import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
+import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
+import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
+import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class principal extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    NavigationView navigationView;
+    int idLogin = -1;
+    public int qtTentativas = 3;
+    public int qtTentativaRealizada = 0;
+
+    CaixaDialogo caixaDialogo;
+    String typeUser="";
+    int ResultCode = 0;
+    TextView NomeDrawer;
+    TextView EmailDrawerr;
+    VerificaConexao verificaConexao;
+    String nomeUsuario = "";
+    String linkImagem ="";
+    String qtNotificacoes;
+    TextView notificacoes;
+
+     CircleImageView imgUser;
+     Permissoes permissoes;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_principal);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        verificaConexao = new VerificaConexao();
+
+        caixaDialogo = new CaixaDialogo();
+        SharedPreferences getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+
+        idLogin = getSharedPreferences.getInt("idLogin", -1);
+        typeUser = getSharedPreferences.getString("typeUserApp","COMUM");
+        nomeUsuario = getSharedPreferences.getString("nomeUser","");
+        linkImagem = getSharedPreferences.getString("linkImagem","");
+
+        Log.d("xex", "idLog  " + String.valueOf(idLogin));
+
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                Date date = new Date();
+
+
+                Notification notification = new Notification("LuizCabeleireiro#Amanhã promoção de 10% de desconto para quem utiliza este aplicativo#"+dateFormat.format(date),"Promoção 10% desconto");
+                Sender sender = new Sender(notification, "/topics/meusalao");
+                INotification iNotification = INotification.retrofit.create(INotification.class);
+                iNotification.enviarNotificacao(sender).enqueue(new Callback<ReturnMessage>() {
+                    @Override
+                    public void onResponse(Call<ReturnMessage> call, Response<ReturnMessage> response) {
+
+                            Toast.makeText(principal.this,"enviado",Toast.LENGTH_LONG).show();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReturnMessage> call, Throwable t) {
+
+                        Toast.makeText(principal.this,"erro",Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemIconTintList(null);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        Menu men = navigationView.getMenu();
+        men.findItem(R.id.nav_meuSalao).setVisible(false);
+        men.findItem(R.id.nav_agendamento).setVisible(false);
+        men.findItem(R.id.nav_meu_agendamento).setVisible(false);
+
+
+        qtNotificacoes = atualizaNotificacoes();
+
+        notificacoes=(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+              findItem(R.id.nav_notificacoes));
+        initializeCountDrawer(qtNotificacoes);
+
+
+        EmailDrawerr = (TextView) headerView.findViewById(R.id.txtemaildrawer);
+        EmailDrawerr.setText(getSharedPreferences.getString("email","..."));
+
+
+        NomeDrawer = (TextView) headerView.findViewById(R.id.nomeuser);
+        if(nomeUsuario!="")
+            NomeDrawer.setText(nomeUsuario);
+        else
+            NomeDrawer.setText("...");
+
+       imgUser = (CircleImageView) headerView.findViewById((R.id.imagemUser));
+
+
+        if(linkImagem!="") {
+
+            Picasso.with(getBaseContext()).load("http://stylehair.xyz/" + linkImagem).into(imgUser);
+        }else
+        {
+            imgUser.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+        }
+
+        if(verificaConexao.verifica(principal.this)) {
+            caixaDialogo.MenssagemDialog(principal.this, "Aguarde...Carregando!!!");
+            atualizatipo();
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
+            atualizaTela(typeUser);
+        }
+    }
+
+
+    public String atualizaNotificacoes(){
+        BancoNotifyController crud = new BancoNotifyController(getBaseContext());
+        Cursor cursor = crud.carregaQuantidade(String.valueOf(idLogin));
+        final List<menssagem> conteudo_menssagem = new ArrayList<>();
+        if (cursor.moveToFirst()){
+            do{
+                String id = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.ID));
+                String titulo = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.TITULO));
+                String texto = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.TEXTO));
+                String hora = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.HORA));
+                String visualizacao = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.VISUALIZACAO));
+                String nome_salao = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.NOME_SALAO));
+                conteudo_menssagem.add(new menssagem(id, titulo, texto, visualizacao,hora,nome_salao));
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        return  String.valueOf(conteudo_menssagem.size());
+    }
+
+    public void initializeCountDrawer(String qt){
+        //Gravity property aligns the text
+
+        notificacoes.setGravity(Gravity.CENTER);
+        notificacoes.setTypeface(null, Typeface.BOLD);
+        notificacoes.setTextColor(getResources().getColor(R.color.corToobar));
+        if(qt.equals("0"))
+            notificacoes.setText("");
+        else
+            notificacoes.setText(qt);
+        notificacoes.setTextSize(15);
+
+    }
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.pesquisa, menu);
+
+        //Pega o Componente.
+        SearchView mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        mSearchView.setQueryHint("Oque está procurando ?");
+        //mSearchView.setIconifiedByDefault(false);
+        mSearchView.setSubmitButtonEnabled(true);
+
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getBaseContext(), query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Toast.makeText(getBaseContext(), newText, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_minhaConta) {
+
+            permissoes = new Permissoes();
+            if(permissoes.habilitarIMagem(principal.this))
+            {
+                Intent intent=new Intent(principal.this,minhaConta.class);
+                startActivityForResult(intent,1);
+            }
+
+
+        } else if (id == R.id.nav_salaoFavorito) {
+            Intent intent=new Intent(principal.this,saloesFavoritos.class);
+            startActivityForResult(intent,2);
+
+        } else if (id == R.id.nav_agendamento) {
+
+
+        } else if (id == R.id.nav_notificacoes) {
+            Intent intent=new Intent(principal.this,notificacao.class);
+            startActivityForResult(intent,4);
+
+        } else if (id == R.id.nav_criarSalao) {
+            Intent intent=new Intent(principal.this,cadastroSalao.class);
+            startActivityForResult(intent,5);
+
+        } else if (id == R.id.nav_meuSalao) {
+
+        } else if (id == R.id.nav_meu_agendamento) {
+            Intent intent=new Intent(principal.this,minha_agenda.class);
+            startActivityForResult(intent,7);
+
+        } else if (id == R.id.nav_configuracao) {
+            Intent intent=new Intent(principal.this,configuracaoApp.class);
+            startActivityForResult(intent,8);
+
+        } else if (id == R.id.nav_logout) {
+            SharedPreferences getSharedPreferencesL = PreferenceManager
+                    .getDefaultSharedPreferences(getBaseContext());
+            SharedPreferences.Editor e = getSharedPreferencesL.edit();
+            e.clear();
+            e.apply();
+            e.putBoolean("firstStart",false);
+            e.putBoolean("logado", false);
+            e.apply();
+            e.commit();
+            Intent i = new Intent(principal.this, logar.class);
+            startActivity(i);
+            finish();
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
+    public void atualizaTela(String user){
+        Menu men = navigationView.getMenu();
+        if( user == "gerente")//gerente
+        {
+            men.findItem(R.id.nav_criarSalao).setVisible(false);
+            men.findItem(R.id.nav_meuSalao).setVisible(true);
+            men.findItem(R.id.nav_meu_agendamento).setVisible(true);
+        }
+        else
+        if(user == "funcionario")//funcionario
+        {
+            men.findItem(R.id.nav_criarSalao).setVisible(false);
+            men.findItem(R.id.nav_meuSalao).setVisible(false);
+            men.findItem(R.id.nav_agendamento).setVisible(false);
+            men.findItem(R.id.nav_meu_agendamento).setVisible(true);
+        }
+        else
+        if(user == "usuario")
+        {
+            men.findItem(R.id.nav_criarSalao).setVisible(true);
+            men.findItem(R.id.nav_meuSalao).setVisible(false);
+        }
+        else
+        {
+            men.findItem(R.id.nav_criarSalao).setVisible(true);
+            men.findItem(R.id.nav_meuSalao).setVisible(false);
+            men.findItem(R.id.nav_agendamento).setVisible(false);
+        }
+    }
+
+
+
+    @Override
+
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent){
+        if(requestCode == 1){
+            atualizatipo();
+            String qt = atualizaNotificacoes();
+            initializeCountDrawer(qt);
+        }else
+        if(requestCode == 2){
+            atualizatipo();
+            String qt = atualizaNotificacoes();
+            initializeCountDrawer(qt);
+        }else
+        if(requestCode == 3){
+            atualizatipo();
+            String qt = atualizaNotificacoes();
+            initializeCountDrawer(qt);
+        }else
+        if(requestCode == 4)
+        {
+           String qt = atualizaNotificacoes();
+           initializeCountDrawer(qt);
+        }
+        else
+        if(requestCode == 5)
+        {
+            atualizatipo();
+            String qt = atualizaNotificacoes();
+            initializeCountDrawer(qt);
+        }
+        else
+        if(requestCode == 6)
+        {
+            atualizatipo();
+            String qt = atualizaNotificacoes();
+            initializeCountDrawer(qt);
+        }
+        else
+        if(requestCode == 8)
+        {
+            atualizatipo();
+            String qt = atualizaNotificacoes();
+            initializeCountDrawer(qt);
+        }
+}
+
+
+    public void atualizatipo(){
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<TipoUsuario> callTipos = iApi.tipoUsuario(idLogin);
+        callTipos.enqueue(new Callback<TipoUsuario>() {
+            @Override
+            public void onResponse(Call<TipoUsuario> call, Response<TipoUsuario> response) {
+                callTipos.cancel();
+                qtTentativaRealizada = 0;
+                caixaDialogo.fecharCaixa();
+                if(response.isSuccessful()) {
+                    TipoUsuario tipo = response.body();
+
+                    int id_suario = -1;
+                    int id_funcionario = -1;
+                    int id_salao = -1;
+
+                    if(tipo.getIdSalao()>=0) {
+                        id_salao = tipo.getIdSalao();
+                    }
+
+                    if(tipo.getIdFuncionario()>=0) {
+                        id_funcionario = tipo.getIdFuncionario();
+                    }
+
+                    if(tipo.getIdUsuario()>=0) {
+                        id_suario = tipo.getIdUsuario();
+                    }
+
+                    //Log.d("xex","usuario = "+String.valueOf(id_suario));
+                    //Log.d("xex","funcionario = "+String.valueOf(id_funcionario));
+                    //Log.d("xex","salao = "+String.valueOf(id_salao));
+
+                    SharedPreferences getSharedPreferencesL = PreferenceManager
+                            .getDefaultSharedPreferences(getBaseContext());
+                    SharedPreferences.Editor e = getSharedPreferencesL.edit();
+
+
+                    if( id_salao > -1)//gerente
+                    {
+                        e.putString("typeUserApp","GERENTE");
+                        atualizaTela("gerente");
+                    }
+                    else
+                    if(id_funcionario > -1)//funcionario
+                    {
+                        e.putString("typeUserApp","FUNCIONARIO");
+                        atualizaTela("funcionario");
+                    }
+                    else
+                    if(id_suario > -1)
+                    {
+                        e.putString("typeUserApp","COMUM");
+                        atualizaTela("usuario");
+                    }
+                    else
+                    {
+                        e.putString("typeUserApp","COMUM");
+                        atualizaTela("comum");
+                    }
+                    e.apply();
+                    e.commit();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TipoUsuario> call, Throwable t) {
+                if(qtTentativaRealizada < qtTentativas) {
+                    qtTentativaRealizada++;
+                    atualizatipo();
+                }
+                else
+                {
+                    caixaDialogo.fecharCaixa();
+                }
+            }
+        });
+    }
+}

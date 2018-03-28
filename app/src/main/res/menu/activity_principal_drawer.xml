@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:showIn="navigation_view">
+
+
+
+    <item
+        android:id="@+id/nav_minhaConta"
+        android:icon="@drawable/icone_minha_conta"
+        app:actionViewClass="android.widget.TextView"
+        android:title="Minha Conta" />
+    <item
+        android:id="@+id/nav_salaoFavorito"
+        android:icon="@drawable/icone_favorito"
+        app:actionViewClass="android.widget.TextView"
+
+        android:title="Salões Favoritos" />
+    <item
+    android:id="@+id/nav_agendamento"
+    android:icon="@drawable/icone_agendamento"
+    app:actionViewClass="android.widget.TextView"
+    android:title="Meus agendamentos" />
+
+    <item
+        android:id="@+id/nav_notificacoes"
+        android:icon="@drawable/icone_agendamento"
+        app:actionViewClass="android.widget.TextView"
+        android:title="Notificações" />
+
+
+
+    <item android:title="Meu Salão">
+        <menu>
+            <item
+                android:id="@+id/nav_criarSalao"
+                android:icon="@drawable/icone_salao"
+                android:title="Criar Salão" />
+
+            <item
+                android:id="@+id/nav_meuSalao"
+                android:icon="@drawable/icone_salao"
+                android:title="Gerenciar Meu Salão" />
+
+            <item
+                android:id="@+id/nav_meu_agendamento"
+                android:icon="@drawable/icone_salao"
+                android:title="Meus Agendamentos" />
+
+        </menu>
+    </item>
+
+    <item android:title="Configurações">
+        <menu>
+            <item
+                android:id="@+id/nav_configuracao"
+                android:icon="@drawable/icone_configuracao"
+                android:title="Configurações" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/icone_logout"
+                android:title="logout" />
+
+        </menu>
+    </item>
+</menu>

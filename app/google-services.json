@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "683785726671",
+    "firebase_url": "https://stylehair-4d4e0.firebaseio.com",
+    "project_id": "stylehair-4d4e0",
+    "storage_bucket": "stylehair-4d4e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683785726671:android:6f0ccff75f0ae4b2",
+        "android_client_info": {
+          "package_name": "com.stylehair.nerdsolutions.stylehair"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683785726671-jcg08l70mh7efusdhhsakss6emjjavvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stylehair.nerdsolutions.stylehair",
+            "certificate_hash": "96b1a5c5156722acce7a6b25a472e1200a13d87f"
+          }
+        },
+        {
+          "client_id": "683785726671-8oje9t48fhtbmfqqh57m4rg8l18vulrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwFzyN9XQ3ovT_NA2Wi81_EAyGIzLpWUM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683785726671-8oje9t48fhtbmfqqh57m4rg8l18vulrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
