@@ -115,10 +115,11 @@ public class fragmentLogin extends Fragment {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                     caixaDialogo.fecharCaixa();
-                    if (response.isSuccessful()) {
-                        qtTentativaRealizada = 0;
-                        if(response.code()==203 && response.message().equals("2"))
-                        {
+                    qtTentativaRealizada = 0;
+                    Log.d("xex", String.valueOf(response.code()) + "--"+ response.message());
+                    switch (response.code())
+                    {
+                        case 204:
                             SharedPreferences getSharedPreferencesL = PreferenceManager
                                     .getDefaultSharedPreferences(getContext());
                             SharedPreferences.Editor e = getSharedPreferencesL.edit();
@@ -129,15 +130,32 @@ public class fragmentLogin extends Fragment {
                             e.apply();
                             Intent i = new Intent(getActivity(), logar.class);
                             startActivity(i);
+                            Toast.makeText(getContext(),"Senha alterada com sucesso!!",Toast.LENGTH_LONG).show();
                             getActivity().finish();
-                        }
+                            break;
+
+                        case 400:
+                            switch (response.message())
+                            {
+                                case "02":
+                                    Toast.makeText(getContext(),"Parametros incorretos!!",Toast.LENGTH_LONG).show();
+                                    break;
+
+                                case "04":
+                                    Toast.makeText(getContext(),"Erro ao editar senha!!",Toast.LENGTH_LONG).show();
+                                    break;
+
+                                case "06":
+                                    TextInputLayout senhaAtual = (TextInputLayout) getView().findViewById(R.id.editSenhaAtual);
+                                    senhaAtual.getEditText().setText("");
+                                    senhaAtual.getEditText().requestFocus();
+                                    Toast.makeText(getContext(),"Senha atual incorreta!!",Toast.LENGTH_LONG).show();
+                                    break;
+                            }
+                            break;
                     }
-                    if(response.code()==400 && response.message().equals("3"))
-                    {
-                        TextInputLayout senhaAtual = (TextInputLayout) getView().findViewById(R.id.editSenhaAtual);
-                        senhaAtual.getEditText().setText("");
-                        senhaAtual.getEditText().requestFocus();
-                    }
+
+
 
 
                     callEditarLogin.cancel();

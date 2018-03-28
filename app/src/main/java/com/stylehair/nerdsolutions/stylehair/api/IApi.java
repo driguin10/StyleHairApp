@@ -53,7 +53,7 @@ public interface IApi {
     //-------- chamada para editar login ---------------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
-    @POST("v1/logins/alterar/")
+    @POST("v1/logins/editar/")
     Call<ResponseBody> EditarLogin(@Part("email") RequestBody email,
                                    @Part("senhaAtual") RequestBody senhaAtual,
                                    @Part("novaSenha") RequestBody novaSenha);
