@@ -9,11 +9,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
 import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
 import com.stylehair.nerdsolutions.stylehair.R;
-
 import org.joda.time.DateTime;
 
 public class minha_agenda extends AppCompatActivity implements DatePickerListener{
@@ -46,16 +44,15 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
 
                 //botao today----------
                 .setTodayButtonTextColor(Color.RED)
-
                 .showTodayButton(true)
+
                 //----------------------
 
                 .init();
-
-        TextView xx = (TextView)findViewById(com.github.jhonnyx2012.horizontalpicker.R.id.tvToday);
-        xx.setText("HOJE");
         picker.setBackgroundColor(Color.DKGRAY);
-        //picker.setDate(new DateTime().plusDays(4));
+        TextView btToday = (TextView)findViewById(com.github.jhonnyx2012.horizontalpicker.R.id.tvToday);
+        btToday.setText("HOJE");
+        picker.setDate(new DateTime());
     }
 
     @Override
