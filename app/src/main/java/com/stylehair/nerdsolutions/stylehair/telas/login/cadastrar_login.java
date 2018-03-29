@@ -108,9 +108,6 @@ public class cadastrar_login extends AppCompatActivity {
                             Log.d("xex","psd");
                             break;
                     }
-
-
-
                 callCadastroLogin.cancel();
 
             }

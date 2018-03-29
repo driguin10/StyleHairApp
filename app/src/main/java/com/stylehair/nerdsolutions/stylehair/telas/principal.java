@@ -41,6 +41,8 @@ import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.Banc
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.cadastroSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
@@ -309,6 +311,8 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,5);
 
         } else if (id == R.id.nav_meuSalao) {
+            Intent intent=new Intent(principal.this,meuSalao.class);
+            startActivityForResult(intent,6);
 
         } else if (id == R.id.nav_meu_agendamento) {
             Intent intent=new Intent(principal.this,minha_agenda.class);
@@ -478,6 +482,7 @@ public class principal extends AppCompatActivity
                         e.putString("typeUserApp","COMUM");
                         atualizaTela("comum");
                     }
+                    e.putString("idUsuario",String.valueOf(tipo.getIdUsuario()));
                     e.apply();
                     e.commit();
                 }

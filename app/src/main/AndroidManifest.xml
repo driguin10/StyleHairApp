@@ -53,10 +53,11 @@
             android:name=".telas.minhaConta.minhaConta"
             android:label="@string/title_activity_minha_conta"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".telas.cadastroSalao" />
+        <activity android:name=".telas.meuSalao.cadastroSalao" />
         <activity android:name=".telas.configuracaoApp" />
         <activity android:name=".telas.saloesFavoritos" />
-        <activity android:name=".telas.minha_agenda"></activity>
+        <activity android:name=".telas.minha_agenda" />
+        <activity android:name=".telas.meuSalao.meuSalao"></activity>
     </application>
 
 </manifest>

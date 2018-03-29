@@ -116,7 +116,6 @@ public class fragmentLogin extends Fragment {
 
                     caixaDialogo.fecharCaixa();
                     qtTentativaRealizada = 0;
-                    Log.d("xex", String.valueOf(response.code()) + "--"+ response.message());
                     switch (response.code())
                     {
                         case 204:
