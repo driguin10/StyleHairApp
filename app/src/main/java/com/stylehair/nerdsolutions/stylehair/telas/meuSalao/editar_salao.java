@@ -19,8 +19,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -99,6 +102,9 @@ public class editar_salao extends AppCompatActivity {
     Loading loading;
     Boolean okSalao = false;
 
+
+    Switch agendar;
+    Button configuraAgenda;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +116,8 @@ public class editar_salao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Meu Salão");
+
+
 
         loading = new Loading(this);
         config = new Config();
@@ -142,7 +150,35 @@ public class editar_salao extends AppCompatActivity {
         CaregaImgSalao = (Button) findViewById(R.id.edt_bt_caregaImgSalao);
         SalvarSalao = (Button)findViewById(R.id.edt_bt_salvarSalao);
         ImagemSalao = (CircleImageView) findViewById(R.id.edt_imagemSalao);
+        agendar = (Switch)findViewById(R.id.sw_agenda);
+        configuraAgenda = (Button) findViewById(R.id.bt_configura_agenda);
         //--------------------------------------------------------------------
+
+        configuraAgenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(editar_salao.this, "teste", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        agendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    configuraAgenda.setEnabled(true);
+                    configuraAgenda.setClickable(true);
+                    configuraAgenda.setAlpha(1);
+
+                }
+                    else {
+                    configuraAgenda.setEnabled(false);
+                    configuraAgenda.setAlpha(.4f);
+                    configuraAgenda.setClickable(false);
+                }
+
+
+            }
+        });
 
         //---------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
@@ -405,6 +441,11 @@ public class editar_salao extends AppCompatActivity {
                         CnpjSalao.getEditText().setText(salao.getCnpj());
                         ComplementoSalao.getEditText().setText(salao.getComplemento());
 
+                        if(salao.getAgendamento() == 1)
+                            agendar.setChecked(true);
+                        else
+                            agendar.setChecked(false);
+
                         for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
                         {
                             if(EstadoSalao.getAdapter().getItem(i).toString().contains(salao.getEstado()))
@@ -494,8 +535,10 @@ public class editar_salao extends AppCompatActivity {
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody imagemAntiga = RequestBody.create(MediaType.parse("text/plain"), ImageAntiga);
-            RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
+            RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "0");
 
+            if(agendar.isChecked())
+                agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
 
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("text/plain"), tipoImagem);

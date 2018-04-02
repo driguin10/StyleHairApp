@@ -24,6 +24,7 @@ public class Salao {
     private String linkImagem;
     private String horaIni;
     private String horaFim;
+    private int agendamento;
 
     public int getIdSalao() {
         return idSalao;
@@ -175,5 +176,14 @@ public class Salao {
 
     public void setHoraFim(String horaFim) {
         this.horaFim = horaFim;
+    }
+
+
+    public int getAgendamento() {
+        return agendamento;
+    }
+
+    public void setAgendamento(int agendamento) {
+        this.agendamento = agendamento;
     }
 }

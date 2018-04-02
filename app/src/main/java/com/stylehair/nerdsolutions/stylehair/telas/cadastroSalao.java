@@ -19,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -92,7 +94,7 @@ public class cadastroSalao extends AppCompatActivity {
 
     String LinkImagem = "";
     Loading loading;
-
+    Switch agendar;
 
 
 
@@ -136,7 +138,9 @@ public class cadastroSalao extends AppCompatActivity {
         CaregaImgSalao = (Button) findViewById(R.id.bt_caregaImgSalao);
         SalvarSalao = (Button)findViewById(R.id.bt_salvarSalao);
         ImagemSalao = (CircleImageView) findViewById(R.id.imagemSalao);
+        agendar = (Switch)findViewById(R.id.sw_cad_agenda);
         //--------------------------------------------------------------------
+
 
         //---------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
@@ -204,6 +208,7 @@ public class cadastroSalao extends AppCompatActivity {
         Boolean status = false;
         String VnomeSalao =NomeSalao.getEditText().getText().toString();
         String VTelefone1Salao = Telefone1Salao.getEditText().getText().toString();
+        String VTelefone2Salao = Telefone2Salao.getEditText().getText().toString();
         String VCepSalao = CepSalao.getEditText().getText().toString();
         String VEnderecoSalao = EnderecoSalao.getEditText().getText().toString();
         String VBairroSalao = BairroSalao.getEditText().getText().toString();
@@ -214,9 +219,17 @@ public class cadastroSalao extends AppCompatActivity {
 
 
         if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
-                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
+                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals("")&& verificaTelefone(VTelefone2Salao))
         {
-            status = true;
+
+
+            if(verificaTelefone(VTelefone1Salao))
+                status = true;
+
+            else {
+                status = false;
+                Telefone1Salao.requestFocus();
+            }
         }
         else
         {
@@ -246,8 +259,33 @@ public class cadastroSalao extends AppCompatActivity {
             else
             if(VEmailSalao.equals(""))
                 EmailSalao.getEditText().requestFocus();
+            else
+            if(!verificaTelefone(VTelefone1Salao))
+                Telefone1Salao.requestFocus();
+            else
+            if(!verificaTelefone(VTelefone2Salao))
+                Telefone2Salao.requestFocus();
+
         }
         return  status;
+    }
+
+
+    public boolean  verificaTelefone(String telefone){
+        boolean verifica = false;
+        String num = "";
+        String num2 = "";
+        num = telefone.replace("(" , " ");
+        num = num.replace(")" , " ");
+        num2 = num.replaceAll(" ","");
+
+        if(num2.length()>= 8 )
+            verifica = true;
+        else
+            verifica = false;
+
+        return  verifica;
+
     }
 
     //------ opcões para escolher imagem---
@@ -360,6 +398,7 @@ public class cadastroSalao extends AppCompatActivity {
 
     //-------- função para salvar o usuario-------------
     public void salvarSalao() {
+
         if(!verificaCampos())
         {
             loading.fechar();
@@ -385,14 +424,24 @@ public class cadastroSalao extends AppCompatActivity {
             RequestBody complementoSalao = RequestBody.create(MediaType.parse("text/plain"), ComplementoSalao.getEditText().getText().toString());
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
-            RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
+            RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "0");
+
+
+           if(agendar.isChecked())
+           {
+               agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
+           }
+
+
+
+
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("multipart/form-data"), tipoImagem);
                 converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), img64);
             }
 
             IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callSalvaSalao = iApi.SalvarSalao(converter64, mine, iduser, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, horaIniSalao, horaFimSalao,sobreSalao,cnpjSalao,agendamento,complementoSalao);
+            final Call<ResponseBody> callSalvaSalao = iApi.SalvarSalao(converter64, mine, iduser, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, horaIniSalao, horaFimSalao,sobreSalao,cnpjSalao, agendamento,complementoSalao);
 
             callSalvaSalao.enqueue(new Callback<ResponseBody>() {
                 @Override
