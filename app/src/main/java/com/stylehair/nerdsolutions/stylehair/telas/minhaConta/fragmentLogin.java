@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
 import java.io.IOException;
@@ -119,18 +120,9 @@ public class fragmentLogin extends Fragment {
                     switch (response.code())
                     {
                         case 204:
-                            SharedPreferences getSharedPreferencesL = PreferenceManager
-                                    .getDefaultSharedPreferences(getContext());
-                            SharedPreferences.Editor e = getSharedPreferencesL.edit();
-                            e.clear();
-                            e.apply();
-                            e.putBoolean("firstStart",false);
-                            e.putBoolean("logado", false);
-                            e.apply();
-                            Intent i = new Intent(getActivity(), logar.class);
-                            startActivity(i);
+                            Logout logout = new Logout();
                             Toast.makeText(getContext(),"Senha alterada com sucesso!!",Toast.LENGTH_LONG).show();
-                            getActivity().finish();
+                            logout.deslogar(getActivity(),false);
                             break;
 
                         case 400:
@@ -153,9 +145,6 @@ public class fragmentLogin extends Fragment {
                             }
                             break;
                     }
-
-
-
 
                     callEditarLogin.cancel();
                 }

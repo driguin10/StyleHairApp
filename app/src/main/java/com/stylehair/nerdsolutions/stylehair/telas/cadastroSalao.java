@@ -1,4 +1,4 @@
-package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
+package com.stylehair.nerdsolutions.stylehair.telas;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,10 +26,10 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
-import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,9 +96,7 @@ public class cadastroSalao extends AppCompatActivity {
 
     Boolean okSalao = false;
     String LinkImagem = "";
-
-
-    CaixaDialogo caixaDialogo;
+    Loading loading;
 
 
 
@@ -112,9 +110,7 @@ public class cadastroSalao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Cadastrar Salão");
-
-        caixaDialogo = new CaixaDialogo();
-
+        loading = new Loading(this);
         config = new Config();
         image = new Image();
 
@@ -185,8 +181,7 @@ public class cadastroSalao extends AppCompatActivity {
         SalvarSalao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                caixaDialogo.MenssagemDialog(cadastroSalao.this,"Aguarde...Enviando dados !!!");
+                loading.abrir("Aguarde...Enviando dados !!!");
                     salvarSalao();
 
             }
@@ -300,7 +295,8 @@ public class cadastroSalao extends AppCompatActivity {
     {
         alerta.dismiss();
         if(resultCode!=0)
-            caixaDialogo.MenssagemDialog(this,"Carregando Imagem...");
+
+        loading.abrir("Carregando Imagem...");
 
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -328,7 +324,7 @@ public class cadastroSalao extends AppCompatActivity {
                     {
                         ImagemSalao.setImageBitmap(image.getBitmap());
                     }
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                 }
                 break;
 
@@ -354,12 +350,12 @@ public class cadastroSalao extends AppCompatActivity {
                     {
                         ImagemSalao.setImageBitmap(image.getBitmap());
                     }
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                 }
                 break;
 
             default:
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
                 break;
         }//fim switch
 
@@ -371,12 +367,11 @@ public class cadastroSalao extends AppCompatActivity {
     public void salvarSalao() {
         if(!verificaCampos())
         {
-            caixaDialogo.fecharCaixa();
+            loading.fechar();
             Toast.makeText(this, "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
         }
         else
         {
-Log.d("xex","id - "+IdUsuario );
             RequestBody iduser = RequestBody.create(MediaType.parse("text/plain"), IdUsuario);
             RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), NomeSalao.getEditText().getText().toString());
             RequestBody telefone1Salao = RequestBody.create(MediaType.parse("text/plain"), Telefone1Salao.getEditText().getText().toString());
@@ -408,25 +403,15 @@ Log.d("xex","id - "+IdUsuario );
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     qtTentativaRealizadaSalvar = 0;
 
                     switch (response.code())
                     {
                         case 204:
-                            SharedPreferences getSharedPreferencesL = PreferenceManager
-                                    .getDefaultSharedPreferences(getBaseContext());
-                            SharedPreferences.Editor e = getSharedPreferencesL.edit();
-                            e.clear();
-                            e.apply();
-                            e.putBoolean("firstStart",false);
-                            e.putBoolean("logado", false);
-                            e.apply();
-                            e.commit();
-                            Intent intent = new Intent(cadastroSalao.this,logar.class);
-                            startActivity(intent);
                             Toast.makeText(cadastroSalao.this,"Salão salvo , Você agora é um gerente!!",Toast.LENGTH_LONG).show();
-                            finish();
+                            Logout logout = new Logout();
+                            logout.deslogar(cadastroSalao.this,false);
                             break;
 
                         case 400:
@@ -455,7 +440,7 @@ Log.d("xex","id - "+IdUsuario );
                         qtTentativaRealizadaSalvar++;
                         salvarSalao();
                     } else {
-                        caixaDialogo.fecharCaixa();
+                        loading.fechar();
 
                         if (t instanceof IOException) {
                             Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");

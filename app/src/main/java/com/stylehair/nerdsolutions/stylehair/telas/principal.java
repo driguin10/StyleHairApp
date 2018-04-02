@@ -12,7 +12,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.View;
@@ -43,7 +42,6 @@ import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.Banc
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.cadastroSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
@@ -102,7 +100,6 @@ public class principal extends AppCompatActivity
         nomeUsuario = getSharedPreferences.getString("nomeUser","");
         linkImagem = getSharedPreferences.getString("linkImagem","");
 
-        Log.d("xex", "idLog  " + String.valueOf(idLogin));
 
 
 

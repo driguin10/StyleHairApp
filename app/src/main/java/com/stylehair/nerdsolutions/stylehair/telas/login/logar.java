@@ -159,13 +159,9 @@ public class logar extends AppCompatActivity {
                         NomeUsuario = logar.getNomeUser();
                         linkImagem = logar.getLinkImagem();
 
-
-
-
                         for (Login log : logar.login) {
                             Email = log.getEmail();
                             idLogin = log.getIdLogin();
-
                         }
 
                         SharedPreferences getSharedPreferencesL = PreferenceManager

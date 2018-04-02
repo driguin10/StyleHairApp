@@ -299,9 +299,28 @@ public class fragmentUsuario extends Fragment {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     loading.fechar();
+                    qtTentativaRealizadaSalvar = 0;
                     if (response.isSuccessful()) {
-                        qtTentativaRealizadaSalvar = 0;
-                        Toast.makeText(getContext(), String.valueOf(response.code() + "*" + response.message()), Toast.LENGTH_LONG).show();
+
+                        switch (response.code())
+                        {
+                            case 204:
+                                Toast.makeText(getContext(), "Salvo com sucesso", Toast.LENGTH_LONG).show();
+                                break;
+
+                            case 400:
+                                switch (response.message())
+                                {
+                                    case "02":
+                                        Toast.makeText(getContext(), "parametros incorretos", Toast.LENGTH_LONG).show();
+                                        break;
+
+                                    case "03":
+                                        Toast.makeText(getContext(), "Erro ao salvar", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                                break;
+                        }
                         pegarUsuario(IdUsuario);
                     }
                     callSalvaUser.cancel();
@@ -380,10 +399,26 @@ public class fragmentUsuario extends Fragment {
                     if (response.isSuccessful()) {
                         qtTentativaRealizadaEditar = 0;
 
-                        if(response.code() == 204 && response.message().equals("01"))
+                        switch (response.code())
                         {
-                            Toast.makeText(getContext(), "Salvo com sucesso", Toast.LENGTH_LONG).show();
+                            case 204:
+                                Toast.makeText(getContext(), "Editado com sucesso", Toast.LENGTH_LONG).show();
+                                break;
+
+                            case 400:
+                                switch (response.message())
+                                {
+                                    case "02":
+                                        Toast.makeText(getContext(), "parametros incorretos", Toast.LENGTH_LONG).show();
+                                        break;
+
+                                    case "04":
+                                        Toast.makeText(getContext(), "Erro ao editar", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                                break;
                         }
+
                     }
                     pegarUsuario(IdUsuario);
                     callEditarUser.cancel();
