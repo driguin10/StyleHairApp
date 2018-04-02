@@ -1,14 +1,18 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 
 public class meuSalao extends AppCompatActivity {
-
+    CardView bt_meuSalao;
+    CardView bt_funcionario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +24,25 @@ public class meuSalao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Meu Salão");
+
+        bt_meuSalao = (CardView) findViewById(R.id.card_bt1);
+        bt_funcionario = (CardView) findViewById(R.id.card_bt2);
+
+        bt_meuSalao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(meuSalao.this,editar_salao.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_funcionario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(meuSalao.this,funcionarios.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.api.INotification;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
@@ -66,7 +67,7 @@ public class principal extends AppCompatActivity
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
 
-    CaixaDialogo caixaDialogo;
+
     String typeUser="";
     int ResultCode = 0;
     TextView NomeDrawer;
@@ -82,16 +83,17 @@ public class principal extends AppCompatActivity
 
      Logout logout;
     AlertDialog alerta;
+    Loading loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        loading = new Loading(principal.this);
         verificaConexao = new VerificaConexao();
         logout = new Logout();
-        caixaDialogo = new CaixaDialogo();
+
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
 
@@ -182,7 +184,7 @@ public class principal extends AppCompatActivity
         }
 
         if(verificaConexao.verifica(principal.this)) {
-            caixaDialogo.MenssagemDialog(principal.this, "Aguarde...Carregando!!!");
+            loading.abrir("Aguarde...Carregando!!!");
             atualizatipo();
         }
         else
@@ -420,7 +422,7 @@ public class principal extends AppCompatActivity
             public void onResponse(Call<TipoUsuario> call, Response<TipoUsuario> response) {
                 callTipos.cancel();
                 qtTentativaRealizada = 0;
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
                 if(response.isSuccessful()) {
                     TipoUsuario tipo = response.body();
 
@@ -486,7 +488,7 @@ public class principal extends AppCompatActivity
                 }
                 else
                 {
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                 }
             }
         });

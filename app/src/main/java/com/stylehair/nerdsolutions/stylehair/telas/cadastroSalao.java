@@ -45,15 +45,11 @@ import retrofit2.Response;
 public class cadastroSalao extends AppCompatActivity {
 
     AlertDialog alerta;
-    ProgressDialog dialog;
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
 
     int qtTentativas = 3;
-    int qtTentativaRealizadaLoad = 0;
     int qtTentativaRealizadaSalvar = 0;
-    int qtTentativaRealizadaEditar = 0;
-
 
     CircleImageView ImagemSalao;
 
@@ -94,7 +90,6 @@ public class cadastroSalao extends AppCompatActivity {
     Drawable bitmapPadrao;//guarda a imagem padrao do usuario
     Config config;
 
-    Boolean okSalao = false;
     String LinkImagem = "";
     Loading loading;
 
@@ -390,14 +385,14 @@ public class cadastroSalao extends AppCompatActivity {
             RequestBody complementoSalao = RequestBody.create(MediaType.parse("text/plain"), ComplementoSalao.getEditText().getText().toString());
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
-
+            RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("multipart/form-data"), tipoImagem);
                 converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), img64);
             }
 
             IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callSalvaSalao = iApi.SalvarSalao(converter64, mine, iduser, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, horaIniSalao, horaFimSalao,sobreSalao,cnpjSalao,complementoSalao);
+            final Call<ResponseBody> callSalvaSalao = iApi.SalvarSalao(converter64, mine, iduser, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, horaIniSalao, horaFimSalao,sobreSalao,cnpjSalao,agendamento,complementoSalao);
 
             callSalvaSalao.enqueue(new Callback<ResponseBody>() {
                 @Override

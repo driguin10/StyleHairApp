@@ -139,19 +139,19 @@ public interface IApi {
                                      @Part("horaFim") RequestBody horaFim,
                                      @Part("sobre") RequestBody sobre,
                                      @Part("cnpj") RequestBody cnpj,
+                                     @Part("agendamento") RequestBody agendamento,
                                      @Part("complemento") RequestBody complemento);
 
     //----------------------------------------------------------------------------
 
 
 
-    //---------------chamada para editar salao---------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
-    @POST("v1/saloes/alterar/")
+    @POST("v1/saloes/editar/")
     Call<ResponseBody> EditarSalao(@Part("uploaded_file") RequestBody image64,
                                    @Part("mine_file") RequestBody tipoImg,
-                                   @Part("idUsuario") RequestBody idUsuario,
+                                   @Part("idSalao") RequestBody idSalao,
                                    @Part("nome") RequestBody nome,
                                    @Part("telefone1") RequestBody telefone1,
                                    @Part("telefone2") RequestBody telefone2,
@@ -167,8 +167,8 @@ public interface IApi {
                                    @Part("sobre") RequestBody sobre,
                                    @Part("cnpj") RequestBody cnpj,
                                    @Part("complemento") RequestBody complemento,
+                                   @Part("agendamento") RequestBody agendamento,
                                    @Part("imagemAntiga") RequestBody imagemAntiga);
-    //----------------------------------------------------------------------------
 
     //---------------chamada para resetar login---------------------------------
     @Headers("apiKey:" + chave)

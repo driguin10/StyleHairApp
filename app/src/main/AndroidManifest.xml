@@ -59,7 +59,8 @@
         <activity android:name=".telas.minha_agenda" />
         <activity android:name=".telas.meuSalao.meuSalao" />
         <activity android:name=".telas.carregando" />
-        <activity android:name=".telas.meuSalao.editar_salao"></activity>
+        <activity android:name=".telas.meuSalao.editar_salao" />
+        <activity android:name=".telas.meuSalao.funcionarios"></activity>
     </application>
 
 </manifest>
