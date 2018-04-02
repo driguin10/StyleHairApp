@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -37,9 +38,13 @@ import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
+import com.stylehair.nerdsolutions.stylehair.telas.principal;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -113,24 +118,25 @@ public class fragmentUsuario extends Fragment {
     String ImageAntiga = "";
     View view;
     VerificaConexao verificaConexao;
-    public CaixaDialogo caixaDialogo;
+
 
 
     SharedPreferences getSharedPreferences;
-
+    Loading loading;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_fragment_usuario, container, false);
-        caixaDialogo = new CaixaDialogo();
-        caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Carregando!!!");
+       // caixaDialogo = new CaixaDialogo();
+        //caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Carregando!!!");
         config = new Config();
-verificaConexao = new VerificaConexao();
+        verificaConexao = new VerificaConexao();
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
         IdUsuario = getSharedPreferences.getInt("idLogin", -1);
-
+        loading = new Loading(getActivity());
+        loading.abrir("Aguarde...Carregando dados!!!");
 
 
 //--------------- Casting dos componentes --------------------------
@@ -196,7 +202,8 @@ verificaConexao = new VerificaConexao();
             public void onClick(View v) {
                 if(verificaConexao.verifica(getActivity()))
                 {
-                    caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Enviando dados !!!");
+                    //caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Enviando dados !!!");
+                    loading.abrir("Aguarde...Enviando dados !!!");
                     if(okUsuario) { // se na hora de buscar usuario tiver seta com true
                         editarUsuario();
                     }
@@ -213,8 +220,11 @@ verificaConexao = new VerificaConexao();
              pegarUsuario(IdUsuario);
         }
         else {
-            caixaDialogo.fecharCaixa();
+            //caixaDialogo.fecharCaixa();
+            loading.fechar();
             Toast.makeText(getActivity(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
+           Logout logout = new Logout();
+           logout.deslogar(getActivity(),false);
         }
 
         return view;
@@ -288,9 +298,7 @@ verificaConexao = new VerificaConexao();
             callSalvaUser.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     if (response.isSuccessful()) {
                         qtTentativaRealizadaSalvar = 0;
                         Toast.makeText(getContext(), String.valueOf(response.code() + "*" + response.message()), Toast.LENGTH_LONG).show();
@@ -305,7 +313,7 @@ verificaConexao = new VerificaConexao();
                         qtTentativaRealizadaSalvar++;
                         salvarUsuario();
                     } else {
-                        caixaDialogo.fecharCaixa();
+                        loading.fechar();
 
                         if (t instanceof IOException) {
                             Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
@@ -332,7 +340,7 @@ verificaConexao = new VerificaConexao();
     {
         if(!verificaCampos())
         {
-            caixaDialogo.fecharCaixa();
+            loading.fechar();
             Toast.makeText(getContext(), "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
         }
         else
@@ -368,9 +376,7 @@ verificaConexao = new VerificaConexao();
             callEditarUser.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    Log.d("xex",String.valueOf(response.code()));
-                    Log.d("xex",response.message());
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     if (response.isSuccessful()) {
                         qtTentativaRealizadaEditar = 0;
 
@@ -378,9 +384,7 @@ verificaConexao = new VerificaConexao();
                         {
                             Toast.makeText(getContext(), "Salvo com sucesso", Toast.LENGTH_LONG).show();
                         }
-
                     }
-
                     pegarUsuario(IdUsuario);
                     callEditarUser.cancel();
                 }
@@ -393,7 +397,7 @@ verificaConexao = new VerificaConexao();
                         qtTentativaRealizadaEditar++;
                         editarUsuario();
                     } else {
-                        caixaDialogo.fecharCaixa();
+                        loading.fechar();
 
                         if (t instanceof IOException) {
                             Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
@@ -422,7 +426,7 @@ verificaConexao = new VerificaConexao();
         callBuscaUser.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
                 callBuscaUser.cancel();
                 switch (response.code()) {
                     case 200:
@@ -503,7 +507,7 @@ verificaConexao = new VerificaConexao();
                     pegarUsuario(idUsuario);
                 }
                 else {
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                 }
             }
         });
@@ -516,6 +520,7 @@ verificaConexao = new VerificaConexao();
     public void EscolhaImagem(){
         LayoutInflater li = getLayoutInflater();
         View view = li.inflate(R.layout.activity_dialog_escolher_imagem, null);
+
         view.findViewById(R.id.bt_cancela_dialog).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 alerta.dismiss();
@@ -554,7 +559,7 @@ verificaConexao = new VerificaConexao();
 
         alerta.dismiss();
         if(resultCode!=0)
-            caixaDialogo.MenssagemDialog(getActivity(),"Carregando Imagem...");
+            loading.abrir("Carregando Imagem...");
 
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -584,7 +589,7 @@ verificaConexao = new VerificaConexao();
                     {
                         ImagemUser.setImageBitmap(img.getBitmap());
                     }
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                 }
                 break;
 
@@ -610,13 +615,13 @@ verificaConexao = new VerificaConexao();
                     {
                         ImagemUser.setImageBitmap(img.getBitmap());
                     }
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
 
                 }
                 break;
 
             default:
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
                 break;
         }//fim switch
 

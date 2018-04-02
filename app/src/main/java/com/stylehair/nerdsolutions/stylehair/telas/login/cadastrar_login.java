@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
 
@@ -24,7 +25,7 @@ import retrofit2.Response;
 
 public class cadastrar_login extends AppCompatActivity {
     private Button btCadastroLogin;
-    CaixaDialogo caixaDialogo;
+    Loading loading;
     private TextInputLayout txtCadEmail;
     private TextInputLayout txtCadSenha;
     private TextInputLayout txtCadRSenha;
@@ -36,7 +37,7 @@ public class cadastrar_login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar);
-        caixaDialogo = new CaixaDialogo();
+        loading = new Loading(cadastrar_login.this);
 
         txtCadEmail = (TextInputLayout) findViewById(R.id.cad_EditEmail);
         txtCadSenha = (TextInputLayout) findViewById(R.id.cad_EditSenha);
@@ -50,7 +51,7 @@ public class cadastrar_login extends AppCompatActivity {
                 if(verificaConexao.verifica(cadastrar_login.this)) {
                  if(verificaCampos())
                  {
-                     caixaDialogo.MenssagemDialog(cadastrar_login.this,"Aguarde...Enviando dados !!!");
+                     loading.abrir("Aguarde...Enviando dados !!!");
                      cadastraLogin();
                  }
                 }
@@ -78,7 +79,7 @@ public class cadastrar_login extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
 
 
                     qtTentativaRealizada = 0;
@@ -118,7 +119,7 @@ public class cadastrar_login extends AppCompatActivity {
                     qtTentativaRealizada++;
                     cadastraLogin();
                 } else {
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     Log.d("xex",call.request().toString());
                 }
             }

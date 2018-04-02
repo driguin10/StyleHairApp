@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 
 import okhttp3.MediaType;
@@ -24,7 +25,8 @@ import retrofit2.Response;
 
 public class esqueci_senha extends AppCompatActivity {
 
-    CaixaDialogo caixaDialogo;
+
+    Loading loading;
     EditText emailReset;
     Button btEnviarSenha;
     int qtTentativas = 3;
@@ -33,7 +35,7 @@ public class esqueci_senha extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_esqueci_senha);
-        caixaDialogo = new CaixaDialogo();
+       loading = new Loading(esqueci_senha.this);
 
         emailReset = (EditText) findViewById(R.id.txt_email_recuperar);
         btEnviarSenha = (Button)findViewById(R.id.bt_enviarSenha);
@@ -45,7 +47,7 @@ public class esqueci_senha extends AppCompatActivity {
                 VerificaConexao verificaConexao = new VerificaConexao();
                 if(verificaConexao.verifica(esqueci_senha.this)) {
                     if (verificaEmail()) {
-                        caixaDialogo.MenssagemDialog(esqueci_senha.this, "Aguarde...Enviando dados !!!");
+                        loading.abrir("Aguarde...Enviando dados !!!");
                         EnviaNotificacao();
                     }
                 }
@@ -86,7 +88,7 @@ public class esqueci_senha extends AppCompatActivity {
         callReset.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
 
                 if (response.isSuccessful()) {
                     qtTentativaRealizada = 0;
@@ -127,7 +129,7 @@ public class esqueci_senha extends AppCompatActivity {
                     qtTentativaRealizada++;
                     EnviaNotificacao();
                 } else {
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     Log.d("xex",call.request().toString());
                 }
 

@@ -19,6 +19,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
@@ -32,9 +33,8 @@ import retrofit2.Response;
 public class logar extends AppCompatActivity {
     public boolean isFirstStart;
     public boolean isLogado;
-    CaixaDialogo caixaDialogo;
+    Loading loading;
     Context mcontext;
-    ProgressDialog dialog;
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
     public String emailUser;
@@ -53,7 +53,7 @@ public class logar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        loading = new Loading(logar.this);
         logEmail = (TextInputLayout)findViewById(R.id.LoginEmail);
         logSenha = (TextInputLayout) findViewById(R.id.LoginSenha);
         btCadastrar = (Button) findViewById(R.id.bt_loginCadastrar);
@@ -66,7 +66,7 @@ public class logar extends AppCompatActivity {
 
                 SharedPreferences getSharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getBaseContext());
-                caixaDialogo = new CaixaDialogo();
+
 
                 isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
                 isLogado = getSharedPreferences.getBoolean("logado", false);
@@ -117,7 +117,7 @@ public class logar extends AppCompatActivity {
                 VerificaConexao verificaConexao = new VerificaConexao();
                 if(verificaConexao.verifica(logar.this)) {
                     if (verificaCampos()) {
-                        caixaDialogo.MenssagemDialog(logar.this, "Aguarde...Carregando!!!");
+                        loading.abrir("Aguarde...Carregando!!!");
                         logar();
                     }
                 }else
@@ -147,7 +147,7 @@ public class logar extends AppCompatActivity {
                 callLoga.cancel();
 
                 if(response.isSuccessful()) {
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     qtTentativaRealizada = 0;
                     Logar logar = response.body();
 
@@ -192,7 +192,7 @@ public class logar extends AppCompatActivity {
                 {
 
 
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     switch (response.code()) {
                         case 400:
                             if(response.message().equals("01"))
@@ -216,8 +216,7 @@ public class logar extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Logar> call, Throwable t) {
-                Log.d("xex","fail");
-                caixaDialogo.fecharCaixa();
+                loading.fechar();
                 if(qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
                     logar();

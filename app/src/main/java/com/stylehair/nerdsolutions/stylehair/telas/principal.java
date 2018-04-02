@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.api.INotification;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.Notification.Notification;
@@ -44,7 +46,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.cadastroSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
-import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,6 +81,9 @@ public class principal extends AppCompatActivity
 
      CircleImageView imgUser;
      Permissoes permissoes;
+
+     Logout logout;
+    AlertDialog alerta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +92,7 @@ public class principal extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         verificaConexao = new VerificaConexao();
-
+        logout = new Logout();
         caixaDialogo = new CaixaDialogo();
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
@@ -187,8 +191,12 @@ public class principal extends AppCompatActivity
         else
         {
             Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
-            atualizaTela(typeUser);
+           // atualizaTela(typeUser);
+            logout.deslogar(this,true);
         }
+
+
+
     }
 
 
@@ -286,19 +294,15 @@ public class principal extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_minhaConta) {
-
             permissoes = new Permissoes();
             if(permissoes.habilitarIMagem(principal.this))
             {
                 Intent intent=new Intent(principal.this,minhaConta.class);
                 startActivityForResult(intent,1);
             }
-
-
         } else if (id == R.id.nav_salaoFavorito) {
-            Intent intent=new Intent(principal.this,saloesFavoritos.class);
+           Intent intent=new Intent(principal.this,saloesFavoritos.class);
             startActivityForResult(intent,2);
-
         } else if (id == R.id.nav_agendamento) {
 
 
@@ -323,19 +327,7 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,8);
 
         } else if (id == R.id.nav_logout) {
-            SharedPreferences getSharedPreferencesL = PreferenceManager
-                    .getDefaultSharedPreferences(getBaseContext());
-            SharedPreferences.Editor e = getSharedPreferencesL.edit();
-            e.clear();
-            e.apply();
-            e.putBoolean("firstStart",false);
-            e.putBoolean("logado", false);
-            e.apply();
-            e.commit();
-            Intent i = new Intent(principal.this, logar.class);
-            startActivity(i);
-            finish();
-
+            logout.deslogar(this,true);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

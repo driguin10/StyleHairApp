@@ -56,4 +56,9 @@
         <item name="android:textSize">18dp</item>
     </style>
 
+
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/corToobar</item>
+    </style>
+
 </resources>
