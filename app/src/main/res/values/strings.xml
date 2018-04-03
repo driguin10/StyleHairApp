@@ -48,4 +48,21 @@
         <item>Homem</item>
         <item>Mulher</item>
     </string-array>
+
+
+    <string-array name="tempo_agendamento">
+        <item>15 minutos</item>
+        <item>20 minutos</item>
+        <item>30 minutos</item>
+        <item>40 minutos</item>
+        <item>50 minutos</item>
+        <item>60 minutos</item>
+    </string-array>
+
+    <string-array name="tempo_min_agendamento">
+        <item>15 minutos</item>
+        <item>30 minutos</item>
+        <item>60 minutos</item>
+    </string-array>
+
 </resources>

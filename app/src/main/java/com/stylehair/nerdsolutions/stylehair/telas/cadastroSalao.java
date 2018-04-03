@@ -65,8 +65,6 @@ public class cadastroSalao extends AppCompatActivity {
     TextInputLayout CidadeSalao;
     TextInputLayout SobreSalao;
     TextInputLayout EmailSalao;
-    TextInputLayout HoraIniSalao;
-    TextInputLayout HoraFimSalao;
     TextInputLayout CnpjSalao;
     TextInputLayout ComplementoSalao;
 
@@ -129,8 +127,6 @@ public class cadastroSalao extends AppCompatActivity {
         CidadeSalao = (TextInputLayout) findViewById(R.id.txt_CidadeSalao);
         SobreSalao = (TextInputLayout) findViewById(R.id.txt_SobreSalao);
         EmailSalao = (TextInputLayout) findViewById(R.id.txt_EmailSalao);
-        HoraIniSalao = (TextInputLayout) findViewById(R.id.txt_HoraIniSalao);
-        HoraFimSalao = (TextInputLayout) findViewById(R.id.txt_HoraFimSalao);
         CnpjSalao = (TextInputLayout) findViewById(R.id.txt_CnpjSalao);
         ComplementoSalao = (TextInputLayout) findViewById(R.id.txt_ComplementoSalao);
         EstadoSalao = (Spinner) findViewById(R.id.Sp_EstadoSalao);
@@ -146,8 +142,6 @@ public class cadastroSalao extends AppCompatActivity {
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
         Telefone2Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone2Salao.getEditText()));
         CepSalao.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, CepSalao.getEditText()));
-        HoraIniSalao.getEditText().addTextChangedListener(Mask.insert(Mask.HORA_MASK, HoraIniSalao.getEditText()));
-        HoraFimSalao.getEditText().addTextChangedListener(Mask.insert(Mask.HORA_MASK, HoraFimSalao.getEditText()));
 
         //---------------------------------------------------------------------------------------------------------------
 
@@ -418,8 +412,6 @@ public class cadastroSalao extends AppCompatActivity {
             RequestBody estadoSalao = RequestBody.create(MediaType.parse("text/plain"), EstadoSalao.getSelectedItem().toString());
             RequestBody sobreSalao = RequestBody.create(MediaType.parse("text/plain"), SobreSalao.getEditText().getText().toString());
             RequestBody emailSalao = RequestBody.create(MediaType.parse("text/plain"), EmailSalao.getEditText().getText().toString());
-            RequestBody horaIniSalao = RequestBody.create(MediaType.parse("text/plain"), HoraIniSalao.getEditText().getText().toString());
-            RequestBody horaFimSalao = RequestBody.create(MediaType.parse("text/plain"), HoraFimSalao.getEditText().getText().toString());
             RequestBody cnpjSalao = RequestBody.create(MediaType.parse("text/plain"), CnpjSalao.getEditText().getText().toString());
             RequestBody complementoSalao = RequestBody.create(MediaType.parse("text/plain"), ComplementoSalao.getEditText().getText().toString());
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
@@ -433,15 +425,13 @@ public class cadastroSalao extends AppCompatActivity {
            }
 
 
-
-
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("multipart/form-data"), tipoImagem);
                 converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), img64);
             }
 
             IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callSalvaSalao = iApi.SalvarSalao(converter64, mine, iduser, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, horaIniSalao, horaFimSalao,sobreSalao,cnpjSalao, agendamento,complementoSalao);
+            final Call<ResponseBody> callSalvaSalao = iApi.SalvarSalao(converter64, mine, iduser, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, sobreSalao,cnpjSalao, agendamento,complementoSalao);
 
             callSalvaSalao.enqueue(new Callback<ResponseBody>() {
                 @Override

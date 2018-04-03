@@ -70,8 +70,7 @@ public class editar_salao extends AppCompatActivity {
     TextInputLayout CidadeSalao;
     TextInputLayout SobreSalao;
     TextInputLayout EmailSalao;
-    TextInputLayout HoraIniSalao;
-    TextInputLayout HoraFimSalao;
+
     TextInputLayout CnpjSalao;
     TextInputLayout ComplementoSalao;
 
@@ -141,8 +140,7 @@ public class editar_salao extends AppCompatActivity {
         CidadeSalao = (TextInputLayout) findViewById(R.id.edt_txt_CidadeSalao);
         SobreSalao = (TextInputLayout) findViewById(R.id.edt_txt_SobreSalao);
         EmailSalao = (TextInputLayout) findViewById(R.id.edt_txt_EmailSalao);
-        HoraIniSalao = (TextInputLayout) findViewById(R.id.edt_txt_HoraIniSalao);
-        HoraFimSalao = (TextInputLayout) findViewById(R.id.edt_txt_HoraFimSalao);
+
         CnpjSalao = (TextInputLayout) findViewById(R.id.edt_txt_CnpjSalao);
         ComplementoSalao = (TextInputLayout) findViewById(R.id.edt_txt_ComplementoSalao);
         EstadoSalao = (Spinner) findViewById(R.id.edt_Sp_EstadoSalao);
@@ -157,7 +155,8 @@ public class editar_salao extends AppCompatActivity {
         configuraAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(editar_salao.this, "teste", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(editar_salao.this,configuracaoSalao.class);
+                startActivity(intent);
             }
         });
 
@@ -184,8 +183,6 @@ public class editar_salao extends AppCompatActivity {
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
         Telefone2Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone2Salao.getEditText()));
         CepSalao.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, CepSalao.getEditText()));
-        HoraIniSalao.getEditText().addTextChangedListener(Mask.insert(Mask.HORA_MASK, HoraIniSalao.getEditText()));
-        HoraFimSalao.getEditText().addTextChangedListener(Mask.insert(Mask.HORA_MASK, HoraFimSalao.getEditText()));
 
         //---------------------------------------------------------------------------------------------------------------
 
@@ -227,8 +224,10 @@ public class editar_salao extends AppCompatActivity {
 
         //-------- faz a busca dos dados do usuario no servidor-------
         VerificaConexao verificaConexao = new VerificaConexao();
-        if(verificaConexao.verifica(this))
+        if(verificaConexao.verifica(this)) {
+            loading.abrir("Aguarde... Carregando dados !!!");
             pegarSalao(IdUsuario);
+        }
         else {
             loading.fechar();
             Toast.makeText(editar_salao.this, "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
@@ -251,11 +250,29 @@ public class editar_salao extends AppCompatActivity {
         return true;
     }
 
+
+    public boolean  verificaTelefone(String telefone){
+        boolean verifica = false;
+        String num = "";
+        String num2 = "";
+        num = telefone.replace("(" , " ");
+        num = num.replace(")" , " ");
+        num2 = num.replaceAll(" ","");
+
+        if(num2.length()>= 8 )
+            verifica = true;
+        else
+            verifica = false;
+
+        return  verifica;
+    }
+
     public boolean verificaCampos()
     {
         Boolean status = false;
         String VnomeSalao =NomeSalao.getEditText().getText().toString();
         String VTelefone1Salao = Telefone1Salao.getEditText().getText().toString();
+        String VTelefone2Salao = Telefone2Salao.getEditText().getText().toString();
         String VCepSalao = CepSalao.getEditText().getText().toString();
         String VEnderecoSalao = EnderecoSalao.getEditText().getText().toString();
         String VBairroSalao = BairroSalao.getEditText().getText().toString();
@@ -266,9 +283,15 @@ public class editar_salao extends AppCompatActivity {
 
 
         if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
-                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
+                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals("")&& verificaTelefone(VTelefone2Salao))
         {
-            status = true;
+            if(verificaTelefone(VTelefone1Salao))
+                status = true;
+
+            else {
+                status = false;
+                Telefone1Salao.requestFocus();
+            }
         }
         else
         {
@@ -298,6 +321,12 @@ public class editar_salao extends AppCompatActivity {
             else
             if(VEmailSalao.equals(""))
                 EmailSalao.getEditText().requestFocus();
+            else
+            if(!verificaTelefone(VTelefone1Salao))
+                Telefone1Salao.requestFocus();
+            else
+            if(!verificaTelefone(VTelefone2Salao))
+                Telefone2Salao.requestFocus();
         }
         return  status;
     }
@@ -435,16 +464,23 @@ public class editar_salao extends AppCompatActivity {
                         NumeroSalao.getEditText().setText(String.valueOf(salao.getNumero()));
                         SobreSalao.getEditText().setText(salao.getSobre());
                         EmailSalao.getEditText().setText(salao.getEmail());
-                        HoraIniSalao.getEditText().setText(salao.getHoraIni());
-                        HoraFimSalao.getEditText().setText(salao.getHoraFim());
                         CidadeSalao.getEditText().setText(salao.getCidade());
                         CnpjSalao.getEditText().setText(salao.getCnpj());
                         ComplementoSalao.getEditText().setText(salao.getComplemento());
 
-                        if(salao.getAgendamento() == 1)
+                        if(salao.getAgendamento() == 1) {
                             agendar.setChecked(true);
-                        else
+                            configuraAgenda.setEnabled(true);
+                            configuraAgenda.setClickable(true);
+                            configuraAgenda.setAlpha(1);
+                        }
+                        else {
                             agendar.setChecked(false);
+                            configuraAgenda.setEnabled(false);
+                            configuraAgenda.setAlpha(.4f);
+                            configuraAgenda.setClickable(false);
+                        }
+
 
                         for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
                         {
@@ -528,8 +564,7 @@ public class editar_salao extends AppCompatActivity {
             RequestBody estadoSalao = RequestBody.create(MediaType.parse("text/plain"), EstadoSalao.getSelectedItem().toString());
             RequestBody sobreSalao = RequestBody.create(MediaType.parse("text/plain"), SobreSalao.getEditText().getText().toString());
             RequestBody emailSalao = RequestBody.create(MediaType.parse("text/plain"), EmailSalao.getEditText().getText().toString());
-            RequestBody horaIniSalao = RequestBody.create(MediaType.parse("text/plain"), HoraIniSalao.getEditText().getText().toString());
-            RequestBody horaFimSalao = RequestBody.create(MediaType.parse("text/plain"), HoraFimSalao.getEditText().getText().toString());
+
             RequestBody cnpjSalao = RequestBody.create(MediaType.parse("text/plain"), CnpjSalao.getEditText().getText().toString());
             RequestBody complementoSalao = RequestBody.create(MediaType.parse("text/plain"), ComplementoSalao.getEditText().getText().toString());
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
@@ -548,7 +583,7 @@ public class editar_salao extends AppCompatActivity {
             }
 
             IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callEditarSalao = iApi.EditarSalao(converter64, mine, id_Salao, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, horaIniSalao, horaFimSalao,sobreSalao,cnpjSalao,complementoSalao,agendamento,imagemAntiga);
+            final Call<ResponseBody> callEditarSalao = iApi.EditarSalao(converter64, mine, id_Salao, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, sobreSalao,cnpjSalao,complementoSalao,agendamento,imagemAntiga);
 
             callEditarSalao.enqueue(new Callback<ResponseBody>() {
                 @Override

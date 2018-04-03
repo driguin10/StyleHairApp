@@ -135,8 +135,6 @@ public interface IApi {
                                      @Part("estado") RequestBody estado,
                                      @Part("cidade") RequestBody cidade,
                                      @Part("email") RequestBody email,
-                                     @Part("horaIni") RequestBody horaIni,
-                                     @Part("horaFim") RequestBody horaFim,
                                      @Part("sobre") RequestBody sobre,
                                      @Part("cnpj") RequestBody cnpj,
                                      @Part("agendamento") RequestBody agendamento,
@@ -162,13 +160,40 @@ public interface IApi {
                                    @Part("estado") RequestBody estado,
                                    @Part("cidade") RequestBody cidade,
                                    @Part("email") RequestBody email,
-                                   @Part("horaIni") RequestBody horaIni,
-                                   @Part("horaFim") RequestBody horaFim,
                                    @Part("sobre") RequestBody sobre,
                                    @Part("cnpj") RequestBody cnpj,
                                    @Part("complemento") RequestBody complemento,
                                    @Part("agendamento") RequestBody agendamento,
                                    @Part("imagemAntiga") RequestBody imagemAntiga);
+
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/saloes/editarHorarios/")
+    Call<ResponseBody> EditarHorarioSalao(@Part("idSalao") RequestBody idSalao,
+                                          @Part("segE") RequestBody segE,
+                                          @Part("segS") RequestBody segS,
+                                          @Part("terE") RequestBody terE,
+                                          @Part("terS") RequestBody terS,
+                                          @Part("quaE") RequestBody quaE,
+                                          @Part("quaS") RequestBody quaS,
+                                          @Part("quiE") RequestBody quiE,
+                                          @Part("quiS") RequestBody quiS,
+                                          @Part("sexE") RequestBody sexE,
+                                          @Part("sexS") RequestBody sexS,
+                                          @Part("sabE") RequestBody sabE,
+                                          @Part("sabS") RequestBody sabS,
+                                          @Part("domE") RequestBody domE,
+                                          @Part("domS") RequestBody domS);
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/saloes/editarStatus/")
+    Call<ResponseBody> EditarStatusSalao(@Part("idSalao") RequestBody idSalao,
+                                          @Part("status") RequestBody status);
+
 
     //---------------chamada para resetar login---------------------------------
     @Headers("apiKey:" + chave)
