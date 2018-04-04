@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.api;
 
 
+import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
 
@@ -186,6 +187,12 @@ public interface IApi {
                                           @Part("sabS") RequestBody sabS,
                                           @Part("domE") RequestBody domE,
                                           @Part("domS") RequestBody domS);
+
+
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/saloes/configuracoes/{id}")
+    Call<List<ConfiguracaoSalao>> getConfiguracaoSalao(@Path("id") int id);
 
 
     @Headers("apiKey:" + chave)

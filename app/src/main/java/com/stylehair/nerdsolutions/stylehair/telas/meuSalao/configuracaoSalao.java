@@ -1,26 +1,33 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
 
-import android.app.Dialog;
+
 import android.app.DialogFragment;
-import android.app.TimePickerDialog;
+
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
+
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.TimePicker;
+import android.widget.Spinner;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.api.IApi;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
+import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
 
-import java.util.Calendar;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class configuracaoSalao extends AppCompatActivity {
 
@@ -66,6 +73,15 @@ public class configuracaoSalao extends AppCompatActivity {
     TextInputLayout txtDomS;
     ToggleButton btStatusDomingo;
 
+    Spinner intervaloAgenda;
+    Spinner tempoMinimo;
+
+    Loading loading;
+    String idSalao = "34";
+
+    int qtTentativas = 3;
+    int qtTentativaRealizada = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +91,8 @@ public class configuracaoSalao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Configuração do Salão");
+
+        loading = new Loading(configuracaoSalao.this);
 
         txtSegE = (TextInputLayout) findViewById(R.id.txt_hora_segE);
         txtSegS = (TextInputLayout) findViewById(R.id.txt_hora_segS);
@@ -117,6 +135,10 @@ public class configuracaoSalao extends AppCompatActivity {
         btStatusDomingo = (ToggleButton) findViewById(R.id.bt_folga_dom);
         horaDomE = (ImageButton) findViewById(R.id.pesquisa_hora_domE);
         horaDomS = (ImageButton) findViewById(R.id.pesquisa_hora_domS);
+
+
+        intervaloAgenda = (Spinner) findViewById(R.id.spn_intervalo_agenda);
+        tempoMinimo = (Spinner) findViewById(R.id.spn_min_agenda);
 
         txtSegE.setEnabled(false);
         txtSegS.setEnabled(false);
@@ -318,7 +340,167 @@ public class configuracaoSalao extends AppCompatActivity {
                     muda(false,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
             }
         });
+
+        loading.abrir("Carregando dados.... aguarde !!");
+        pegarConfiguracao(idSalao);
     }
+
+
+
+    public void pegarConfiguracao(final String id){
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<ConfiguracaoSalao>> callBuscaConfiguracao = iApi.getConfiguracaoSalao(Integer.valueOf(id));
+        callBuscaConfiguracao.enqueue(new Callback<List<ConfiguracaoSalao>>() {
+            @Override
+            public void onResponse(Call<List<ConfiguracaoSalao>> call, Response<List<ConfiguracaoSalao>> response) {
+                loading.fechar();
+                Log.d("xex",String.valueOf(response.code()));
+                callBuscaConfiguracao.cancel();
+                switch (response.code()) {
+                    case 200:
+
+                        List<ConfiguracaoSalao> configuracoes = response.body();
+                        ConfiguracaoSalao configSalao = configuracoes.get(0);
+
+
+                        if(configSalao.getSegE()!=null && configSalao.getSegS()!=null) {
+                            muda(true, txtSegE, txtSegS, horaSegE, horaSegS, btStatusSegunda);
+                            txtSegE.getEditText().setText(configSalao.getSegE());
+                            txtSegS.getEditText().setText(configSalao.getSegS());
+                        }
+                        else
+                        {
+                            muda(false, txtSegE, txtSegS, horaSegE, horaSegS, btStatusSegunda);
+                            btStatusSegunda.setChecked(false);
+                        }
+
+                        if(configSalao.getTerE()!=null && configSalao.getTerS()!=null) {
+                            muda(true,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
+                            txtTerE.getEditText().setText(configSalao.getTerE());
+                            txtTerS.getEditText().setText(configSalao.getTerS());
+                        }
+                        else
+                        {
+                            muda(false,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
+                            btStatusTerca.setChecked(false);
+                        }
+
+
+                        if(configSalao.getQuaE()!=null && configSalao.getQuaS()!=null) {
+                            muda(true,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
+                            txtQuaE.getEditText().setText(configSalao.getQuaE());
+                            txtQuaS.getEditText().setText(configSalao.getQuaS());
+                        }
+                        else
+                        {
+                            muda(false,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
+                            btStatusQuarta.setChecked(false);
+                        }
+
+                        if(configSalao.getQuiE()!=null && configSalao.getQuiS()!=null) {
+                            muda(true,txtQuiE,txtQuiS,horaQuiE,horaQuiS,btStatusQuinta);
+                            txtQuiE.getEditText().setText(configSalao.getQuaE());
+                            txtQuiS.getEditText().setText(configSalao.getQuiS());
+                        }
+                        else
+                        {
+                            muda(false,txtQuiE,txtQuiS,horaQuiE,horaQuiS,btStatusQuinta);
+                            btStatusQuinta.setChecked(false);
+                        }
+
+                        if(configSalao.getSexE()!=null && configSalao.getSexS()!=null) {
+                            muda(true,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
+                            txtSexE.getEditText().setText(configSalao.getSexE());
+                            txtSexS.getEditText().setText(configSalao.getSexS());
+                        }
+                        else
+                        {
+                            muda(false,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
+                            btStatusSexta.setChecked(false);
+                        }
+
+
+                        if(configSalao.getSabE()!=null && configSalao.getSabS()!=null) {
+                            muda(true,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
+                            txtSabE.getEditText().setText(configSalao.getSabE());
+                            txtSabS.getEditText().setText(configSalao.getSabS());
+                        }
+                        else
+                        {
+                            muda(false,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
+                            btStatusSabado.setChecked(false);
+                        }
+
+                        if(configSalao.getDomE()!=null && configSalao.getDomS()!=null) {
+                            muda(true,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
+                            txtDomE.getEditText().setText(configSalao.getDomE());
+                            txtDomS.getEditText().setText(configSalao.getDomS());
+                        }
+                        else
+                        {
+                            muda(false,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
+                            btStatusDomingo.setChecked(false);
+                        }
+
+
+
+                       // String[] time = configSalao.getTempoReserva().split(":");
+                       // Log.d("xex",configSalao.getTempoReserva().toString());
+                       // Log.d("xex",configSalao.getTempoMinAgenda());
+
+                       /* for(int i= 0; i < intervaloAgenda.getAdapter().getCount(); i++)
+                        {
+                            if(intervaloAgenda.getAdapter().getItem(i).toString().contains(configSalao.getTempoReserva()))
+                            {
+                                intervaloAgenda.setSelection(i);
+                            }
+                        }
+
+                        for(int i= 0; i < tempoMinimo.getAdapter().getCount(); i++)
+                        {
+                            if(tempoMinimo.getAdapter().getItem(i).toString().contains(configSalao.getTempoMinAgenda()))
+                            {
+                                tempoMinimo.setSelection(i);
+                            }
+                        }*/
+
+                        break;
+
+
+                    case 400:
+                        switch (response.message())
+                        {
+                            case "01":
+                                Toast.makeText(configuracaoSalao.this, "não encontrado !!", Toast.LENGTH_LONG).show();
+                                break;
+
+                            case "02":
+                                Toast.makeText(configuracaoSalao.this, "Parametros incorretos !!", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ConfiguracaoSalao>> call, Throwable t) {
+                if (qtTentativaRealizada < qtTentativas) {
+                    qtTentativaRealizada++;
+
+                    pegarConfiguracao(idSalao);
+                }
+                else {
+                    loading.fechar();
+                    Log.d("xex","erro");
+                    Log.d("xex",t.getMessage());
+                }
+            }
+        });
+
+    }
+    //-------------------------------------------------------
 
     void muda(boolean status,TextInputLayout idtxtE,TextInputLayout idtxtS,ImageButton btE, ImageButton btS,ToggleButton btfolga)
     {
