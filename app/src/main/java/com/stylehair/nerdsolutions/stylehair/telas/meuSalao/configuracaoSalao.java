@@ -24,17 +24,47 @@ import java.util.Calendar;
 
 public class configuracaoSalao extends AppCompatActivity {
 
-     ImageButton horaSegE;
-     ImageButton horaSegS;
-     TextInputLayout txtSegE;
-     TextInputLayout txtSegS;
-     ToggleButton btStatusSegunda;
+    ImageButton horaSegE;
+    ImageButton horaSegS;
+    TextInputLayout txtSegE;
+    TextInputLayout txtSegS;
+    ToggleButton btStatusSegunda;
 
     ImageButton horaTerE;
     ImageButton horaTerS;
     TextInputLayout txtTerE;
     TextInputLayout txtTerS;
     ToggleButton btStatusTerca;
+
+    ImageButton horaQuaE;
+    ImageButton horaQuaS;
+    TextInputLayout txtQuaE;
+    TextInputLayout txtQuaS;
+    ToggleButton btStatusQuarta;
+
+    ImageButton horaQuiE;
+    ImageButton horaQuiS;
+    TextInputLayout txtQuiE;
+    TextInputLayout txtQuiS;
+    ToggleButton btStatusQuinta;
+
+    ImageButton horaSexE;
+    ImageButton horaSexS;
+    TextInputLayout txtSexE;
+    TextInputLayout txtSexS;
+    ToggleButton btStatusSexta;
+
+    ImageButton horaSabE;
+    ImageButton horaSabS;
+    TextInputLayout txtSabE;
+    TextInputLayout txtSabS;
+    ToggleButton btStatusSabado;
+
+    ImageButton horaDomE;
+    ImageButton horaDomS;
+    TextInputLayout txtDomE;
+    TextInputLayout txtDomS;
+    ToggleButton btStatusDomingo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +88,72 @@ public class configuracaoSalao extends AppCompatActivity {
         horaTerE = (ImageButton) findViewById(R.id.pesquisa_hora_terE);
         horaTerS = (ImageButton) findViewById(R.id.pesquisa_hora_terS);
 
+        txtQuaE = (TextInputLayout) findViewById(R.id.txt_hora_quaE);
+        txtQuaS = (TextInputLayout) findViewById(R.id.txt_hora_quaS);
+        btStatusQuarta = (ToggleButton) findViewById(R.id.bt_folga_qua);
+        horaQuaE = (ImageButton) findViewById(R.id.pesquisa_hora_quaE);
+        horaQuaS = (ImageButton) findViewById(R.id.pesquisa_hora_quaS);
+
+        txtQuiE = (TextInputLayout) findViewById(R.id.txt_hora_quiE);
+        txtQuiS = (TextInputLayout) findViewById(R.id.txt_hora_quiS);
+        btStatusQuinta = (ToggleButton) findViewById(R.id.bt_folga_qui);
+        horaQuiE = (ImageButton) findViewById(R.id.pesquisa_hora_quiE);
+        horaQuiS = (ImageButton) findViewById(R.id.pesquisa_hora_quiS);
+
+        txtSexE = (TextInputLayout) findViewById(R.id.txt_hora_sexE);
+        txtSexS = (TextInputLayout) findViewById(R.id.txt_hora_sexS);
+        btStatusSexta = (ToggleButton) findViewById(R.id.bt_folga_sex);
+        horaSexE = (ImageButton) findViewById(R.id.pesquisa_hora_sexE);
+        horaSexS = (ImageButton) findViewById(R.id.pesquisa_hora_sexS);
+
+        txtSabE = (TextInputLayout) findViewById(R.id.txt_hora_sabE);
+        txtSabS = (TextInputLayout) findViewById(R.id.txt_hora_sabS);
+        btStatusSabado = (ToggleButton) findViewById(R.id.bt_folga_sab);
+        horaSabE = (ImageButton) findViewById(R.id.pesquisa_hora_sabE);
+        horaSabS = (ImageButton) findViewById(R.id.pesquisa_hora_sabS);
+
+        txtDomE = (TextInputLayout) findViewById(R.id.txt_hora_domE);
+        txtDomS = (TextInputLayout) findViewById(R.id.txt_hora_domS);
+        btStatusDomingo = (ToggleButton) findViewById(R.id.bt_folga_dom);
+        horaDomE = (ImageButton) findViewById(R.id.pesquisa_hora_domE);
+        horaDomS = (ImageButton) findViewById(R.id.pesquisa_hora_domS);
+
         txtSegE.setEnabled(false);
         txtSegS.setEnabled(false);
 
         txtTerE.setEnabled(false);
         txtTerS.setEnabled(false);
 
+        txtQuaE.setEnabled(false);
+        txtQuaS.setEnabled(false);
+
+        txtQuiE.setEnabled(false);
+        txtQuiS.setEnabled(false);
+
+        txtSexE.setEnabled(false);
+        txtSexS.setEnabled(false);
+
+        txtSabE.setEnabled(false);
+        txtSabS.setEnabled(false);
+
+        txtDomE.setEnabled(false);
+        txtDomS.setEnabled(false);
+
         btStatusSegunda.setChecked(true);
         btStatusTerca.setChecked(true);
+        btStatusQuarta.setChecked(true);
+        btStatusQuinta.setChecked(true);
+        btStatusSexta.setChecked(true);
+        btStatusSabado.setChecked(true);
+        btStatusDomingo.setChecked(true);
 
         muda(true,txtSegE,txtSegS,horaSegE,horaSegS,btStatusSegunda);
         muda(true,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
+        muda(true,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
+        muda(true,txtQuiE,txtQuiS,horaQuiE,horaQuiS,btStatusQuinta);
+        muda(true,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
+        muda(true,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
+        muda(true,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
 
         horaSegE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +181,70 @@ public class configuracaoSalao extends AppCompatActivity {
             }
         });
 
+        horaQuaE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_quaE);
+            }
+        });
+        horaQuaS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_quaS);
+            }
+        });
+
+        horaQuiE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_quiE);
+            }
+        });
+        horaQuiS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_quiS);
+            }
+        });
+
+        horaSexE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_sexE);
+            }
+        });
+        horaSexS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_sexS);
+            }
+        });
+
+        horaSabE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_sabE);
+            }
+        });
+        horaSabS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_sabS);
+            }
+        });
+
+        horaDomE.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_domE);
+            }
+        });
+        horaDomS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_hora_domS);
+            }
+        });
 
 
         btStatusSegunda.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -115,6 +264,58 @@ public class configuracaoSalao extends AppCompatActivity {
                     muda(true,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
                 else
                     muda(false,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
+            }
+        });
+
+
+        btStatusQuarta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    muda(true,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
+                else
+                    muda(false,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
+            }
+        });
+
+
+        btStatusQuinta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    muda(true,txtQuiE,txtQuiS,horaQuiE,horaQuiS,btStatusQuinta);
+                else
+                    muda(false,txtQuiE,txtQuiS,horaQuiE,horaQuiS,btStatusQuinta);
+            }
+        });
+
+        btStatusSexta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    muda(true,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
+                else
+                    muda(false,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
+            }
+        });
+
+        btStatusSabado.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    muda(true,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
+                else
+                    muda(false,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
+            }
+        });
+
+        btStatusDomingo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    muda(true,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
+                else
+                    muda(false,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
             }
         });
     }
