@@ -103,7 +103,7 @@ public class editar_salao extends AppCompatActivity {
 
 
     Switch agendar;
-    Button configuraAgenda;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,35 +149,9 @@ public class editar_salao extends AppCompatActivity {
         SalvarSalao = (Button)findViewById(R.id.edt_bt_salvarSalao);
         ImagemSalao = (CircleImageView) findViewById(R.id.edt_imagemSalao);
         agendar = (Switch)findViewById(R.id.sw_agenda);
-        configuraAgenda = (Button) findViewById(R.id.bt_configura_agenda);
+
         //--------------------------------------------------------------------
 
-        configuraAgenda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(editar_salao.this,configuracaoSalao.class);
-                startActivity(intent);
-            }
-        });
-
-        agendar.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    configuraAgenda.setEnabled(true);
-                    configuraAgenda.setClickable(true);
-                    configuraAgenda.setAlpha(1);
-
-                }
-                    else {
-                    configuraAgenda.setEnabled(false);
-                    configuraAgenda.setAlpha(.4f);
-                    configuraAgenda.setClickable(false);
-                }
-
-
-            }
-        });
 
         //---------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
@@ -427,6 +401,7 @@ public class editar_salao extends AppCompatActivity {
                         ImagemSalao.setImageBitmap(image.getBitmap());
                     }
                     loading.fechar();
+
                 }
                 break;
 
@@ -468,18 +443,6 @@ public class editar_salao extends AppCompatActivity {
                         CnpjSalao.getEditText().setText(salao.getCnpj());
                         ComplementoSalao.getEditText().setText(salao.getComplemento());
 
-                        if(salao.getAgendamento() == 1) {
-                            agendar.setChecked(true);
-                            configuraAgenda.setEnabled(true);
-                            configuraAgenda.setClickable(true);
-                            configuraAgenda.setAlpha(1);
-                        }
-                        else {
-                            agendar.setChecked(false);
-                            configuraAgenda.setEnabled(false);
-                            configuraAgenda.setAlpha(.4f);
-                            configuraAgenda.setClickable(false);
-                        }
 
 
                         for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
@@ -578,9 +541,14 @@ public class editar_salao extends AppCompatActivity {
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("text/plain"), tipoImagem);
                 converter64 = RequestBody.create(MediaType.parse("text/plain"), img64);
+
             } else {
                 converter64 = RequestBody.create(MediaType.parse("text/plain"), LinkImagem);
+
             }
+
+
+
 
             IApi iApi = IApi.retrofit.create(IApi.class);
             final Call<ResponseBody> callEditarSalao = iApi.EditarSalao(converter64, mine, id_Salao, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, sobreSalao,cnpjSalao,complementoSalao,agendamento,imagemAntiga);

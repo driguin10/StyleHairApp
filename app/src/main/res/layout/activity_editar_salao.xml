@@ -342,17 +342,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                       <Button
-                           android:id="@+id/bt_configura_agenda"
-                           android:layout_width="match_parent"
-                           android:layout_height="match_parent"
-                           android:background="@drawable/bt_cor_toolbar"
-                           android:text="Configurar"
-                           android:textColor="@color/corTextos"
-                           android:layout_marginLeft="5dp"
-                           android:layout_marginRight="5dp"
-                           android:layout_marginBottom="5dp"
-                           />
+
                     </LinearLayout>
 
 

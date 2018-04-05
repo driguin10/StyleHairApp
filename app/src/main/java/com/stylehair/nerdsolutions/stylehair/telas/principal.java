@@ -454,12 +454,14 @@ public class principal extends AppCompatActivity
                     if( id_salao > -1)//gerente
                     {
                         e.putString("typeUserApp","GERENTE");
+                        e.putString("idSalao",String.valueOf(id_salao));
                         atualizaTela("gerente");
                     }
                     else
                     if(id_funcionario > -1)//funcionario
                     {
                         e.putString("typeUserApp","FUNCIONARIO");
+                        e.putString("idFuncionario",String.valueOf(id_funcionario));
                         atualizaTela("funcionario");
                     }
                     else

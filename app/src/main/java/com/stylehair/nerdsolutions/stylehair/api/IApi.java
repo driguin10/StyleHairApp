@@ -192,7 +192,7 @@ public interface IApi {
 
     @Headers("apiKey:" + chave)
     @GET("v1/saloes/configuracoes/{id}")
-    Call<List<ConfiguracaoSalao>> getConfiguracaoSalao(@Path("id") int id);
+    Call<ConfiguracaoSalao> getConfiguracaoSalao(@Path("id") int id);
 
 
     @Headers("apiKey:" + chave)
