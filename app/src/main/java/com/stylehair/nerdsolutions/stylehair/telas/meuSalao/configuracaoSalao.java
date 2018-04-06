@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -22,6 +23,7 @@ import android.widget.ToggleButton;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
 import com.stylehair.nerdsolutions.stylehair.classes.ConfigHorarioSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.ConfigSalao;
@@ -30,6 +32,9 @@ import com.stylehair.nerdsolutions.stylehair.classes.Login;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,9 +89,14 @@ public class configuracaoSalao extends AppCompatActivity {
     Loading loading;
     String idSalao;
 
+    Button salvarConfig;
+
 
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
+
+    int qtTentativasSalvar = 3;
+    int qtTentativaRealizadaSalvar = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +109,7 @@ public class configuracaoSalao extends AppCompatActivity {
         getSupportActionBar().setTitle("Configuração do Salão");
 
         loading = new Loading(configuracaoSalao.this);
-
+        salvarConfig = (Button) findViewById(R.id.bt_salvarConfiguracao);
         txtSegE = (TextInputLayout) findViewById(R.id.txt_hora_segE);
         txtSegS = (TextInputLayout) findViewById(R.id.txt_hora_segS);
         btStatusSegunda = (ToggleButton) findViewById(R.id.bt_folga_seg);
@@ -187,12 +197,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_segE);
+                txtSegE.getEditText().setError(null);
             }
         });
+
         horaSegS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_segS);
+                txtSegS.getEditText().setError(null);
             }
         });
 
@@ -200,12 +213,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_terE);
+                txtTerE.getEditText().setError(null);
             }
         });
+
         horaTerS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_terS);
+                txtTerS.getEditText().setError(null);
             }
         });
 
@@ -213,12 +229,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_quaE);
+                txtQuaE.getEditText().setError(null);
             }
         });
+
         horaQuaS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_quaS);
+                txtQuaS.getEditText().setError(null);
             }
         });
 
@@ -226,12 +245,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_quiE);
+                txtQuiE.getEditText().setError(null);
             }
         });
+
         horaQuiS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_quiS);
+                txtQuiS.getEditText().setError(null);
             }
         });
 
@@ -239,12 +261,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_sexE);
+                txtSexE.getEditText().setError(null);
             }
         });
+
         horaSexS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_sexS);
+                txtSexS.getEditText().setError(null);
             }
         });
 
@@ -252,12 +277,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_sabE);
+                txtSabE.getEditText().setError(null);
             }
         });
+
         horaSabS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_sabS);
+                txtSabS.getEditText().setError(null);
             }
         });
 
@@ -265,12 +293,15 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_domE);
+                txtDomE.getEditText().setError(null);
             }
         });
+
         horaDomS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimePickerDialog(v,R.id.txt_hora_domS);
+                txtDomS.getEditText().setError(null);
             }
         });
 
@@ -347,14 +378,272 @@ public class configuracaoSalao extends AppCompatActivity {
             }
         });
 
+        salvarConfig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(verificaCampos()) {
+                    loading.abrir("Aguarde... enviando dados!!!");
+                    editarConfiguracao(idSalao);
+                }
+                else
+                {
+                    Toast.makeText(configuracaoSalao.this,"Preencha os campos corretamente!!",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         //-------pega o id do login para fazer a consulta---------------
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         idSalao = getSharedPreferences.getString("idSalao", "-1");
         //---------------------------------------------------------------
-        loading.abrir("Carregando dados.... aguarde !!");
-        pegarConfiguracao(idSalao);
+        VerificaConexao verificaConexao = new VerificaConexao();
+        if(verificaConexao.verifica(configuracaoSalao.this)) {
+            loading.abrir("Carregando dados.... aguarde !!");
+            pegarConfiguracao(idSalao);
+        }
+        else
+        {
+            Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
+
+public void editarConfiguracao(String id_Salao)
+{
+
+   String[] intervaloA =  intervaloAgenda.getSelectedItem().toString().split(" ");
+   String tempoIntervalo = "";
+   if(intervaloA[1].equals("hora"))
+   {
+       tempoIntervalo = intervaloA[0] +":00";
+   }
+   else
+   {
+       tempoIntervalo = "00:"+intervaloA[0];
+   }
+
+
+    String[] tempoMinA =  tempoMinimo.getSelectedItem().toString().split(" ");
+    String tempoM = "";
+    if(tempoMinA[1].equals("hora"))
+    {
+        tempoM = tempoMinA[0] +":00";
+    }
+    else
+    {
+        tempoM = "00:"+tempoMinA[0];
+    }
+
+    RequestBody IdSalao = RequestBody.create(MediaType.parse("text/plain"),id_Salao);
+
+    RequestBody intervalo_Agenda = RequestBody.create(MediaType.parse("text/plain"),tempoIntervalo);
+    RequestBody tempo_Minimo = RequestBody.create(MediaType.parse("text/plain"),tempoM);
+
+    RequestBody SegE = RequestBody.create(MediaType.parse("text/plain"),txtSegE.getEditText().getText().toString());
+    RequestBody SegS = RequestBody.create(MediaType.parse("text/plain"),txtSegS.getEditText().getText().toString());
+
+    RequestBody TerE = RequestBody.create(MediaType.parse("text/plain"),txtTerE.getEditText().getText().toString());
+    RequestBody TerS = RequestBody.create(MediaType.parse("text/plain"),txtTerS.getEditText().getText().toString());
+
+    RequestBody QuaE = RequestBody.create(MediaType.parse("text/plain"),txtQuaE.getEditText().getText().toString());
+    RequestBody QuaS = RequestBody.create(MediaType.parse("text/plain"),txtQuaS.getEditText().getText().toString());
+
+    RequestBody QuiE = RequestBody.create(MediaType.parse("text/plain"),txtQuiE.getEditText().getText().toString());
+    RequestBody QuiS = RequestBody.create(MediaType.parse("text/plain"),txtQuiS.getEditText().getText().toString());
+
+    RequestBody SexE = RequestBody.create(MediaType.parse("text/plain"),txtSexE.getEditText().getText().toString());
+    RequestBody SexS = RequestBody.create(MediaType.parse("text/plain"),txtSexS.getEditText().getText().toString());
+
+    RequestBody SabE = RequestBody.create(MediaType.parse("text/plain"),txtSabE.getEditText().getText().toString());
+    RequestBody SabS = RequestBody.create(MediaType.parse("text/plain"),txtSabS.getEditText().getText().toString());
+
+    RequestBody DomE = RequestBody.create(MediaType.parse("text/plain"),txtDomE.getEditText().getText().toString());
+    RequestBody DomS = RequestBody.create(MediaType.parse("text/plain"),txtDomS.getEditText().getText().toString());
+
+    IApi iApi = IApi.retrofit.create(IApi.class);
+    final Call<ResponseBody> callEditaConfiguracao = iApi.EditarConfiguracoesSalao(IdSalao,intervalo_Agenda,tempo_Minimo,SegE,SegS,TerE,TerS,QuaE,QuaS,QuiE,QuiS,SexE,SexS,SabE,SabS,DomE,DomS);
+    callEditaConfiguracao.enqueue(new Callback<ResponseBody>() {
+        @Override
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            loading.fechar();
+            callEditaConfiguracao.cancel();
+            switch (response.code()){
+                case 204:
+                    Toast.makeText(configuracaoSalao.this,"Editado com sucesso !!",Toast.LENGTH_LONG).show();
+                    break;
+
+                case 400:
+                    switch (response.message())
+                    {
+                        case "02":
+                            Toast.makeText(configuracaoSalao.this,"Parametros incorretos !!",Toast.LENGTH_LONG).show();
+                            break;
+
+                        case "04":
+                            Toast.makeText(configuracaoSalao.this,"Erro ao editar !!",Toast.LENGTH_LONG).show();
+                            break;
+                    }
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable t) {
+            if (qtTentativaRealizadaSalvar < qtTentativasSalvar) {
+                qtTentativaRealizadaSalvar++;
+
+                editarConfiguracao(idSalao);
+            }
+            else {
+                loading.fechar();
+            }
+        }
+    });
+}
+
+
+
+public boolean verificaCampos(){
+      boolean status = true;
+
+      if(txtSegE.isClickable())
+      {
+         if(txtSegE.getEditText().getText().toString().equals("")) {
+             txtSegE.getEditText().setError("*");
+             status = false;
+         }
+      }
+
+      if(txtSegS.isClickable())
+      {
+          if(txtSegS.getEditText().getText().toString().equals("")) {
+              txtSegS.getEditText().setError("*");
+              status = false;
+          }
+
+      }
+
+        if(txtTerE.isClickable())
+        {
+            if(txtTerE.getEditText().getText().toString().equals("")) {
+                txtTerE.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+        if(txtTerS.isClickable())
+        {
+            if(txtTerS.getEditText().getText().toString().equals("")) {
+                txtTerS.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+        if(txtQuaE.isClickable())
+        {
+            if(txtQuaE.getEditText().getText().toString().equals("")) {
+                txtQuaE.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+        if(txtQuaS.isClickable())
+        {
+            if(txtQuaS.getEditText().getText().toString().equals("")) {
+                txtQuaS.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+        if(txtQuiE.isClickable())
+        {
+            if(txtQuiE.getEditText().getText().toString().equals("")) {
+                txtQuiE.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+        if(txtQuiS.isClickable())
+        {
+            if(txtQuiS.getEditText().getText().toString().equals("")) {
+                txtQuiS.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+        if(txtSexE.isClickable())
+        {
+            if(txtSexE.getEditText().getText().toString().equals("")) {
+                txtSexE.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+        if(txtSexS.isClickable())
+        {
+            if(txtSexS.getEditText().getText().toString().equals("")) {
+                txtSexS.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+        if(txtSabE.isClickable())
+        {
+            if(txtSabE.getEditText().getText().toString().equals("")) {
+                txtSabE.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+        if(txtSabS.isClickable())
+        {
+            if(txtSabS.getEditText().getText().toString().equals("")) {
+                txtSabS.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+        if(txtDomE.isClickable())
+        {
+            if(txtDomE.getEditText().getText().toString().equals("")) {
+                txtDomE.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+        if(txtDomS.isClickable())
+        {
+            if(txtDomS.getEditText().getText().toString().equals("")) {
+                txtDomS.getEditText().setError("*");
+                status = false;
+            }
+
+        }
+
+
+      return status;
+}
+
 
 
 
@@ -366,6 +655,7 @@ public class configuracaoSalao extends AppCompatActivity {
             @Override
             public void onResponse(Call<ConfiguracaoSalao>call, Response<ConfiguracaoSalao> response) {
                 loading.fechar();
+                qtTentativaRealizada = 0 ;
                 Log.d("xex",String.valueOf(response.code()));
                 callBuscaConfiguracao.cancel();
                 switch (response.code()) {
@@ -397,10 +687,30 @@ public class configuracaoSalao extends AppCompatActivity {
                             configHorarioSalao.setSabS(configH.getSabS());
                             configHorarioSalao.setDomE(configH.getDomE());
                             configHorarioSalao.setDomS(configH.getDomS());
+                            configHorarioSalao.setAgendamento(configH.getAgendamento());
                         }
 
 
+                        if(configHorarioSalao.getAgendamento() == 1)
+                        {
+                            intervaloAgenda.setClickable(true);
+                            intervaloAgenda.setEnabled(true);
+                            intervaloAgenda.setAlpha(.9f);
 
+                            tempoMinimo.setAlpha(.9f);
+                            tempoMinimo.setClickable(true);
+                            tempoMinimo.setEnabled(true);
+                        }
+                        else
+                        {
+                            intervaloAgenda.setClickable(false);
+                            intervaloAgenda.setEnabled(false);
+                            intervaloAgenda.setAlpha(.3f);
+
+                            tempoMinimo.setAlpha(.3f);
+                            tempoMinimo.setClickable(false);
+                            tempoMinimo.setEnabled(false);
+                        }
 
                         if(configHorarioSalao.getSegE()!=null && configHorarioSalao.getSegS()!=null) {
                             muda(true, txtSegE, txtSegS, horaSegE, horaSegS, btStatusSegunda);
@@ -573,6 +883,8 @@ public class configuracaoSalao extends AppCompatActivity {
             idtxtE.setAlpha(.3f);
             idtxtS.setClickable(false);
             idtxtS.setAlpha(.3f);
+            idtxtE.getEditText().setText("");
+            idtxtS.getEditText().setText("");
             btE.setEnabled(false);
             btE.setClickable(false);
             btE.setAlpha(.3f);

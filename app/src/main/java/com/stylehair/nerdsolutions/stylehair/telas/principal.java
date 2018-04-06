@@ -12,6 +12,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.View;
@@ -192,6 +193,7 @@ public class principal extends AppCompatActivity
             Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
            // atualizaTela(typeUser);
             logout.deslogar(this,true);
+
         }
 
 
@@ -420,6 +422,9 @@ public class principal extends AppCompatActivity
         callTipos.enqueue(new Callback<TipoUsuario>() {
             @Override
             public void onResponse(Call<TipoUsuario> call, Response<TipoUsuario> response) {
+
+
+
                 callTipos.cancel();
                 qtTentativaRealizada = 0;
                 loading.fechar();
@@ -442,9 +447,7 @@ public class principal extends AppCompatActivity
                         id_suario = tipo.getIdUsuario();
                     }
 
-                    //Log.d("xex","usuario = "+String.valueOf(id_suario));
-                    //Log.d("xex","funcionario = "+String.valueOf(id_funcionario));
-                    //Log.d("xex","salao = "+String.valueOf(id_salao));
+
 
                     SharedPreferences getSharedPreferencesL = PreferenceManager
                             .getDefaultSharedPreferences(getBaseContext());

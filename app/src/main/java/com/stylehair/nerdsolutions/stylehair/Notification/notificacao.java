@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.Adaptador;
+import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.Adaptador_notify;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
@@ -61,7 +61,7 @@ public class notificacao extends AppCompatActivity  {
             }while(cursor.moveToNext());
         }
         cursor.close();
-        lista.setAdapter(new Adaptador(conteudo_menssagem));
+        lista.setAdapter(new Adaptador_notify(conteudo_menssagem));
         lista.setLayoutManager(layout);
 
 
@@ -69,10 +69,6 @@ public class notificacao extends AppCompatActivity  {
 
     }
 
-    public void  teste()
-    {
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar

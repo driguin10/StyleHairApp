@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp"
+    android:id="@+id/cardsFunc">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/layoutop">
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_funcionario"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                app:civ_border_width="0dp"
+                app:civ_border_color="#fffefe"
+                android:src="@drawable/img_padrao_user"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nome_funcionario"
+                android:layout_toRightOf="@+id/img_funcionario"
+                android:layout_alignParentTop="true"
+                android:textSize="18sp"
+                android:text="Nome Funcionario do Salão "
+                android:layout_marginTop="15dp"
+                android:textColor="#050505"/>
+
+        </RelativeLayout>
+
+
+
+
+
+
+</android.support.v7.widget.CardView>

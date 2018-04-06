@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 
 import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
 
@@ -9,6 +10,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -171,22 +173,24 @@ public interface IApi {
 
     @Headers("apiKey:" + chave)
     @Multipart
-    @POST("v1/saloes/editarHorarios/")
-    Call<ResponseBody> EditarHorarioSalao(@Part("idSalao") RequestBody idSalao,
-                                          @Part("segE") RequestBody segE,
-                                          @Part("segS") RequestBody segS,
-                                          @Part("terE") RequestBody terE,
-                                          @Part("terS") RequestBody terS,
-                                          @Part("quaE") RequestBody quaE,
-                                          @Part("quaS") RequestBody quaS,
-                                          @Part("quiE") RequestBody quiE,
-                                          @Part("quiS") RequestBody quiS,
-                                          @Part("sexE") RequestBody sexE,
-                                          @Part("sexS") RequestBody sexS,
-                                          @Part("sabE") RequestBody sabE,
-                                          @Part("sabS") RequestBody sabS,
-                                          @Part("domE") RequestBody domE,
-                                          @Part("domS") RequestBody domS);
+    @POST("v1/saloes/configuracoes/")
+    Call<ResponseBody> EditarConfiguracoesSalao(@Part("idSalao") RequestBody idSalao,
+                                                @Part("tempoReserva") RequestBody tempoReserva,
+                                                @Part("tempoMinReserva") RequestBody tempoMinReserva,
+                                                @Part("segE") RequestBody segE,
+                                                @Part("segS") RequestBody segS,
+                                                @Part("terE") RequestBody terE,
+                                                @Part("terS") RequestBody terS,
+                                                @Part("quaE") RequestBody quaE,
+                                                @Part("quaS") RequestBody quaS,
+                                                @Part("quiE") RequestBody quiE,
+                                                @Part("quiS") RequestBody quiS,
+                                                @Part("sexE") RequestBody sexE,
+                                                @Part("sexS") RequestBody sexS,
+                                                @Part("sabE") RequestBody sabE,
+                                                @Part("sabS") RequestBody sabS,
+                                                @Part("domE") RequestBody domE,
+                                                @Part("domS") RequestBody domS);
 
 
 
@@ -214,6 +218,11 @@ public interface IApi {
     @GET("v1/usuarios/tipos/{id}")
     Call<TipoUsuario> tipoUsuario(@Path("id") int id);
     //-----------------------------------------------------------------------------
+
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/funcionarios/{id}")
+    Call <GetUsuarioFuncionario> buscaFuncionario(@Path("id") int id);
 
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()

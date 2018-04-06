@@ -444,6 +444,16 @@ public class editar_salao extends AppCompatActivity {
                         ComplementoSalao.getEditText().setText(salao.getComplemento());
 
 
+                        if(salao.getAgendamento() == 1)
+                        {
+                            agendar.setChecked(true);
+                        }
+                        else
+                        {
+                            agendar.setChecked(false);
+                        }
+
+
 
                         for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
                         {

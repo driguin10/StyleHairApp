@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".telas.meuSalao.configuracaoSalao"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".telas.meuSalao.funcionario.fragment_horarios_funcionario">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_config_salao"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/corToobar"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/corTextos"/>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,83 +18,6 @@
             android:orientation="vertical"
             android:paddingTop="2dp"
             android:paddingBottom="10dp">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                app:cardCornerRadius="7dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-                    <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Agenda"
-                    android:textAlignment="center"
-                    android:textColor="@color/corToobar"/>
-                <LinearLayout
-                    android:id="@+id/linear_spiners"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="20dp">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Intervalo"
-                            android:textAlignment="center" />
-
-                        <Spinner
-                            android:id="@+id/spn_intervalo_agenda"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="20dp"
-                            android:textAlignment="center"
-                            android:backgroundTint="#da1818"
-                            android:entries="@array/tempo_agendamento"
-                            android:popupBackground="#f3f9f7f7"
-                            android:prompt="@string/sexo_prompt"
-                            android:theme="@style/estiloSpinner" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Tempo minimo"
-                            android:textAlignment="center"/>
-                        <Spinner
-                            android:id="@+id/spn_min_agenda"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginTop="20dp"
-                            android:backgroundTint="#da1818"
-                            android:entries="@array/tempo_min_agendamento"
-                            android:popupBackground="#f3f9f7f7"
-                            android:prompt="@string/sexo_prompt"
-                            android:theme="@style/estiloSpinner"
-                            android:textAlignment="center"/>
-
-                    </LinearLayout>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-
-
-
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -955,9 +870,4 @@
 
     </ScrollView>
 
-
-
-
-
-
-</LinearLayout>
+</FrameLayout>

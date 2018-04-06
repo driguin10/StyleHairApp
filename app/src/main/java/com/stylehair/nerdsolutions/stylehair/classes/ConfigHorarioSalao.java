@@ -16,6 +16,7 @@ public class ConfigHorarioSalao {
     private String sabS;
     private String domE;
     private String domS;
+    private int agendamento;
 
     public String getSegE() {
         return segE;
@@ -127,5 +128,13 @@ public class ConfigHorarioSalao {
 
     public void setDomS(String domS) {
         this.domS = domS;
+    }
+
+    public int getAgendamento() {
+        return agendamento;
+    }
+
+    public void setAgendamento(int agendamento) {
+        this.agendamento = agendamento;
     }
 }

@@ -14,12 +14,12 @@ import java.util.List;
  * Created by dherrera on 15/03/2017.
  */
 
-public class Adaptador extends RecyclerView.Adapter<viewHolderNotification> {
+public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotification> {
 
     List<menssagem> ListaObjeto;
 
 
-    public Adaptador(List<menssagem> listaObjeto) {
+    public Adaptador_notify(List<menssagem> listaObjeto) {
         ListaObjeto = listaObjeto;
     }
 

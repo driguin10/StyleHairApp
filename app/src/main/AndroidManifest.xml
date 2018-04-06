@@ -53,19 +53,22 @@
             android:name=".telas.minhaConta.minhaConta"
             android:label="@string/title_activity_minha_conta"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".telas.cadastroSalao"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.cadastroSalao"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".telas.configuracaoApp" />
         <activity android:name=".telas.saloesFavoritos" />
         <activity android:name=".telas.minha_agenda" />
         <activity android:name=".telas.meuSalao.meuSalao" />
         <activity android:name=".telas.carregando" />
-        <activity android:name=".telas.meuSalao.editar_salao"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".telas.meuSalao.funcionarios" />
-        <activity android:name=".telas.meuSalao.configuracaoSalao"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+        <activity
+            android:name=".telas.meuSalao.editar_salao"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".telas.meuSalao.funcionario.funcionarios" />
+        <activity
+            android:name=".telas.meuSalao.configuracaoSalao"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".telas.meuSalao.funcionario.ver_funcionario"></activity>
     </application>
 
 </manifest>

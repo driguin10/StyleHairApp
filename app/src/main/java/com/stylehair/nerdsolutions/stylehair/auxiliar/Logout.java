@@ -18,12 +18,13 @@ public class Logout {
         SharedPreferences.Editor e = getSharedPreferencesL.edit();
         e.clear();
         e.apply();
+        e.commit();
         e.putBoolean("firstStart",false);
-        e.putBoolean("logado", false);
-        e.putInt("idLogin",-1);
-        e.putString("typeUserApp","");
-        e.putString("nomeUser","");
-        e.putString("linkImagem","");
+        //e.putBoolean("logado", false);
+       // e.putInt("idLogin",-1);
+       // e.putString("typeUserApp","");
+        //e.putString("nomeUser","");
+       // e.putString("linkImagem","");
         e.apply();
         e.commit();
         Intent intent = new Intent(activity,logar.class);
