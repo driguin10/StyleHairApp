@@ -64,11 +64,13 @@
         <activity
             android:name=".telas.meuSalao.editar_salao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.funcionario.funcionarios" />
+        <activity android:name=".telas.meuSalao.funcionario.funcionarios"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".telas.meuSalao.configuracaoSalao"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity android:name=".telas.meuSalao.funcionario.ver_funcionario"></activity>
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".telas.meuSalao.funcionario.ver_funcionario"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

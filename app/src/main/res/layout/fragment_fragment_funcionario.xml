@@ -42,9 +42,13 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:theme="@style/estiloImputCad"
-                android:hint="Nome *"
+                android:hint="Nome"
+
+
                 android:textColorHint="#000000">
                 <EditText
+                    android:clickable="false"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -63,6 +67,8 @@
                 android:hint="Apelido"
                 android:textColorHint="#000000">
                 <EditText
+                    android:clickable="false"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -77,20 +83,24 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
-                <Spinner
-                    android:id="@+id/spn_usrSexo"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/txt_usrsexo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-
-                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-
-                    android:backgroundTint="#da1818"
-                    android:entries="@array/sexo_values"
-                    android:popupBackground="#f3f9f7f7"
-                    android:prompt="@string/sexo_prompt"
-                    android:theme="@style/estiloSpinner" />
+                    android:layout_marginRight="8dp"
+                    android:theme="@style/estiloImputCad"
+                    android:hint="Sexo"
+                    android:textColorHint="#000000">
+                    <EditText
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:inputType="number"/>
+                </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/txt_nascimento"
@@ -102,6 +112,8 @@
                     android:textColorHint="#000000"
                     >
                     <EditText
+                        android:clickable="false"
+                        android:enabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
@@ -127,9 +139,11 @@
                     android:layout_weight="1"
                     android:layout_marginRight="8dp"
                     android:theme="@style/estiloImputCad"
-                    android:hint="Telefone *"
+                    android:hint="Telefone"
                     android:textColorHint="#000000">
                     <EditText
+                        android:clickable="false"
+                        android:enabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
@@ -147,6 +161,8 @@
                     android:hint="Cep"
                     android:textColorHint="#000000">
                     <EditText
+                        android:clickable="false"
+                        android:enabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
@@ -165,6 +181,8 @@
                 android:hint="Endereço"
                 android:textColorHint="#000000">
                 <EditText
+                    android:clickable="false"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -181,6 +199,8 @@
                 android:hint="Bairro"
                 android:textColorHint="#000000">
                 <EditText
+                    android:clickable="false"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -208,6 +228,8 @@
                     android:hint="Número"
                     android:textColorHint="#000000">
                     <EditText
+                        android:clickable="false"
+                        android:enabled="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
@@ -215,18 +237,24 @@
                 </android.support.design.widget.TextInputLayout>
 
 
-                <Spinner
-                    android:id="@+id/Sp_usrEstado"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/txt_usrEstado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-
+                    android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:backgroundTint="#fc0303"
-                    android:entries="@array/estados_values"
-                    android:popupBackground="#f3f9f7f7"
-
-                    android:theme="@style/estiloSpinner" />
+                    android:layout_marginRight="8dp"
+                    android:theme="@style/estiloImputCad"
+                    android:hint="Estado"
+                    android:textColorHint="#000000">
+                    <EditText
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000000"
+                        android:inputType="number"/>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
 
@@ -238,9 +266,11 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:theme="@style/estiloImputCad"
-                android:hint="Cidade *"
+                android:hint="Cidade"
                 android:textColorHint="#000000">
                 <EditText
+                    android:clickable="false"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
@@ -262,6 +292,8 @@
                 app:counterEnabled="true"
                 app:counterMaxLength="140">
                 <EditText
+                    android:clickable="false"
+                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"

@@ -34,24 +34,28 @@ public class ver_funcionario extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsFuncionario);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_funcionario));
+        tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_time));
+        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
+
 
         Bundle bundle = getIntent().getExtras();
 
         if(bundle!=null)
         {
             String id = bundle.getString("idUsuario");
-
-            Log.d("xex",id);
         }
     }
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new fragment_funcionario(), "funcionario");
-        adapter.addFragment(new fragment_horarios_funcionario(), "Horarios");
+        adapter.addFragment(new fragment_funcionario(), "");
+        adapter.addFragment(new fragment_horarios_funcionario(), "");
+        adapter.addFragment(new fragment_servicos_funcionarios(), "");
 
 
         viewPager.setAdapter(adapter);
+
     }
 
     @Override
