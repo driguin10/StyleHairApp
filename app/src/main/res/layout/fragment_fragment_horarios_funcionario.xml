@@ -53,7 +53,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_segE"
+                                android:id="@+id/txt_ver_hora_segE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -68,7 +68,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_segE"
+                                android:id="@+id/ver_pesquisa_hora_segE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="5dp"
@@ -89,7 +89,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_segS"
+                                android:id="@+id/txt_ver_hora_segS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -104,7 +104,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_segS"
+                                android:id="@+id/ver_pesquisa_hora_segS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_marginTop="5dp"
@@ -124,11 +124,11 @@
                         android:gravity="center"
                         android:orientation="vertical">
                         <ToggleButton
-                            android:id="@+id/bt_folga_seg"
+                            android:id="@+id/ver_bt_folga_seg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textOn="Aberto"
-                            android:textOff="Fechado"
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA"
                             android:textColor="@color/corTextos"
                             android:background="@drawable/bt_folga_off"
                             />
@@ -171,7 +171,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_terE"
+                                android:id="@+id/txt_ver_hora_terE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -187,7 +187,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_terE"
+                                android:id="@+id/ver_pesquisa_hora_terE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -208,7 +208,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_terS"
+                                android:id="@+id/txt_ver_hora_terS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -224,7 +224,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_terS"
+                                android:id="@+id/ver_pesquisa_hora_terS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -246,13 +246,13 @@
                         android:orientation="vertical">
 
                         <ToggleButton
-                            android:id="@+id/bt_folga_ter"
+                            android:id="@+id/ver_bt_folga_ter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bt_folga_off"
                             android:textColor="@color/corTextos"
-                            android:textOff="Fechado"
-                            android:textOn="Aberto" />
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -292,7 +292,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_quaE"
+                                android:id="@+id/txt_ver_hora_quaE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -308,7 +308,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_quaE"
+                                android:id="@+id/ver_pesquisa_hora_quaE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -329,7 +329,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_quaS"
+                                android:id="@+id/txt_ver_hora_quaS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -345,7 +345,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_quaS"
+                                android:id="@+id/ver_pesquisa_hora_quaS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -367,13 +367,13 @@
                         android:orientation="vertical">
 
                         <ToggleButton
-                            android:id="@+id/bt_folga_qua"
+                            android:id="@+id/ver_bt_folga_qua"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bt_folga_off"
                             android:textColor="@color/corTextos"
-                            android:textOff="Fechado"
-                            android:textOn="Aberto" />
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -413,7 +413,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_quiE"
+                                android:id="@+id/txt_ver_hora_quiE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -429,7 +429,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_quiE"
+                                android:id="@+id/ver_pesquisa_hora_quiE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -450,7 +450,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_quiS"
+                                android:id="@+id/txt_ver_hora_quiS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -466,7 +466,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_quiS"
+                                android:id="@+id/ver_pesquisa_hora_quiS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -488,13 +488,13 @@
                         android:orientation="vertical">
 
                         <ToggleButton
-                            android:id="@+id/bt_folga_qui"
+                            android:id="@+id/ver_bt_folga_qui"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bt_folga_off"
                             android:textColor="@color/corTextos"
-                            android:textOff="Fechado"
-                            android:textOn="Aberto" />
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -534,7 +534,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_sexE"
+                                android:id="@+id/txt_ver_hora_sexE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -550,7 +550,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_sexE"
+                                android:id="@+id/ver_pesquisa_hora_sexE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -569,7 +569,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_sexS"
+                                android:id="@+id/txt_ver_hora_sexS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -585,7 +585,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_sexS"
+                                android:id="@+id/ver_pesquisa_hora_sexS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -607,13 +607,13 @@
                         android:orientation="vertical">
 
                         <ToggleButton
-                            android:id="@+id/bt_folga_sex"
+                            android:id="@+id/ver_bt_folga_sex"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bt_folga_off"
                             android:textColor="@color/corTextos"
-                            android:textOff="Fechado"
-                            android:textOn="Aberto" />
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -653,7 +653,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_sabE"
+                                android:id="@+id/txt_ver_hora_sabE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -669,7 +669,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_sabE"
+                                android:id="@+id/ver_pesquisa_hora_sabE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -688,7 +688,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_sabS"
+                                android:id="@+id/txt_ver_hora_sabS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -704,7 +704,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_sabS"
+                                android:id="@+id/ver_pesquisa_hora_sabS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -726,13 +726,13 @@
                         android:orientation="vertical">
 
                         <ToggleButton
-                            android:id="@+id/bt_folga_sab"
+                            android:id="@+id/ver_bt_folga_sab"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bt_folga_off"
                             android:textColor="@color/corTextos"
-                            android:textOff="Fechado"
-                            android:textOn="Aberto" />
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -772,7 +772,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_domE"
+                                android:id="@+id/txt_ver_hora_domE"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -788,7 +788,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_domE"
+                                android:id="@+id/ver_pesquisa_hora_domE"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -807,7 +807,7 @@
                             android:orientation="horizontal">
 
                             <android.support.design.widget.TextInputLayout
-                                android:id="@+id/txt_hora_domS"
+                                android:id="@+id/txt_ver_hora_domS"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -823,7 +823,7 @@
                             </android.support.design.widget.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/pesquisa_hora_domS"
+                                android:id="@+id/ver_pesquisa_hora_domS"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
@@ -845,20 +845,20 @@
                         android:orientation="vertical">
 
                         <ToggleButton
-                            android:id="@+id/bt_folga_dom"
+                            android:id="@+id/ver_bt_folga_dom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/bt_folga_off"
                             android:textColor="@color/corTextos"
-                            android:textOff="Fechado"
-                            android:textOn="Aberto" />
+                            android:textOn="TRABALHO"
+                            android:textOff="FOLGA" />
                     </LinearLayout>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <Button
-                android:id="@+id/bt_salvarConfiguracao"
+                android:id="@+id/ver_bt_salvarConfiguracao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"

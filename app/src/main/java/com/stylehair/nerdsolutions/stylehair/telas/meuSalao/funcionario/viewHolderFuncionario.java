@@ -53,6 +53,7 @@ public class viewHolderFuncionario extends ViewHolder implements View.OnClickLis
 
         Intent intent = new Intent(v.getContext(),ver_funcionario.class);
         intent.putExtra("idUsuario", String.valueOf(usuarioFuncionario.getIdUsuario()));
+        intent.putExtra("idFuncionario",String.valueOf(usuarioFuncionario.getIdFuncionario()));
         v.getContext().startActivity(intent);
 
     }

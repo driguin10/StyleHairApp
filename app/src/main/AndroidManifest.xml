@@ -47,34 +47,46 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Notification.notificacao" />
-        <activity android:name=".Notification.ver_notificacao" />
+        <activity
+            android:name=".Notification.notificacao" />
+        <activity
+            android:name=".Notification.ver_notificacao" />
         <activity
             android:name=".telas.minhaConta.minhaConta"
             android:label="@string/title_activity_minha_conta"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".telas.cadastroSalao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.configuracaoApp"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".telas.saloesFavoritos"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".telas.minha_agenda"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".telas.meuSalao.meuSalao"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".telas.carregando" />
+        <activity
+            android:name=".telas.configuracaoApp"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.saloesFavoritos"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.minha_agenda"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.meuSalao.meuSalao"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.carregando" />
         <activity
             android:name=".telas.meuSalao.editar_salao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.funcionario.funcionarios"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.meuSalao.funcionario.funcionarios"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".telas.meuSalao.configuracaoSalao"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity android:name=".telas.meuSalao.funcionario.ver_funcionario"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.meuSalao.funcionario.ver_funcionario"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.meuSalao.funcionario.cadastrar_funcionario"
             android:windowSoftInputMode="stateHidden"/>
     </application>
 

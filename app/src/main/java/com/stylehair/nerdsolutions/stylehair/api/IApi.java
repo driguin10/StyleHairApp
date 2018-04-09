@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 
 import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
@@ -198,6 +199,43 @@ public interface IApi {
     @GET("v1/saloes/configuracoes/{id}")
     Call<ConfiguracaoSalao> getConfiguracaoSalao(@Path("id") int id);
 
+//----------------------- funcionario--------------------------------------------
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/saloes/funcionario/")
+    Call<ResponseBody> SalvarFuncionario(@Part("idSalao") RequestBody idSalao,
+                                         @Part("idUsuario") RequestBody idUsuario);
+
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/funcionarios/funcionario/{id}")
+    Call<List<Funcionario>> BuscaFuncionario(@Path("id") String id);
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/funcionarios/editar/")
+    Call<ResponseBody> EditarHoraFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
+                                                @Part("segE") RequestBody segE,
+                                                @Part("segS") RequestBody segS,
+                                                @Part("terE") RequestBody terE,
+                                                @Part("terS") RequestBody terS,
+                                                @Part("quaE") RequestBody quaE,
+                                                @Part("quaS") RequestBody quaS,
+                                                @Part("quiE") RequestBody quiE,
+                                                @Part("quiS") RequestBody quiS,
+                                                @Part("sexE") RequestBody sexE,
+                                                @Part("sexS") RequestBody sexS,
+                                                @Part("sabE") RequestBody sabE,
+                                                @Part("sabS") RequestBody sabS,
+                                                @Part("domE") RequestBody domE,
+                                                @Part("domS") RequestBody domS);
+
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/funcionarios/{id}")
+    Call <GetUsuarioFuncionario> buscaFuncionarios(@Path("id") int id);
+
+//--------------------------------------------------------------------------------
 
     @Headers("apiKey:" + chave)
     @Multipart
@@ -220,9 +258,7 @@ public interface IApi {
     //-----------------------------------------------------------------------------
 
 
-    @Headers("apiKey:" + chave)
-    @GET("v1/funcionarios/{id}")
-    Call <GetUsuarioFuncionario> buscaFuncionario(@Path("id") int id);
+
 
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()

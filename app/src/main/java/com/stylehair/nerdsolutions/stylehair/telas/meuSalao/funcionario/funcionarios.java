@@ -1,7 +1,10 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -49,6 +53,16 @@ public class funcionarios extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_funcionarios);
         setSupportActionBar(myToolbar);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.bt_add_funcionario);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(funcionarios.this,cadastrar_funcionario.class);
+                startActivity(intent);
+            }
+        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Funcionarios");
@@ -85,7 +99,7 @@ public class funcionarios extends AppCompatActivity {
     {
 
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<GetUsuarioFuncionario> callBuscaFuncionarios = iApi.buscaFuncionario(Integer.valueOf(id));
+        final Call<GetUsuarioFuncionario> callBuscaFuncionarios = iApi.buscaFuncionarios(Integer.valueOf(id));
         callBuscaFuncionarios.enqueue(new Callback<GetUsuarioFuncionario>() {
             @Override
             public void onResponse(Call<GetUsuarioFuncionario> call, Response<GetUsuarioFuncionario> response) {

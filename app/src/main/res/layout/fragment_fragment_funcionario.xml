@@ -18,7 +18,7 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/imagemUser"
+                android:id="@+id/verimagemFunc"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
@@ -36,7 +36,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_userNome"
+                android:id="@+id/txt_funcNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -58,7 +58,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrApelido"
+                android:id="@+id/txt_funcApelido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -84,7 +84,7 @@
                 android:layout_marginRight="8dp">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrsexo"
+                    android:id="@+id/txt_funcsexo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -103,7 +103,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_nascimento"
+                    android:id="@+id/txt_funcNascimento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -132,7 +132,7 @@
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrTelefone"
+                    android:id="@+id/txt_funcTelefone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -151,7 +151,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrCep"
+                    android:id="@+id/txt_funcCep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -172,7 +172,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrEndereco"
+                android:id="@+id/txt_funcEndereco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -190,7 +190,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrBairro"
+                android:id="@+id/txt_funcBairro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -220,7 +220,7 @@
 
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrNumero"
+                    android:id="@+id/txt_funcNumero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -238,7 +238,7 @@
 
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrEstado"
+                    android:id="@+id/txt_funcEstado"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -260,7 +260,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrCidade"
+                android:id="@+id/txt_funcCidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -280,7 +280,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrObs"
+                android:id="@+id/txt_funcObs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
