@@ -52,14 +52,19 @@
         <activity
             android:name=".telas.minhaConta.minhaConta"
             android:label="@string/title_activity_minha_conta"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".telas.cadastroSalao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.configuracaoApp" />
-        <activity android:name=".telas.saloesFavoritos" />
-        <activity android:name=".telas.minha_agenda" />
-        <activity android:name=".telas.meuSalao.meuSalao" />
+        <activity android:name=".telas.configuracaoApp"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".telas.saloesFavoritos"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".telas.minha_agenda"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".telas.meuSalao.meuSalao"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".telas.carregando" />
         <activity
             android:name=".telas.meuSalao.editar_salao"
