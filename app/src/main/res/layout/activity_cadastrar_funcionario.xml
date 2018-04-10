@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_cadastro_funcionario"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/corToobar"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -18,7 +18,7 @@
 
 
     <ScrollView
-
+android:id="@+id/scrollCadastroFunc"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -93,6 +93,21 @@
 
                     </android.support.design.widget.TextInputLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/bt_limparLogin"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Limpar"
+                        android:textColor="#fff"
+                        android:elevation="12dp"
+                        android:layout_marginRight="7dp"
+                        android:background="@drawable/bt_fragment"/>
                     <Button
                         android:id="@+id/bt_pesquisaLogin"
                         android:layout_width="100dp"
@@ -100,9 +115,11 @@
                         android:text="Pesquisar"
                         android:textColor="#fff"
                         android:elevation="12dp"
-                        android:layout_gravity="right"
+
                         android:layout_marginRight="7dp"
                         android:background="@drawable/bt_fragment_carregar"/>
+                </LinearLayout>
+
                 </LinearLayout>
 
 
@@ -135,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <Button
-                    android:id="@+id/bt_caregaImg"
+                    android:id="@+id/bt_caregaImgNovo"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="Carregar"
@@ -144,7 +161,7 @@
 
                     android:background="@drawable/bt_fragment_carregar"/>
                 <ImageButton
-                    android:id="@+id/bt_excluiImg"
+                    android:id="@+id/bt_excluiImgNovo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="4dp"
@@ -243,7 +260,7 @@
                 android:layout_marginRight="8dp">
 
                 <Spinner
-                    android:id="@+id/spn_usrSexo"
+                    android:id="@+id/spn_SexoNovo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
@@ -258,7 +275,7 @@
                     android:theme="@style/estiloSpinner" />
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_nascimento"
+                    android:id="@+id/txt_nascimentoNovo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -274,7 +291,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <ImageButton
-                    android:id="@+id/pesquisa_data"
+                    android:id="@+id/pesquisa_dataNovo"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"
@@ -295,7 +312,7 @@
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrTelefone"
+                    android:id="@+id/txt_TelefoneNovo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -312,7 +329,7 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrCep"
+                    android:id="@+id/txt_CepNovo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -331,7 +348,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrEndereco"
+                android:id="@+id/txt_EnderecoNovo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -347,7 +364,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrBairro"
+                android:id="@+id/txt_BairroNovo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -375,7 +392,7 @@
 
 
                 <android.support.design.widget.TextInputLayout
-                    android:id="@+id/txt_usrNumero"
+                    android:id="@+id/txt_NumeroNovo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -391,7 +408,7 @@
 
 
                 <Spinner
-                    android:id="@+id/Sp_usrEstado"
+                    android:id="@+id/Sp_EstadoNovo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -407,7 +424,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrCidade"
+                android:id="@+id/txt_CidadeNovo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -425,7 +442,7 @@
 
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_usrObs"
+                android:id="@+id/txt_ObsNovo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -445,7 +462,7 @@
 
 
             <Button
-                android:id="@+id/bt_salvarUser"
+                android:id="@+id/bt_salvarNovo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
