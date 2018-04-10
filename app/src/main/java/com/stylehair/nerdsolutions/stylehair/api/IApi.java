@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.api;
 
 
+import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
@@ -234,6 +235,65 @@ public interface IApi {
     @Headers("apiKey:" + chave)
     @GET("v1/funcionarios/{id}")
     Call <GetUsuarioFuncionario> buscaFuncionarios(@Path("id") int id);
+
+
+
+    //criar funcionario -- já tem usuario e login
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @GET("v1/funcionarios/salvar/")
+    Call<List<CadastroFuncionario>> CriarFuncionario1(@Part("TipoSalvar") RequestBody TipoSalvar,
+                                                      @Part("idSalao") RequestBody idSalao,
+                                                      @Part("idUsuario") RequestBody idUsuario);
+
+
+    //criar funcionario -- não tem usuario - nem login
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @GET("v1/funcionarios/salvar/")
+    Call<List<CadastroFuncionario>> CriarFuncionario2(@Part("TipoSalvar") RequestBody TipoSalvar,
+                                                      @Part("idSalao") RequestBody idSalao,
+                                                      @Part("uploaded_file") RequestBody image64,
+                                                      @Part("mine_file") RequestBody tipoImg,
+                                                      @Part("idLogin") RequestBody idLogin,
+                                                      @Part("nome") RequestBody nome,
+                                                      @Part("apelido") RequestBody apelido,
+                                                      @Part("sexo") RequestBody sexo,
+                                                      @Part("dataNascimento") RequestBody dataNascimento,
+                                                      @Part("telefone") RequestBody telefone,
+                                                      @Part("cep") RequestBody cep,
+                                                      @Part("endereco") RequestBody endereco,
+                                                      @Part("numero") RequestBody numero,
+                                                      @Part("bairro") RequestBody bairro,
+                                                      @Part("estado") RequestBody estado,
+                                                      @Part("cidade") RequestBody cidade,
+                                                      @Part("obs") RequestBody obs);
+
+
+    //criar funcionario -- não tem nada
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @GET("v1/funcionarios/salvar/")
+    Call<List<CadastroFuncionario>> CriarFuncionario3(@Part("TipoSalvar") RequestBody TipoSalvar,
+                                                      @Part("idSalao") RequestBody idSalao,
+                                                      @Part("email") RequestBody email,
+                                                      @Part("senha") RequestBody senha,
+                                                      @Part("uploaded_file") RequestBody image64,
+                                                      @Part("mine_file") RequestBody tipoImg,
+                                                      @Part("idLogin") RequestBody idLogin,
+                                                      @Part("nome") RequestBody nome,
+                                                      @Part("apelido") RequestBody apelido,
+                                                      @Part("sexo") RequestBody sexo,
+                                                      @Part("dataNascimento") RequestBody dataNascimento,
+                                                      @Part("telefone") RequestBody telefone,
+                                                      @Part("cep") RequestBody cep,
+                                                      @Part("endereco") RequestBody endereco,
+                                                      @Part("numero") RequestBody numero,
+                                                      @Part("bairro") RequestBody bairro,
+                                                      @Part("estado") RequestBody estado,
+                                                      @Part("cidade") RequestBody cidade,
+                                                      @Part("obs") RequestBody obs);
 
 //--------------------------------------------------------------------------------
 
