@@ -25,10 +25,7 @@ import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfigHorarioSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfigSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.Login;
+import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 
 import java.util.List;
 
@@ -87,6 +84,7 @@ public class configuracaoSalao extends AppCompatActivity {
     Spinner tempoMinimo;
 
     Loading loading;
+    String idUsuario;
     String idSalao;
 
     Button salvarConfig;
@@ -396,12 +394,12 @@ public class configuracaoSalao extends AppCompatActivity {
         //-------pega o id do login para fazer a consulta---------------
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
-        idSalao = getSharedPreferences.getString("idSalao", "-1");
+        idUsuario = getSharedPreferences.getString("idUsuario", "-1");
         //---------------------------------------------------------------
         VerificaConexao verificaConexao = new VerificaConexao();
         if(verificaConexao.verifica(configuracaoSalao.this)) {
             loading.abrir("Carregando dados.... aguarde !!");
-            pegarConfiguracao(idSalao);
+            pegarConfiguracao(idUsuario);
         }
         else
         {
@@ -495,7 +493,7 @@ public void editarConfiguracao(String id_Salao)
             if (qtTentativaRealizadaSalvar < qtTentativasSalvar) {
                 qtTentativaRealizadaSalvar++;
 
-                editarConfiguracao(idSalao);
+                editarConfiguracao(idUsuario);
             }
             else {
                 loading.fechar();
@@ -650,48 +648,22 @@ public boolean verificaCampos(){
     public void pegarConfiguracao(final String id){
 
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ConfiguracaoSalao> callBuscaConfiguracao = iApi.getConfiguracaoSalao(Integer.valueOf(id));
-        callBuscaConfiguracao.enqueue(new Callback<ConfiguracaoSalao>() {
+        final Call<List<Salao>> callBuscaConfiguracao = iApi.BuscaSalao(Integer.valueOf(id));
+        callBuscaConfiguracao.enqueue(new Callback<List<Salao>>() {
             @Override
-            public void onResponse(Call<ConfiguracaoSalao>call, Response<ConfiguracaoSalao> response) {
+            public void onResponse(Call<List<Salao>>call, Response<List<Salao>> response) {
                 loading.fechar();
                 qtTentativaRealizada = 0 ;
-                Log.d("xex",String.valueOf(response.code()));
                 callBuscaConfiguracao.cancel();
                 switch (response.code()) {
                     case 200:
 
-                            ConfiguracaoSalao configuracaoSalao = response.body();
+                        List<Salao> saloes = response.body();
+                        Salao salao = saloes.get(0);
 
-                            ConfigSalao configSalao = new ConfigSalao();
-                        for (ConfigSalao configS : configuracaoSalao.configSalao) {
-                            configSalao.setIdConfiguracao(configS.getIdConfiguracao());
-                            configSalao.setIdSalao(configS.getIdSalao());
-                            configSalao.setTempoMinAgenda(configS.getTempoMinAgenda());
-                            configSalao.setTempoReserva(configS.getTempoReserva());
-                        }
+                        idSalao = String.valueOf(salao.getIdSalao());
 
-                        ConfigHorarioSalao configHorarioSalao = new ConfigHorarioSalao();
-                        for (ConfigHorarioSalao configH : configuracaoSalao.configHorarioSalao) {
-                            configHorarioSalao.setSegE(configH.getSegE());
-                            configHorarioSalao.setSegS(configH.getSegS());
-                            configHorarioSalao.setTerE(configH.getTerE());
-                            configHorarioSalao.setTerS(configH.getTerS());
-                            configHorarioSalao.setQuaE(configH.getQuaE());
-                            configHorarioSalao.setQuaS(configH.getQuaS());
-                            configHorarioSalao.setQuiE(configH.getQuiE());
-                            configHorarioSalao.setQuiS(configH.getQuiS());
-                            configHorarioSalao.setSexE(configH.getSexE());
-                            configHorarioSalao.setSexS(configH.getSexS());
-                            configHorarioSalao.setSabE(configH.getSabE());
-                            configHorarioSalao.setSabS(configH.getSabS());
-                            configHorarioSalao.setDomE(configH.getDomE());
-                            configHorarioSalao.setDomS(configH.getDomS());
-                            configHorarioSalao.setAgendamento(configH.getAgendamento());
-                        }
-
-
-                        if(configHorarioSalao.getAgendamento() == 1)
+                        if(salao.getAgendamento() == 1)
                         {
                             intervaloAgenda.setClickable(true);
                             intervaloAgenda.setEnabled(true);
@@ -712,10 +684,10 @@ public boolean verificaCampos(){
                             tempoMinimo.setEnabled(false);
                         }
 
-                        if(configHorarioSalao.getSegE()!=null && configHorarioSalao.getSegS()!=null) {
+                        if(salao.getSegE()!=null && salao.getSegS()!=null) {
                             muda(true, txtSegE, txtSegS, horaSegE, horaSegS, btStatusSegunda);
-                            txtSegE.getEditText().setText(configHorarioSalao.getSegE().substring(0,5));
-                            txtSegS.getEditText().setText(configHorarioSalao.getSegS().substring(0,5));
+                            txtSegE.getEditText().setText(salao.getSegE().substring(0,5));
+                            txtSegS.getEditText().setText(salao.getSegS().substring(0,5));
                         }
                         else
                         {
@@ -723,10 +695,10 @@ public boolean verificaCampos(){
                             btStatusSegunda.setChecked(false);
                         }
 
-                        if(configHorarioSalao.getTerE()!=null && configHorarioSalao.getTerS()!=null) {
+                        if(salao.getTerE()!=null && salao.getTerS()!=null) {
                             muda(true,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
-                            txtTerE.getEditText().setText(configHorarioSalao.getTerE().substring(0,5));
-                            txtTerS.getEditText().setText(configHorarioSalao.getTerS().substring(0,5));
+                            txtTerE.getEditText().setText(salao.getTerE().substring(0,5));
+                            txtTerS.getEditText().setText(salao.getTerS().substring(0,5));
                         }
                         else
                         {
@@ -735,10 +707,10 @@ public boolean verificaCampos(){
                         }
 
 
-                        if(configHorarioSalao.getQuaE()!=null && configHorarioSalao.getQuaS()!=null) {
+                        if(salao.getQuaE()!=null && salao.getQuaS()!=null) {
                             muda(true,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
-                            txtQuaE.getEditText().setText(configHorarioSalao.getQuaE().substring(0,5));
-                            txtQuaS.getEditText().setText(configHorarioSalao.getQuaS().substring(0,5));
+                            txtQuaE.getEditText().setText(salao.getQuaE().substring(0,5));
+                            txtQuaS.getEditText().setText(salao.getQuaS().substring(0,5));
                         }
                         else
                         {
@@ -746,10 +718,10 @@ public boolean verificaCampos(){
                             btStatusQuarta.setChecked(false);
                         }
 
-                        if(configHorarioSalao.getQuiE()!=null && configHorarioSalao.getQuiS()!=null) {
+                        if(salao.getQuiE()!=null && salao.getQuiS()!=null) {
                             muda(true,txtQuiE,txtQuiS,horaQuiE,horaQuiS,btStatusQuinta);
-                            txtQuiE.getEditText().setText(configHorarioSalao.getQuaE().substring(0,5));
-                            txtQuiS.getEditText().setText(configHorarioSalao.getQuiS().substring(0,5));
+                            txtQuiE.getEditText().setText(salao.getQuaE().substring(0,5));
+                            txtQuiS.getEditText().setText(salao.getQuiS().substring(0,5));
                         }
                         else
                         {
@@ -757,10 +729,10 @@ public boolean verificaCampos(){
                             btStatusQuinta.setChecked(false);
                         }
 
-                        if(configHorarioSalao.getSexE()!=null && configHorarioSalao.getSexS()!=null) {
+                        if(salao.getSexE()!=null && salao.getSexS()!=null) {
                             muda(true,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
-                            txtSexE.getEditText().setText(configHorarioSalao.getSexE().substring(0,5));
-                            txtSexS.getEditText().setText(configHorarioSalao.getSexS().substring(0,5));
+                            txtSexE.getEditText().setText(salao.getSexE().substring(0,5));
+                            txtSexS.getEditText().setText(salao.getSexS().substring(0,5));
                         }
                         else
                         {
@@ -769,10 +741,10 @@ public boolean verificaCampos(){
                         }
 
 
-                        if(configHorarioSalao.getSabE()!=null && configHorarioSalao.getSabS()!=null) {
+                        if(salao.getSabE()!=null && salao.getSabS()!=null) {
                             muda(true,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
-                            txtSabE.getEditText().setText(configHorarioSalao.getSabE().substring(0,5));
-                            txtSabS.getEditText().setText(configHorarioSalao.getSabS().substring(0,5));
+                            txtSabE.getEditText().setText(salao.getSabE().substring(0,5));
+                            txtSabS.getEditText().setText(salao.getSabS().substring(0,5));
                         }
                         else
                         {
@@ -780,10 +752,10 @@ public boolean verificaCampos(){
                             btStatusSabado.setChecked(false);
                         }
 
-                        if(configHorarioSalao.getDomE()!=null && configHorarioSalao.getDomS()!=null) {
+                        if(salao.getDomE()!=null && salao.getDomS()!=null) {
                             muda(true,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
-                            txtDomE.getEditText().setText(configHorarioSalao.getDomE().substring(0,5));
-                            txtDomS.getEditText().setText(configHorarioSalao.getDomS().substring(0,5));
+                            txtDomE.getEditText().setText(salao.getDomE().substring(0,5));
+                            txtDomS.getEditText().setText(salao.getDomS().substring(0,5));
                         }
                         else
                         {
@@ -793,7 +765,7 @@ public boolean verificaCampos(){
 
 
 
-                        String[] timetempoReserva = configSalao.getTempoReserva().split(":");
+                        String[] timetempoReserva = salao.getTempoReserva().split(":");
                         String comparaTimetempoReserva = "";
                         if(timetempoReserva[0].equals("01"))
                             comparaTimetempoReserva = "1 hora";
@@ -809,7 +781,7 @@ public boolean verificaCampos(){
                         }
 
 
-                        String[] timeTempoMinimo = configSalao.getTempoMinAgenda().split(":");
+                        String[] timeTempoMinimo = salao.getTempoMinAgenda().split(":");
                         String comparaTempoMinimo = "";
                         if(timeTempoMinimo[0].equals("01"))
                             comparaTempoMinimo = "1 hora";
@@ -843,11 +815,11 @@ public boolean verificaCampos(){
             }
 
             @Override
-            public void onFailure(Call<ConfiguracaoSalao> call, Throwable t) {
+            public void onFailure(Call<List<Salao>> call, Throwable t) {
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
 
-                    pegarConfiguracao(idSalao);
+                    pegarConfiguracao(idUsuario);
                 }
                 else {
                     loading.fechar();

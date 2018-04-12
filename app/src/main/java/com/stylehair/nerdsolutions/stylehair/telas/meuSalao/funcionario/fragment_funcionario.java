@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,9 @@ public class fragment_funcionario extends Fragment {
         if(bundle!=null)
         {
             IdUsuario = bundle.getString("idUsuario");
+            Log.d("xex","iii- "+IdUsuario);
+
+
         }
 
 
@@ -127,13 +131,14 @@ public class fragment_funcionario extends Fragment {
 
 
     //---- função para pegar dados do usuario do servidor----
-    public void pegarFuncionario(final String idUser){
+    public void pegarFuncionario(final String idUsuario){
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuario(Integer.valueOf(idUser));
+        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuarioId(Integer.valueOf(idUsuario));
         callBuscaUser.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 loading.fechar();
+
                 callBuscaUser.cancel();
                 switch (response.code()) {
                     case 200:

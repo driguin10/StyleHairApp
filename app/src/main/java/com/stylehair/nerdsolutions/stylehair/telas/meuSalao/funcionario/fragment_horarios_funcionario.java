@@ -21,11 +21,7 @@ import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfigHorarioSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfigSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.configuracaoSalao;
 
 import java.util.List;
 

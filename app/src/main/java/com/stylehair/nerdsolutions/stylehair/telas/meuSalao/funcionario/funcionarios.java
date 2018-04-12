@@ -2,10 +2,8 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,15 +16,11 @@ import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfigSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
-import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentLogin;
-import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,13 +37,15 @@ public class funcionarios extends AppCompatActivity {
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
 
+    Loading loading;
+
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_funcionarios);
-
+        loading = new Loading(funcionarios.this);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_funcionarios);
         setSupportActionBar(myToolbar);
 
@@ -76,7 +72,7 @@ public class funcionarios extends AppCompatActivity {
                 .getDefaultSharedPreferences(funcionarios.this);
         idSalao = getSharedPreferences.getString("idSalao","-1");
 
-
+        loading.abrir("Atualizando...");
         getFuncionarios(idSalao);
 
     }
@@ -106,11 +102,12 @@ public class funcionarios extends AppCompatActivity {
                 qtTentativaRealizada = 0 ;
                 callBuscaFuncionarios.cancel();
 
-
+                loading.fechar();
 
                     switch (response.code())
                     {
                         case 200:
+
                             GetUsuarioFuncionario func = response.body();
                             List<UsuarioFuncionario> funcs = new ArrayList<>();
 
@@ -130,7 +127,7 @@ public class funcionarios extends AppCompatActivity {
                             break;
 
                         case 400:
-                            Log.d("xex","nenhummm");
+
                             break;
                     }
 
@@ -146,7 +143,7 @@ public class funcionarios extends AppCompatActivity {
                     getFuncionarios(idSalao);
                 }
                 else {
-                    //loading.fechar();
+                    loading.fechar();
                     Log.d("xex","erro");
                     Log.d("xex",t.getMessage());
                 }

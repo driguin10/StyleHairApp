@@ -2,7 +2,6 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
-import com.stylehair.nerdsolutions.stylehair.classes.ConfiguracaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
@@ -12,7 +11,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -114,6 +112,11 @@ public interface IApi {
     @GET("v1/usuarios/{id}")
     Call <List<Usuario>> BuscaUsuario(@Path("id") int id);
 
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/usuariosId/{id}")
+    Call <List<Usuario>> BuscaUsuarioId(@Path("id") int id);
+
     //----------------------------------------------------------------------------
 
 
@@ -196,9 +199,7 @@ public interface IApi {
 
 
 
-    @Headers("apiKey:" + chave)
-    @GET("v1/saloes/configuracoes/{id}")
-    Call<ConfiguracaoSalao> getConfiguracaoSalao(@Path("id") int id);
+
 
 //----------------------- funcionario--------------------------------------------
     @Headers("apiKey:" + chave)
@@ -242,8 +243,8 @@ public interface IApi {
 
     @Headers("apiKey:" + chave)
     @Multipart
-    @GET("v1/funcionarios/salvar/")
-    Call<List<CadastroFuncionario>> CriarFuncionario1(@Part("TipoSalvar") RequestBody TipoSalvar,
+    @POST("v1/funcionarios/salvar/")
+    Call<CadastroFuncionario> CriarFuncionario1(@Part("TipoSalvar") RequestBody TipoSalvar,
                                                       @Part("idSalao") RequestBody idSalao,
                                                       @Part("idUsuario") RequestBody idUsuario);
 
@@ -251,8 +252,8 @@ public interface IApi {
     //criar funcionario -- não tem usuario - nem login
     @Headers("apiKey:" + chave)
     @Multipart
-    @GET("v1/funcionarios/salvar/")
-    Call<List<CadastroFuncionario>> CriarFuncionario2(@Part("TipoSalvar") RequestBody TipoSalvar,
+    @POST("v1/funcionarios/salvar/")
+    Call<CadastroFuncionario> CriarFuncionario2(@Part("TipoSalvar") RequestBody TipoSalvar,
                                                       @Part("idSalao") RequestBody idSalao,
                                                       @Part("uploaded_file") RequestBody image64,
                                                       @Part("mine_file") RequestBody tipoImg,
@@ -274,8 +275,8 @@ public interface IApi {
     //criar funcionario -- não tem nada
     @Headers("apiKey:" + chave)
     @Multipart
-    @GET("v1/funcionarios/salvar/")
-    Call<List<CadastroFuncionario>> CriarFuncionario3(@Part("TipoSalvar") RequestBody TipoSalvar,
+    @POST("v1/funcionarios/salvar/")
+    Call<CadastroFuncionario> CriarFuncionario3(@Part("TipoSalvar") RequestBody TipoSalvar,
                                                       @Part("idSalao") RequestBody idSalao,
                                                       @Part("email") RequestBody email,
                                                       @Part("senha") RequestBody senha,

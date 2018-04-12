@@ -99,15 +99,16 @@ android:id="@+id/scrollCadastroFunc"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="right">
+
                     <Button
                         android:id="@+id/bt_limparLogin"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Limpar"
-                        android:textColor="#fff"
-                        android:elevation="12dp"
                         android:layout_marginRight="7dp"
-                        android:background="@drawable/bt_fragment"/>
+                        android:background="@drawable/bt_fragment"
+                        android:elevation="12dp"
+                        android:text="Limpar"
+                        android:textColor="#fff" />
                     <Button
                         android:id="@+id/bt_pesquisaLogin"
                         android:layout_width="100dp"

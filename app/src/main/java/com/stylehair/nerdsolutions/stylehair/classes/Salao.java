@@ -38,6 +38,8 @@ public class Salao {
     private String sabS;
     private String domE;
     private String domS;
+    private String tempoReserva;
+    private String tempoMinAgenda;
 
     public int getIdSalao() {
         return idSalao;
@@ -301,5 +303,21 @@ public class Salao {
 
     public void setDomS(String domS) {
         this.domS = domS;
+    }
+
+    public String getTempoReserva() {
+        return tempoReserva;
+    }
+
+    public void setTempoReserva(String tempoReserva) {
+        this.tempoReserva = tempoReserva;
+    }
+
+    public String getTempoMinAgenda() {
+        return tempoMinAgenda;
+    }
+
+    public void setTempoMinAgenda(String tempoMinAgenda) {
+        this.tempoMinAgenda = tempoMinAgenda;
     }
 }

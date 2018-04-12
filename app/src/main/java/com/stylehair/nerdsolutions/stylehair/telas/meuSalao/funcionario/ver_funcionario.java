@@ -39,12 +39,6 @@ public class ver_funcionario extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
 
 
-        Bundle bundle = getIntent().getExtras();
-
-        if(bundle!=null)
-        {
-            String id = bundle.getString("idUsuario");
-        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -52,10 +46,7 @@ public class ver_funcionario extends AppCompatActivity {
         adapter.addFragment(new fragment_funcionario(), "");
         adapter.addFragment(new fragment_horarios_funcionario(), "");
         adapter.addFragment(new fragment_servicos_funcionarios(), "");
-
-
         viewPager.setAdapter(adapter);
-
     }
 
     @Override
@@ -63,7 +54,9 @@ public class ver_funcionario extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
 
-                finish();
+                Intent intent = new Intent(ver_funcionario.this,funcionarios.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 break;
             default:break;
         }

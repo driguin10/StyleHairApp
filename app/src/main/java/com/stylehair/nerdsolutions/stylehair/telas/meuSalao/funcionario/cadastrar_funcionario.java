@@ -36,19 +36,26 @@ import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
+import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.telas.cadastroSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentUsuario;
 import com.stylehair.nerdsolutions.stylehair.telas.principal;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +88,7 @@ Loading loading;
 
     Button BtSalvar;
     Button BtCarregaImagem ;
+    Button Limparcampos;
 
     ImageButton BtPesqData;
     ImageButton BtExcluirImagem;
@@ -88,10 +96,13 @@ Loading loading;
     public int qtTentativaRealizada = 0;
 
     public int qtTentativaRealizadaLoad = 0;
+    public int qtTentativaRealizadaSalvar1 = 0;
+    public int qtTentativaRealizadaSalvar2 = 0;
+    public int qtTentativaRealizadaSalvar3 = 0;
 
     Config config;
 
-    int idLogin = -1;
+
 
     AlertDialog alerta;
     static final int imagem_interna = 1;
@@ -102,7 +113,13 @@ Loading loading;
     String tipoImagem=""; // extensao da imagem
     int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
-ScrollView scrollView;
+    ScrollView scrollView;
+    String tipoSalvar;
+
+    int id_Login = -1;
+    int id_Salao = -1 ;
+    int id_Usuario = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,9 +131,14 @@ ScrollView scrollView;
         getSupportActionBar().setTitle("Cadastrar Funcionário");
         loading = new Loading(cadastrar_funcionario.this);
         config = new Config();
+
+        SharedPreferences getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        id_Salao = Integer.valueOf(getSharedPreferences.getString("idSalao", ""));
        LoginEmail = (TextInputLayout) findViewById(R.id.procuraLoginEmail);
        LoginSenha = (TextInputLayout) findViewById(R.id.procuraLoginSenha);
        pesquisaLogin = (Button) findViewById(R.id.bt_pesquisaLogin);
+        Limparcampos = (Button) findViewById(R.id.bt_limparLogin);
        pesquisaLogin.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -124,6 +146,93 @@ ScrollView scrollView;
                logar();
            }
        });
+
+        Limparcampos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginEmail.getEditText().setText("");
+                LoginEmail.setAlpha(.9f);
+                LoginEmail.setEnabled(true);
+
+                LoginSenha.getEditText().setText("");
+                LoginSenha.setAlpha(.9f);
+                LoginSenha.setEnabled(true);
+
+                cadNomeUser.getEditText().setText("");
+                cadNomeUser.setAlpha(.9f);
+                cadNomeUser.setEnabled(true);
+
+                emailNovo.getEditText().setText("");
+                senhaNova.getEditText().setText("");
+
+                cadApelidoUser.getEditText().setText("");
+                cadApelidoUser.setEnabled(true);
+                cadApelidoUser.setAlpha(.9f);
+
+                cadTelefoneUser.getEditText().setText("");
+                cadTelefoneUser.setEnabled(true);
+                cadTelefoneUser.setAlpha(.9f);
+
+                cadEnderecoUser.getEditText().setText("");
+                cadEnderecoUser.setEnabled(true);
+                cadEnderecoUser.setAlpha(.9f);
+
+                cadBairroUser.getEditText().setText("");
+                cadBairroUser.setEnabled(true);
+                cadBairroUser.setAlpha(.9f);
+
+                cadNumeroUser.getEditText().setText("");
+                cadNumeroUser.setEnabled(true);
+                cadNumeroUser.setAlpha(.9f);
+
+                cadCidadeUser.getEditText().setText("");
+                cadCidadeUser.setEnabled(true);
+                cadCidadeUser.setAlpha(.9f);
+
+                cadObsUser.getEditText().setText("");
+                cadObsUser.setEnabled(true);
+                cadObsUser.setAlpha(.9f);
+
+                cadCepUser.getEditText().setText("");
+                cadCepUser.setEnabled(true);
+                cadCepUser.setAlpha(.9f);
+
+                cadNascimento.getEditText().setText("");
+                cadNascimento.setAlpha(.9f);
+                cadNascimento.setEnabled(true);
+
+                cadEstadoUser.setEnabled(true);
+                cadEstadoUser.setAlpha(.9f);
+
+
+                cadSexoUser.setEnabled(true);
+                cadSexoUser.setAlpha(.9f);
+
+               BtCarregaImagem.setEnabled(true);
+               BtCarregaImagem.setAlpha(.9f);
+
+               BtExcluirImagem.setAlpha(.9f);
+               BtExcluirImagem.setEnabled(true);
+
+
+                BtPesqData.setEnabled(true);
+                BtPesqData.setAlpha(.9f);
+
+
+                emailNovo.setEnabled(true);
+                emailNovo.setAlpha(.9f);
+
+                senhaNova.setAlpha(.9f);
+                senhaNova.setEnabled(true);
+
+
+
+
+
+
+
+            }
+        });
 
        scrollView = (ScrollView)findViewById(R.id.scrollCadastroFunc);
 
@@ -159,6 +268,40 @@ ScrollView scrollView;
         ImagemUser = (CircleImageView) findViewById(R.id.imagemUserNovo);
 
 
+        BtSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             /*   Log.d("xex","idSalao - "+ String.valueOf(id_Salao));
+                Log.d("xex","idUsuario - "+ String.valueOf(id_Usuario));
+                Log.d("xex","idLogin - "+ String.valueOf(id_Login));*/
+                if(!verificaCampos())
+                {
+                    Toast.makeText(cadastrar_funcionario.this, "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
+                }
+                else {
+
+                    if (id_Login == -1 && id_Usuario == -1) {
+                        //tipo 3 -- não tem nenhum cadastro
+                        loading.abrir("salvando....");
+                        Log.d("xex", "salvar3");
+                        salvar3();
+                    } else if (id_Login != -1 && id_Usuario == -1) {
+                        // tipo 2 tem só login
+                        loading.abrir("salvando....");
+                        Log.d("xex", "salvar2");
+                        salvar2();
+                    } else if (id_Login != -1 && id_Usuario != -1) {
+                        // tipo 1 tem tudo
+                        loading.abrir("salvando....");
+                        Log.d("xex", "salvar1");
+                        salvar1();
+                    }
+                }
+
+
+
+            }
+        });
 
         BtCarregaImagem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +344,209 @@ ScrollView scrollView;
 
 
 
+    public void salvar1(){
+        RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "1");
+        RequestBody idSalao = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Salao));
+        RequestBody idUsuario = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Usuario) );
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<CadastroFuncionario> callCriaFunc1 = iApi.CriarFuncionario1(TipoSalvar,idSalao,idUsuario);
+        callCriaFunc1.enqueue(new Callback<CadastroFuncionario>() {
+            @Override
+            public void onResponse(Call<CadastroFuncionario> call, Response<CadastroFuncionario> response) {
+                loading.fechar();
+                qtTentativaRealizadaSalvar1 = 0;
+                callCriaFunc1.cancel();
+
+                CadastroFuncionario ListcadFunc = response.body();
+                if(response.isSuccessful())
+                {
+                    if(ListcadFunc.getId().equals(""))
+                    {
+                        Toast.makeText(cadastrar_funcionario.this,"erro ao salvar !!" ,Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        if(!ListcadFunc.getId().equals("-1")) {
+                             Toast.makeText(cadastrar_funcionario.this,"Salvo com sucesso !!! ",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(cadastrar_funcionario.this, ver_funcionario.class);
+                            intent.putExtra("idUsuario", String.valueOf(id_Usuario));
+                            intent.putExtra("idFuncionario", ListcadFunc.getId());
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CadastroFuncionario> call, Throwable t) {
+
+                if (qtTentativaRealizadaSalvar1 < qtTentativas) {
+                    qtTentativaRealizadaSalvar1++;
+                    salvar1();
+                } else {
+                    loading.fechar();
+                }
+            }
+        });
+    }
+
+    public void salvar2(){
+        RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "2");
+        RequestBody idSalao = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Salao));
+        RequestBody idLogin = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Login) );
+
+        RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), cadNomeUser.getEditText().getText().toString());
+        RequestBody apelido = RequestBody.create(MediaType.parse("text/plain"), cadApelidoUser.getEditText().getText().toString());
+        RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUser.getEditText().getText().toString());
+        RequestBody cep = RequestBody.create(MediaType.parse("text/plain"), cadCepUser.getEditText().getText().toString());
+        RequestBody endereco = RequestBody.create(MediaType.parse("text/plain"), cadEnderecoUser.getEditText().getText().toString());
+        RequestBody numero = RequestBody.create(MediaType.parse("text/plain"), cadNumeroUser.getEditText().getText().toString());
+        RequestBody bairro = RequestBody.create(MediaType.parse("text/plain"), cadBairroUser.getEditText().getText().toString());
+        RequestBody estado = RequestBody.create(MediaType.parse("text/plain"), cadEstadoUser.getSelectedItem().toString());
+        RequestBody sexo = RequestBody.create(MediaType.parse("text/plain"), cadSexoUser.getSelectedItem().toString());
+        RequestBody cidade = RequestBody.create(MediaType.parse("text/plain"), cadCidadeUser.getEditText().getText().toString());
+        RequestBody obs = RequestBody.create(MediaType.parse("text/plain"), cadObsUser.getEditText().getText().toString());
+        RequestBody dataNascimento = RequestBody.create(MediaType.parse("text/plain"), cadNascimento.getEditText().getText().toString());
+        RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+        RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+
+        if (!tipoImagem.equals("") && !img64.equals("")) {
+            mine = RequestBody.create(MediaType.parse("multipart/form-data"), tipoImagem);
+            converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), img64);
+        }
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<CadastroFuncionario> callCriaFunc2 = iApi.CriarFuncionario2(TipoSalvar,idSalao,converter64,mine,idLogin,nome, apelido, sexo, dataNascimento, telefone, cep, endereco, numero, bairro, estado, cidade, obs);
+        callCriaFunc2.enqueue(new Callback<CadastroFuncionario>() {
+            @Override
+            public void onResponse(Call<CadastroFuncionario> call, Response<CadastroFuncionario> response) {
+                loading.fechar();
+                qtTentativaRealizadaSalvar2 = 0;
+                callCriaFunc2.cancel();
+
+                CadastroFuncionario ListcadFunc = response.body();
+                if(response.isSuccessful())
+                {
+                    String[] ids = ListcadFunc.getId().split("#");
+                    String iduser = ids[0];
+                    String idfunc = ids[1];
+                    Log.d("xex",iduser + "-" + idfunc );
+                    if(iduser.equals("-1") && iduser.equals("-2") && idfunc.equals("-1"))
+                    {
+                        Toast.makeText(cadastrar_funcionario.this,"erro ao salvar !!" ,Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                            Toast.makeText(cadastrar_funcionario.this,"Salvo com sucesso !!! " ,Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(cadastrar_funcionario.this, ver_funcionario.class);
+                            intent.putExtra("idUsuario",iduser);
+                            intent.putExtra("idFuncionario",idfunc);
+                            startActivity(intent);
+                            finish();
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CadastroFuncionario> call, Throwable t) {
+
+                if (qtTentativaRealizadaSalvar2 < qtTentativas) {
+                    qtTentativaRealizadaSalvar2++;
+                    salvar2();
+                } else {
+                    loading.fechar();
+                }
+            }
+        });
+    }
+
+    public void salvar3(){
+        RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "3");
+        RequestBody idSalao = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Salao));
+        RequestBody idLogin = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Login) );
+
+
+        RequestBody email = RequestBody.create(MediaType.parse("text/plain"), emailNovo.getEditText().getText().toString());
+        RequestBody senha = RequestBody.create(MediaType.parse("text/plain"), senhaNova.getEditText().getText().toString());
+
+        RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), cadNomeUser.getEditText().getText().toString());
+        RequestBody apelido = RequestBody.create(MediaType.parse("text/plain"), cadApelidoUser.getEditText().getText().toString());
+        RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUser.getEditText().getText().toString());
+        RequestBody cep = RequestBody.create(MediaType.parse("text/plain"), cadCepUser.getEditText().getText().toString());
+        RequestBody endereco = RequestBody.create(MediaType.parse("text/plain"), cadEnderecoUser.getEditText().getText().toString());
+        RequestBody numero = RequestBody.create(MediaType.parse("text/plain"), cadNumeroUser.getEditText().getText().toString());
+        RequestBody bairro = RequestBody.create(MediaType.parse("text/plain"), cadBairroUser.getEditText().getText().toString());
+        RequestBody estado = RequestBody.create(MediaType.parse("text/plain"), cadEstadoUser.getSelectedItem().toString());
+        RequestBody sexo = RequestBody.create(MediaType.parse("text/plain"), cadSexoUser.getSelectedItem().toString());
+        RequestBody cidade = RequestBody.create(MediaType.parse("text/plain"), cadCidadeUser.getEditText().getText().toString());
+        RequestBody obs = RequestBody.create(MediaType.parse("text/plain"), cadObsUser.getEditText().getText().toString());
+        RequestBody dataNascimento = RequestBody.create(MediaType.parse("text/plain"), cadNascimento.getEditText().getText().toString());
+        RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+        RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
+
+        if (!tipoImagem.equals("") && !img64.equals("")) {
+            mine = RequestBody.create(MediaType.parse("multipart/form-data"), tipoImagem);
+            converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), img64);
+        }
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<CadastroFuncionario> callCriaFunc3 = iApi.CriarFuncionario3(TipoSalvar,idSalao,email,senha,converter64,mine,idLogin,nome, apelido, sexo, dataNascimento, telefone, cep, endereco, numero, bairro, estado, cidade, obs);
+        callCriaFunc3.enqueue(new Callback<CadastroFuncionario>() {
+            @Override
+            public void onResponse(Call<CadastroFuncionario> call, Response<CadastroFuncionario> response) {
+                loading.fechar();
+                qtTentativaRealizadaSalvar3 = 0;
+                callCriaFunc3.cancel();
+
+                Log.d("xex",String.valueOf(response.code()) + "--" + response.message());
+
+                CadastroFuncionario ListcadFunc = response.body();
+                Log.d("xex","men - " + ListcadFunc.getId());
+                if(response.isSuccessful())
+                {
+                    String[] ids = ListcadFunc.getId().split("#");
+                    String iduser = ids[0];
+                    String idfunc = ids[1];
+
+                    if(iduser.equals("-2")) {
+                        Toast.makeText(cadastrar_funcionario.this,"Email já existe !!" ,Toast.LENGTH_LONG).show();
+                        emailNovo.getEditText().requestFocus();
+                    }
+                    else
+                    if(iduser.equals("-1") && idfunc.equals("-1"))
+                    {
+                        Toast.makeText(cadastrar_funcionario.this,"erro ao salvar !!" ,Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(cadastrar_funcionario.this,"Salvo com sucesso !!! " ,Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(cadastrar_funcionario.this, ver_funcionario.class);
+                        intent.putExtra("idUsuario",iduser);
+                        intent.putExtra("idFuncionario",idfunc);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CadastroFuncionario> call, Throwable t) {
+
+                if (qtTentativaRealizadaSalvar3 < qtTentativas) {
+                    qtTentativaRealizadaSalvar3++;
+                    salvar3();
+                } else {
+                    loading.fechar();
+                }
+            }
+        });
+    }
+
+
     public void logar(){
 
         final Login login = new Login();
@@ -225,7 +571,7 @@ ScrollView scrollView;
                         String Email = "";
                         for (Login log : logar.login) {
                             Email = log.getEmail();
-                            idLogin = log.getIdLogin();
+                            id_Login = log.getIdLogin();
                         }
 
                         emailNovo.getEditText().setText(Email);
@@ -240,7 +586,10 @@ ScrollView scrollView;
 
                         if(!logar.getIdUser().equals(""))
                         {
-                            pegarUsuario(Integer.valueOf(idLogin));
+                            pegarUsuario(Integer.valueOf(id_Login));
+                        }else
+                        {
+                            loading.fechar();
                         }
 
 
@@ -305,7 +654,6 @@ ScrollView scrollView;
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 loading.fechar();
-                Log.d("xex","iiii " + String.valueOf(response.code()) + " ===" +response.message());
                 callBuscaUser.cancel();
                 switch (response.code()) {
                     case 200:
@@ -397,6 +745,9 @@ ScrollView scrollView;
 
                         BtPesqData.setEnabled(false);
                         BtPesqData.setAlpha(.4f);
+
+                        id_Usuario = Integer.valueOf(user.getIdUsuario());
+
                         break;
 
 
@@ -416,7 +767,7 @@ ScrollView scrollView;
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 if (qtTentativaRealizadaLoad < qtTentativas) {
                     qtTentativaRealizadaLoad++;
-                    pegarUsuario(idUsuario);
+                    pegarUsuario(Integer.valueOf(id_Login));
                 }
                 else {
                     loading.fechar();
@@ -464,6 +815,47 @@ ScrollView scrollView;
 
 
 
+
+    public boolean verificaCampos()
+    {
+        Boolean status = false;
+        String Vnome =cadNomeUser.getEditText().getText().toString();
+        String Vtelefone = cadTelefoneUser.getEditText().getText().toString();
+        String Vestado = cadEstadoUser.getSelectedItem().toString();
+        String Vcidade = cadCidadeUser.getEditText().getText().toString();
+
+        String Vemail  = emailNovo.getEditText().getText().toString();
+        String Vsenha = senhaNova.getEditText().getText().toString();
+
+
+        if(!Vnome.equals("") && !Vtelefone.equals("") && !Vestado.equals("") && !Vcidade.equals("") && !Vemail.equals("") && !Vsenha.equals(""))
+        {
+            status = true;
+        }
+        else
+        {
+            if(Vnome.equals(""))
+                cadNomeUser.getEditText().requestFocus();
+            else
+            if(Vtelefone.equals(""))
+                cadTelefoneUser.getEditText().requestFocus();
+            else
+            if(Vestado.equals(""))
+                cadEstadoUser.requestFocus();
+            else
+            if(Vcidade.equals(""))
+                cadCidadeUser.getEditText().requestFocus();
+            else
+            if(Vemail.equals(""))
+                emailNovo.getEditText().requestFocus();
+            else
+            if(Vsenha.equals(""))
+                senhaNova.getEditText().requestFocus();
+
+        }
+        return  status;
+    }
+
     //--------- quando escolhe uma imagem---------------------------------
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
@@ -496,6 +888,7 @@ ScrollView scrollView;
                     }
                     img64  = img.getBitmapBase64();
                     tipoImagem = img.getMime();
+
 
                     if(img.getBitmap()!=null)
                     {
