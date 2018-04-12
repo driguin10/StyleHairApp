@@ -15,6 +15,7 @@ public class meuSalao extends AppCompatActivity {
     CardView bt_meuSalao;
     CardView bt_funcionario;
     CardView bt_Configuracao;
+    CardView bt_Servicos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class meuSalao extends AppCompatActivity {
 
         bt_meuSalao = (CardView) findViewById(R.id.card_bt1);
         bt_funcionario = (CardView) findViewById(R.id.card_bt2);
+        bt_Servicos = (CardView) findViewById(R.id.card_bt3);
         bt_Configuracao = (CardView) findViewById(R.id.card_bt6);
 
         bt_meuSalao.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +53,14 @@ public class meuSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(meuSalao.this,configuracaoSalao.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_Servicos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(meuSalao.this,servico_salao.class);
                 startActivity(intent);
             }
         });

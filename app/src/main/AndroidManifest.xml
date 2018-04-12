@@ -47,10 +47,8 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".Notification.notificacao" />
-        <activity
-            android:name=".Notification.ver_notificacao" />
+        <activity android:name=".Notification.notificacao" />
+        <activity android:name=".Notification.ver_notificacao" />
         <activity
             android:name=".telas.minhaConta.minhaConta"
             android:label="@string/title_activity_minha_conta"
@@ -71,8 +69,7 @@
         <activity
             android:name=".telas.meuSalao.meuSalao"
             android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".telas.carregando" />
+        <activity android:name=".telas.carregando" />
         <activity
             android:name=".telas.meuSalao.editar_salao"
             android:windowSoftInputMode="stateHidden" />
@@ -87,7 +84,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".telas.meuSalao.funcionario.cadastrar_funcionario"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".telas.meuSalao.servico_salao"></activity>
     </application>
 
 </manifest>
