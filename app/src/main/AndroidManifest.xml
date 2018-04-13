@@ -85,7 +85,6 @@
         <activity
             android:name=".telas.meuSalao.funcionario.cadastrar_funcionario"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.servico.cadastro_servico_salao" />
         <activity android:name=".telas.meuSalao.servico.servicos_salao" />
         <activity android:name=".telas.meuSalao.servico.ver_servico_salao"></activity>
     </application>

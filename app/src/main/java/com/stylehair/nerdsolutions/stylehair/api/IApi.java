@@ -324,6 +324,29 @@ public interface IApi {
     Call<List<ServicoSalao>> BuscaServicosSalao(@Path("id") String id);
 
 
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/servi_saloes/salvar/")
+    Call<ResponseBody> SalvarServicoSalao(@Part("idSalao") RequestBody idSalao,
+                                          @Part("servico") RequestBody servico,
+                                          @Part("tempo") RequestBody tempo,
+                                          @Part("sexo") RequestBody sexo,
+                                          @Part("valor") RequestBody valor);
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/servi_saloes/editar/")
+    Call<ResponseBody> EditarServicoSalao(@Part("idServicoSalao") RequestBody idServicoSalao,
+                                          @Part("servico") RequestBody servico,
+                                          @Part("tempo") RequestBody tempo,
+                                          @Part("sexo") RequestBody sexo,
+                                          @Part("valor") RequestBody valor);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/servi_saloes/deletar/{id}")
+    Call<ResponseBody> ExcluirServicosSalao(@Path("id") String id);
+
+
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
           .connectTimeout(15, TimeUnit.SECONDS)

@@ -10,7 +10,6 @@ import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.cadastro_servico_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.servicos_salao;
 
 public class meuSalao extends AppCompatActivity {

@@ -1,6 +1,8 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,7 +34,7 @@ import retrofit2.Response;
 public class servicos_salao extends AppCompatActivity {
     RecyclerView lista;
     List<ServicoSalao> servicosSalao;
-    String idSalao = "0";
+    String idSalao;
 
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
@@ -47,13 +49,17 @@ public class servicos_salao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Serviços");
-loading = new Loading(servicos_salao.this);
+        loading = new Loading(servicos_salao.this);
+
+        SharedPreferences getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        idSalao = getSharedPreferences.getString("idSalao", "");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.bt_add_servico);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(servicos_salao.this,cadastro_servico_salao.class);
+                Intent intent = new Intent(servicos_salao.this,ver_servico_salao.class);
                 startActivity(intent);
             }
         });
@@ -84,10 +90,7 @@ loading = new Loading(servicos_salao.this);
                 switch (response.code())
                 {
                     case 200:
-
-
                         List<ServicoSalao> ListaServicos = response.body();
-
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         lista.setAdapter(new Adaptador_servico_salao(ListaServicos));

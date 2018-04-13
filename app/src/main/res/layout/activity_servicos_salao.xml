@@ -34,7 +34,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@color/corToobar"
-        android:src="@drawable/icone_add_funcionario"
+        android:src="@drawable/icone_servicos"
         />
 
 </android.support.design.widget.CoordinatorLayout>

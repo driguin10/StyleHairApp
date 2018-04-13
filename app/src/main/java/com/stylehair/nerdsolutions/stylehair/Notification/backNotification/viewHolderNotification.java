@@ -72,8 +72,6 @@ Context contexto;
 
         if (view.getId() == excluir.getId()) {
 
-
-
             new AlertDialog.Builder(view.getContext())
                     .setTitle("Excluir")
                     .setMessage("Deseja excluir esta notificação?")
