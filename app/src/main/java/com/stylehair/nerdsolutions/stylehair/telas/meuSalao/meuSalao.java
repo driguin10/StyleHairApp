@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.cadastro_servico_salao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.servicos_salao;
 
 public class meuSalao extends AppCompatActivity {
     CardView bt_meuSalao;
@@ -60,7 +62,7 @@ public class meuSalao extends AppCompatActivity {
         bt_Servicos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(meuSalao.this,servico_salao.class);
+                Intent intent = new Intent(meuSalao.this,servicos_salao.class);
                 startActivity(intent);
             }
         });

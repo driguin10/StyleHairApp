@@ -7,6 +7,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
 
+import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
@@ -318,7 +319,9 @@ public interface IApi {
     Call<TipoUsuario> tipoUsuario(@Path("id") int id);
     //-----------------------------------------------------------------------------
 
-
+    @Headers("apiKey:" + chave)
+    @GET("v1/servi_saloes/servicos/{id}")
+    Call<List<ServicoSalao>> BuscaServicosSalao(@Path("id") String id);
 
 
     //******************* SERVICE RETROFIT ******************************

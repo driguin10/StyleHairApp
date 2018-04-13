@@ -6,7 +6,8 @@ package com.stylehair.nerdsolutions.stylehair.classes;
 public class ServicoSalao {
     private int idServicoSalao;
     private int idSalao;
-    private String tipo;
+    private String servico;
+    private String tempo;
     private String sexo;
     protected float valor;
 
@@ -26,12 +27,20 @@ public class ServicoSalao {
         this.idSalao = idSalao;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getServico() {
+        return servico;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setServico(String servico) {
+        this.servico = servico;
+    }
+
+    public String getTempo() {
+        return tempo;
+    }
+
+    public void setTempo(String tempo) {
+        this.tempo = tempo;
     }
 
     public String getSexo() {
