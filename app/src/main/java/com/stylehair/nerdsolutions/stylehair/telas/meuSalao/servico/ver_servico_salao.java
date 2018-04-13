@@ -94,6 +94,14 @@ public class ver_servico_salao extends AppCompatActivity {
                 valor.getEditText().setText(bundle.getString("valor"));
                 id_servico=bundle.getString("idServico");
 
+                for(int i= 0; i < sexo.getAdapter().getCount(); i++)
+                {
+                    if(sexo.getAdapter().getItem(i).toString().contains(bundle.getString("sexo")))
+                    {
+                        sexo.setSelection(i);
+                    }
+                }
+
             }
 
         }
