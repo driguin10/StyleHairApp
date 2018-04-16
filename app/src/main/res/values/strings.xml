@@ -78,4 +78,26 @@
         <item>09</item>
     </string-array>
 
+
+    <string-array name="servicos_salao">
+        <item>Corte Masculino</item>
+        <item>Mechas Masculino</item>
+        <item>Penteados Masculino</item>
+        <item>Hidratação Masculino</item>
+        <item>Tingimento Masculino</item>
+        <item>Plástica dos Fios Masculino</item>
+        <item>Design de Sobrancelhas Masculino</item>
+        <item>Alisamento Masculino</item>
+        <item>Corte Pigmentado Masculino</item>
+        <item>Barba</item>
+        <item>Corte Feminino</item>
+        <item>Mechas Feminino</item>
+        <item>Penteados Feminino</item>
+        <item>Hidratação Feminino</item>
+        <item>Tingimento Feminino</item>
+        <item>Plástica dos Fios Feminino</item>
+        <item>Design de Sobrancelhas Feminino</item>
+        <item>Alisamento Feminino</item>
+    </string-array>
+
 </resources>

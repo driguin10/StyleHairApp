@@ -347,6 +347,28 @@ public interface IApi {
     Call<ResponseBody> ExcluirServicosSalao(@Path("id") String id);
 
 
+    //-------------------------servicos funcionario-----------------------
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/servi_funcionarios/salvar/")
+    Call<ResponseBody> SalvarServicoFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
+                                          @Part("idServicoSalao") RequestBody idServicoSalao);
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/servi_funcionarios/salvar/")
+    Call<ResponseBody> EditarServicoFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
+                                                @Part("idServicoSalao") RequestBody idServicoSalao);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/servi_funcionarios/deletar/{id}")
+    Call<ResponseBody> ExcluirServicosFuncionario(@Path("id") String id);
+
+    //----------------------------------------------------
+
+
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
           .connectTimeout(15, TimeUnit.SECONDS)

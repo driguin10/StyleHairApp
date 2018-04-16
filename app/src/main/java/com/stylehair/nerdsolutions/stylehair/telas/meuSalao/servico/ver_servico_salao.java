@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,7 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -20,10 +24,14 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.cadastrar_funcionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.ver_funcionario;
+
+import java.util.Arrays;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -49,6 +57,8 @@ public class ver_servico_salao extends AppCompatActivity {
     String id_servico;
     Bundle bundle;
 
+    AutoCompleteTextView EdtServico;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,16 +69,30 @@ public class ver_servico_salao extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
          bundle = ver_servico_salao.this.getIntent().getExtras();
 
+
+
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         id_Salao = getSharedPreferences.getString("idSalao", "");
         loading = new Loading(ver_servico_salao.this);
         servico = (TextInputLayout) findViewById(R.id.cadServico);
         tempo = (TextInputLayout) findViewById(R.id.txt_cadtempo);
+        tempo.setEnabled(false);
         valor = (TextInputLayout) findViewById(R.id.cadValor);
         sexo = (Spinner) findViewById(R.id.spn_cadServSexo);
         btPesquisaTempo =(ImageButton) findViewById(R.id.pesquisa_tempo);
         salvar = (Button) findViewById(R.id.bt_salvarServico);
+
+        btPesquisaTempo.requestFocus();
+
+        List<String> servicosSal =
+                Arrays.asList(getResources().getStringArray(R.array.servicos_salao));
+
+        ArrayAdapter<String> adapters = new ArrayAdapter<String>(ver_servico_salao.this,
+                android.R.layout.simple_dropdown_item_1line,servicosSal);
+        EdtServico = (AutoCompleteTextView) findViewById(R.id.edt_servico);
+
+        EdtServico.setAdapter(adapters);
 
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,11 +112,13 @@ public class ver_servico_salao extends AppCompatActivity {
         if(bundle!=null)
         {
             if(!bundle.getString("servico").isEmpty()) {
-                getSupportActionBar().setTitle(bundle.getString("servico"));
-                servico.getEditText().setText(bundle.getString("servico"));
-                tempo.getEditText().setText(bundle.getString("tempo"));
+                getSupportActionBar().setTitle("Serviço - " + bundle.getString("servico"));
+               servico.getEditText().setText(bundle.getString("servico"));
+
+                tempo.getEditText().setText(bundle.getString("tempo").substring(0,5));
                 valor.getEditText().setText(bundle.getString("valor"));
                 id_servico=bundle.getString("idServico");
+
 
                 for(int i= 0; i < sexo.getAdapter().getCount(); i++)
                 {
@@ -108,7 +134,24 @@ public class ver_servico_salao extends AppCompatActivity {
         else {
             getSupportActionBar().setTitle("Cadastro de Serviços");
         }
+
+        btPesquisaTempo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_cadtempo);
+               // tempo.getEditText().setError(null);
+            }
+        });
     }
+
+
+    public void showTimePickerDialog(View v,int idCampo) {
+        timerPick tim = new timerPick();
+        tim.setId(idCampo);
+        DialogFragment newFragment = tim;
+        newFragment.show(getFragmentManager(), "timePicker");
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
@@ -128,7 +171,7 @@ public class ver_servico_salao extends AppCompatActivity {
 
     public void salvar(){
         RequestBody IdSalao = RequestBody.create(MediaType.parse("text/plain"), id_Salao);
-        RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),servico.getEditText().getText().toString());
+        RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),EdtServico.getText().toString());
         RequestBody Sexo = RequestBody.create(MediaType.parse("text/plain"), sexo.getSelectedItem().toString());
         RequestBody Valor = RequestBody.create(MediaType.parse("text/plain"), valor.getEditText().getText().toString());
         RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"), tempo.getEditText().getText().toString());
@@ -183,7 +226,7 @@ public class ver_servico_salao extends AppCompatActivity {
 
     public void editar(){
         RequestBody IdServicoSalao = RequestBody.create(MediaType.parse("text/plain"), id_servico);
-        RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),servico.getEditText().getText().toString());
+        RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),EdtServico.getText().toString());
         RequestBody Sexo = RequestBody.create(MediaType.parse("text/plain"), sexo.getSelectedItem().toString());
         RequestBody Valor = RequestBody.create(MediaType.parse("text/plain"), valor.getEditText().getText().toString());
         RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"), tempo.getEditText().getText().toString());
