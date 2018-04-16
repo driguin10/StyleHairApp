@@ -366,6 +366,10 @@ public interface IApi {
     @GET("v1/servi_funcionarios/deletar/{id}")
     Call<ResponseBody> ExcluirServicosFuncionario(@Path("id") String id);
 
+    @Headers("apiKey:" + chave)
+    @GET("v1/servi_funcionarios/servicos/{id}")
+    Call<List<ServicoSalao>> BuscaServicosFuncionario(@Path("id") String id);
+
     //----------------------------------------------------
 
 

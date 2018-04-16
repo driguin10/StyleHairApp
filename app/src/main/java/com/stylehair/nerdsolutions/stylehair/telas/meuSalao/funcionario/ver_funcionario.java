@@ -6,15 +6,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+
 import android.view.MenuItem;
 
-import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
-import com.stylehair.nerdsolutions.stylehair.Notification.ver_notificacao;
+
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
-import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentLogin;
-import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentUsuario;
+
 
 public class ver_funcionario extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
