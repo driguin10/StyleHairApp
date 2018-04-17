@@ -370,7 +370,6 @@ public class principal extends AppCompatActivity
 
 
     @Override
-
     protected void onActivityResult(int requestCode, int ResultCode, Intent intent){
         if(requestCode == 1){
             atualizatipo();

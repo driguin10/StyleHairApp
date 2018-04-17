@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -21,6 +23,9 @@ import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.Adaptador_se
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,8 +38,10 @@ public class Cadastro_servico_funcionario extends AppCompatActivity {
 
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
+    int qtTentativaRealizadaSalvar = 0;
+Button btSalvarServico;
     Loading loading;
+    List<ServicoSalao> ListaServicos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +52,96 @@ public class Cadastro_servico_funcionario extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Adicionar Serviços");
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+            idFuncionario = bundle.getString("idFuncionario");
+        }
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         idSalao = getSharedPreferences.getString("idSalao", "");
         lista = (RecyclerView) findViewById(R.id.listServicosCadastroFunc);
         lista.setHasFixedSize(true);
+        btSalvarServico = (Button) findViewById(R.id.bt_salvarServicoFunc);
+        btSalvarServico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String idServicoCad =  "";
+                for(int x= 0; x< lista.getChildCount(); x++)
+                {
+                    if(lista.getChildAt(x).findViewById(R.id.cardsServicoEscolhido).isSelected())
+                    {
+                        //Log.d("xex","id- " + String.valueOf(ListaServicos.get(x).getIdServicoSalao()));
+                        idServicoCad = String.valueOf(ListaServicos.get(x).getIdServicoSalao());
+                    }
+                }
+
+                salvarServicos(idFuncionario,idServicoCad);
+            }
+        });
         loading.abrir("Atualizando...");
         getServicos(idSalao);
 
     }
+
+    public void salvarServicos(final String idFunc, final String idServ)
+    {
+
+        RequestBody func = RequestBody.create(MediaType.parse("text/plain"),idFunc);
+        RequestBody serv = RequestBody.create(MediaType.parse("text/plain"),idServ);
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callServicoFunc = iApi.SalvarServicoFuncionario(func,serv);
+        callServicoFunc.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                qtTentativaRealizadaSalvar = 0 ;
+                callServicoFunc.cancel();
+
+                loading.fechar();
+                switch (response.code())
+                {
+                    case 204:
+                        Toast.makeText(Cadastro_servico_funcionario.this,"Salvo com sucesso !!",Toast.LENGTH_LONG).show();
+                       finish();
+                        break;
+
+                    case 400:
+                        switch (response.message())
+                        {
+                            case "01":
+                                Toast.makeText(Cadastro_servico_funcionario.this,"Já cadastrado !!",Toast.LENGTH_LONG).show();
+                                break;
+
+                            case "03":
+                                Toast.makeText(Cadastro_servico_funcionario.this,"erro !!",Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                        break;
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (qtTentativaRealizadaSalvar < qtTentativas) {
+                    qtTentativaRealizadaSalvar++;
+
+                    salvarServicos(idFunc,idServ);
+                }
+                else {
+                    loading.fechar();
+                    Log.d("xex","erro");
+                    Log.d("xex",t.getMessage());
+                }
+            }
+        });
+
+    }
+
 
 
 
@@ -73,10 +161,10 @@ public class Cadastro_servico_funcionario extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 200:
-                        List<ServicoSalao> ListaServicos = response.body();
+                        ListaServicos = response.body();
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        lista.setAdapter(new Adaptador_servico_funcionario_escolhido(ListaServicos,idFuncionario));
+                        lista.setAdapter(new Adaptador_servico_funcionario_escolhido(ListaServicos,idFuncionario,lista));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;

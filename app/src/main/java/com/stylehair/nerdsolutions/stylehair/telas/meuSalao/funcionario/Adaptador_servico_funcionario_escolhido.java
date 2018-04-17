@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,17 @@ public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapte
 
     List<ServicoSalao> ListaServicoSalao;
     String idFunc;
+    RecyclerView lista;
 
 
 
+    int selected_position = 0;
 
-    public Adaptador_servico_funcionario_escolhido(List<ServicoSalao> listaServicoSalao, String idFuncionario) {
+
+    public Adaptador_servico_funcionario_escolhido(List<ServicoSalao> listaServicoSalao, String idFuncionario,RecyclerView listaa) {
         ListaServicoSalao = listaServicoSalao;
         idFunc = idFuncionario;
-
+        lista = listaa;
 
     }
 
@@ -40,9 +44,14 @@ public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapte
     public void onBindViewHolder(viewHolderServicoFuncionarioEscolhido holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
          holder.idF = idFunc;
+         holder.lista = lista;
 
 
 }
+
+
+
+
     @Override
     public int getItemCount() {
         return ListaServicoSalao.size();

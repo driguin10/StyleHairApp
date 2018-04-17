@@ -57,7 +57,7 @@ public class fragment_servicos_funcionarios extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
          view = inflater.inflate(R.layout.fragment_fragment_servicos, container, false);
@@ -77,12 +77,27 @@ public class fragment_servicos_funcionarios extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),Cadastro_servico_funcionario.class);
-                startActivity(intent);
+                intent.putExtra("idFuncionario",idFuncionario);
+                startActivityForResult(intent,1);
+
             }
         });
 
         return view;
     }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+           getServicos(idFuncionario);
+        }
+    }
+
+
     public void getServicos(String id)
     {
 
@@ -133,14 +148,6 @@ public class fragment_servicos_funcionarios extends Fragment {
         });
 
     }
-
-
-
-
-
-
-
-
 
 
     public void onButtonPressed(Uri uri) {
