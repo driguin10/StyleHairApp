@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -114,8 +115,13 @@ public class principal extends AppCompatActivity
                 DateFormat dateFormat = new SimpleDateFormat("HH:mm");
                 Date date = new Date();
 
+                String tituloNotify = "Promoção 10% desconto";
+                String nomeSalaoMen = "LuizCabeleireiro";
+                String tituloMen = "Amanhã promoção de 10% de desconto Codigo-311447" ;
+                String horaMen = dateFormat.format(date);
 
-                Notification notification = new Notification("LuizCabeleireiro#Amanhã promoção de 10% de desconto para quem utiliza este aplicativo#"+dateFormat.format(date),"Promoção 10% desconto");
+                String saidaMen = nomeSalaoMen+"§"+tituloMen+"§"+horaMen;
+                Notification notification = new Notification(saidaMen,tituloNotify);
                 Sender sender = new Sender(notification, "/topics/meusalao");
                 INotification iNotification = INotification.retrofit.create(INotification.class);
                 iNotification.enviarNotificacao(sender).enqueue(new Callback<ReturnMessage>() {
@@ -336,6 +342,10 @@ public class principal extends AppCompatActivity
         return true;
     }
 
+    public void atualizaTopico()
+    {
+
+    }
 
     public void atualizaTela(String user){
         Menu men = navigationView.getMenu();

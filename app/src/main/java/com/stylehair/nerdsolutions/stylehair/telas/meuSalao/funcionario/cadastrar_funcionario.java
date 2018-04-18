@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -37,6 +39,7 @@ import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
@@ -267,11 +270,18 @@ Loading loading;
         BtSalvar = (Button)findViewById(R.id.bt_salvarNovo);
         ImagemUser = (CircleImageView) findViewById(R.id.imagemUserNovo);
 
+        //---------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
+        cadTelefoneUser.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, cadTelefoneUser.getEditText()));
+        cadCepUser.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, cadCepUser.getEditText()));
+        cadNascimento.getEditText().addTextChangedListener(Mask.insert(Mask.DATA_MASK, cadNascimento.getEditText()));
+        //---------------------------------------------------------------------------------------------------------------
+
+
 
         BtSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /*   Log.d("xex","idSalao - "+ String.valueOf(id_Salao));
+             /* Log.d("xex","idSalao - "+ String.valueOf(id_Salao));
                 Log.d("xex","idUsuario - "+ String.valueOf(id_Usuario));
                 Log.d("xex","idLogin - "+ String.valueOf(id_Login));*/
                 if(!verificaCampos())
@@ -283,17 +293,17 @@ Loading loading;
                     if (id_Login == -1 && id_Usuario == -1) {
                         //tipo 3 -- não tem nenhum cadastro
                         loading.abrir("salvando....");
-                        Log.d("xex", "salvar3");
+
                         salvar3();
                     } else if (id_Login != -1 && id_Usuario == -1) {
                         // tipo 2 tem só login
                         loading.abrir("salvando....");
-                        Log.d("xex", "salvar2");
+
                         salvar2();
                     } else if (id_Login != -1 && id_Usuario != -1) {
                         // tipo 1 tem tudo
                         loading.abrir("salvando....");
-                        Log.d("xex", "salvar1");
+
                         salvar1();
                     }
                 }
@@ -432,7 +442,7 @@ Loading loading;
                     String[] ids = ListcadFunc.getId().split("#");
                     String iduser = ids[0];
                     String idfunc = ids[1];
-                    Log.d("xex",iduser + "-" + idfunc );
+
                     if(iduser.equals("-1") && iduser.equals("-2") && idfunc.equals("-1"))
                     {
                         Toast.makeText(cadastrar_funcionario.this,"erro ao salvar !!" ,Toast.LENGTH_LONG).show();
@@ -502,10 +512,9 @@ Loading loading;
                 qtTentativaRealizadaSalvar3 = 0;
                 callCriaFunc3.cancel();
 
-                Log.d("xex",String.valueOf(response.code()) + "--" + response.message());
 
                 CadastroFuncionario ListcadFunc = response.body();
-                Log.d("xex","men - " + ListcadFunc.getId());
+
                 if(response.isSuccessful())
                 {
                     String[] ids = ListcadFunc.getId().split("#");
@@ -808,6 +817,7 @@ Loading loading;
         AlertDialog.Builder builder = new AlertDialog.Builder(cadastrar_funcionario.this);
         builder.setView(view);
         alerta = builder.create();
+        alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alerta.show();
 
     }
@@ -950,7 +960,7 @@ Loading loading;
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(),this, year, month, day);
+            return new DatePickerDialog(getActivity(),R.style.MyDatePickerDialogTheme,this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {

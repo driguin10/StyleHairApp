@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 
 import android.net.Uri;
@@ -580,6 +582,7 @@ public class fragmentUsuario extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
         alerta = builder.create();
+        alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alerta.show();
 
     }
@@ -680,7 +683,7 @@ public class fragmentUsuario extends Fragment {
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(),this, year, month, day);
+            return new DatePickerDialog(getActivity(),R.style.MyDatePickerDialogTheme,this, year, month, day);
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {

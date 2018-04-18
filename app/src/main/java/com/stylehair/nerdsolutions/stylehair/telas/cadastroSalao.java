@@ -1,6 +1,5 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -19,12 +18,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
-
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -32,10 +29,8 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
-
 import java.io.File;
 import java.io.IOException;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -49,12 +44,9 @@ public class cadastroSalao extends AppCompatActivity {
     AlertDialog alerta;
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
-
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
-
     CircleImageView ImagemSalao;
-
     TextInputLayout NomeSalao;
     TextInputLayout Telefone1Salao;
     TextInputLayout Telefone2Salao;
@@ -67,34 +59,23 @@ public class cadastroSalao extends AppCompatActivity {
     TextInputLayout EmailSalao;
     TextInputLayout CnpjSalao;
     TextInputLayout ComplementoSalao;
-
     Spinner EstadoSalao;
-
     Button SalvarSalao;
     Button CaregaImgSalao ;
-
-
     ImageButton ExcluiImgSalao;
-
     String IdUsuario;
-
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
     int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
-
     Image image;
     String ImageAntiga="";
-
     Drawable bitmapPadrao;//guarda a imagem padrao do usuario
     Config config;
-
     String LinkImagem = "";
     Loading loading;
     Switch agendar;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,20 +160,15 @@ public class cadastroSalao extends AppCompatActivity {
 
             }
         });
-
-
-
         //------
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {
             finish();
         }
-        
         return super.onOptionsItemSelected(item);
     }
 
@@ -215,11 +191,8 @@ public class cadastroSalao extends AppCompatActivity {
         if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
                 && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals("")&& verificaTelefone(VTelefone2Salao))
         {
-
-
             if(verificaTelefone(VTelefone1Salao))
                 status = true;
-
             else {
                 status = false;
                 Telefone1Salao.requestFocus();
@@ -277,7 +250,6 @@ public class cadastroSalao extends AppCompatActivity {
             verifica = true;
         else
             verifica = false;
-
         return  verifica;
 
     }
@@ -295,9 +267,7 @@ public class cadastroSalao extends AppCompatActivity {
         view.findViewById(R.id.bt_get_camera).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-
                 startActivityForResult(intent,imagem_camera);
-
             }
         });
 
@@ -311,10 +281,8 @@ public class cadastroSalao extends AppCompatActivity {
         builder.setView(view);
         alerta = builder.create();
         alerta.show();
-
     }
     //-------------------------------------
-
 
     //--------- quando escolhe uma imagem---------------------------------
     @Override
@@ -322,9 +290,7 @@ public class cadastroSalao extends AppCompatActivity {
     {
         alerta.dismiss();
         if(resultCode!=0)
-
         loading.abrir("Carregando Imagem...");
-
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
@@ -388,7 +354,6 @@ public class cadastroSalao extends AppCompatActivity {
 
     }
     //----------------------------------------------------------------------
-
 
     //-------- função para salvar o usuario-------------
     public void salvarSalao() {

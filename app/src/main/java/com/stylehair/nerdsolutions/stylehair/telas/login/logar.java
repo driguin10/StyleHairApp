@@ -20,6 +20,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
@@ -156,8 +157,10 @@ public class logar extends AppCompatActivity {
                         String Email = "";
                         String NomeUsuario = "";
                         String linkImagem = "";
+                        String topico = "";
                         NomeUsuario = logar.getNomeUser();
                         linkImagem = logar.getLinkImagem();
+                        topico = logar.getTopico();
 
                         for (Login log : logar.login) {
                             Email = log.getEmail();
@@ -173,11 +176,17 @@ public class logar extends AppCompatActivity {
                         e.putString("nomeUser",NomeUsuario);
                         e.putString("linkImagem",linkImagem);
                         e.putBoolean("firstStart", false);
+                        e.putString("topicoNotificacao",topico);
                         e.apply();
                         e.commit();
+                        Log.d("xex", "topico = "+ topico);
 
-                        FirebaseMessaging.getInstance().subscribeToTopic("AllNotifications");
-                        FirebaseMessaging.getInstance().subscribeToTopic("meusalao");
+                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
+                        topicoNotificacao.addTopico("AllNotifications");
+                        if(!topico.equals("")) {
+                            topicoNotificacao.addTopico(topico);
+                        }
+
                         Intent i = new Intent(com.stylehair.nerdsolutions.stylehair.telas.login.logar.this, principal.class);
                         startActivity(i);
                         finish();

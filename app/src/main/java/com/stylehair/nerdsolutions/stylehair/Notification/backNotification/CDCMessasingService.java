@@ -37,7 +37,7 @@ public class CDCMessasingService extends FirebaseMessagingService {
 
         String Titulo = notification.getTitle();
         String Corpo = notification.getBody();
-        String[] info = Corpo.split("#");
+        String[] info = Corpo.split("§");
 
         Intent intent = new Intent(this, notificacao.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

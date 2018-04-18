@@ -55,6 +55,7 @@ public class ver_funcionario extends AppCompatActivity {
                 Intent intent = new Intent(ver_funcionario.this,funcionarios.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
                 break;
             default:break;
         }

@@ -11,6 +11,7 @@ public class Logar {
     public String idUser;
     public String nomeUser;
     public String linkImagem;
+    public String topico;
 
     public List<Login> getLogin() {
         return login;
@@ -42,5 +43,13 @@ public class Logar {
 
     public void setLinkImagem(String linkImagem) {
         this.linkImagem = linkImagem;
+    }
+
+    public String getTopico() {
+        return topico;
+    }
+
+    public void setTopico(String topico) {
+        this.topico = topico;
     }
 }

@@ -91,7 +91,8 @@
         <activity
             android:name=".telas.meuSalao.servico.ver_servico_salao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.funcionario.Cadastro_servico_funcionario"></activity>
+        <activity android:name=".telas.meuSalao.funcionario.Cadastro_servico_funcionario" />
+        <activity android:name=".telas.meuSalao.notificacoes.Notificacao"></activity>
     </application>
 
 </manifest>
