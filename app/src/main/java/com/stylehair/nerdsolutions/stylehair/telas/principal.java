@@ -2,16 +2,15 @@ package com.stylehair.nerdsolutions.stylehair.telas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
-
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuInflater;
@@ -26,32 +25,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
-import com.stylehair.nerdsolutions.stylehair.api.INotification;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
-import com.stylehair.nerdsolutions.stylehair.Notification.Notification;
-import com.stylehair.nerdsolutions.stylehair.Notification.ReturnMessage;
-import com.stylehair.nerdsolutions.stylehair.Notification.Sender;
 import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
+import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -59,6 +51,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,6 +62,8 @@ public class principal extends AppCompatActivity
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
 
+
+    public int qtTentativaRealizadaUser = 0;
 
     String typeUser="";
     int ResultCode = 0;
@@ -86,6 +81,8 @@ public class principal extends AppCompatActivity
      Logout logout;
     AlertDialog alerta;
     Loading loading;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +104,8 @@ public class principal extends AppCompatActivity
 
 
 
+
+/*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,27 +121,21 @@ public class principal extends AppCompatActivity
 
                 String saidaMen = nomeSalaoMen+"§"+tituloMen+"§"+horaMen;
                 Notification notification = new Notification(saidaMen,tituloNotify);
-                Sender sender = new Sender(notification, "/topics/meusalao");
+                Sender sender = new Sender(notification, "/topics/AllNotifications");
                 INotification iNotification = INotification.retrofit.create(INotification.class);
                 iNotification.enviarNotificacao(sender).enqueue(new Callback<ReturnMessage>() {
                     @Override
                     public void onResponse(Call<ReturnMessage> call, Response<ReturnMessage> response) {
-
                             Toast.makeText(principal.this,"enviado",Toast.LENGTH_LONG).show();
-
                     }
 
                     @Override
                     public void onFailure(Call<ReturnMessage> call, Throwable t) {
-
                         Toast.makeText(principal.this,"erro",Toast.LENGTH_LONG).show();
                     }
                 });
-
-
-
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -193,6 +186,7 @@ public class principal extends AppCompatActivity
         if(verificaConexao.verifica(principal.this)) {
             loading.abrir("Aguarde...Carregando!!!");
             atualizatipo();
+            pegarUsuario(idLogin);
         }
         else
         {
@@ -264,7 +258,9 @@ public class principal extends AppCompatActivity
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getBaseContext(), query, Toast.LENGTH_SHORT).show();
+                Intent intent =new Intent(principal.this,busca_salao.class);
+                intent.putExtra("query",query);
+                startActivity(intent);
                 return false;
             }
 
@@ -330,8 +326,15 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,7);
 
         } else if (id == R.id.nav_configuracao) {
-            Intent intent=new Intent(principal.this,configuracaoApp.class);
-            startActivityForResult(intent,8);
+
+
+            permissoes = new Permissoes();
+            if(permissoes.habilitarLocalizacao(principal.this))
+            {
+                Intent intent=new Intent(principal.this,Mapa.class);
+                startActivityForResult(intent,1);
+            }
+
 
         } else if (id == R.id.nav_logout) {
             logout.deslogar(this,true);
@@ -342,10 +345,7 @@ public class principal extends AppCompatActivity
         return true;
     }
 
-    public void atualizaTopico()
-    {
 
-    }
 
     public void atualizaTela(String user){
         Menu men = navigationView.getMenu();
@@ -354,6 +354,15 @@ public class principal extends AppCompatActivity
             men.findItem(R.id.nav_criarSalao).setVisible(false);
             men.findItem(R.id.nav_meuSalao).setVisible(true);
             men.findItem(R.id.nav_meu_agendamento).setVisible(true);
+
+            Fragment fragment = null;
+            fragment = new fragment_principal_gerente();
+            //replacing the fragment
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame_principal, fragment);
+                ft.commit();
+            }
         }
         else
         if(user == "funcionario")//funcionario
@@ -507,4 +516,52 @@ public class principal extends AppCompatActivity
             }
         });
     }
+
+    //---- função para pegar dados do usuario do servidor----
+    public void pegarUsuario(final int id_Usuario){
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuario(id_Usuario);
+        callBuscaUser.enqueue(new Callback<List<Usuario>>() {
+            @Override
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+                loading.fechar();
+                callBuscaUser.cancel();
+                switch (response.code()) {
+                    case 200:
+                        qtTentativaRealizadaUser = 0;
+                        List<Usuario> users = response.body();
+                        Usuario user = users.get(0);
+                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
+                        topicoNotificacao.addTopico(user.getTopicoNotificacao());
+                        Log.d("xex", "add ao topico -" +user.getTopicoNotificacao() );
+                        break;
+
+
+                    case 400:
+                        if (response.message().equals("1")) {
+
+                        }
+                        if (response.message().equals("2")) {
+
+                            //paramentros incorretos
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
+                if (qtTentativaRealizadaUser < qtTentativas) {
+                    qtTentativaRealizadaUser++;
+                    pegarUsuario(idLogin);
+                }
+                else {
+                    loading.fechar();
+                }
+            }
+        });
+
+    }
+    //-------------------------------------------------------
+
 }

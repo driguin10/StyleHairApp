@@ -4,9 +4,14 @@
 
     <item
         android:id="@+id/search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/icone_pesquisa"
         android:title="Pesquisar"
         app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom"/>
+    <item
+        android:id="@+id/filter"
+        android:title="Filtros"
+        android:icon="@drawable/icone_filtro"
         app:showAsAction="collapseActionView|ifRoom"/>
 
 </menu>

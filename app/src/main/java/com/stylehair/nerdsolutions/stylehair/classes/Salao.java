@@ -16,6 +16,8 @@ public class Salao {
     private String bairro;
     private String cidade;
     private String estado;
+    private Double latitude;
+    private Double longitude;
     private String telefone1;
     private String telefone2;
     private String cnpj;
@@ -127,6 +129,22 @@ public class Salao {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public String getTelefone1() {

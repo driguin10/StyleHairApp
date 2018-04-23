@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -91,8 +93,32 @@
         <activity
             android:name=".telas.meuSalao.servico.ver_servico_salao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.funcionario.Cadastro_servico_funcionario" />
-        <activity android:name=".telas.meuSalao.notificacoes.Notificacao"></activity>
+        <activity
+            android:name=".telas.meuSalao.funcionario.Cadastro_servico_funcionario"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.meuSalao.notificacoes.Notificacao"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".telas.meuSalao.notificacoes.pesquisaFuncionario"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".telas.meuSalao.avaliacoes.avaliacoes" />
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".telas.Mapa"
+            android:label="@string/title_activity_mapa" />
+        <activity android:name=".telas.busca.busca_salao"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
@@ -23,10 +24,12 @@ import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.api.INotification;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
+import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.principal;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -50,9 +53,12 @@ public class Notificacao extends AppCompatActivity {
 
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
-
+    int qtTentativaRealizadaUsuario = 0;
+    int qtTentativaRealizadaSalao = 0;
     String IdUsuario;
+    String IdUsuarioEscolhido;
     String TopicoSalao;
+    String NomeSalao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,10 +88,9 @@ public class Notificacao extends AppCompatActivity {
             public void onClick(View v) {
                 String tit = tituloNot.getEditText().getText().toString();
                 String men = menssagemNotify.getEditText().getText().toString();
-                String nomeS = "teste";
 
              loading.abrir("Enviando, aguarde...");
-                EnviarNotificacao(tit,men,nomeS,topico);
+                EnviarNotificacao(tit,men,NomeSalao,topico);
             }
         });
 
@@ -100,12 +105,29 @@ public class Notificacao extends AppCompatActivity {
         btFuncionarios.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enviarP.setText("driguin_10@hotmail.com");
+
+                Intent intent = new Intent(Notificacao.this,pesquisaFuncionario.class);
+                startActivityForResult(intent,1);
             }
         });
+
+        pegarSalao(IdUsuario);
     }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
 
+                String[] teste = data.getData().toString().split("#");
+
+                enviarP.setText(teste[0]);
+                IdUsuarioEscolhido = teste[1];
+                pegarUsuario(Integer.valueOf(IdUsuarioEscolhido));
+
+
+            }
+        }
+    }
 
     public void EnviarNotificacao(String titulo, String menssagem, String nomeSalao, String topico){
         DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -148,6 +170,7 @@ public class Notificacao extends AppCompatActivity {
                         List<Salao> saloes = response.body();
                         Salao salao = saloes.get(0);
                         TopicoSalao = salao.getTopicoNotificacao();
+                        NomeSalao = salao.getNome();
                         break;
 
 
@@ -183,6 +206,55 @@ public class Notificacao extends AppCompatActivity {
     }
     //-------------------------------------------------------
 
+
+    //---- função para pegar dados do usuario do servidor----
+    public void pegarUsuario(final int id_Usuario){
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuarioId(id_Usuario);
+        callBuscaUser.enqueue(new Callback<List<Usuario>>() {
+            @Override
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+                loading.fechar();
+                callBuscaUser.cancel();
+                switch (response.code()) {
+                    case 200:
+
+
+
+                        List<Usuario> users = response.body();
+                        Usuario user = users.get(0);
+
+                        topico = user.getTopicoNotificacao();
+
+                        break;
+
+
+                    case 400:
+                        if (response.message().equals("1")) {
+
+                        }
+                        if (response.message().equals("2")) {
+
+                            //paramentros incorretos
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
+                if (qtTentativaRealizadaUsuario < qtTentativas) {
+                    qtTentativaRealizadaUsuario++;
+                    pegarUsuario(Integer.valueOf(IdUsuarioEscolhido));
+                }
+                else {
+                    loading.fechar();
+                }
+            }
+        });
+
+    }
+    //-------------------------------------------------------
 
 
 

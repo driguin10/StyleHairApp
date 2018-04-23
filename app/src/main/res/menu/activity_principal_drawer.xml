@@ -15,7 +15,6 @@
         android:id="@+id/nav_salaoFavorito"
         android:icon="@drawable/icone_favorito"
         app:actionViewClass="android.widget.TextView"
-
         android:title="Salões Favoritos" />
     <item
     android:id="@+id/nav_agendamento"

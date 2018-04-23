@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_editar_salao"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/corToobar"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -144,39 +144,7 @@
             </LinearLayout>
 
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/edt_txt_EnderecoSalao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:hint="Endereço *"
-                android:textColorHint="#000000"
-                android:theme="@style/estiloImputCad">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="#000000" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/edt_txt_BairroSalao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:hint="Bairro *"
-                android:textColorHint="#000000"
-                android:theme="@style/estiloImputCad">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textColor="#000000" />
-            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -262,13 +230,15 @@
                     android:theme="@style/estiloSpinner" />
             </LinearLayout>
 
+
+
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/edt_txt_ComplementoSalao"
+                android:id="@+id/edt_txt_EnderecoSalao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:hint="Complemento"
+                android:hint="Endereço *"
                 android:textColorHint="#000000"
                 android:theme="@style/estiloImputCad">
 
@@ -278,6 +248,25 @@
                     android:inputType="text"
                     android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edt_txt_BairroSalao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="Bairro *"
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="#000000" />
+            </android.support.design.widget.TextInputLayout>
+
+
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/edt_txt_CidadeSalao"
@@ -295,6 +284,36 @@
                     android:inputType="text"
                     android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edt_txt_ComplementoSalao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="Complemento"
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textColor="#000000" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/bt_pegarLocalizacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/bt_fragment"
+                android:text="Localizar Salão no Mapa"
+                android:textColor="#fff"
+                android:textSize="20dp" />
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/edt_txt_EmailSalao"

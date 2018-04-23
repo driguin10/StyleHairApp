@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.auxiliar;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -27,6 +28,31 @@ public class Permissoes extends AppCompatActivity {
     {
         //**************** Qual permissão ira solicitar **********************
         String permissao = android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+        //********************************************************************
+
+        if( ContextCompat.checkSelfPermission( activity, permissao ) != PackageManager.PERMISSION_GRANTED )// verifica se tem a permessao
+        {
+            if( ActivityCompat.shouldShowRequestPermissionRationale( activity,permissao)) {//verifica se o usuario já ignorou a permissao
+                callDialog(activity, menssagem, new String[]{permissao});
+            }
+            else {
+                ActivityCompat.requestPermissions(activity, new String[]{permissao}, REQUEST_PERMISSIONS_CODE);// requisita a permissão novamente
+            }
+        }
+        else
+        {
+            habilitado = true;
+        }
+        return  habilitado;
+    }
+
+
+
+    public boolean habilitarLocalizacao(Activity activity)
+    {
+        //**************** Qual permissão ira solicitar **********************
+        String permissao = android.Manifest.permission.ACCESS_FINE_LOCATION;
+
         //********************************************************************
 
         if( ContextCompat.checkSelfPermission( activity, permissao ) != PackageManager.PERMISSION_GRANTED )// verifica se tem a permessao

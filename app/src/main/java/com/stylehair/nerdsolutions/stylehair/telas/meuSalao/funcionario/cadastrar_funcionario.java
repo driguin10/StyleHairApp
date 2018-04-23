@@ -34,16 +34,19 @@ import android.widget.Toast;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.api.APICepService;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.UfToName;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.classes.cep.CEP;
 import com.stylehair.nerdsolutions.stylehair.telas.cadastroSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentUsuario;
 import com.stylehair.nerdsolutions.stylehair.telas.principal;
@@ -276,6 +279,21 @@ Loading loading;
         cadNascimento.getEditText().addTextChangedListener(Mask.insert(Mask.DATA_MASK, cadNascimento.getEditText()));
         //---------------------------------------------------------------------------------------------------------------
 
+        cadCepUser.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    String cep = cadCepUser.getEditText().getText().toString();
+                    String novoCep = cep.trim();
+                    novoCep = cep.replace("-", "");
+
+                    if(novoCep.length() == 8) {
+                        loading.abrir("Buscando endereço...");
+                        pegarCep(novoCep);
+                    }
+                }
+            }
+        });
 
 
         BtSalvar.setOnClickListener(new View.OnClickListener() {
@@ -352,7 +370,40 @@ Loading loading;
     }
 
 
+    public void pegarCep(String cep)
+    {
+        APICepService apiCepService = APICepService.retrofit.create(APICepService.class);
+        final Call<CEP> callBuscaCep = apiCepService.getEnderecoByCEP(cep);
+        callBuscaCep.enqueue(new Callback<CEP>() {
+            @Override
+            public void onResponse(Call<CEP> call, Response<CEP> response) {
+                loading.fechar();
+                if (!response.isSuccessful()) {
 
+                } else {
+                    CEP cep = response.body();
+                    cadEnderecoUser.getEditText().setText(cep.getLogradouro());
+                    cadBairroUser.getEditText().setText(cep.getBairro());
+                    cadCidadeUser.getEditText().setText(cep.getLocalidade());
+
+                    if(cep.getUf()!=null) {
+                        UfToName ufToName = new UfToName();
+                        for (int i = 0; i < cadEstadoUser.getAdapter().getCount(); i++) {
+                            if (cadEstadoUser.getAdapter().getItem(i).toString().contains(ufToName.estado(cep.getUf()))) {
+                                cadEstadoUser.setSelection(i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CEP> call, Throwable t) {
+                loading.fechar();
+                Log.d("xex", "erro no cep");
+            }
+        });
+    }
 
     public void salvar1(){
         RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "1");

@@ -14,31 +14,32 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.CellIdentityCdma;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.api.APICepService;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.UfToName;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
-import com.stylehair.nerdsolutions.stylehair.telas.cadastroSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.cep.CEP;
+import com.stylehair.nerdsolutions.stylehair.telas.Mapa;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,6 +57,7 @@ public class editar_salao extends AppCompatActivity {
     AlertDialog alerta;
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
+    static final int mapa = 2;
 
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
@@ -106,6 +108,10 @@ public class editar_salao extends AppCompatActivity {
 
     Switch agendar;
 
+    Button pegarPosicao;
+
+    String latitude;
+    String longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +158,8 @@ public class editar_salao extends AppCompatActivity {
         ImagemSalao = (CircleImageView) findViewById(R.id.edt_imagemSalao);
         agendar = (Switch)findViewById(R.id.sw_agenda);
 
+        pegarPosicao =(Button) findViewById(R.id.bt_pegarLocalizacao);
+
         //--------------------------------------------------------------------
 
 
@@ -162,6 +170,22 @@ public class editar_salao extends AppCompatActivity {
 
         //---------------------------------------------------------------------------------------------------------------
 
+        CepSalao.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if(!hasFocus) {
+                    String cep = CepSalao.getEditText().getText().toString();
+                    String novoCep = cep.trim();
+                    novoCep = cep.replace("-", "");
+
+                    if(novoCep.length() == 8) {
+                        loading.abrir("Buscando endereço...");
+                        pegarCep(novoCep);
+                    }
+                }
+            }
+        });
         //-------guarda a imagem padrao ---------
         bitmapPadrao = ImagemSalao.getDrawable();
 
@@ -211,6 +235,27 @@ public class editar_salao extends AppCompatActivity {
             logout.deslogar(editar_salao.this,false);
 
         }
+
+        pegarPosicao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String endereco = EnderecoSalao.getEditText().getText().toString();
+                String numero = NumeroSalao.getEditText().getText().toString();
+                String Bairro = BairroSalao.getEditText().getText().toString();
+                String cidade = CidadeSalao.getEditText().getText().toString();
+                String estado = EstadoSalao.getSelectedItem().toString();
+                String nome = NomeSalao.getEditText().getText().toString();
+
+                String saida = endereco + "," + numero + "," + Bairro + "," + cidade + "," + estado;
+                Intent intent = new Intent(editar_salao.this, Mapa.class);
+                intent .putExtra("nome",nome);
+                intent.putExtra("endereco",saida);
+                intent.putExtra("latitude",latitude);
+                intent.putExtra("longitude",longitude);
+                startActivityForResult(intent,2);
+
+            }
+        });
 
         //-
     }
@@ -346,16 +391,13 @@ public class editar_salao extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-        alerta.dismiss();
-        if(resultCode!=0)
-
-            loading.abrir("Carregando Imagem...");
-
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
             case imagem_interna:
                 if (resultCode == RESULT_OK) {
+                    alerta.dismiss();
+                    loading.abrir("Carregando Imagem...");
                     Uri uri = data.getData();
                     String[] projection = {MediaStore.Images.Media.DATA};
                     Cursor cursor = this.getContentResolver().query(uri, projection, null, null, null);
@@ -384,6 +426,8 @@ public class editar_salao extends AppCompatActivity {
             case imagem_camera:
                 if (resultCode == RESULT_OK)
                 {
+                    alerta.dismiss();
+                    loading.abrir("Carregando Imagem...");
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
 
                     Uri uri = image.getImageUri(this, photo);
@@ -408,8 +452,11 @@ public class editar_salao extends AppCompatActivity {
                 }
                 break;
 
-            default:
-                loading.fechar();
+            case mapa:
+                if (resultCode == RESULT_OK) {
+                    latitude = data.getStringExtra("latitude");
+                    longitude = data.getStringExtra("longitude");
+                }
                 break;
         }//fim switch
 
@@ -445,6 +492,8 @@ public class editar_salao extends AppCompatActivity {
                         CidadeSalao.getEditText().setText(salao.getCidade());
                         CnpjSalao.getEditText().setText(salao.getCnpj());
                         ComplementoSalao.getEditText().setText(salao.getComplemento());
+                        latitude = String.valueOf(salao.getLatitude());
+                        longitude = String.valueOf(salao.getLongitude());
 
 
                         if(salao.getAgendamento() == 1)
@@ -511,7 +560,40 @@ public class editar_salao extends AppCompatActivity {
 
 
 
+public void pegarCep(String cep)
+{
+    APICepService apiCepService = APICepService.retrofit.create(APICepService.class);
+    final Call<CEP> callBuscaCep = apiCepService.getEnderecoByCEP(cep);
+    callBuscaCep.enqueue(new Callback<CEP>() {
+        @Override
+        public void onResponse(Call<CEP> call, Response<CEP> response) {
+            loading.fechar();
+            if (!response.isSuccessful()) {
 
+            } else {
+                CEP cep = response.body();
+                EnderecoSalao.getEditText().setText(cep.getLogradouro());
+                BairroSalao.getEditText().setText(cep.getBairro());
+                CidadeSalao.getEditText().setText(cep.getLocalidade());
+
+               if(cep.getUf()!=null) {
+                   UfToName ufToName = new UfToName();
+                   for (int i = 0; i < EstadoSalao.getAdapter().getCount(); i++) {
+                       if (EstadoSalao.getAdapter().getItem(i).toString().contains(ufToName.estado(cep.getUf()))) {
+                           EstadoSalao.setSelection(i);
+                       }
+                   }
+               }
+            }
+        }
+
+        @Override
+        public void onFailure(Call<CEP> call, Throwable t) {
+            loading.fechar();
+            Log.d("xex", "erro no cep");
+        }
+    });
+}
 
 
 
@@ -548,6 +630,9 @@ public class editar_salao extends AppCompatActivity {
             RequestBody imagemAntiga = RequestBody.create(MediaType.parse("text/plain"), ImageAntiga);
             RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "0");
 
+            RequestBody lati = RequestBody.create(MediaType.parse("text/plain"), latitude);
+            RequestBody longi = RequestBody.create(MediaType.parse("text/plain"), longitude);
+
             if(agendar.isChecked())
                 agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
 
@@ -564,7 +649,7 @@ public class editar_salao extends AppCompatActivity {
 
 
             IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callEditarSalao = iApi.EditarSalao(converter64, mine, id_Salao, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao, cidadeSalao, emailSalao, sobreSalao,cnpjSalao,complementoSalao,agendamento,imagemAntiga);
+            final Call<ResponseBody> callEditarSalao = iApi.EditarSalao(converter64, mine, id_Salao, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao,lati,longi, cidadeSalao, emailSalao, sobreSalao,cnpjSalao,complementoSalao,agendamento,imagemAntiga);
 
             callEditarSalao.enqueue(new Callback<ResponseBody>() {
                 @Override

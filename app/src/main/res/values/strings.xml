@@ -99,5 +99,6 @@
         <item>Design de Sobrancelhas Feminino</item>
         <item>Alisamento Feminino</item>
     </string-array>
+    <string name="title_activity_mapa">Map</string>
 
 </resources>

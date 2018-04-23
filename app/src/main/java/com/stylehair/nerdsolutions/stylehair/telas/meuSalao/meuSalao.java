@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes.avaliacoes;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.servicos_salao;
@@ -19,6 +20,7 @@ public class meuSalao extends AppCompatActivity {
     CardView bt_Configuracao;
     CardView bt_Servicos;
     CardView bt_notificacao;
+    CardView bt_avaliacoes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,9 @@ public class meuSalao extends AppCompatActivity {
         bt_funcionario = (CardView) findViewById(R.id.card_bt2);
         bt_Servicos = (CardView) findViewById(R.id.card_bt3);
         bt_notificacao = (CardView) findViewById(R.id.card_bt4);
+        bt_avaliacoes = (CardView) findViewById(R.id.card_bt5);
         bt_Configuracao = (CardView) findViewById(R.id.card_bt6);
+
 
 
 
@@ -67,6 +71,14 @@ public class meuSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(meuSalao.this,servicos_salao.class);
+                startActivity(intent);
+            }
+        });
+
+        bt_avaliacoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(meuSalao.this,avaliacoes.class);
                 startActivity(intent);
             }
         });

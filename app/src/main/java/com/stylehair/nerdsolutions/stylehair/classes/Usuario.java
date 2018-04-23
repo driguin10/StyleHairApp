@@ -20,6 +20,8 @@ public class Usuario {
     public String estado;
     public String cidade;
     public String obs;
+    public String topicoNotificacao;
+    public String mostrarNotificacao;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -141,5 +143,21 @@ public class Usuario {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public String getTopicoNotificacao() {
+        return topicoNotificacao;
+    }
+
+    public void setTopicoNotificacao(String topicoNotificacao) {
+        this.topicoNotificacao = topicoNotificacao;
+    }
+
+    public String getMostrarNotificacao() {
+        return mostrarNotificacao;
+    }
+
+    public void setMostrarNotificacao(String mostrarNotificacao) {
+        this.mostrarNotificacao = mostrarNotificacao;
     }
 }

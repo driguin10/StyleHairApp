@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@drawable/fundoscuro"
+tools:context=".telas.Mapa"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_mapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/corToobar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/corTextos"
+        android:textAlignment="center"
+        app:title="Localização do Salão"/>
+
+    <fragment
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+    </fragment>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+        <Button
+            android:id="@+id/btSalva"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            android:layout_margin="5dp"
+            android:textColor="@color/corTextos"
+            android:background="@drawable/bt_cor_toolbar"/>
+        <Button
+            android:id="@+id/btpega"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Minha Posição"
+            android:layout_margin="5dp"
+            android:textColor="@color/corTextos"
+            android:background="@drawable/bt_azul_esuro"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
