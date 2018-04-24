@@ -21,6 +21,7 @@ import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.Banc
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.ver_notificacao;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
 
 import java.util.List;
 
@@ -41,17 +42,17 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
     ImageView coracao;
 
     TextView distancia;
+    CardView cardStatus;
+    TextView status;
 
     Resources resources;
     Context contexto;
-    menssagem objeto;
-
-
-    List<menssagem> ListaObjeto;
+    BuscaSalao objeto;
+    List<BuscaSalao> ListaObjeto;
 
 
 
-    public viewHolderBuscaSalao(View itemView, List<menssagem> datos) {
+    public viewHolderBuscaSalao(View itemView, List<BuscaSalao> datos) {
         super(itemView);
 
         imagem = (CircleImageView) itemView.findViewById(R.id.img_salao);
@@ -63,6 +64,10 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
         coracao = (ImageView) itemView.findViewById(R.id.coracao);
 
         distancia = (TextView) itemView.findViewById(R.id.distancia);
+
+
+        cardStatus = (CardView) itemView.findViewById(R.id.cardStatus);
+        status = (TextView) itemView.findViewById(R.id.status);
 
         ListaObjeto = datos;
         card = (CardView) itemView.findViewById(R.id.cardsBusca);

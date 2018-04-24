@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
 
 import java.util.List;
 
@@ -17,79 +19,42 @@ import java.util.List;
 
 public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSalao> {
 
-    List<menssagem> ListaObjeto;
+    List<BuscaSalao> ListaObjeto;
 
 
-    public Adaptador_BuscaSalao(List<menssagem> listaObjeto) {
+    public Adaptador_BuscaSalao(List<BuscaSalao> listaObjeto) {
         ListaObjeto = listaObjeto;
     }
 
     @Override
     public viewHolderBuscaSalao onCreateViewHolder(ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_notificacao, parent, false);
-
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_busca, parent, false);
         return new viewHolderBuscaSalao(vista,ListaObjeto);
     }
 
     @Override
     public void onBindViewHolder(viewHolderBuscaSalao holder, int position) {
-         holder.titulo.setText(ListaObjeto.get(position).getTitulo());
-         holder.nomeSalao.setText(ListaObjeto.get(position).getNome_salao());
-         holder.hora.setText(ListaObjeto.get(position).getHora());
          Resources r = holder.resources;
+         holder.nomeSalao.setText(ListaObjeto.get(position).getNome());
+         holder.endereco.setText(ListaObjeto.get(position).getEndereco());
+         holder.distancia.setText(String.valueOf(ListaObjeto.get(position).getDistancia()));
+         Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaObjeto.get(position).getLinkImagem()).into(holder.imagem);
 
-            String titulo = ListaObjeto.get(position).getTitulo();
-            String visualizado = ListaObjeto.get(position).getVisualizacao();
+         if(ListaObjeto.get(position).getStatus() == 1)
+         {
+             holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corAberto));
+             holder.status.setText("ABERTO");
+         }
+         else{
+             holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corFechado));
+             holder.status.setText("FECHADO");
+         }
 
-
-        if(verifica(titulo).equals("menssagem"))
-        {
-            holder.imagem.setImageDrawable(r.getDrawable(R.drawable.icone_menssagem));
-        }
-        else
-        if(verifica(titulo).equals("promocao"))
-        {
-            holder.imagem.setImageDrawable(r.getDrawable(R.drawable.icone_promocao));
-        }
-        else
-        if(verifica(titulo).equals("atencao"))
-        {
-            holder.imagem.setImageDrawable(r.getDrawable(R.drawable.icone_atencao));
-        }
-
-        if(visualizado.equals("0"))
-        {
-
-            holder.card.setCardBackgroundColor(r.getColor(R.color.corNotificacao0));
-
-        }
-}
-
-
-public String verifica(String texto)
-{
-    String imagem ="menssagem";
-
-
-    String[] titulosPromocionais ={"promoção","corra","imperdivel"};
-    String[] titulosAtencao ={"atenção","alerta"};
-
-    for(int i=0; i<titulosPromocionais.length;i++)
-    {
-        if(texto.toLowerCase().contains(titulosPromocionais[i]))
-            imagem = "promocao";
-    }
-
-    for(int i=0; i<titulosAtencao.length;i++)
-    {
-        if(texto.toLowerCase().contains(titulosAtencao[i]))
-            imagem = "atencao";
-
-    }
-
-    return imagem;
+         holder.estrela.setRating(ListaObjeto.get(position).getEstrela());
 
 }
+
+
 
 
 

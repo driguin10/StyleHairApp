@@ -11,4 +11,9 @@
 
     <color name="corCalendarioPrincipal">#eea9271d</color>
     <color name="corCalendarioPrincipalEscuro">#ee791c15</color>
+
+
+    <color name="corAberto">#ee50bc2f</color>
+    <color name="corFechado">#eebf281d</color>
+
 </resources>
