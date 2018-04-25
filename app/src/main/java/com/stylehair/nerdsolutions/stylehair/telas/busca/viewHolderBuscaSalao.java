@@ -36,7 +36,7 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
     CardView card;
     CircleImageView imagem;
     TextView nomeSalao;
-    RatingBar estrela;
+    TextView pontos;
     TextView endereco;
     CardView bt_favorito;
     ImageView coracao;
@@ -57,7 +57,7 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
 
         imagem = (CircleImageView) itemView.findViewById(R.id.img_salao);
         nomeSalao = (TextView) itemView.findViewById(R.id.nome_salao);
-        estrela = (RatingBar) itemView.findViewById(R.id.estrelas);
+        pontos = (TextView) itemView.findViewById(R.id.txtqt_pontos);
         endereco = (TextView) itemView.findViewById(R.id.endereco);
 
         bt_favorito = (CardView) itemView.findViewById(R.id.card_btFavorito);

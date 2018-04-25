@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -22,6 +26,10 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.APICepService;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
@@ -36,6 +44,8 @@ import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -82,8 +92,8 @@ public class cadastroSalao extends AppCompatActivity {
     String LinkImagem = "";
     Loading loading;
     Switch agendar;
-    String latitude;
-    String longitude;
+    String latitude="";
+    String longitude="";
     Button pegarPosicao;
 
 
@@ -337,9 +347,6 @@ public class cadastroSalao extends AppCompatActivity {
     }
 
 
-
-
-
     //------ opcões para escolher imagem---
     public void EscolhaImagem(){
         LayoutInflater li = getLayoutInflater();
@@ -473,8 +480,41 @@ public class cadastroSalao extends AppCompatActivity {
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "0");
-            RequestBody lati = RequestBody.create(MediaType.parse("text/plain"), latitude);
-            RequestBody longi = RequestBody.create(MediaType.parse("text/plain"), longitude);
+            RequestBody lati = RequestBody.create(MediaType.parse("text/plain"), "");
+            RequestBody longi = RequestBody.create(MediaType.parse("text/plain"), "");
+
+            if(!latitude.equals("") && !longitude.equals(""))
+            {
+
+
+                String Eendereco = EnderecoSalao.getEditText().getText().toString();
+                String Nnumero = NumeroSalao.getEditText().getText().toString();
+                String Bbairro = BairroSalao.getEditText().getText().toString();
+                String Ccidade = CidadeSalao.getEditText().getText().toString();
+                String Eestado = EstadoSalao.getSelectedItem().toString();
+
+
+                String saida = Eendereco + "," + Nnumero + "," + Bbairro + "," + Ccidade + "," + Eestado;
+
+                Geocoder geocoder = new Geocoder(cadastroSalao.this);
+                try {
+                    List<Address> enderecos = geocoder.getFromLocationName(saida, 1);
+                    if (enderecos.size() > 0) {
+                        LatLng myEndereco = new LatLng(enderecos.get(0).getLatitude(),enderecos.get(0).getLongitude());
+                        lati = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(enderecos.get(0).getLatitude()));
+                        longi = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(enderecos.get(0).getLongitude()));
+                    }
+                }catch (IOException e)
+                {
+
+                }
+
+            }
+            else {
+
+                lati = RequestBody.create(MediaType.parse("text/plain"), latitude);
+                longi = RequestBody.create(MediaType.parse("text/plain"), longitude);
+            }
 
            if(agendar.isChecked())
            {

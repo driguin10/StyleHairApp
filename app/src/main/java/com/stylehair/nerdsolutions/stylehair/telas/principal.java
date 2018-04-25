@@ -293,11 +293,11 @@ public class principal extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        permissoes = new Permissoes();
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_minhaConta) {
-            permissoes = new Permissoes();
             if(permissoes.habilitarIMagem(principal.this))
             {
                 Intent intent=new Intent(principal.this,minhaConta.class);
@@ -314,12 +314,17 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,4);
 
         } else if (id == R.id.nav_criarSalao) {
-            Intent intent=new Intent(principal.this,cadastroSalao.class);
-            startActivityForResult(intent,5);
+
+            if(permissoes.habilitarLocalizacao(principal.this)) {
+                Intent intent = new Intent(principal.this, cadastroSalao.class);
+                startActivityForResult(intent, 5);
+            }
 
         } else if (id == R.id.nav_meuSalao) {
-            Intent intent=new Intent(principal.this,meuSalao.class);
-            startActivityForResult(intent,6);
+            if(permissoes.habilitarLocalizacao(principal.this)) {
+                Intent intent = new Intent(principal.this, meuSalao.class);
+                startActivityForResult(intent, 6);
+            }
 
         } else if (id == R.id.nav_meu_agendamento) {
             Intent intent=new Intent(principal.this,minha_agenda.class);
@@ -327,8 +332,6 @@ public class principal extends AppCompatActivity
 
         } else if (id == R.id.nav_configuracao) {
 
-
-            permissoes = new Permissoes();
             if(permissoes.habilitarLocalizacao(principal.this))
             {
                 Intent intent=new Intent(principal.this,Mapa.class);

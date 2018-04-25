@@ -5,8 +5,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
     app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="#ffffff"
     android:id="@+id/cardsBusca">
 
 
@@ -49,14 +52,27 @@
                 android:textColor="#050505"
                 />
 
-            <RatingBar
-                android:id="@+id/estrelas"
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
-                android:stepSize="0.5"
-                android:rating="1.5"
-                />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtqt_pontos"
+                    android:textSize="20sp"
+                    android:text="100"
+                    android:textColor="#050505"
+                    />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:backgroundTint="@color/corToobar"
+                    android:background="@drawable/icone_avaliacoes"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,7 +159,7 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             app:cardCornerRadius="8dp"
-            android:backgroundTint="#b8d943"
+
             android:id="@+id/cardStatus"
             >
 

@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.api;
 
 
+import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
@@ -150,6 +151,28 @@ public interface IApi {
                                      @Part("cnpj") RequestBody cnpj,
                                      @Part("agendamento") RequestBody agendamento,
                                      @Part("complemento") RequestBody complemento);
+
+    //------------------------
+
+
+
+    //---------------chamada para salvar salao---------------------------------
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/saloes/")
+    Call<List<BuscaSalao>> BuscarSalao(@Part("latitude") RequestBody latitude,
+                                       @Part("longitude") RequestBody longitude,
+                                       @Part("cidade") RequestBody cidade,
+                                       @Part("nome") RequestBody nome,
+                                       @Part("kilometro") RequestBody kilometro);
+
+
+
+
+
+
+
+
 
     //----------------------------------------------------------------------------
 

@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menss
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
 
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.List;
 
 /**
@@ -36,9 +39,20 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
     public void onBindViewHolder(viewHolderBuscaSalao holder, int position) {
          Resources r = holder.resources;
          holder.nomeSalao.setText(ListaObjeto.get(position).getNome());
-         holder.endereco.setText(ListaObjeto.get(position).getEndereco());
-         holder.distancia.setText(String.valueOf(ListaObjeto.get(position).getDistancia()));
+         holder.endereco.setText(ListaObjeto.get(position).getEndereco()+","+ListaObjeto.get(position).getNumero()+","+ListaObjeto.get(position).getCidade());
+
+
+        float distanc = ListaObjeto.get(position).getDistancia();
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMaximumFractionDigits(1);
+        format.setMinimumFractionDigits(1);
+        format.setMaximumIntegerDigits(2);
+        format.setRoundingMode(RoundingMode.HALF_UP);
+
+
+         holder.distancia.setText(format.format(distanc)+"km");
          Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaObjeto.get(position).getLinkImagem()).into(holder.imagem);
+
 
          if(ListaObjeto.get(position).getStatus() == 1)
          {
@@ -50,7 +64,21 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
              holder.status.setText("FECHADO");
          }
 
-         holder.estrela.setRating(ListaObjeto.get(position).getEstrela());
+
+        if(ListaObjeto.get(position).getIdFavorito() == 1)
+        {
+            holder.coracao.setImageDrawable(r.getDrawable(R.drawable.icone_favorito));
+
+        }
+        else{
+            holder.coracao.setImageDrawable(r.getDrawable(R.drawable.icone_favorito_of));
+
+        }
+
+
+
+
+         holder.pontos.setText(String.valueOf(ListaObjeto.get(position).getPontos()));
 
 }
 

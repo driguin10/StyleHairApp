@@ -26,6 +26,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -42,13 +44,13 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
     double longitude = 0;
     String provader;
 
-
+Loading loading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_EnviarNotificacoes);
-
+loading = new Loading(Mapa.this);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -99,7 +101,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
 
             }
         });
-
+loading.abrir("carregando mapa...");
     }
 
 
@@ -109,6 +111,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
 
 
         try {
+            loading.fechar();
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             provader = locationManager.getBestProvider(criteria, true);
