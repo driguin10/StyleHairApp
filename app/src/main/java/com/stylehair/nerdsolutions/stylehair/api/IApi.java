@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.api;
 
 
+import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
@@ -399,6 +400,21 @@ public interface IApi {
 
     //----------------------------------------------------
 
+    @Headers("apiKey:" + chave)
+    @GET("v1/avaliacoes/comentario/deletar/{id}")
+    Call<ResponseBody> ExcluirComentario(@Path("id") String id);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/avaliacoes/deletar/{id}")
+    Call<ResponseBody> ExcluirAvaliacao(@Path("id") String id);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/avaliacoes/{id}")
+    Call<List<AvaliacaoSalao>> BuscarAvaliacoes(@Path("id") String id);
+
+
+
+    //--------------------------------------
 
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
