@@ -68,7 +68,6 @@
     </style>
 
 
-
     <style name="MyDatePickerDialogTheme" parent="android:Theme.Material.Light.Dialog">
         <item name="android:colorAccent">@color/corToobar</item>
         <item name="android:datePickerStyle">@style/MyDatePickerStyle</item>

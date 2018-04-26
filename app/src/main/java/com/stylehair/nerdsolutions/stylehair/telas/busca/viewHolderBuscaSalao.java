@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
@@ -86,20 +87,14 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
 
         if (view.getId() == bt_favorito.getId()) {
 
-
+            Toast.makeText(view.getContext(),"favorito pos -" + String.valueOf(position),Toast.LENGTH_LONG).show();
         } else
         if(view.getId() == card.getId())
         {
-            /*Intent intent = new Intent(view.getContext(),ver_notificacao.class);
-            intent.putExtra("id_notificacao",objeto.get_id());
-            intent.putExtra("titulo_notificacao",objeto.getTitulo());
-            intent.putExtra("texto_notificacao",objeto.getTexto());
-            intent.putExtra("visualizacao_notificacao",objeto.getVisualizacao());
-            intent.putExtra("hora_notificacao",objeto.getHora());
-            intent.putExtra("nome_salao_notificacao",objeto.getNome_salao());
-            intent.putExtra("idLogin",idLogin);
-            view.getContext().startActivity(intent);
-            ((Activity)view.getContext()).finish();*/
+           /* Intent intent = new Intent(view.getContext(),ver_salao.class);
+            intent.putExtra("id_notificacao",objeto.getIdSalao());
+            view.getContext().startActivity(intent);*/
+
         }
     }
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ TextView textoDistancia;
 TextView cidade;
 SeekBar seekDistancia;
 Button salvar;
+ImageButton fechar;
 int progresso = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,17 @@ int progresso = 0;
         cidade = (TextView) findViewById(R.id.txtCidadeFiltro);
         seekDistancia = (SeekBar) findViewById(R.id.SeekDistancia);
         salvar = (Button) findViewById(R.id.btSalvarFiltro);
+        fechar = (ImageButton) findViewById(R.id.btFecharFiltro);
+        fechar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent data = new Intent();
+                data.putExtra("cidade","");
+                data.putExtra("kilometro","5");
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +83,7 @@ int progresso = 0;
         seekDistancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                textoDistancia.setText(String.valueOf(progress));
+                textoDistancia.setText(String.valueOf(progress)+"km");
                 progresso = progress;
             }
 

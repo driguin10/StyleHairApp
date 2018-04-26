@@ -75,9 +75,6 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
 
         }
 
-
-
-
          holder.pontos.setText(String.valueOf(ListaObjeto.get(position).getPontos()));
 
 }

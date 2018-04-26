@@ -44,13 +44,20 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
     double longitude = 0;
     String provader;
 
-Loading loading;
+    Loading loading;
+
+    String Cidade;
+    String Cep;
+    String Estado;
+    String Endereco;
+    String Bairro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_EnviarNotificacoes);
 loading = new Loading(Mapa.this);
+        loading.abrir("carregando mapa...");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -77,6 +84,10 @@ loading = new Loading(Mapa.this);
                 Intent data = new Intent();
                 data.putExtra("latitude",String.valueOf(latitude));
                 data.putExtra("longitude",String.valueOf(longitude));
+                data.putExtra("endereco",String.valueOf(Endereco));
+                data.putExtra("cidade",String.valueOf(Cidade));
+                data.putExtra("estado",String.valueOf(Estado));
+                data.putExtra("bairro",String.valueOf(Bairro));
                 setResult(RESULT_OK, data);
                 finish();
 
@@ -87,6 +98,7 @@ loading = new Loading(Mapa.this);
         pegaMypos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loading.abrir("Aguarde...");
                 try {
                     mMap.clear();
                     Location location = locationManager.getLastKnownLocation(provader);
@@ -94,6 +106,7 @@ loading = new Loading(Mapa.this);
                     mMap.addMarker(new MarkerOptions().position(userLocation).title(nome));
                     //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18.0f));
+                    loading.fechar();
                 }catch (SecurityException s)
                 {
 
@@ -101,7 +114,7 @@ loading = new Loading(Mapa.this);
 
             }
         });
-loading.abrir("carregando mapa...");
+
     }
 
 
@@ -111,7 +124,7 @@ loading.abrir("carregando mapa...");
 
 
         try {
-            loading.fechar();
+
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             provader = locationManager.getBestProvider(criteria, true);
@@ -131,28 +144,31 @@ loading.abrir("carregando mapa...");
             LatLng myEndereco = new LatLng(latitude,longitude);
             mMap.addMarker(new MarkerOptions().position(myEndereco).title(nome));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myEndereco, 18.0f));
-            Log.d("xex","com lat - " +String.valueOf(latitude) +" / " + String.valueOf(longitude));
+
         }
         else
         {
-            Log.d("xex","com ender");
+
             Geocoder geocoder = new Geocoder(Mapa.this);
             try {
                 List<Address> enderecos = geocoder.getFromLocationName(endereco, 1);
+
                 if (enderecos.size() > 0) {
+
                     LatLng myEndereco = new LatLng(enderecos.get(0).getLatitude(),enderecos.get(0).getLongitude());
                     latitude = enderecos.get(0).getLatitude();
                     longitude = enderecos.get(0).getLongitude();
                     mMap.addMarker(new MarkerOptions().position(myEndereco).title(nome));
                    // mMap.moveCamera(CameraUpdateFactory.newLatLng(myEndereco));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myEndereco, 18.0f));
+
                 }
             }catch (IOException e)
             {
 
             }
         }
-
+        loading.fechar();
     }
 
     @Override
@@ -183,6 +199,36 @@ loading.abrir("carregando mapa...");
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18.0f));
        // Toast.makeText(Mapa.this,"Mapa clicado ",Toast.LENGTH_LONG).show();
+
+
+        Geocoder geocoder = new Geocoder(Mapa.this);
+        try {
+            List<Address> enderecos = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
+
+            if (enderecos.size() > 0) {
+               /* Log.d("xex","cidade " +enderecos.get(0).getLocality());
+                Log.d("xex","bairro " + enderecos.get(0).getSubLocality());
+                Log.d("xex","sub cidade " + enderecos.get(0).getSubAdminArea());
+                Log.d("xex","endereco " + enderecos.get(0).getThoroughfare());
+                Log.d("xex","pais " + enderecos.get(0).getCountryName());
+                Log.d("xex","uf " + enderecos.get(0).getCountryCode());
+                Log.d("xex","estado " + enderecos.get(0).getAdminArea());*/
+
+               if(enderecos.get(0).getLocality()!=null)
+                   Cidade=enderecos.get(0).getLocality();
+               else
+                   if(enderecos.get(0).getSubAdminArea()!=null)
+                       Cidade = enderecos.get(0).getSubAdminArea();
+
+               Estado = enderecos.get(0).getAdminArea();
+               Bairro = enderecos.get(0).getSubLocality();
+               Endereco = enderecos.get(0).getThoroughfare();
+
+            }
+        }catch (IOException e)
+        {
+
+        }
     }
 
     @Override

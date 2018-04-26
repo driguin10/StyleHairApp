@@ -456,6 +456,17 @@ public class editar_salao extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     latitude = data.getStringExtra("latitude");
                     longitude = data.getStringExtra("longitude");
+                    EnderecoSalao.getEditText().setText(data.getStringExtra("endereco"));
+                    CidadeSalao.getEditText().setText(data.getStringExtra("cidade"));
+                    BairroSalao.getEditText().setText(data.getStringExtra("bairro"));
+                    Log.d("xex",data.getStringExtra("estado"));
+                    for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
+                    {
+                        if(EstadoSalao.getAdapter().getItem(i).toString().contains(data.getStringExtra("estado")))
+                        {
+                            EstadoSalao.setSelection(i);
+                        }
+                    }
                 }
                 break;
         }//fim switch

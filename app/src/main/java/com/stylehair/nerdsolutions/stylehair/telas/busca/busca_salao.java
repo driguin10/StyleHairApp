@@ -193,7 +193,14 @@ public class busca_salao extends AppCompatActivity {
           if (resultCode == RESULT_OK) {
               cidade = data.getStringExtra("cidade");
               kilometro =  Integer.valueOf(data.getStringExtra("kilometro"));
-              kilometroRedor.setText("Até "+ String.valueOf(kilometro)+"km de você");
+              if(kilometro == 0 && !cidade.equals(""))
+              {
+                  kilometroRedor.setText("cidade : " + cidade);
+              }
+              else {
+                  
+                  kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você");
+              }
           }
       }
 
