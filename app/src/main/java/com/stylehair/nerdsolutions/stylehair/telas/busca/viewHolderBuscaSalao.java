@@ -1,28 +1,17 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
-import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
-import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
-import com.stylehair.nerdsolutions.stylehair.Notification.ver_notificacao;
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 
 import java.util.List;
 
@@ -91,9 +80,9 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
         } else
         if(view.getId() == card.getId())
         {
-           /* Intent intent = new Intent(view.getContext(),ver_salao.class);
-            intent.putExtra("id_notificacao",objeto.getIdSalao());
-            view.getContext().startActivity(intent);*/
+            Intent intent = new Intent(view.getContext(),verSalao_buscado.class);
+            intent.putExtra("idSalao",String.valueOf(objeto.getIdSalao()));
+            view.getContext().startActivity(intent);
 
         }
     }

@@ -4,21 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".telas.meuSalao.funcionario.ver_funcionario">
-
-
-
+    tools:context=".telas.busca.verSalao_buscado"
+    android:orientation="vertical">
 
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbarFuncionario"
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_verFuncionario"
+            android:id="@+id/toolbar_verSalaoBuscado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/corToobar"
@@ -28,19 +25,35 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabsFuncionario"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:background="@color/corToobar"/>
+            android:orientation="vertical"
+            android:background="@color/corToobar"
+            android:gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_padrao_user"/>
+
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_salaoBuscado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/corToobar"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/containerFuncionario"
+        android:id="@+id/container_salaoBuscado"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
 
 
 

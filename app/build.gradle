@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.stylehair.nerdsolutions.stylehair"
         minSdkVersion 21
@@ -18,6 +18,7 @@ android {
     }
     productFlavors {
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {

@@ -2,15 +2,13 @@ package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
-import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 
 import java.math.RoundingMode;
 import java.text.NumberFormat;

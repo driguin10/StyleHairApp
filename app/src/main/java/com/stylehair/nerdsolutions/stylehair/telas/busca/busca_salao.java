@@ -1,10 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,15 +16,8 @@ import android.widget.TextView;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
-import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
-import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
-import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.Adaptador_funcionario;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
+import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;

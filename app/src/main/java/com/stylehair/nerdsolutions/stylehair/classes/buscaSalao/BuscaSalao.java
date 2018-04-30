@@ -1,4 +1,4 @@
-package com.stylehair.nerdsolutions.stylehair.classes;
+package com.stylehair.nerdsolutions.stylehair.classes.buscaSalao;
 
 public class BuscaSalao {
 

@@ -2,7 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.BuscaSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
@@ -13,6 +13,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -334,6 +335,12 @@ public interface IApi {
                                           @Part("status") RequestBody status);
 
 
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/saloes/salao/{id}")
+    Call<VerSalao> verSalaoBusca(@Path("id") String id);
+
+
     //---------------chamada para resetar login---------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
@@ -373,6 +380,9 @@ public interface IApi {
     @Headers("apiKey:" + chave)
     @GET("v1/servi_saloes/deletar/{id}")
     Call<ResponseBody> ExcluirServicosSalao(@Path("id") String id);
+
+
+
 
 
     //-------------------------servicos funcionario-----------------------
