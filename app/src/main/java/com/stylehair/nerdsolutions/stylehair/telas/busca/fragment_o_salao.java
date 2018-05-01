@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,9 @@ public class fragment_o_salao extends Fragment {
     TextView txtTelefones;
     TextView txtEmail;
     TextView txtCnpj;
+    TextView txtStatus;
+    CardView cardStatus;
+    CardView cardAgendar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,9 @@ public class fragment_o_salao extends Fragment {
         txtTelefones=(TextView) view.findViewById(R.id.txtTelefones);
         txtEmail=(TextView) view.findViewById(R.id.txtEmail);
         txtCnpj=(TextView) view.findViewById(R.id.txtCnpj);
+        txtStatus=(TextView) view.findViewById(R.id.txtStatus);
+        cardStatus=(CardView) view.findViewById(R.id.cardStatus);
+        cardAgendar=(CardView) view.findViewById(R.id.cardAgendar);
 
         if(bundle!=null)
         {
@@ -75,6 +82,32 @@ public class fragment_o_salao extends Fragment {
             txtTelefones.setText( bundle.getString("telefones"));
             txtEmail.setText( bundle.getString("email"));
             txtCnpj.setText( bundle.getString("cnpj"));
+
+            if(bundle.getString("status").equals("1"))
+            {
+               txtStatus.setText("Salão Aberto");
+               cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
+            }
+            else
+            {
+                txtStatus.setText("Salão Fechado");
+                cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
+            }
+
+            if(bundle.getString("agendamento").equals("1"))
+            {
+                cardAgendar.setAlpha(.9f);
+                cardAgendar.setCardElevation(5);
+                cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
+            }
+            else
+            {
+                cardAgendar.setAlpha(.4f);
+                cardAgendar.setCardElevation(0);
+                cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
+            }
+
+
            /*endereco = bundle.getString("endereco");
            email = bundle.getString("email");
            sobre = bundle.getString("sobre");
