@@ -120,7 +120,8 @@
             android:label="@string/title_activity_mapa" />
         <activity android:name=".telas.busca.busca_salao" />
         <activity android:name=".telas.busca.Filtros" />
-        <activity android:name=".telas.busca.verSalao_buscado"></activity>
+        <activity android:name=".telas.busca.verSalao_buscado" />
+        <activity android:name=".testeee"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -48,10 +50,14 @@ Loading loading ;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_salao_buscado);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_verSalaoBuscado);
+
+
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+
         getSupportActionBar().setTitle("");
+
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container_salaoBuscado);
@@ -60,6 +66,7 @@ Loading loading ;
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_funcionario));
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
+
 
 
         loading = new Loading(this);
