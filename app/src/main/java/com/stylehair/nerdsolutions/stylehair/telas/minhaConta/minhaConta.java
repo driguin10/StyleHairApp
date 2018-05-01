@@ -1,6 +1,9 @@
 package com.stylehair.nerdsolutions.stylehair.telas.minhaConta;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 public class minhaConta extends AppCompatActivity {
 
@@ -24,6 +28,9 @@ public class minhaConta extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Minha Conta");
+        Drawable upArrow = ContextCompat.getDrawable(minhaConta.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(minhaConta.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());

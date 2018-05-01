@@ -1,6 +1,9 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -9,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.telas.busca.verSalao_buscado;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes.avaliacoes;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
@@ -32,6 +36,9 @@ public class meuSalao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Meu Salão");
+        Drawable upArrow = ContextCompat.getDrawable(meuSalao.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(meuSalao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         bt_meuSalao = (CardView) findViewById(R.id.card_bt1);
         bt_funcionario = (CardView) findViewById(R.id.card_bt2);

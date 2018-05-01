@@ -2,7 +2,10 @@ package com.stylehair.nerdsolutions.stylehair.telas;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 import com.github.jhonnyx2012.horizontalpicker.DatePickerListener;
 import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
+
 import org.joda.time.DateTime;
 
 public class minha_agenda extends AppCompatActivity implements DatePickerListener{
@@ -25,6 +30,9 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Meus Agendamentos");
+        Drawable upArrow = ContextCompat.getDrawable(minha_agenda.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(minha_agenda.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         HorizontalPicker picker = (HorizontalPicker) findViewById(R.id.agendaH);
 

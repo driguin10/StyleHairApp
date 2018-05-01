@@ -42,7 +42,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
-import com.stylehair.nerdsolutions.stylehair.testeee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -334,8 +333,8 @@ public class principal extends AppCompatActivity
         } else if (id == R.id.nav_configuracao) {
 
 
-                Intent intent=new Intent(principal.this,testeee.class);
-                startActivity(intent);
+                //Intent intent=new Intent(principal.this,testeee.class);
+                //startActivity(intent);
 
 
         } else if (id == R.id.nav_logout) {

@@ -1,7 +1,10 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +22,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.Adaptador_servico_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.servicos_salao;
 
@@ -53,6 +57,9 @@ public class avaliacoes extends AppCompatActivity{
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Avaliações");
+        Drawable upArrow = ContextCompat.getDrawable(avaliacoes.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(avaliacoes.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         idSalao = getSharedPreferences.getString("idSalao", "");

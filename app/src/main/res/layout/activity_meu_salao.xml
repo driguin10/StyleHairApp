@@ -100,7 +100,7 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/icone_funcionario" />
+                        android:background="@drawable/icone_funcionario_preto" />
 
                     <TextView
                         android:id="@+id/textBt2"

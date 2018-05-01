@@ -2,7 +2,10 @@ package com.stylehair.nerdsolutions.stylehair.Notification;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +18,7 @@ import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.Adapt
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +41,9 @@ public class notificacao extends AppCompatActivity  {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("NOTIFICAÇÕES");
+        Drawable upArrow = ContextCompat.getDrawable(notificacao.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(notificacao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         lista = (RecyclerView) findViewById(R.id.listNotify);
         lista.setHasFixedSize(true);
         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());

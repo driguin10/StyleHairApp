@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -13,6 +14,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +43,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.UfToName;
 import com.stylehair.nerdsolutions.stylehair.classes.cep.CEP;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import java.io.File;
 import java.io.IOException;
@@ -106,6 +109,9 @@ public class cadastroSalao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Cadastrar Salão");
+        Drawable upArrow = ContextCompat.getDrawable(cadastroSalao.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(cadastroSalao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         loading = new Loading(this);
         config = new Config();
         image = new Image();

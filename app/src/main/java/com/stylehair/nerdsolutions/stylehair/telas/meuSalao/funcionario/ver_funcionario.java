@@ -1,7 +1,10 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,13 +29,16 @@ public class ver_funcionario extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Funcionario");
+        Drawable upArrow = ContextCompat.getDrawable(ver_funcionario.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(ver_funcionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.containerFuncionario);
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabsFuncionario);
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_funcionario));
+        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_funcionario_preto));
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_time));
         tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
 

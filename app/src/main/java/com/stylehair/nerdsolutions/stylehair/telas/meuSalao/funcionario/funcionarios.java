@@ -2,8 +2,11 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +23,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
 
 import java.util.ArrayList;
@@ -62,6 +66,10 @@ public class funcionarios extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Funcionarios");
+
+        Drawable upArrow = ContextCompat.getDrawable(funcionarios.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(funcionarios.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
 
         lista = (RecyclerView) findViewById(R.id.listFuncionarios);

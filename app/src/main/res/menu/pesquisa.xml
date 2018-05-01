@@ -8,10 +8,6 @@
         android:title="Pesquisar"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="collapseActionView|ifRoom"/>
-    <item
-        android:id="@+id/filter"
-        android:title="Filtros"
-        android:icon="@drawable/icone_filtro"
-        app:showAsAction="collapseActionView|ifRoom"/>
+
 
 </menu>

@@ -4,8 +4,11 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
 import android.app.DialogFragment;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -26,6 +29,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import java.util.List;
 
@@ -105,6 +109,9 @@ public class configuracaoSalao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Configuração do Salão");
+        Drawable upArrow = ContextCompat.getDrawable(configuracaoSalao.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(configuracaoSalao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         loading = new Loading(configuracaoSalao.this);
         salvarConfig = (Button) findViewById(R.id.bt_salvarConfiguracao);

@@ -102,7 +102,9 @@
         <activity
             android:name=".telas.meuSalao.notificacoes.pesquisaFuncionario"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.avaliacoes.avaliacoes" />
+        <activity
+            android:name=".telas.meuSalao.avaliacoes.avaliacoes"
+            android:windowSoftInputMode="stateHidden"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -118,10 +120,15 @@
         <activity
             android:name=".telas.Mapa"
             android:label="@string/title_activity_mapa" />
-        <activity android:name=".telas.busca.busca_salao" />
-        <activity android:name=".telas.busca.Filtros" />
-        <activity android:name=".telas.busca.verSalao_buscado" />
-        <activity android:name=".testeee"></activity>
+        <activity
+            android:name=".telas.busca.busca_salao"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.busca.Filtros"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.busca.verSalao_buscado"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>
