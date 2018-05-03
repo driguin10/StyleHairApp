@@ -78,12 +78,12 @@ public class servicos_salao extends AppCompatActivity {
     {
 
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<List<ServicoSalao>> callBuscaFuncionarios = iApi.BuscaServicosSalao(id);
-        callBuscaFuncionarios.enqueue(new Callback<List<ServicoSalao>>() {
+        final Call<List<ServicoSalao>> callBuscaServico = iApi.BuscaServicosSalao(id);
+        callBuscaServico.enqueue(new Callback<List<ServicoSalao>>() {
             @Override
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
                 qtTentativaRealizada = 0 ;
-                callBuscaFuncionarios.cancel();
+                callBuscaServico.cancel();
 
                 loading.fechar();
 

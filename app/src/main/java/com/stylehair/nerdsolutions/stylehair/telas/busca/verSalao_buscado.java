@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Utils;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
@@ -25,6 +27,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.FuncionarioVerSa
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,6 +45,7 @@ Config config;
 
 
     TextView nomeSalao;
+
     CircleImageView imagemSalao;
 
     private SectionsPageAdapter mSectionsPageAdapter;
@@ -74,14 +78,6 @@ Config config;
 
         nomeSalao = (TextView) findViewById(R.id.txt_nomeSalao_buscado);
         imagemSalao = (CircleImageView) findViewById(R.id.imagemSalao_buscado);
-
-
-
-
-
-
-
-
 
         loading.abrir("aguarde");
         pegarSalao(idSalao);
@@ -117,13 +113,25 @@ Config config;
         bundleOSalao.putString("domE",salao.getDomE());
         bundleOSalao.putString("domS",salao.getDomS());
 
+
         Fragment Osalao = new fragment_o_salao();
         Osalao.setArguments(bundleOSalao);
-        adapter.addFragment(Osalao, "O salão");
+        adapter.addFragment(Osalao, "");
+
+        Bundle Bservico = new Bundle();
+        Bservico.putString("idServico", String.valueOf(salao.getIdSalao()));
+        Fragment Fservicos = new fragment_servicos_do_salao();
+        Fservicos.setArguments(Bservico);
+        adapter.addFragment(Fservicos, "");
+
+        Bundle Bfuncionarios = new Bundle();
+        Bfuncionarios.putString("idServico", String.valueOf(salao.getIdSalao()));
+        Fragment Ffuncionarios = new fragment_servicos_do_salao();
+        Ffuncionarios.setArguments(Bfuncionarios);
+        adapter.addFragment(Ffuncionarios, "");
 
 
-        adapter.addFragment(new fragment_servicos_do_salao(), "Serviços");
-       // adapter.addFragment(new fragment_servicos_funcionarios(), "");
+
         viewPager.setAdapter(adapter);
         configuraTab();
     }
@@ -131,8 +139,9 @@ Config config;
     private void configuraTab()
     {
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_funcionario_branco));
+        tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_home_branco));
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_servicos_branco));
+        tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_funcionario_branco));
     }
 
     @Override
@@ -175,13 +184,14 @@ Config config;
 
                         List<ServicoSalao> servicos = ver_salao.getServicos();
 
-
                         Log.d("xex",String.valueOf(servicos.get(0).getServico()));
 
                             nomeSalao.setText(salao.getNome());
                         if (salao.getLinkImagem() != "") {
                             Picasso.with(verSalao_buscado.this).load(config.getWebService() + salao.getLinkImagem()).centerCrop().resize(250, 250).into(imagemSalao);
                         }
+
+
 
                         setupViewPager(mViewPager,salao);
 

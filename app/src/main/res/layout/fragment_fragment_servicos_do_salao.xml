@@ -5,10 +5,40 @@
     android:layout_height="match_parent"
     tools:context=".telas.busca.fragment_servicos_do_salao">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/txtSemServicos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="serviço do salao" />
+        android:text="Não possui Serviços"
+        android:gravity="center"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <GridView
+                android:id="@+id/gradeServicos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:columnWidth="90dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="2"
+                android:verticalSpacing="10dp">
+            </GridView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
 
 </FrameLayout>
