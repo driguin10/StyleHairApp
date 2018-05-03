@@ -1,20 +1,15 @@
-package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes;
+package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -23,7 +18,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.Adaptador_funcionario;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.cadastrar_funcionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import java.util.ArrayList;
@@ -33,54 +27,38 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class pesquisaFuncionario extends AppCompatActivity {
 
-
+public class fragment_funcionarios_salao extends Fragment {
     RecyclerView lista;
     List<Usuario> usuarios;
-    String idSalao;
+    String IdSalao;
+
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
 
     Loading loading;
-
+    Bundle bundle;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pesquisa_funcionario);
-        loading = new Loading(pesquisaFuncionario.this);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_pesquisafuncionarios);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
-        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        getSupportActionBar().setTitle("Pesquisar Funcionarios");
-        Drawable upArrow = ContextCompat.getDrawable(pesquisaFuncionario.this, R.drawable.abc_ic_ab_back_material);
-        upArrow.setColorFilter(ContextCompat.getColor(pesquisaFuncionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-        lista = (RecyclerView) findViewById(R.id.listpesquisaFuncionarios);
-        lista.setHasFixedSize(true);
-
-
-        SharedPreferences getSharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(pesquisaFuncionario.this);
-        idSalao = getSharedPreferences.getString("idSalao","-1");
-
-        loading.abrir("Atualizando...");
-        getFuncionarios(idSalao);
+        bundle= getArguments();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
-        switch (item.getItemId()) {
-            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                finish();
-                break;
-            default:break;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_fragment_funcionarios_salao, container, false);
+        if(bundle !=null)
+        {
+            IdSalao =  bundle.getString("idServico");
         }
-        return true;
+        loading = new Loading(getActivity());
+        lista = (RecyclerView) view.findViewById(R.id.listServicos_funcionario_busca);
+        lista.setHasFixedSize(true);
+        loading.abrir("Atualizando...");
+        getFuncionarios(IdSalao);
+       return view;
     }
-
 
     public void getFuncionarios(String id)
     {
@@ -111,9 +89,9 @@ public class pesquisaFuncionario extends AppCompatActivity {
                             funcs.add(new UsuarioFuncionario(IdUsuario, Nome, LinkImagem, IdFuncionario,Telefone));
                         }
 
-                        LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
+                        LinearLayoutManager layout = new LinearLayoutManager(getContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        lista.setAdapter(new Adaptador_funcionarioNotif(funcs,pesquisaFuncionario.this));
+                        lista.setAdapter(new Adaptador_funcionario_busca(funcs));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
@@ -132,7 +110,7 @@ public class pesquisaFuncionario extends AppCompatActivity {
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
 
-                    getFuncionarios(idSalao);
+                    getFuncionarios(IdSalao);
                 }
                 else {
                     loading.fechar();
@@ -143,4 +121,7 @@ public class pesquisaFuncionario extends AppCompatActivity {
         });
 
     }
+
+
+
 }

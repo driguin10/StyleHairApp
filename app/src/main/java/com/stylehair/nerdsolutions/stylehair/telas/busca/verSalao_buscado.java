@@ -1,6 +1,5 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
@@ -19,7 +18,6 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.Utils;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
@@ -27,7 +25,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.FuncionarioVerSa
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -126,7 +123,7 @@ Config config;
 
         Bundle Bfuncionarios = new Bundle();
         Bfuncionarios.putString("idServico", String.valueOf(salao.getIdSalao()));
-        Fragment Ffuncionarios = new fragment_servicos_do_salao();
+        Fragment Ffuncionarios = new fragment_funcionarios_salao();
         Ffuncionarios.setArguments(Bfuncionarios);
         adapter.addFragment(Ffuncionarios, "");
 

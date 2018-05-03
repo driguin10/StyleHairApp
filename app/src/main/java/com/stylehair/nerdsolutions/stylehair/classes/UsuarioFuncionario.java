@@ -6,12 +6,14 @@ public class UsuarioFuncionario {
     public String nome;
     public String linkImagem;
     public int idFuncionario;
+    public String telefone;
 
-    public UsuarioFuncionario(int idUsuario, String nome, String linkImagem, int idFuncionario) {
+    public UsuarioFuncionario(int idUsuario, String nome, String linkImagem, int idFuncionario,String telefone) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.linkImagem = linkImagem;
         this.idFuncionario = idFuncionario;
+        this.telefone = telefone;
     }
 
     public int getIdUsuario() {
@@ -44,5 +46,13 @@ public class UsuarioFuncionario {
 
     public void setIdFuncionario(int idFuncionario) {
         this.idFuncionario = idFuncionario;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 }
