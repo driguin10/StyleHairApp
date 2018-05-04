@@ -56,7 +56,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mapa);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_EnviarNotificacoes);
-loading = new Loading(Mapa.this);
+        loading = new Loading(Mapa.this);
         loading.abrir("carregando mapa...");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

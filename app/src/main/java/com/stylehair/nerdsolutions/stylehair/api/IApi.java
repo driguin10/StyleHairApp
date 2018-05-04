@@ -422,6 +422,13 @@ public interface IApi {
     @GET("v1/avaliacoes/{id}")
     Call<List<AvaliacaoSalao>> BuscarAvaliacoes(@Path("id") String id);
 
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/avaliacoes/salvar/")
+    Call<ResponseBody> SalvarAvaliacao(@Part("idSalao") RequestBody idSalao,
+                                       @Part("pontos") RequestBody pontos,
+                                       @Part("comentario") RequestBody comentario,
+                                       @Part("data") RequestBody data);
 
 
     //--------------------------------------

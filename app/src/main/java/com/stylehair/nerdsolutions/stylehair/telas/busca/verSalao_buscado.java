@@ -1,33 +1,60 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
+import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.FuncionarioVerSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes.Adaptador_avaliacoes;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,13 +64,18 @@ Loading loading ;
 Config config;
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
+    int qtTentativaRealizadaComentario = 0;
+    int qtTentativaRealizadaSalvComentario = 0;
     String idSalao;
 
-
+    AlertDialog alerta;
 
     TextView nomeSalao;
 
     CircleImageView imagemSalao;
+    Button avaliacao;
+
+    RecyclerView listaComentario;
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
@@ -70,6 +102,58 @@ Config config;
         mViewPager = (ViewPager) findViewById(R.id.container_salaoBuscado);
         tabLayout = (TabLayout) findViewById(R.id.tabs_salaoBuscado);
 
+
+        avaliacao = (Button) findViewById(R.id.btAvaliar);
+
+
+        avaliacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("xex","foi");
+                LayoutInflater li = getLayoutInflater();
+                final View view = li.inflate(R.layout.activity_avaliar, null);
+                listaComentario = (RecyclerView) view.findViewById(R.id.listaComentarios);
+                listaComentario.setHasFixedSize(true);
+                loading.abrir("aguarde");
+                getAvaliacoes(idSalao);
+
+                view.findViewById(R.id.btSair).setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View arg0) {
+                        alerta.dismiss();
+                    }
+                });
+
+                view.findViewById(R.id.btAvaliar).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d("xex","aq");
+                        RatingBar estrelas = (RatingBar) view.findViewById(R.id.estrelasAvalia);
+                        EditText comentario = (EditText)view.findViewById(R.id.txtComentario);
+
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = new Date();
+                        String Data = dateFormat.format(date);
+                        if(estrelas.getRating()>0 || !comentario.getText().toString().equals("") ) {
+                            loading.abrir("Enviando Avaliação...");
+                            SalvarAvaliacao(idSalao, String.valueOf(estrelas.getRating()), comentario.getText().toString(), Data);
+                        }
+                        else
+                        {
+                            Toast.makeText(verSalao_buscado.this,"Dê alguma avaliação !!",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(verSalao_buscado.this);
+                builder.setView(view);
+                alerta = builder.create();
+                alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alerta.show();
+            }
+        });
+
+
+
         loading = new Loading(this);
         config = new Config();
 
@@ -80,6 +164,49 @@ Config config;
         pegarSalao(idSalao);
     }
 
+
+    public void getAvaliacoes(String id)
+    {
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<AvaliacaoSalao>> callBuscaAvaliacoes = iApi.BuscarAvaliacoes(id);
+        callBuscaAvaliacoes.enqueue(new Callback<List<AvaliacaoSalao>>() {
+            @Override
+            public void onResponse(Call<List<AvaliacaoSalao>> call, Response<List<AvaliacaoSalao>> response) {
+                qtTentativaRealizadaComentario = 0 ;
+                callBuscaAvaliacoes.cancel();
+                loading.fechar();
+                switch (response.code())
+                {
+                    case 200:
+                        List<AvaliacaoSalao> ListaAvaliacoes = response.body();
+                        LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
+                        layout.setOrientation(LinearLayoutManager.VERTICAL);
+                        listaComentario.setAdapter(new Adaptador_avaliacoes_comentario(ListaAvaliacoes));
+                        listaComentario.setLayoutManager(layout);
+                        listaComentario.setClickable(true);
+                        break;
+
+                    case 400:
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<AvaliacaoSalao>> call, Throwable t) {
+                if (qtTentativaRealizadaComentario < qtTentativas) {
+                    qtTentativaRealizadaComentario++;
+                    getAvaliacoes(idSalao);
+                }
+                else {
+                    loading.fechar();
+                    Log.d("xex","erro");
+                    Log.d("xex",t.getMessage());
+                }
+            }
+        });
+
+    }
 
     private void setupViewPager(ViewPager viewPager,Salao salao) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -175,20 +302,10 @@ Config config;
                         gerente = listaGerente.get(0);
 
 
-
-                        List<FuncionarioVerSalao> funcionarios = ver_salao.getFuncionarios();
-                        FuncionarioVerSalao funcionarioVerSalao = new FuncionarioVerSalao();
-
-                        List<ServicoSalao> servicos = ver_salao.getServicos();
-
-                        Log.d("xex",String.valueOf(servicos.get(0).getServico()));
-
-                            nomeSalao.setText(salao.getNome());
+                        nomeSalao.setText(salao.getNome());
                         if (salao.getLinkImagem() != "") {
                             Picasso.with(verSalao_buscado.this).load(config.getWebService() + salao.getLinkImagem()).centerCrop().resize(250, 250).into(imagemSalao);
                         }
-
-
 
                         setupViewPager(mViewPager,salao);
 
@@ -218,4 +335,81 @@ Config config;
     }
     //-------------------------------------------------------
 
-}
+
+
+    public void SalvarAvaliacao(final String idSalao, final String pontos, final String comentario, final String data)
+    {
+
+
+        RequestBody IDsalao = RequestBody.create(MediaType.parse("text/plain"),idSalao);
+        RequestBody Pontos = RequestBody.create(MediaType.parse("text/plain"),pontos);
+        RequestBody Comentario = RequestBody.create(MediaType.parse("text/plain"),comentario);
+        RequestBody Data = RequestBody.create(MediaType.parse("text/plain"),data);
+
+
+            IApi iApi = IApi.retrofit.create(IApi.class);
+            final Call<ResponseBody> callSalvarAvaliacao = iApi.SalvarAvaliacao(IDsalao,Pontos,Comentario,Data);
+            callSalvarAvaliacao.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    callSalvarAvaliacao.cancel();
+                    loading.fechar();
+                    qtTentativaRealizadaSalvComentario = 0;
+                    switch (response.code())
+                    {
+                        case 204:
+                            Toast.makeText(verSalao_buscado.this,"Obrigado por Avaliar",Toast.LENGTH_LONG).show();
+                            alerta.dismiss();
+                            break;
+
+                        case 400:
+                            switch (response.message())
+                            {
+                                case "02":
+                                    Toast.makeText(verSalao_buscado.this,"Parametros incorretos!!",Toast.LENGTH_LONG).show();
+                                    break;
+
+                                case "04":
+                                    Toast.makeText(verSalao_buscado.this,"Erro!!",Toast.LENGTH_LONG).show();
+                                    break;
+
+                            }
+                            break;
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+
+                    if (qtTentativaRealizadaSalvComentario < qtTentativas) {
+                        qtTentativaRealizadaSalvComentario++;
+                        SalvarAvaliacao( idSalao, pontos,  comentario, data);
+                    } else {
+                       loading.fechar();
+
+                        if (t instanceof IOException) {
+                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
+                            Log.d("xex", String.valueOf(t.getCause()));
+                        } else if (t instanceof IllegalStateException) {
+                            Log.d("xex", "ConversionError");
+                            Log.d("xex", String.valueOf(t.getCause()));
+                        } else {
+                            Log.d("xex", "erro");
+                            Log.d("xex", String.valueOf(t.getCause()));
+                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
+                        }
+
+                    }
+
+
+
+
+                }
+            });
+        }
+    }
+
+

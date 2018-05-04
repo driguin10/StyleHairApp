@@ -1,8 +1,13 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class busca_salao extends AppCompatActivity {
+public class busca_salao extends AppCompatActivity implements LocationListener {
 
     RecyclerView lista;
     List<BuscaSalao> salaos;
@@ -39,7 +44,7 @@ public class busca_salao extends AppCompatActivity {
     int qtTentativaRealizada = 0;
 
     Loading loading;
-
+    private LocationManager locationManager;
     String query;
 
     ImageButton busca;
@@ -50,6 +55,9 @@ public class busca_salao extends AppCompatActivity {
     double latitude;
     double longitude;
     int kilometro = 5;
+
+    Location myLocation;
+    String Provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +100,12 @@ public class busca_salao extends AppCompatActivity {
             public void onClick(View v) {
                getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude);
 
-                loading.abrir("BUSCANCO...");
+                loading.abrir("Aguarde Carregando...");
             }
         });
 
 
-
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         minhaPosicao();
     }
@@ -113,11 +121,27 @@ public class busca_salao extends AppCompatActivity {
     }
 
 
-
+//*************************** mudar isso************************////////////////*******************
     public void minhaPosicao()
     {
-        latitude = -20.52717426;
-        longitude = -47.42805847;
+
+        Provider = locationManager.getBestProvider(new Criteria(),true);
+
+        try
+        {
+             myLocation = locationManager.getLastKnownLocation(Provider);
+        }
+        catch (SecurityException seg)
+        {
+
+        }
+        //Log.d("xex","lat - " +String.valueOf(myLocation.getLatitude()));
+        //Log.d("xex","long - " +String.valueOf(myLocation.getLongitude()));
+
+        //latitude = -20.52717426;
+        //longitude = -47.42805847;
+        latitude = myLocation.getLatitude();
+        longitude = myLocation.getLongitude();
     }
 
     public void getBusca(final int kilometro, final String nome, final String cidade, final double latitude, final double longitude)
@@ -203,4 +227,43 @@ public class busca_salao extends AppCompatActivity {
     }
     //----------------------------------------------------------------------
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }catch (SecurityException s)
+        {
+
+        }
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }

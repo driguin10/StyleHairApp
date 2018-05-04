@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
@@ -44,12 +45,13 @@ public class fragmentLogin extends Fragment {
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     ProgressDialog dialog;
-    CaixaDialogo caixaDialogo;
+
+    Loading loading;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fragment_login, container, false);
-
+        loading = new Loading(getActivity());
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
 
@@ -57,14 +59,14 @@ public class fragmentLogin extends Fragment {
         senhaAtual = (TextInputLayout)v.findViewById(R.id.editSenhaAtual);
         novaSenha = (TextInputLayout)v.findViewById(R.id.editSenhaNova);
         BtalterarLogin = (Button)v.findViewById(R.id.btAlterarLogin);
-        caixaDialogo = new CaixaDialogo();
+
         emailCadastrado.setText(getSharedPreferences.getString("email", ""));
 
 
         BtalterarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Enviando dados !!!");
+                loading.abrir("Aguarde...Enviando dados !!!");
                 AtualizaLogin();
             }
         });
@@ -99,7 +101,7 @@ public class fragmentLogin extends Fragment {
     {
         if(!verificaCampos())
         {
-            caixaDialogo.fecharCaixa();
+           loading.fechar();
             Toast.makeText(getContext(), "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
         }
         else
@@ -115,7 +117,7 @@ public class fragmentLogin extends Fragment {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    caixaDialogo.fecharCaixa();
+                    loading.fechar();
                     qtTentativaRealizada = 0;
                     switch (response.code())
                     {
@@ -157,7 +159,7 @@ public class fragmentLogin extends Fragment {
                         qtTentativaRealizada++;
                         AtualizaLogin();
                     } else {
-                        caixaDialogo.fecharCaixa();
+                        loading.fechar();
 
                         if (t instanceof IOException) {
                             Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
