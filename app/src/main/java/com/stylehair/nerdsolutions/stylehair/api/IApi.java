@@ -232,11 +232,11 @@ public interface IApi {
 
 
 //----------------------- funcionario--------------------------------------------
-    @Headers("apiKey:" + chave)
+   /* @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/saloes/funcionario/")
     Call<ResponseBody> SalvarFuncionario(@Part("idSalao") RequestBody idSalao,
-                                         @Part("idUsuario") RequestBody idUsuario);
+                                         @Part("idUsuario") RequestBody idUsuario);*/
 
 
     @Headers("apiKey:" + chave)
@@ -407,6 +407,11 @@ public interface IApi {
     @Headers("apiKey:" + chave)
     @GET("v1/servi_funcionarios/servicos/{id}")
     Call<List<ServicoSalao>> BuscaServicosFuncionario(@Path("id") String id);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/funcionarios/deletar/usuario/{id}")
+    Call<ResponseBody> ExcluirFuncionario(@Path("id") String id);
+
 
     //----------------------------------------------------
 

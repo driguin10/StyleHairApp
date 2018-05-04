@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,7 +50,7 @@ public class fragment_funcionario extends Fragment {
 
     int qtTentativas = 3;
     int qtTentativaRealizadaLoad = 0;
-
+    int qtTentativaRealizadaExcluir = 0;
 
 
 
@@ -67,6 +68,7 @@ public class fragment_funcionario extends Fragment {
     TextInputLayout verEstadoUser;
     TextInputLayout verSexoUser;
 
+    Button btExcluirFuncionario;
 
     String IdUsuario;
 
@@ -114,6 +116,7 @@ public class fragment_funcionario extends Fragment {
         verNascimento = (TextInputLayout) view.findViewById(R.id.txt_funcNascimento);
         verSexoUser = (TextInputLayout) view.findViewById(R.id.txt_funcsexo);
         ImagemUser = (CircleImageView) view.findViewById(R.id.verimagemFunc);
+        btExcluirFuncionario = (Button) view.findViewById(R.id.btExcluirFunc);
         //--------------------------------------------------------------------
 
         if(verificaConexao.verifica(getContext())) {
@@ -125,9 +128,62 @@ public class fragment_funcionario extends Fragment {
             Toast.makeText(getActivity(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
         }
 
+        btExcluirFuncionario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading.abrir("Aguarde...");
+                excluirFuncionario(IdUsuario);
+            }
+        });
+
 
         return view;
     }
+
+
+
+    //---- função para pegar dados do usuario do servidor----
+    public void excluirFuncionario(final String idFuncionario){
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callExcluir = iApi.ExcluirFuncionario(idFuncionario);
+        callExcluir.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loading.fechar();
+                qtTentativaRealizadaExcluir = 0;
+                callExcluir.cancel();
+                switch (response.code()) {
+                    case 204:
+
+                        break;
+                    case 400:
+                        if (response.message().equals("1")) {
+
+                        }
+                        if (response.message().equals("2")) {
+
+                            //paramentros incorretos
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (qtTentativaRealizadaExcluir < qtTentativas) {
+                    qtTentativaRealizadaExcluir++;
+                    excluirFuncionario(idFuncionario);
+                }
+                else {
+                    loading.fechar();
+                }
+            }
+        });
+
+    }
+    //-------------------------------------------------------
+
+
 
 
     //---- função para pegar dados do usuario do servidor----
