@@ -1,4 +1,5 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -8,7 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,6 +26,11 @@ public class fragment_principal_gerente extends Fragment {
 CardView btAbrir;
 CardView btFechar;
 CardView btAlmoco;
+
+CardView btAgendaDia;
+CardView btAgendar;
+CardView btNotificar;
+CardView btPesquisaSalao;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,42 +46,93 @@ CardView btAlmoco;
 
 
         btAbrir= (CardView) view.findViewById(R.id.card_aberto);
-        btFechar= (CardView) view.findViewById(R.id.card_almoco);
-        btAlmoco= (CardView) view.findViewById(R.id.card_fechado);
+        btFechar= (CardView) view.findViewById(R.id.card_fechado);
+        btAlmoco= (CardView) view.findViewById(R.id.card_almoco);
 
+        btAgendaDia= (CardView) view.findViewById(R.id.card_bt1);
+        btAgendar= (CardView) view.findViewById(R.id.card_bt2);
+        btNotificar= (CardView) view.findViewById(R.id.card_bt3);
+        btPesquisaSalao= (CardView) view.findViewById(R.id.card_bt4);
 
-        btAbrir.setOnClickListener(new View.OnClickListener() {
+        btPesquisaSalao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btAbrir.setAlpha(.9f);
-                btFechar.setAlpha(.4f);
-                btAlmoco.setAlpha(.4f);
+                Intent intent = new Intent(getActivity(), busca_salao.class);
+                startActivity(intent);
+            }
+
+        });
+
+        btAgendaDia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), minha_agenda.class);
+                startActivity(intent);
+            }
+
+        });
+
+        btNotificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Notificacao.class);
+                startActivity(intent);
+            }
+
+        });
+
+
+        btAbrir.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+               statusSalao(1);
+                return true;
             }
         });
 
-        btFechar.setOnClickListener(new View.OnClickListener() {
+        btFechar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                btAbrir.setAlpha(.4f);
-                btFechar.setAlpha(.9f);
-                btAlmoco.setAlpha(.4f);
-            }
-        });
-
-        btAlmoco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btAbrir.setAlpha(.4f);
-                btFechar.setAlpha(.4f);
-                btAlmoco.setAlpha(.9f);
+            public boolean onLongClick(View v) {
+               statusSalao(0);
+                return true;
             }
         });
 
 
+        btAlmoco.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                statusSalao(2);
+                return true;
+            }
+        });
 
-
-
+        statusSalao(0);
         return view;
+    }
+
+    public void statusSalao(int status)
+    {
+
+        if(status == 0)
+        {
+            btAbrir.setAlpha(.4f);
+            btFechar.setAlpha(1f);
+            btAlmoco.setAlpha(.4f);
+        }
+        else
+        if(status == 1)
+        {
+            btAbrir.setAlpha(1f);
+            btFechar.setAlpha(.4f);
+            btAlmoco.setAlpha(.4f);
+        }
+        else
+        {
+            btAbrir.setAlpha(.4f);
+            btFechar.setAlpha(.4f);
+            btAlmoco.setAlpha(1f);
+        }
     }
 
 }

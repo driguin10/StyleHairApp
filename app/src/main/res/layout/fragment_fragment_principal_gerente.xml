@@ -5,23 +5,137 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".telas.fragment_principal_gerente"
-    android:orientation="vertical">
+    android:orientation="vertical"
+
+    android:gravity="center">
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        app:cardCornerRadius="7dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_aberto"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="130dp"
+                    android:layout_marginRight="1dp"
+                    app:cardCornerRadius="7dp"
+                    android:alpha=".4"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@drawable/icone_aberto" />
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_almoco"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="130dp"
+                    android:alpha=".4"
+                    app:cardCornerRadius="7dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+
+                            android:background="@drawable/icone_almoco" />
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_fechado"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="130dp"
+                    android:alpha=".4"
+                    android:layout_marginLeft="1dp"
+                    app:cardCornerRadius="7dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+
+                        <ImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="@drawable/icone_fechado" />
+
+
+                    </LinearLayout>
+
+
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status do salão"
+                    android:textAlignment="center"
+                    android:textColor="#000"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_bt1"
             android:layout_width="85dp"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             app:cardCornerRadius="7dp"
@@ -38,17 +152,16 @@
                     android:id="@+id/imgbt1"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
-                    android:background="@drawable/icone_home" />
+                    android:background="@drawable/icone_calendario" />
 
                 <TextView
                     android:id="@+id/textBt1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="MEU SALÂO"
+                    android:text="Agenda do Dia"
                     android:textAlignment="center"
                     android:textSize="14dp"
                     android:textStyle="bold" />
@@ -60,10 +173,9 @@
         <android.support.v7.widget.CardView
             android:id="@+id/card_bt2"
             android:layout_width="85dp"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="3dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             app:cardCornerRadius="7dp"
@@ -80,17 +192,16 @@
                     android:id="@+id/imgbt2"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginBottom="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
-                    android:background="@drawable/icone_funcionario_preto" />
+                    android:background="@drawable/icone_agendar" />
 
                 <TextView
                     android:id="@+id/textBt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="FUNCIONÁRIOS"
+                    android:text="Agendar"
                     android:textAlignment="center"
                     android:textSize="14dp"
                     android:textStyle="bold" />
@@ -100,100 +211,91 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="40dp"
         android:layout_marginLeft="40dp"
-        android:orientation="vertical">
+        android:layout_marginRight="40dp"
+        android:orientation="horizontal">
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Status do Salão"
-    android:textAlignment="center"
-    android:textSize="17dp"
-    android:textColor="@color/corTextos"
-    android:textStyle="bold"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           android:padding="2dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_bt3"
+            android:layout_width="85dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="7dp"
+            app:cardElevation="2dp">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_aberto"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="130dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
 
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:background="@drawable/icone_aberto" />
-                </LinearLayout>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icone_notificacao" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Notificar"
+                    android:textAlignment="center"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
 
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_almoco"
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_bt4"
+            android:layout_width="85dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            app:cardCornerRadius="7dp"
+            app:cardElevation="2dp"
+            >
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="130dp"
-                android:alpha=".4">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
 
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icone_pesquisa_preto" />
 
-                        android:background="@drawable/icone_almoco" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Salões"
+                    android:textAlignment="center"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-                </LinearLayout>
+        </android.support.v7.widget.CardView>
 
-
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_fechado"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:layout_height="130dp"
-                android:alpha=".4">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:background="@drawable/icone_fechado" />
-
-
-                </LinearLayout>
-
-
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
     </LinearLayout>
+
 
 
 </LinearLayout>
