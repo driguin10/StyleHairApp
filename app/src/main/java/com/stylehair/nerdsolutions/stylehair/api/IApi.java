@@ -334,7 +334,11 @@ public interface IApi {
     Call<ResponseBody> EditarStatusSalao(@Part("idSalao") RequestBody idSalao,
                                           @Part("status") RequestBody status);
 
-
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/saloes/trocarGerente/")
+    Call<ResponseBody> TransferirGerente(@Part("idSalao") RequestBody idSalao,
+                                         @Part("idUsuario") RequestBody idUsuario);
 
     @Headers("apiKey:" + chave)
     @GET("v1/saloes/salao/{id}")

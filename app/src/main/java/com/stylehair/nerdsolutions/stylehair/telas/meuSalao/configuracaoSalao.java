@@ -3,6 +3,7 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
 
 import android.app.DialogFragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -30,6 +31,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.troca_gerente.trocar_gerente;
 
 import java.util.List;
 
@@ -92,7 +94,7 @@ public class configuracaoSalao extends AppCompatActivity {
     String idSalao;
 
     Button salvarConfig;
-
+    Button trocarGerente;
 
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
@@ -115,6 +117,7 @@ public class configuracaoSalao extends AppCompatActivity {
 
         loading = new Loading(configuracaoSalao.this);
         salvarConfig = (Button) findViewById(R.id.bt_salvarConfiguracao);
+        trocarGerente = (Button) findViewById(R.id.btTrocaGerente);
         txtSegE = (TextInputLayout) findViewById(R.id.txt_hora_segE);
         txtSegS = (TextInputLayout) findViewById(R.id.txt_hora_segS);
         btStatusSegunda = (ToggleButton) findViewById(R.id.bt_folga_seg);
@@ -197,6 +200,15 @@ public class configuracaoSalao extends AppCompatActivity {
         muda(true,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
         muda(true,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
         muda(true,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
+
+        trocarGerente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(configuracaoSalao.this,trocar_gerente.class);
+                intent.putExtra("idSalao",idSalao);
+                startActivity(intent);
+            }
+        });
 
         horaSegE.setOnClickListener(new View.OnClickListener() {
             @Override

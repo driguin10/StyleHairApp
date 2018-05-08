@@ -45,7 +45,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
     Loading loading;
     private LocationManager locationManager;
-    String query;
+    String query = "";
 
     ImageButton busca;
     ImageButton filtrar;
@@ -86,6 +86,8 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
         busca = (ImageButton) findViewById(R.id.bt_encontrar);
         nome = (EditText) findViewById(R.id.txt_query);
+        nome.setText(query);
+        kilometroRedor.setText("Até " + String.valueOf(kilometro) + "Km de você");
         filtrar = (ImageButton) findViewById(R.id.bt_filtrar);
         filtrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +110,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         minhaPosicao();
+        busca.callOnClick();
     }
 
     @Override
@@ -221,6 +224,8 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                   
                   kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você");
               }
+
+              busca.callOnClick();
           }
       }
 

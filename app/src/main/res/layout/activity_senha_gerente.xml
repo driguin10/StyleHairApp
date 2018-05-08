@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundoscuro"
+    tools:context=".telas.meuSalao.troca_gerente.senha_gerente">
+
+    <LinearLayout
+        android:id="@+id/l2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp">
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/SenhaGerente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/estiloImput"
+            app:passwordToggleTint="#fff"
+            app:passwordToggleEnabled="true"
+            android:hint="Senha do gerente"
+            android:textColorHint="#fff">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:inputType="textPassword"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/RSenhaGerente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/estiloImput"
+            app:passwordToggleTint="#fff"
+            app:passwordToggleEnabled="true"
+            android:hint="Repetir Senha"
+            android:textColorHint="#fff">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:inputType="textPassword"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/bt_transferir"
+                style="@android:style/Widget.Button.Inset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bt_azul"
+                android:text="Transferir"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/corTextos" />
+
+            <Button
+                android:id="@+id/bt_cancelar"
+                style="@android:style/Widget.Button.Inset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bt_cor_toolbar"
+                android:text="Cancelar"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/corTextos" />
+
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

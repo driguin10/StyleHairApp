@@ -942,6 +942,17 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
+                    <Button
+                        android:id="@+id/btTrocaGerente"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/bt_azul_esuro"
+                        android:textColor="@color/corTextos"
+                        android:text="Trocar Gerencia"/>
+
             <Button
                 android:id="@+id/bt_salvarConfiguracao"
                 android:layout_width="match_parent"

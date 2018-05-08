@@ -3,6 +3,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ public class fragment_principal_gerente extends Fragment {
 
 
 
-
+CardView btAbrir;
+CardView btFechar;
+CardView btAlmoco;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,16 +35,38 @@ public class fragment_principal_gerente extends Fragment {
         getActivity().setTitle("Bem Vindo");
 
 
-        Geocoder geocoder = new Geocoder(getContext());
-        try {
-            List<Address> enderecos = geocoder.getFromLocationName("Rua Voluntarios Adriano Cintra, Vila São Sebastião, Franca, SP", 1);
-            if (enderecos.size() > 0) {
-                Log.v("tag", "coordenadas " + enderecos.get(0).getLatitude() + ", " + enderecos.get(0).getLongitude());
-            }
-        }catch (IOException e)
-        {
+        btAbrir= (CardView) view.findViewById(R.id.card_aberto);
+        btFechar= (CardView) view.findViewById(R.id.card_almoco);
+        btAlmoco= (CardView) view.findViewById(R.id.card_fechado);
 
-        }
+
+        btAbrir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btAbrir.setAlpha(.9f);
+                btFechar.setAlpha(.4f);
+                btAlmoco.setAlpha(.4f);
+            }
+        });
+
+        btFechar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btAbrir.setAlpha(.4f);
+                btFechar.setAlpha(.9f);
+                btAlmoco.setAlpha(.4f);
+            }
+        });
+
+        btAlmoco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btAbrir.setAlpha(.4f);
+                btFechar.setAlpha(.4f);
+                btAlmoco.setAlpha(.9f);
+            }
+        });
+
 
 
 

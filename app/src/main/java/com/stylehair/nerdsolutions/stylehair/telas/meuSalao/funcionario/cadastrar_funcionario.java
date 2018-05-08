@@ -72,8 +72,8 @@ import retrofit2.Response;
 public class cadastrar_funcionario extends AppCompatActivity {
 TextInputLayout LoginEmail;
 TextInputLayout LoginSenha;
-Button pesquisaLogin;
-Loading loading;
+    Button pesquisaLogin;
+    Loading loading;
 
     CircleImageView ImagemUser;
 
