@@ -6,4 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".telas.agendamento.escolherServico">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_cadastro_servicos_funcionario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/corToobar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/corTextos"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/barraStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/barraStatus"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/corToobar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent">
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

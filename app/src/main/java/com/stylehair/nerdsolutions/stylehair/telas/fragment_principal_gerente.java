@@ -1,22 +1,36 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.api.IApi;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class fragment_principal_gerente extends Fragment {
@@ -32,6 +46,13 @@ CardView btAgendar;
 CardView btNotificar;
 CardView btPesquisaSalao;
 
+Loading loading;
+    SharedPreferences getSharedPreferences;
+    int qtTentativas = 3;
+    int qtTentativaRealizada = 0;
+
+    String idSalao;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +64,12 @@ CardView btPesquisaSalao;
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_fragment_principal_gerente, container, false);
         getActivity().setTitle("Bem Vindo");
+        getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+
+        idSalao = getSharedPreferences.getString("idSalao", "-1");
+
+        loading = new Loading(getActivity());
 
 
         btAbrir= (CardView) view.findViewById(R.id.card_aberto);
@@ -85,7 +112,7 @@ CardView btPesquisaSalao;
         btAbrir.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-               statusSalao(1);
+              mudarStatus(1);
                 return true;
             }
         });
@@ -93,7 +120,7 @@ CardView btPesquisaSalao;
         btFechar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-               statusSalao(0);
+              mudarStatus(0);
                 return true;
             }
         });
@@ -102,7 +129,7 @@ CardView btPesquisaSalao;
         btAlmoco.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                statusSalao(2);
+               mudarStatus(2);
                 return true;
             }
         });
@@ -135,4 +162,46 @@ CardView btPesquisaSalao;
         }
     }
 
-}
+
+
+
+
+    public void mudarStatus(final int status)
+    {
+            RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"),idSalao);
+            RequestBody STATUS = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(status));
+            IApi iApi = IApi.retrofit.create(IApi.class);
+            final Call<ResponseBody> callMudaStatus = iApi.EditarStatusSalao(IDSALAO,STATUS);
+            callMudaStatus.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    loading.fechar();
+                    qtTentativaRealizada = 0;
+                    switch (response.code())
+                    {
+                        case 204:
+                            statusSalao(status);
+                            break;
+
+                        case 400:
+
+                            break;
+                    }
+
+                    callMudaStatus.cancel();
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if (qtTentativaRealizada < qtTentativas) {
+                        qtTentativaRealizada++;
+                        mudarStatus(status);
+                    } else {
+                        loading.fechar();
+                    }
+                }
+            });
+        }
+    }
+
