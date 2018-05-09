@@ -205,7 +205,7 @@ Config config;
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 
         Bundle bundleOSalao = new Bundle();
-
+        bundleOSalao.putString("idSalao",String.valueOf(salao.getIdSalao()));
         String endereco = salao.getEndereco()+", "+String.valueOf(salao.getNumero())+", "+salao.getBairro()+", "+salao.getCidade()+", "+salao.getComplemento();
         bundleOSalao.putString("endereco",endereco);
         bundleOSalao.putString("email",salao.getEmail());
@@ -320,8 +320,7 @@ Config config;
                     loading.fechar();
 
                 }
-                Log.d("xex",t.getMessage());
-                Log.d("xex",t.getCause().toString());
+
             }
         });
 

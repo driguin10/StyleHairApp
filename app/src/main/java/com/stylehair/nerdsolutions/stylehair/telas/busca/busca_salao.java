@@ -110,7 +110,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         minhaPosicao();
-        busca.callOnClick();
+
     }
 
     @Override
@@ -132,19 +132,29 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
         try
         {
-             myLocation = locationManager.getLastKnownLocation(Provider);
+            myLocation = locationManager.getLastKnownLocation(Provider);
+            if(myLocation!=null) {
+                latitude = myLocation.getLatitude();
+                longitude = myLocation.getLongitude();
+            }
+            else
+            {
+                latitude = -20.52717426;
+                longitude = -47.42805847;
+                Log.d("xex","setou padrao");
+            }
+            busca.callOnClick();
         }
         catch (SecurityException seg)
         {
-
+            Log.d("xex","erro");
         }
         //Log.d("xex","lat - " +String.valueOf(myLocation.getLatitude()));
         //Log.d("xex","long - " +String.valueOf(myLocation.getLongitude()));
 
         //latitude = -20.52717426;
         //longitude = -47.42805847;
-        latitude = myLocation.getLatitude();
-        longitude = myLocation.getLongitude();
+
     }
 
     public void getBusca(final int kilometro, final String nome, final String cidade, final double latitude, final double longitude)

@@ -7,7 +7,7 @@
     tools:context=".telas.agendamento.escolherServico">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_cadastro_servicos_funcionario"
+        android:id="@+id/toolbar_escolherServico"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/corToobar"
@@ -15,28 +15,80 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@color/corTextos"/>
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listaServicosSalao"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/barraStatus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_escolherServico"
+        >
 
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
+
+
 
 
     <LinearLayout
         android:id="@+id/barraStatus"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@color/corToobar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="7dp"
+        android:orientation="vertical"
+        android:gravity="center">
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/icone_servicos_branco" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:padding="2dp"
+                 android:layout_margin="2dp"
+                 android:layout_gravity="right|bottom"
+                 android:gravity="center"
+                 android:background="@drawable/bolha"
+                 android:text="20"
+                 android:textColor="@color/corTextos"
+                 android:textStyle="bold"/>
+        </android.support.design.widget.CoordinatorLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/corTextos"
+            android:text="Serviços Selecionados "/>
+    </LinearLayout>
+
+</LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2t"
+            android:text="prosseguir"
+           />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
