@@ -41,6 +41,7 @@ import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapte
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -102,7 +103,7 @@ Config config;
         avaliacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("xex","foi");
+
                 LayoutInflater li = getLayoutInflater();
                 final View view = li.inflate(R.layout.activity_avaliar, null);
                 listaComentario = (RecyclerView) view.findViewById(R.id.listaComentarios);
@@ -204,6 +205,8 @@ Config config;
     private void setupViewPager(ViewPager viewPager,Salao salao) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
 
+
+
         Bundle bundleOSalao = new Bundle();
         bundleOSalao.putString("idSalao",String.valueOf(salao.getIdSalao()));
         String endereco = salao.getEndereco()+", "+String.valueOf(salao.getNumero())+", "+salao.getBairro()+", "+salao.getCidade()+", "+salao.getComplemento();
@@ -231,8 +234,10 @@ Config config;
         bundleOSalao.putString("domS",salao.getDomS());
 
 
+
         Fragment Osalao = new fragment_o_salao();
         Osalao.setArguments(bundleOSalao);
+
         adapter.addFragment(Osalao, "");
 
         Bundle Bservico = new Bundle();

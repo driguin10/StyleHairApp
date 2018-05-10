@@ -10,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -19,6 +23,7 @@ import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.Adaptador_servico_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.servicos_salao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,24 +41,35 @@ public class escolherServico extends AppCompatActivity {
 
     Loading loading;
 
+    Button btProsseguir;
+    ImageButton btListaServicos;
+    TextView qtServicosEscolhido;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolher_servico);
         loading = new Loading(escolherServico.this);
         Bundle bundle = getIntent().getExtras();
+
         if(bundle!=null)
         {
             idSalao = bundle.getString("idSalao");
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_escolherServico);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Escolha os Serviços");
         Drawable upArrow = ContextCompat.getDrawable(escolherServico.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(escolherServico.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+
+        qtServicosEscolhido = (TextView) findViewById(R.id.txtQuantidadeServico);
+        btProsseguir = (Button) findViewById(R.id.btProsseguir) ;
+        btListaServicos = (ImageButton) findViewById(R.id.btVerListaServicos);
 
         lista = (RecyclerView) findViewById(R.id.listaServicosSalao);
         lista.setHasFixedSize(true);
@@ -89,11 +105,12 @@ public class escolherServico extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 200:
+                        ArrayList<String> list = new ArrayList<>();
                         List<ServicoSalao> ListaServicos = response.body();
                         Log.d("xex","lii - " +  ListaServicos.get(0).getServico());
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        lista.setAdapter(new Adaptador_ecolherservico_salao(ListaServicos));
+                        lista.setAdapter(new Adaptador_ecolherservico_salao(ListaServicos,qtServicosEscolhido,list,btProsseguir,btListaServicos));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;

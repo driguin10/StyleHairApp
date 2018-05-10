@@ -56,19 +56,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageButton
+                android:id="@+id/btVerListaServicos"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@drawable/icone_servicos_branco" />
              <TextView
+                 android:id="@+id/txtQuantidadeServico"
                  android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:padding="2dp"
-                 android:layout_margin="2dp"
+                 android:layout_height="20dp"
+                 android:paddingLeft="5dp"
+                 android:paddingRight="5dp"
+                 android:layout_marginLeft="50dp"
                  android:layout_gravity="right|bottom"
                  android:gravity="center"
-                 android:background="@drawable/bolha"
-                 android:text="20"
+                 android:background="@drawable/bt_azul_esuro"
+                 android:text="0"
                  android:textColor="@color/corTextos"
                  android:textStyle="bold"/>
         </android.support.design.widget.CoordinatorLayout>
@@ -84,10 +87,18 @@
 
 
         <Button
+            android:id="@+id/btProsseguir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2t"
+            android:layout_weight="1"
             android:text="prosseguir"
+            android:background="@drawable/bt_azul_esuro"
+            android:textColor="@color/corTextos"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginRight="7dp"
            />
     </LinearLayout>
 
