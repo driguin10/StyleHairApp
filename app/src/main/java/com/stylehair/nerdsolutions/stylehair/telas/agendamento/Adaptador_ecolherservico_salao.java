@@ -26,12 +26,14 @@ public class Adaptador_ecolherservico_salao extends RecyclerView.Adapter<viewHol
     Button bt_Prosseguir;
     ImageButton bt_ListaServicos;
 
+
     public Adaptador_ecolherservico_salao(List<ServicoSalao> listaServicoSalao,TextView ServicosEscolhido, ArrayList<String> list, Button BtProsseguir,ImageButton BtListaServicos) {
         ListaServicoSalao = listaServicoSalao;
         qtServicosEscolhido = ServicosEscolhido;
         lista = list;
         bt_Prosseguir = BtProsseguir;
         bt_ListaServicos = BtListaServicos;
+
     }
 
 
@@ -47,8 +49,6 @@ public class Adaptador_ecolherservico_salao extends RecyclerView.Adapter<viewHol
          holder.valor.setText("R$"+String.valueOf(ListaServicoSalao.get(position).getValor()));
          holder.qtServicosEscolhido = qtServicosEscolhido;
          holder.lista = lista;
-
-
 }
     @Override
     public int getItemCount() {

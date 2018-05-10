@@ -41,14 +41,13 @@ public class viewHolderServicoSalao_escolhido extends ViewHolder implements View
     CardView card;
     Context contexto;
     ImageButton excluir;
-
     List<ServicoSalao> ListaServicoSalao;
     ServicoSalao servicoSalao;
 
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
 
-Loading loading;
+    Loading loading;
 
     public viewHolderServicoSalao_escolhido(View itemView, List<ServicoSalao> dados) {
         super(itemView);
@@ -80,9 +79,6 @@ Loading loading;
                     .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
 
-
-                            excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()));
-
                         }
                     })
                     .setNegativeButton("não", new DialogInterface.OnClickListener() {
@@ -92,88 +88,9 @@ Loading loading;
                     })
                     .show();
         }
-        else
-        if(v.getId() == card.getId())
-        {
-            Intent intent = new Intent(v.getContext(),ver_servico_salao.class);
-            intent.putExtra("idSalao", String.valueOf(servicoSalao.getIdSalao()));
-            intent.putExtra("idServico",String.valueOf(servicoSalao.getIdServicoSalao()));
-            intent.putExtra("servico",servicoSalao.getServico());
-            intent.putExtra("valor",String.valueOf(servicoSalao.getValor()));
-            intent.putExtra("tempo",servicoSalao.getTempo());
-            intent.putExtra("sexo",servicoSalao.getSexo());
-            v.getContext().startActivity(intent);
-            ((Activity)v.getContext()).finish();
-        }
+
     }
 
 
-    public void excluiServico(String id)
-    {
-
-
-
-            IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callExcluiServico = iApi.ExcluirServicosSalao(id);
-            callExcluiServico.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    qtTentativaRealizada = 0;
-                    switch (response.code())
-                    {
-                        case 204:
-                            Intent intent = new Intent(contexto,servicos_salao.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            contexto.startActivity(intent);
-                            ((Activity)contexto).finish();
-                            break;
-
-                        case 400:
-                            switch (response.message())
-                            {
-                                case "02":
-                                    Toast.makeText(contexto,"Parametros incorretos!!",Toast.LENGTH_LONG).show();
-                                    break;
-
-                                case "05":
-                                    Toast.makeText(contexto,"Erro ao excluir!!",Toast.LENGTH_LONG).show();
-                                    break;
-                            }
-                            break;
-                    }
-
-                    callExcluiServico.cancel();
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
-                    if (qtTentativaRealizada < qtTentativas) {
-                        qtTentativaRealizada++;
-                        excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()));
-                    } else {
-
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
-                    }
-
-
-
-
-                }
-            });
-        }
     }
 

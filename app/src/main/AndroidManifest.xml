@@ -132,7 +132,8 @@
         <activity android:name=".telas.meuSalao.troca_gerente.trocar_gerente" />
         <activity android:name=".telas.meuSalao.troca_gerente.senha_gerente" />
         <activity android:name=".telas.agendamento.escolherServico" />
-        <activity android:name=".telas.agendamento.escolherFuncionario"></activity>
+        <activity android:name=".telas.agendamento.escolherFuncionario" />
+        <activity android:name=".telas.agendamento.servicos_escolhidos.lista_servi_escolhido"></activity>
     </application>
 
 </manifest>

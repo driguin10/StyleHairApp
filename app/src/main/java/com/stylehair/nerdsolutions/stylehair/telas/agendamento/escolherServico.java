@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -75,6 +76,8 @@ public class escolherServico extends AppCompatActivity {
         lista.setHasFixedSize(true);
         loading.abrir("atualizando");
         getServicos(idSalao);
+
+
     }
 
     @Override
@@ -105,6 +108,7 @@ public class escolherServico extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 200:
+
                         ArrayList<String> list = new ArrayList<>();
                         List<ServicoSalao> ListaServicos = response.body();
                         Log.d("xex","lii - " +  ListaServicos.get(0).getServico());
