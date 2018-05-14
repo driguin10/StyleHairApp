@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:background="#252424"
-tools:context=".telas.agendamento.servicos_escolhidos.lista_servi_escolhido">
+tools:context=".telas.agendamento.servicos_agenda.escolhido.lista_servi_escolhido">
 >
 
 <ImageButton

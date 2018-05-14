@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".telas.agendamento.escolherServico">
+    tools:context=".telas.agendamento.servicos_agenda.escolherServico">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_escolherServico"
