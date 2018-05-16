@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.stylehair.nerdsolutions.stylehair.telas.configuracaoApp">
 
     <android.support.v7.widget.Toolbar
@@ -15,5 +16,16 @@
         app:titleTextColor="@color/corTextos"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <Button
+        android:id="@+id/bt_deletar_conta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Encerrar Conta"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:background="@drawable/bt_azul_esuro"/>
 
 </LinearLayout>

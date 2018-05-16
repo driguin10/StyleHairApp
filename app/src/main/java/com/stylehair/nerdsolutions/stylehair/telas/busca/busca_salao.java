@@ -141,13 +141,13 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             {
                 latitude = -20.52717426;
                 longitude = -47.42805847;
-                Log.d("xex","setou padrao");
+               // Log.d("xex","setou padrao");
             }
             busca.callOnClick();
         }
         catch (SecurityException seg)
         {
-            Log.d("xex","erro");
+           // Log.d("xex","erro");
         }
         //Log.d("xex","lat - " +String.valueOf(myLocation.getLatitude()));
         //Log.d("xex","long - " +String.valueOf(myLocation.getLongitude()));

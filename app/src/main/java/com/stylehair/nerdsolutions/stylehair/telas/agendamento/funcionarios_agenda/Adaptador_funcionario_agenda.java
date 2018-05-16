@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.telas.agendamento.funcionarios_agenda;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,11 @@ import android.view.ViewGroup;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
+import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionarioBusca;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.viewHolderFuncionario;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,23 +22,38 @@ import java.util.List;
 
 public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolderFuncionario_agenda> {
 
-    List<UsuarioFuncionario> ListaFuncionario;
+    List<UsuarioFuncionarioBusca> ListaFuncionario;
+    RecyclerView lista;
 
 
-
-    public Adaptador_funcionario_agenda(List<UsuarioFuncionario> listaFuncionario) {
+    public Adaptador_funcionario_agenda(List<UsuarioFuncionarioBusca> listaFuncionario,RecyclerView listaa) {
         ListaFuncionario = listaFuncionario;
+        lista = listaa;
     }
 
 
     @Override
     public viewHolderFuncionario_agenda onCreateViewHolder(ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_funcionario, parent, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_funcionario_busca, parent, false);
         return new viewHolderFuncionario_agenda(vista,ListaFuncionario);
     }
 
     @Override
     public void onBindViewHolder(viewHolderFuncionario_agenda holder, int position) {
+         holder.lista = lista;
+         String[] Lservicos = ListaFuncionario.get(position).getServico().split("#");
+        ArrayList<String> LServaux = new ArrayList<>();
+        String Sconcat = "";
+         for (int x = 0 ; x<Lservicos.length;x++)
+         {
+             String[] Laux = Lservicos[x].split("-");
+             LServaux.add(Laux[0]);
+             Sconcat = Sconcat + "\n" + Laux[1];
+         }
+
+
+         holder.ListaIdServ = LServaux;
+         holder.Servicos.setText(Sconcat);
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
          Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
 }

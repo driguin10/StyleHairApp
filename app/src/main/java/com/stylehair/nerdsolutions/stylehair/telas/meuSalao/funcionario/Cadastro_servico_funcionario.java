@@ -68,11 +68,10 @@ Button btSalvarServico;
             @Override
             public void onClick(View v) {
                 String idServicoCad =  "";
-                for(int x= 0; x< lista.getChildCount(); x++)
+                for(int x= 0; x< lista.getChildCount(); x++)//percorre a lista
                 {
-                    if(lista.getChildAt(x).findViewById(R.id.cardsServicoEscolhido).isSelected())
+                    if(lista.getChildAt(x).findViewById(R.id.cardsServicoEscolhido).isSelected())//verifica qual esta selecionado
                     {
-                        //Log.d("xex","id- " + String.valueOf(ListaServicos.get(x).getIdServicoSalao()));
                         idServicoCad = String.valueOf(ListaServicos.get(x).getIdServicoSalao());
                     }
                 }

@@ -30,7 +30,7 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp">
@@ -55,7 +55,7 @@
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Intervalo"
+                            android:text="@string/intervalo"
                             android:textAlignment="center" />
 
                         <Spinner
@@ -81,7 +81,7 @@
 
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Tempo minimo"
+                            android:text="@string/tempo_m_nimo"
                             android:textAlignment="center"/>
                         <Spinner
                             android:id="@+id/spn_min_agenda"
@@ -100,23 +100,19 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-
-
-
-
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Segunda Feira"
+                    android:text="@string/segunda_feira"
                     android:textAlignment="center"
                     android:textColor="@color/corToobar"/>
 
@@ -154,11 +150,9 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_segE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_marginTop="5dp"
-
-
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
@@ -190,9 +184,9 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_segS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
@@ -227,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
@@ -273,14 +267,11 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_terE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
-
-
                                 android:layout_alignRight="@+id/id_search_EditText"
-                                android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
 
@@ -310,12 +301,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_terS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
                         </LinearLayout>
@@ -348,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
@@ -394,14 +385,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_quaE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
-
-
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
 
@@ -431,12 +420,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_quaS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
                         </LinearLayout>
@@ -469,7 +458,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
@@ -515,18 +504,14 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_quiE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
-
-
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
-
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -552,12 +537,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_quiS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
                         </LinearLayout>
@@ -590,7 +575,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
@@ -636,16 +621,14 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_sexE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
-
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -671,12 +654,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_sexS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
                         </LinearLayout>
@@ -709,7 +692,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
@@ -755,12 +738,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_sabE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
 
@@ -790,12 +773,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_sabS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
                         </LinearLayout>
@@ -828,7 +811,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="1dp"
                 app:cardCornerRadius="7dp"
                 android:elevation="4dp">
 
@@ -874,16 +857,14 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_domE"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
-
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -909,12 +890,12 @@
 
                             <ImageButton
                                 android:id="@+id/pesquisa_hora_domS"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
                                 android:layout_alignBottom="@+id/id_search_EditText"
                                 android:layout_alignRight="@+id/id_search_EditText"
                                 android:layout_alignTop="@+id/id_search_EditText"
-                                android:layout_marginTop="5dp"
                                 android:background="@drawable/icone_time"
                                 android:backgroundTint="#ee313745" />
                         </LinearLayout>
@@ -942,25 +923,38 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-                    <Button
-                        android:id="@+id/btTrocaGerente"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:background="@drawable/bt_azul_esuro"
-                        android:textColor="@color/corTextos"
-                        android:text="Trocar Gerencia"/>
+            <Button
+                android:id="@+id/bt_deletar_conta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Encerrar Conta"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="15dp"
+                android:textColor="#fff"
+                android:background="@drawable/bt_cor_toolbar"/>
+
+            <Button
+                android:id="@+id/btTrocaGerente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:background="@drawable/bt_azul_esuro"
+                android:textColor="@color/corTextos"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Trocar Gerencia"/>
 
             <Button
                 android:id="@+id/bt_salvarConfiguracao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/bt_cor_toolbar"
                 android:textColor="@color/corTextos"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:text="Salvar"/>
         </LinearLayout>
 

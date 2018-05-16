@@ -30,7 +30,6 @@ public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapte
         ListaServicoSalao = listaServicoSalao;
         idFunc = idFuncionario;
         lista = listaa;
-
     }
 
 

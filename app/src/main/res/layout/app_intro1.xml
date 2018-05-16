@@ -15,7 +15,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="29dp"
-        android:text="Welcome to AppIntro"
+        android:text="Bem Vindo Ao StyleHair"
         android:textColor="#ffffff"
         android:textSize="27sp"
         android:textStyle="bold" />
@@ -30,12 +30,12 @@
         //image link from drawable folder
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/ic_done_white" />
+            android:src="@drawable/icone_pesquisa" />
     </LinearLayout>
 
     <TextView
@@ -46,7 +46,7 @@
         android:gravity="center"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"
-        android:text="Amazing android app with cool features."
+        android:text="O jeito fácil e rápido de buscar salões"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

@@ -331,12 +331,8 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,7);
 
         } else if (id == R.id.nav_configuracao) {
-
-
-                //Intent intent=new Intent(principal.this,testeee.class);
-                //startActivity(intent);
-
-
+                Intent intent=new Intent(principal.this,configuracaoApp.class);
+                startActivity(intent);
         } else if (id == R.id.nav_logout) {
             logout.deslogar(this,true);
         }

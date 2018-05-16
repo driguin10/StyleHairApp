@@ -120,7 +120,7 @@ Config config;
                 view.findViewById(R.id.btAvaliar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("xex","aq");
+
                         RatingBar estrelas = (RatingBar) view.findViewById(R.id.estrelasAvalia);
                         EditText comentario = (EditText)view.findViewById(R.id.txtComentario);
 

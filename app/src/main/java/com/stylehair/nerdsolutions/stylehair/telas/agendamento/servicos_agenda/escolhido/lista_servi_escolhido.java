@@ -1,9 +1,11 @@
 package com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolhido;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,8 @@ public class lista_servi_escolhido extends AppCompatActivity {
     Float vlTotal = 0f;
     Button btInfo;
     ImageButton sair;
+
+    ArrayList<String> listNova = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +37,21 @@ public class lista_servi_escolhido extends AppCompatActivity {
         sair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                converteLista();
+                Intent data = new Intent();
+                data.putStringArrayListExtra("lista",listNova);
+                setResult(RESULT_OK, data);
                 finish();
+
             }
         });
         btInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                converteLista();
+                Intent data = new Intent();
+                data.putStringArrayListExtra("lista",listNova);
+                setResult(RESULT_OK, data);
                 finish();
             }
         });
@@ -71,9 +84,22 @@ public class lista_servi_escolhido extends AppCompatActivity {
         }
         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
         layout.setOrientation(LinearLayoutManager.VERTICAL);
-        listaServicos.setAdapter(new Adaptador_servico_salaoE(ListaServicos));
+        listaServicos.setAdapter(new Adaptador_servico_salaoE(ListaServicos,listaServicos,btInfo));
         listaServicos.setLayoutManager(layout);
         listaServicos.setClickable(true);
         btInfo.setText("Volor Total R$ " + String.valueOf(vlTotal));
+
+    }
+
+
+    public void converteLista()
+    {
+        String dadosLista = "";
+
+        for(int x = 0; x < listaServicos.getAdapter().getItemCount();x++)
+        {
+            String Serv = String.valueOf(ListaServicos.get(x).getIdServicoSalao())+"#"+ListaServicos.get(x).getServico()+"#"+ String.valueOf(ListaServicos.get(x).getValor())+"#"+ListaServicos.get(x).getTempo();
+            listNova.add(Serv);
+        }
     }
 }

@@ -41,7 +41,7 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent">
 <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
     android:orientation="vertical">
@@ -49,9 +49,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="7dp"
+
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_gravity="center">
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -88,10 +89,10 @@
 
         <Button
             android:id="@+id/btProsseguir"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="prosseguir"
+            android:text="Escolher Funcionario"
             android:background="@drawable/bt_azul_esuro"
             android:textColor="@color/corTextos"
             android:paddingRight="5dp"

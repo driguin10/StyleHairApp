@@ -11,6 +11,10 @@
     android:layout_marginLeft="5dp"
     android:id="@+id/cardsFunc">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -43,10 +47,42 @@
                 android:layout_alignParentTop="true"
                 android:textSize="18sp"
                 android:text="Nome Funcionario do Salão "
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
+
                 android:textColor="#050505"/>
 
         </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Serviços"
+                android:textAlignment="center"
+                android:gravity="bottom"
+                />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@drawable/line">
+                </LinearLayout>
+            <TextView
+                android:id="@+id/txtServicos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
 
 

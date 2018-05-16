@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionarioBusca;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
@@ -45,28 +46,29 @@ public interface IApi {
     //**********************************************************
 
 
-    //----------chamada para criar o login ---------------
+    //--------------------------------- LOGIN ------------------------------
     @Headers("apiKey:" + chave)
     @POST(versao + "/logins/salvar/")
     Call<ResponseBody> cadastraLogin(@Body Login login);
-    //----------------------------------------------------
 
-    //---------chamada para verificar login ---------------
     @Headers("apiKey:" + chave)
     @POST(versao + "/logins/")
     Call<Logar> Logar(@Body Login login);
-    //-----------------------------------------------------
 
-    //-------- chamada para editar login ---------------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/logins/editar/")
     Call<ResponseBody> EditarLogin(@Part("email") RequestBody email,
                                    @Part("senhaAtual") RequestBody senhaAtual,
                                    @Part("novaSenha") RequestBody novaSenha);
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/logins/reset/")
+    Call<ResponseBody> esqueciSenha(@Part("email") RequestBody email);
     //--------------------------------------------------------------------------
 
-    //---------------chamada para criar usuario---------------------------------
+    //------------------------------------ USUARIO---------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/usuarios/salvar/")
@@ -85,9 +87,7 @@ public interface IApi {
                                      @Part("estado") RequestBody estado,
                                      @Part("cidade") RequestBody cidade,
                                      @Part("obs") RequestBody obs);
-    //----------------------------------------------------------------------------
 
-    //---------------chamada para editar usuario---------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/usuarios/editar/")
@@ -107,11 +107,7 @@ public interface IApi {
                                      @Part("cidade") RequestBody cidade,
                                      @Part("obs") RequestBody obs,
                                      @Part("imagemAntiga") RequestBody imagemAntiga);
-    //----------------------------------------------------------------------------
 
-
-
-//-----------------------------------------------------------------------
     @Headers("apiKey:" + chave)
     @GET("v1/usuarios/{id}")
     Call <List<Usuario>> BuscaUsuario(@Path("id") int id);
@@ -121,16 +117,20 @@ public interface IApi {
     @GET("v1/usuariosId/{id}")
     Call <List<Usuario>> BuscaUsuarioId(@Path("id") int id);
 
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/usuarios/tipos/{id}")
+    Call<TipoUsuario> tipoUsuario(@Path("id") int id);
+
     //----------------------------------------------------------------------------
 
 
 
+    //---------------------------------- SALAO-------------------------------------
     @Headers("apiKey:" + chave)
     @GET("v1/saloes/{id}")
     Call <List<Salao>> BuscaSalao(@Path("id") int id);
 
-
-    //---------------chamada para salvar salao---------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/saloes/salvar/")
@@ -154,11 +154,7 @@ public interface IApi {
                                      @Part("agendamento") RequestBody agendamento,
                                      @Part("complemento") RequestBody complemento);
 
-    //------------------------
 
-
-
-    //---------------chamada para salvar salao---------------------------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/saloes/")
@@ -167,17 +163,6 @@ public interface IApi {
                                        @Part("cidade") RequestBody cidade,
                                        @Part("nome") RequestBody nome,
                                        @Part("kilometro") RequestBody kilometro);
-
-
-
-
-
-
-
-
-
-    //----------------------------------------------------------------------------
-
 
 
     @Headers("apiKey:" + chave)
@@ -204,8 +189,6 @@ public interface IApi {
                                    @Part("agendamento") RequestBody agendamento,
                                    @Part("imagemAntiga") RequestBody imagemAntiga);
 
-
-
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/saloes/configuracoes/")
@@ -227,17 +210,24 @@ public interface IApi {
                                                 @Part("domE") RequestBody domE,
                                                 @Part("domS") RequestBody domS);
 
-
-
-
-
-//----------------------- funcionario--------------------------------------------
-   /* @Headers("apiKey:" + chave)
+    @Headers("apiKey:" + chave)
     @Multipart
-    @POST("v1/saloes/funcionario/")
-    Call<ResponseBody> SalvarFuncionario(@Part("idSalao") RequestBody idSalao,
-                                         @Part("idUsuario") RequestBody idUsuario);*/
+    @POST("v1/saloes/editarStatus/")
+    Call<ResponseBody> EditarStatusSalao(@Part("idSalao") RequestBody idSalao,
+                                         @Part("status") RequestBody status);
 
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/saloes/trocarGerente/")
+    Call<ResponseBody> TransferirGerente(@Part("idSalao") RequestBody idSalao,
+                                         @Part("idUsuario") RequestBody idUsuario);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/saloes/salao/{id}")
+    Call<VerSalao> verSalaoBusca(@Path("id") String id);
+    //--------------------------------------------------------------------------------
+
+    //----------------------------------- FUNCIONARIOS ---------------------------------------
 
     @Headers("apiKey:" + chave)
     @GET("v1/funcionarios/funcionario/{id}")
@@ -267,17 +257,18 @@ public interface IApi {
     @GET("v1/funcionarios/{id}")
     Call <GetUsuarioFuncionario> buscaFuncionarios(@Path("id") int id);
 
+    @Headers("apiKey:" + chave)
+    @GET("v1/funcionarios/salao/{id}/servicos/{idServ}")
+    Call <GetUsuarioFuncionarioBusca> buscaFuncionariosBusca(@Path("id") int id, @Path("idServ") String servicos);
 
 
     //criar funcionario -- já tem usuario e login
-
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/funcionarios/salvar/")
     Call<CadastroFuncionario> CriarFuncionario1(@Part("TipoSalvar") RequestBody TipoSalvar,
                                                       @Part("idSalao") RequestBody idSalao,
                                                       @Part("idUsuario") RequestBody idUsuario);
-
 
     //criar funcionario -- não tem usuario - nem login
     @Headers("apiKey:" + chave)
@@ -326,37 +317,12 @@ public interface IApi {
                                                       @Part("cidade") RequestBody cidade,
                                                       @Part("obs") RequestBody obs);
 
-//--------------------------------------------------------------------------------
-
-    @Headers("apiKey:" + chave)
-    @Multipart
-    @POST("v1/saloes/editarStatus/")
-    Call<ResponseBody> EditarStatusSalao(@Part("idSalao") RequestBody idSalao,
-                                          @Part("status") RequestBody status);
-
-    @Headers("apiKey:" + chave)
-    @Multipart
-    @POST("v1/saloes/trocarGerente/")
-    Call<ResponseBody> TransferirGerente(@Part("idSalao") RequestBody idSalao,
-                                         @Part("idUsuario") RequestBody idUsuario);
-
-    @Headers("apiKey:" + chave)
-    @GET("v1/saloes/salao/{id}")
-    Call<VerSalao> verSalaoBusca(@Path("id") String id);
+    //--------------------------------------------------------------------------------
 
 
-    //---------------chamada para resetar login---------------------------------
-    @Headers("apiKey:" + chave)
-    @Multipart
-    @POST("v1/logins/reset/")
-    Call<ResponseBody> esqueciSenha(@Part("email") RequestBody email);
-    //----------------------------------------------------------------------------
 
-    //-----------------------------------------------------------------------------
-    @Headers("apiKey:" + chave)
-    @GET("v1/usuarios/tipos/{id}")
-    Call<TipoUsuario> tipoUsuario(@Path("id") int id);
-    //-----------------------------------------------------------------------------
+
+    //--------------------------------SERVICOS SALÃO ---------------------------------------------
 
     @Headers("apiKey:" + chave)
     @GET("v1/servi_saloes/servicos/{id}")
@@ -384,25 +350,17 @@ public interface IApi {
     @Headers("apiKey:" + chave)
     @GET("v1/servi_saloes/deletar/{id}")
     Call<ResponseBody> ExcluirServicosSalao(@Path("id") String id);
+    //--------------------------------------------------------------------------------
 
 
 
 
-
-    //-------------------------servicos funcionario-----------------------
-
+    //-------------------------SERVICOS FUNCIONARIO-----------------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/servi_funcionarios/salvar/")
     Call<ResponseBody> SalvarServicoFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
                                           @Part("idServicoSalao") RequestBody idServicoSalao);
-
-
-    @Headers("apiKey:" + chave)
-    @Multipart
-    @POST("v1/servi_funcionarios/salvar/")
-    Call<ResponseBody> EditarServicoFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
-                                                @Part("idServicoSalao") RequestBody idServicoSalao);
 
     @Headers("apiKey:" + chave)
     @GET("v1/servi_funcionarios/deletar/{id}")
@@ -415,14 +373,10 @@ public interface IApi {
     @Headers("apiKey:" + chave)
     @GET("v1/funcionarios/deletar/usuario/{id}")
     Call<ResponseBody> ExcluirFuncionario(@Path("id") String id);
+    //--------------------------------------------------------------------------------
 
 
-    //----------------------------------------------------
-
-    @Headers("apiKey:" + chave)
-    @GET("v1/avaliacoes/comentario/deletar/{id}")
-    Call<ResponseBody> ExcluirComentario(@Path("id") String id);
-
+    //------------------------AVALIAÇÃO SALAO-----------------------------------
     @Headers("apiKey:" + chave)
     @GET("v1/avaliacoes/deletar/{id}")
     Call<ResponseBody> ExcluirAvaliacao(@Path("id") String id);
@@ -438,9 +392,7 @@ public interface IApi {
                                        @Part("pontos") RequestBody pontos,
                                        @Part("comentario") RequestBody comentario,
                                        @Part("data") RequestBody data);
-
-
-    //--------------------------------------
+    //--------------------------------------------------------------------------------
 
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()

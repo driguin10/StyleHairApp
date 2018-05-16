@@ -19,6 +19,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
+import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
 
@@ -85,6 +86,17 @@ Loading loading;
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), busca_salao.class);
+                startActivity(intent);
+            }
+
+        });
+
+        btAgendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(),escolherServico.class);
+                intent.putExtra("idSalao",idSalao);
                 startActivity(intent);
             }
 

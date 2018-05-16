@@ -1,7 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.classes;
 
-public class UsuarioFuncionario {
-
+public class UsuarioFuncionarioBusca {
 
     public int idFuncionario;
     public int idUsuario;
@@ -10,8 +9,9 @@ public class UsuarioFuncionario {
     public String telefone;
     public int idServico;
     public String servico;
+    public String[] listaAux;
 
-    public UsuarioFuncionario(int idFuncionario, int idUsuario, String nome, String linkImagem, String telefone, int idServico, String servico) {
+    public UsuarioFuncionarioBusca(int idFuncionario, int idUsuario, String nome, String linkImagem, String telefone, int idServico, String servico) {
         this.idFuncionario = idFuncionario;
         this.idUsuario = idUsuario;
         this.nome = nome;

@@ -4,11 +4,11 @@ package com.stylehair.nerdsolutions.stylehair.telas.busca.busca_servicos;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -17,7 +17,6 @@ import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
-import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_servicos.Adaptador_servico_salao_grid;
 
 
 import java.util.List;
@@ -33,7 +32,8 @@ public class fragment_servicos_do_salao extends Fragment {
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     Loading loading;
-    GridView lista;
+    //GridView lista;
+    RecyclerView lista;
 
     List<ServicoSalao> servicosSalao;
     TextView semServico;
@@ -58,7 +58,7 @@ public class fragment_servicos_do_salao extends Fragment {
         }
 
         loading = new Loading(getActivity());
-        lista = (GridView) view.findViewById(R.id.gradeServicos);
+        lista = (RecyclerView) view.findViewById(R.id.ListaServicos);
 
         loading.abrir("carregando");
         getServicos(IdSalao);
@@ -68,7 +68,6 @@ public class fragment_servicos_do_salao extends Fragment {
 
     public void getServicos(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<ServicoSalao>> callBuscaServico = iApi.BuscaServicosSalao(id);
         callBuscaServico.enqueue(new Callback<List<ServicoSalao>>() {
@@ -78,37 +77,27 @@ public class fragment_servicos_do_salao extends Fragment {
                 callBuscaServico.cancel();
 
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
                        List<ServicoSalao> ListaServicos = response.body();
-                       Log.d("xex",ListaServicos.get(0).getServico().toString());
-                        lista.setAdapter(new Adaptador_servico_salao_grid(getContext(),ListaServicos,semServico));
-
-
-                        break;
-
-                    case 400:
-
+                        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+                        layout.setOrientation(LinearLayoutManager.VERTICAL);
+                        lista.setAdapter(new Adaptador_servico_funcionario_busca(ListaServicos));
+                        lista.setLayoutManager(layout);
+                        lista.setClickable(true);
                         break;
                 }
-
-
-
             }
 
             @Override
             public void onFailure(Call<List<ServicoSalao>> call, Throwable t) {
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
-
                     getServicos(IdSalao);
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });

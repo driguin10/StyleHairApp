@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="10"
-    android:background="#b704c4"
+    android:background="#c60f3d"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +15,7 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="29dp"
-        android:text="All in One App"
+        android:text="texto aqui"
         android:textColor="#ffffff"
         android:textSize="27sp"
         android:textStyle="bold" />

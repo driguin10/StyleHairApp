@@ -125,7 +125,9 @@ public class funcionarios extends AppCompatActivity {
                                 String Nome = Ufunc.getNome();
                                 String LinkImagem = Ufunc.getLinkImagem();
                                 String Telefone = Ufunc.getTelefone();
-                                funcs.add(new UsuarioFuncionario(IdUsuario, Nome, LinkImagem, IdFuncionario,Telefone));
+                                String Servico = Ufunc.getServico();
+                                int IdServico = Ufunc.getIdServico();
+                                funcs.add(new UsuarioFuncionario(IdFuncionario,IdUsuario,Nome,LinkImagem,Telefone,IdServico,Servico));
                             }
 
                             LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());

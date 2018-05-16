@@ -5,40 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".telas.busca.busca_servicos.fragment_servicos_do_salao">
 
-    <TextView
-        android:id="@+id/txtSemServicos"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Não possui Serviços"
-        android:gravity="center"
-        />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-       android:fillViewport="true">
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <GridView
-                android:id="@+id/gradeServicos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:columnWidth="90dp"
-                android:horizontalSpacing="10dp"
-                android:numColumns="2"
-                android:verticalSpacing="10dp">
-            </GridView>
-
-
-        </LinearLayout>
-    </ScrollView>
-
-
-
-
+            android:id="@+id/ListaServicos">
+        </android.support.v7.widget.RecyclerView>
 </FrameLayout>

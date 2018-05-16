@@ -16,17 +16,17 @@ tools:context=".telas.agendamento.funcionarios_agenda.escolherFuncionario">
     app:titleTextColor="@color/corTextos"/>
 
 
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/listaFunc"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toTopOf="@+id/barraStatus"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/toolbar_escolherServico"
-    >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listaFunc"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
-</android.support.v7.widget.RecyclerView>
+        app:layout_constraintBottom_toTopOf="@+id/barraStatus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_escolherFunc">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 
@@ -42,17 +42,22 @@ tools:context=".telas.agendamento.funcionarios_agenda.escolherFuncionario">
     app:layout_constraintStart_toStartOf="parent"
     android:gravity="right">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+    </LinearLayout>
     <Button
         android:id="@+id/btProsseguir"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:text="prosseguir"
+        android:layout_weight="1"
+        android:text="Escolher Horario  "
         android:background="@drawable/bt_azul_esuro"
         android:textColor="@color/corTextos"
         android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:gravity="center"
         android:layout_gravity="center"
         android:layout_marginRight="7dp"
         />

@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda;
 
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -39,15 +41,19 @@ public class escolherServico extends AppCompatActivity {
     Button btProsseguir;
     ImageButton btListaServicos;
     TextView qtServicosEscolhido;
+    ArrayList<String> listFinal;
 
-
+    LinearLayoutManager layout;
+    List<ServicoSalao> ListaServicos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolher_servico);
         loading = new Loading(escolherServico.this);
+        layout = new LinearLayoutManager(getApplicationContext());
+        layout.setOrientation(LinearLayoutManager.VERTICAL);
         Bundle bundle = getIntent().getExtras();
-
+        listFinal = new ArrayList<>();
         if(bundle!=null)
         {
             idSalao = bundle.getString("idSalao");
@@ -70,6 +76,8 @@ public class escolherServico extends AppCompatActivity {
         lista.setHasFixedSize(true);
         loading.abrir("atualizando");
         getServicos(idSalao);
+
+
 
 
     }
@@ -100,18 +108,13 @@ public class escolherServico extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 200:
-                        ArrayList<String> list = new ArrayList<>();
-                        List<ServicoSalao> ListaServicos = response.body();
-                        LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
-                        layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        lista.setAdapter(new Adaptador_ecolherservico_salao(ListaServicos,qtServicosEscolhido,list,btProsseguir,btListaServicos));
+                        ListaServicos = response.body();
+                        lista.setAdapter(new Adaptador_ecolherservico_salao(ListaServicos,qtServicosEscolhido,listFinal,btProsseguir,btListaServicos));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
 
-                    case 400:
 
-                        break;
                 }
             }
 
@@ -128,4 +131,18 @@ public class escolherServico extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent){
+        if(requestCode == 1){
+            Bundle bundle = intent.getExtras();
+            listFinal = bundle.getStringArrayList("lista");
+            qtServicosEscolhido.setText(String.valueOf(listFinal.size()));
+            lista.setAdapter(new Adaptador_ecolherservico_salao(ListaServicos,qtServicosEscolhido,listFinal,btProsseguir,btListaServicos));
+            lista.setLayoutManager(layout);
+            lista.setClickable(true);
+            Log.d("xex",listFinal.toString());
+        }
+    }
+
 }

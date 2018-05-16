@@ -9,9 +9,6 @@ import java.util.List;
 
 public class VerSalao {
 
-
-
-
     private List<Salao> salao;
     private List<Usuario> gerente;
     private List<FuncionarioVerSalao> funcionarios;

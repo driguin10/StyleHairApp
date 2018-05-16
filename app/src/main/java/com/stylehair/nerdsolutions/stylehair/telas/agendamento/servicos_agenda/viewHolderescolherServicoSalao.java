@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -82,15 +83,14 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
             new AlertDialog.Builder(contexto)
                     .setTitle("Adicionar Serviço?")
                     .setMessage("Deseja adicionar este serviço")
-                    .setIcon(R.drawable.icone_delete)
+                    .setIcon(R.drawable.icone_servicos)
                     .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-
-                            int vl = Integer.valueOf(qtServicosEscolhido.getText().toString());
-
+                             int vl = Integer.valueOf(qtServicosEscolhido.getText().toString());
                              qtServicosEscolhido.setText(String.valueOf(vl + 1));
                              String Serv = String.valueOf(servicoSalao.getIdServicoSalao())+"#"+servicoSalao.getServico()+"#"+ String.valueOf(servicoSalao.getValor())+"#"+servicoSalao.getTempo();
                              lista.add(Serv);
+                             Toast.makeText(contexto,servicoSalao.getServico()+" adicionado",Toast.LENGTH_LONG).show();
 
                         }
                     })
@@ -125,7 +125,10 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
             if(lista.size()>0) {
                 Intent intent = new Intent(v.getContext(), lista_servi_escolhido.class);
                 intent.putStringArrayListExtra("ListaServ", lista);
-                v.getContext().startActivity(intent);
+               // v.getContext().startActivity(intent);
+                ((Activity) v.getContext()).startActivityForResult(intent,1);
+
+
             }
             else
             {
@@ -136,5 +139,8 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
 
 
     }
+
+
+
 }
 
