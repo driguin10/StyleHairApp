@@ -14,78 +14,92 @@
 
 
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="10dp"
+        android:id="@+id/layoutop">
 
-        <RelativeLayout
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/img_notification"
+            android:src="@drawable/icone_minha_conta"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            />
+
+        <TextView
+            android:id="@+id/titulo_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:id="@+id/layoutop">
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/img_notification"
+            android:text="Titulo"
+            android:textColor="#050505"
+            android:textSize="24sp" />
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/img_notification"
-                android:src="@drawable/icone_minha_conta"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/titulo_notification"
-                android:layout_toRightOf="@+id/img_notification"
-                android:layout_alignParentTop="true"
-                android:textSize="24sp"
-                android:text="Titulo"
-                android:textColor="#050505"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/nome_salao_notification"
-                android:layout_toRightOf="@+id/img_notification"
-                android:layout_below="@+id/titulo_notification"
-                android:text="Salão"
-                android:textColor="#4b4a4a"
-                />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nome_salao_notification"
+            android:layout_toRightOf="@+id/img_notification"
+            android:layout_below="@+id/titulo_notification"
+            android:text="Salão"
+            android:textColor="#4b4a4a"
+            />
 
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/hora_notification"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hora_notification"
 
-                android:layout_toRightOf="@+id/img_notification"
-                android:layout_below="@+id/nome_salao_notification"
-                android:text="10:30"
-                android:textColor="#030303"
-                />
+            android:layout_toRightOf="@+id/img_notification"
+            android:layout_below="@+id/nome_salao_notification"
+            android:text="10:30"
+            android:textColor="#030303"
+            />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icone_time"
-                android:layout_toLeftOf="@+id/hora_notification"
-                android:backgroundTint="#72a301"
-                android:layout_alignBaseline="@+id/nome_salao_notification"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icone_time"
+            android:layout_toLeftOf="@+id/hora_notification"
+            android:backgroundTint="#72a301"
+            android:layout_alignBaseline="@+id/nome_salao_notification"/>
 
-            <ImageButton
-                android:layout_width="42dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
-android:backgroundTint="@color/corToobar"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/icone_delete"
-                android:id="@+id/bt_excluir_notification"/>
 
-        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageButton
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/corToobar"
+            android:background="@drawable/icone_delete"
+            android:id="@+id/bt_excluir_notification"/>
+
+    </LinearLayout>
+</LinearLayout>
+
+
 
 
 

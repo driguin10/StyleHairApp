@@ -54,10 +54,10 @@ tools:context=".telas.agendamento.funcionarios_agenda.escolherFuncionario">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Escolher Horario  "
+        android:text="Escolher Horario"
+        android:textAlignment="center"
         android:background="@drawable/bt_azul_esuro"
         android:textColor="@color/corTextos"
-        android:paddingRight="5dp"
         android:layout_gravity="center"
         android:layout_marginRight="7dp"
         />

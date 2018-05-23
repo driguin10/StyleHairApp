@@ -73,7 +73,7 @@
                             android:layout_width="70dp"
                             android:layout_height="70dp"
 
-                            android:background="@drawable/icone_almoco" />
+                            android:background="@drawable/icone_almoco_novo" />
 
                     </LinearLayout>
 

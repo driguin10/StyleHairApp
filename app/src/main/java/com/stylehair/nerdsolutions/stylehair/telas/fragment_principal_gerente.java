@@ -194,6 +194,7 @@ Loading loading;
                     {
                         case 204:
                             statusSalao(status);
+                            Toast.makeText(getContext(),"Status alterado com sucesso!!",Toast.LENGTH_LONG).show();
                             break;
 
                         case 400:

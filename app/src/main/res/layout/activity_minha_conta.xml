@@ -29,7 +29,9 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/corToobar"/>
+            android:background="@color/corToobar"
+            app:tabTextColor="#b9ffffff"
+            app:tabSelectedTextColor="@color/corTextos"/>
 
     </android.support.design.widget.AppBarLayout>
 

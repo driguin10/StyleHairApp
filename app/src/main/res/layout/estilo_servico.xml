@@ -49,7 +49,7 @@
                     android:id="@+id/valor_servico"
                     android:textSize="18sp"
                     android:text="RS 100,00"
-                    android:textColor="#6ca103"
+                    android:textColor="@color/corAberto"
                     />
 
                 <ImageButton

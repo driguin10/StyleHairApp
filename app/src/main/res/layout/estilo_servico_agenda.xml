@@ -35,7 +35,7 @@
             android:id="@+id/valor_servico"
             android:textSize="20sp"
             android:text="RS 100,00"
-            android:textColor="#6ca103"
+            android:textColor="@color/corAberto"
             android:gravity="center" />
     </LinearLayout>
 

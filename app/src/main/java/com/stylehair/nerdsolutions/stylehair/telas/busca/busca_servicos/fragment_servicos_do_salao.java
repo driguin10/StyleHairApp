@@ -36,7 +36,6 @@ public class fragment_servicos_do_salao extends Fragment {
     RecyclerView lista;
 
     List<ServicoSalao> servicosSalao;
-    TextView semServico;
     Bundle bundle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class fragment_servicos_do_salao extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_fragment_servicos_do_salao, container, false);
-         semServico = (TextView) view.findViewById(R.id.txtSemServicos);
+
 
 
         if(bundle !=null)
