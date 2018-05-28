@@ -3,6 +3,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionarioBusca;
+import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
@@ -226,6 +227,18 @@ public interface IApi {
     @GET("v1/saloes/salao/{id}")
     Call<VerSalao> verSalaoBusca(@Path("id") String id);
     //--------------------------------------------------------------------------------
+
+
+
+    //---------------------------------------AGENDA-----------------------------------------
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/agenda/horarios/")
+    Call<HorariosAgenda> HorariosAgenda(@Part("idSalao") RequestBody idSalao,
+                                        @Part("idFuncionario") RequestBody idFuncionario,
+                                        @Part("servicos") RequestBody servicos,
+                                        @Part("data") RequestBody data);
+    //--------------------------------------------------------------------------------------
 
     //----------------------------------- FUNCIONARIOS ---------------------------------------
 

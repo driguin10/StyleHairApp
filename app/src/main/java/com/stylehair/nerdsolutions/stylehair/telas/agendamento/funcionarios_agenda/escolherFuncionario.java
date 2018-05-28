@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
@@ -41,11 +42,13 @@ public class escolherFuncionario extends AppCompatActivity {
 
     Loading loading;
     String idsServicos="";
+    Button BTprosseguir;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escolher_funcionario);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_escolherFunc);
+        BTprosseguir = (Button) findViewById(R.id.btProsseguir);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
@@ -146,7 +149,7 @@ public class escolherFuncionario extends AppCompatActivity {
 
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        listaFunc.setAdapter(new Adaptador_funcionario_agenda(funcsAux,listaFunc));
+                        listaFunc.setAdapter(new Adaptador_funcionario_agenda(funcsAux,listaFunc,BTprosseguir,idSalao));
                         listaFunc.setLayoutManager(layout);
                         listaFunc.setClickable(true);
                         break;

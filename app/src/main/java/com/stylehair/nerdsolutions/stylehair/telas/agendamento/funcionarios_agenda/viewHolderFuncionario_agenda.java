@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionarioBusca;
+import com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios_agenda;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.ver_funcionario;
 
 import java.util.ArrayList;
@@ -33,12 +35,14 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
     CardView card;
     Context contexto;
     RecyclerView lista;
+    Button btProsseguir;
+    String idSalao;
 
     List<UsuarioFuncionarioBusca> ListaUsuario;
     UsuarioFuncionarioBusca usuarioFuncionario;
     ArrayList<String> ListaIdServ = new ArrayList<>();
 
-    public viewHolderFuncionario_agenda(View itemView, List<UsuarioFuncionarioBusca> dados) {
+    public viewHolderFuncionario_agenda(View itemView, List<UsuarioFuncionarioBusca> dados,Button bt) {
         super(itemView);
 
         imagemFunc = (CircleImageView) itemView.findViewById(R.id.img_funcionario);
@@ -46,6 +50,8 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
         Servicos = (TextView) itemView.findViewById(R.id.txtServicos);
         card = (CardView) itemView.findViewById(R.id.cardsFunc);
         card.setOnClickListener(this);
+        btProsseguir = bt;
+        btProsseguir.setOnClickListener(this);
         ListaUsuario = dados;
         contexto = itemView.getContext();
     }
@@ -55,25 +61,41 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
         int position = getAdapterPosition();
         usuarioFuncionario = ListaUsuario.get(position);
 
-        for(int x= 0; x< lista.getChildCount(); x++)
+        if(v.getId() == card.getId())
         {
-            if(lista.getChildAt(x).findViewById(R.id.cardsFunc).isSelected())
-            {
-                CardView cv = (CardView) lista.getChildAt(x).findViewById(R.id.cardsFunc);
-                cv.setCardBackgroundColor(contexto.getResources().getColor(R.color.corTextos));
-                cv.setCardElevation(5);
-                lista.getChildAt(x).findViewById(R.id.cardsFunc).setSelected(false);
-                TextView textoNome = (TextView) lista.getChildAt(x).findViewById(R.id.nome_funcionario);
-                textoNome.setTextColor(contexto.getResources().getColor(R.color.black_de));
+            for (int x = 0; x < lista.getChildCount(); x++) {
+                if (lista.getChildAt(x).findViewById(R.id.cardsFunc).isSelected()) {
+                    CardView cv = (CardView) lista.getChildAt(x).findViewById(R.id.cardsFunc);
+                    cv.setCardBackgroundColor(contexto.getResources().getColor(R.color.corTextos));
+                    cv.setCardElevation(5);
+                    lista.getChildAt(x).findViewById(R.id.cardsFunc).setSelected(false);
+                    TextView textoNome = (TextView) lista.getChildAt(x).findViewById(R.id.nome_funcionario);
+                    textoNome.setTextColor(contexto.getResources().getColor(R.color.black_de));
+                }
             }
+            boolean selecionado = lista.getChildAt(position).findViewById(R.id.cardsFunc).isSelected();
+            CardView cv = (CardView) lista.getChildAt(position).findViewById(R.id.cardsFunc);
+            cv.setCardBackgroundColor(contexto.getResources().getColor(R.color.corItemEscolhido));
+            cv.setCardElevation(7);
+            lista.getChildAt(position).findViewById(R.id.cardsFunc).setSelected(true);
+            TextView textoNome = (TextView) lista.getChildAt(position).findViewById(R.id.nome_funcionario);
+            textoNome.setTextColor(contexto.getResources().getColor(R.color.corToobar));
         }
-        boolean selecionado = lista.getChildAt(position).findViewById(R.id.cardsFunc).isSelected();
-        CardView cv = (CardView) lista.getChildAt(position).findViewById(R.id.cardsFunc);
-        cv.setCardBackgroundColor(contexto.getResources().getColor(R.color.corItemEscolhido));
-        cv.setCardElevation(7);
-        lista.getChildAt(position).findViewById(R.id.cardsFunc).setSelected(true);
-        TextView textoNome = (TextView) lista.getChildAt(position).findViewById(R.id.nome_funcionario);
-        textoNome.setTextColor(contexto.getResources().getColor(R.color.corToobar));
+
+        if(v.getId() == btProsseguir.getId())
+        {
+
+            String serv = ListaIdServ.toString();
+            serv = serv.replace("["," ");
+            serv = serv.replace("]"," ");
+
+            Intent intent = new Intent(contexto,horarios_agenda.class);
+            intent.putExtra("servicos",serv);
+            intent.putExtra("idFuncionario",String.valueOf(usuarioFuncionario.getIdFuncionario()));
+            intent.putExtra("idSalao",idSalao);
+            contexto.startActivity(intent);
+
+        }
 
     }
 }

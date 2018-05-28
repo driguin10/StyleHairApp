@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -24,18 +25,22 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
 
     List<UsuarioFuncionarioBusca> ListaFuncionario;
     RecyclerView lista;
+    Button Btprosseguir;
+    String IdSalao;
 
 
-    public Adaptador_funcionario_agenda(List<UsuarioFuncionarioBusca> listaFuncionario,RecyclerView listaa) {
+    public Adaptador_funcionario_agenda(List<UsuarioFuncionarioBusca> listaFuncionario, RecyclerView listaa, Button btProsseguir,String idSalao) {
         ListaFuncionario = listaFuncionario;
         lista = listaa;
+        Btprosseguir = btProsseguir;
+        IdSalao = idSalao;
     }
 
 
     @Override
     public viewHolderFuncionario_agenda onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_funcionario_busca, parent, false);
-        return new viewHolderFuncionario_agenda(vista,ListaFuncionario);
+        return new viewHolderFuncionario_agenda(vista,ListaFuncionario,Btprosseguir);
     }
 
     @Override
@@ -54,6 +59,8 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
 
          holder.ListaIdServ = LServaux;
          holder.Servicos.setText(Sconcat);
+         holder.idSalao =IdSalao;
+
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
          Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
 }
