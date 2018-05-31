@@ -27,13 +27,15 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
     RecyclerView lista;
     Button Btprosseguir;
     String IdSalao;
+    ArrayList<String> ListaServicos;
 
 
-    public Adaptador_funcionario_agenda(List<UsuarioFuncionarioBusca> listaFuncionario, RecyclerView listaa, Button btProsseguir,String idSalao) {
+    public Adaptador_funcionario_agenda(List<UsuarioFuncionarioBusca> listaFuncionario, RecyclerView listaa, Button btProsseguir,String idSalao,ArrayList<String> listaServicos) {
         ListaFuncionario = listaFuncionario;
         lista = listaa;
         Btprosseguir = btProsseguir;
         IdSalao = idSalao;
+        ListaServicos = listaServicos;
     }
 
 
@@ -60,6 +62,7 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
          holder.ListaIdServ = LServaux;
          holder.Servicos.setText(Sconcat);
          holder.idSalao =IdSalao;
+         holder.listaServicos = ListaServicos;
 
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
          Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);

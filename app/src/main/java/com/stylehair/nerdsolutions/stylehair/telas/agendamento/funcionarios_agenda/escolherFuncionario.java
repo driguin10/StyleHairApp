@@ -62,6 +62,7 @@ public class escolherFuncionario extends AppCompatActivity {
         {
             listaServicos = bundle.getStringArrayList("escolhas");
             idSalao = bundle.getString("idSalao");
+
         }
 
         // pega a lista de serviços selecionados e monta a string com os ID
@@ -149,7 +150,7 @@ public class escolherFuncionario extends AppCompatActivity {
 
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        listaFunc.setAdapter(new Adaptador_funcionario_agenda(funcsAux,listaFunc,BTprosseguir,idSalao));
+                        listaFunc.setAdapter(new Adaptador_funcionario_agenda(funcsAux,listaFunc,BTprosseguir,idSalao,listaServicos));
                         listaFunc.setLayoutManager(layout);
                         listaFunc.setClickable(true);
                         break;

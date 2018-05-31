@@ -53,20 +53,16 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
 
     public viewHolderescolherServicoSalao(View itemView, List<ServicoSalao> dados,Button bt_Prosseguir,ImageButton bt_ListaServicos) {
         super(itemView);
-
         btProsseguir = bt_Prosseguir;
         btListaServicos = bt_ListaServicos;
         NomeServico = (TextView) itemView.findViewById(R.id.nome_servico);
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
         card = (CardView) itemView.findViewById(R.id.cardsServico);
-
         card.setOnLongClickListener(this);
         ListaServicoSalao = dados;
         contexto = itemView.getContext();
         btProsseguir.setOnClickListener(this);
         btListaServicos.setOnClickListener(this);
-
-
     }
 
 

@@ -37,6 +37,7 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
     RecyclerView lista;
     Button btProsseguir;
     String idSalao;
+    ArrayList<String> listaServicos;
 
     List<UsuarioFuncionarioBusca> ListaUsuario;
     UsuarioFuncionarioBusca usuarioFuncionario;
@@ -93,6 +94,7 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
             intent.putExtra("servicos",serv);
             intent.putExtra("idFuncionario",String.valueOf(usuarioFuncionario.getIdFuncionario()));
             intent.putExtra("idSalao",idSalao);
+            intent.putStringArrayListExtra("ListaServicos", listaServicos);
             contexto.startActivity(intent);
 
         }

@@ -8,6 +8,7 @@ public class HorariosAgenda {
 
     private String tempoServico;
     private ArrayList<String> horarios;
+    private String intervalo;
 
     public String getTempoServico() {
         return tempoServico;
@@ -23,5 +24,13 @@ public class HorariosAgenda {
 
     public void setHorarios(ArrayList<String> horarios) {
         this.horarios = horarios;
+    }
+
+    public String getIntervalo() {
+        return intervalo;
+    }
+
+    public void setIntervalo(String intervalo) {
+        this.intervalo = intervalo;
     }
 }
