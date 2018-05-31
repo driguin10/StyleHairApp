@@ -238,6 +238,18 @@ public interface IApi {
                                         @Part("idFuncionario") RequestBody idFuncionario,
                                         @Part("servicos") RequestBody servicos,
                                         @Part("data") RequestBody data);
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/agenda/salvar/")
+    Call<ResponseBody> AgendaSalvar(@Part("idSalao") RequestBody idSalao,
+                                        @Part("idFuncionario") RequestBody idFuncionario,
+                                        @Part("idServicos") RequestBody idServicos,
+                                        @Part("idUsuario") RequestBody idUsuario,
+                                        @Part("data") RequestBody data,
+                                        @Part("horaIni") RequestBody horaIni,
+                                        @Part("horaFim") RequestBody horaFim);
     //--------------------------------------------------------------------------------------
 
     //----------------------------------- FUNCIONARIOS ---------------------------------------

@@ -1,23 +1,22 @@
-package com.stylehair.nerdsolutions.stylehair.telas.agendamento;
+package com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.agendamento.confirmar.confirma_agendamento;
 
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.OnClickListener  {
     TextView hora;
@@ -31,11 +30,15 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
     TextView txtHoraEscolhido;
     Button Prosseguir;
 
-
-    String listaServicos;
+    String idServicos;
     String idFuncionario;
     String idSalao;
     ArrayList<String> vetAux;
+    ArrayList<String> ServicosLista;
+    String Data;
+
+    String NomeFuncionario;
+    String Imagemfuncionario;
     public viewHolderServicoAgendaHorarios(View itemView,  ArrayList<String> dados,Button prosseguir,ArrayList<String> vet) {
         super(itemView);
         hora = (TextView) itemView.findViewById(R.id.horario);
@@ -113,8 +116,21 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
         else
             if(v.getId() == Prosseguir.getId())
             {
-                Log.d("xex",listaServicos + " - " + idFuncionario + " - " + idSalao);
-                Log.d("xex",vetAux.toString());
+                String horaInicio = vetAux.get(0).substring(0,5);
+                String horaFim = vetAux.get(vetAux.size()-1).substring(0,5);
+
+
+                Intent intent = new Intent(contexto,confirma_agendamento.class);
+                intent.putExtra("idSalao",idSalao);
+                intent.putExtra("idFuncionario",idFuncionario);
+                intent.putExtra("idServicos",idServicos);
+                intent.putStringArrayListExtra("listaServicos",ServicosLista);
+                intent.putExtra("horaIni",horaInicio);
+                intent.putExtra("horaFim",horaFim);
+                intent.putExtra("data",Data);
+                intent.putExtra("nomeFuncionario",NomeFuncionario);
+                intent.putExtra("imagemFuncionario",Imagemfuncionario);
+                contexto.startActivity(intent);
             }
 
 

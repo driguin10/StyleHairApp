@@ -30,7 +30,6 @@ public class Logout {
        // e.putString("linkImagem","");
         e.apply();
         e.commit();
-        Log.d("xex", "topico log= "+ topic);
         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
         if(!topic.equals("")) {
             topicoNotificacao.removeTopico(topic);

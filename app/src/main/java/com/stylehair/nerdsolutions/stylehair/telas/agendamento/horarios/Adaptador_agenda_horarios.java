@@ -1,4 +1,4 @@
-package com.stylehair.nerdsolutions.stylehair.telas.agendamento;
+package com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,16 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.viewHolderServicoFuncionarioEscolhido;
 
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dherrera on 15/03/2017.
@@ -29,24 +25,30 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
     String Intervalo;
     TextView txtHoraEscolhido;
     Button Prosseguir;
-
-
-    String ListaServicos;
+    String IdServicos;
     String IdFuncionario;
     String IdSalao;
     ArrayList<String> vetAux = new ArrayList<>();
+    ArrayList<String> ServicosLista;
+    String Data;
 
-    public Adaptador_agenda_horarios(ArrayList<String> listaHorario, RecyclerView listaa,String tempo,String intervalo,TextView txtHora_Escolhido, Button prosseguir, String listaServicos, String idFuncionario,  String idSalao) {
+    String NomeFuncionario;
+    String Imagemfuncionario;
+
+    public Adaptador_agenda_horarios(ArrayList<String> listaHorario, RecyclerView listaa,String tempo,String intervalo,TextView txtHora_Escolhido, Button prosseguir, ArrayList<String> servicosLista, String idFuncionario,  String idSalao,String idServicos,String data,String nomeFuncionario, String imagemfuncionario) {
         ListaHorario = listaHorario;
         lista = listaa;
         Tempo = tempo;
         Intervalo = intervalo;
         txtHoraEscolhido = txtHora_Escolhido;
         Prosseguir = prosseguir;
-
-        ListaServicos= listaServicos;
+        ServicosLista = servicosLista;
         IdFuncionario=idFuncionario;
         IdSalao=idSalao;
+        IdServicos = idServicos;
+        Data = data;
+        NomeFuncionario = nomeFuncionario;
+        Imagemfuncionario = imagemfuncionario;
     }
 
 
@@ -63,11 +65,13 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
          holder.tempo = Tempo;
          holder.intervalo = Intervalo;
          holder.txtHoraEscolhido = txtHoraEscolhido;
-
-
-         holder.listaServicos = ListaServicos;
+         holder.Data = Data;
+         holder.ServicosLista = ServicosLista;
          holder.idFuncionario = IdFuncionario;
          holder.idSalao = IdSalao;
+         holder.idServicos = IdServicos;
+         holder.NomeFuncionario = NomeFuncionario;
+         holder.Imagemfuncionario = Imagemfuncionario;
 
         LocalTime penultimoH =  LocalTime.parse(ListaHorario.get(ListaHorario.size()-1));
         LocalTime HoraIntervalo = LocalTime.parse(Intervalo);

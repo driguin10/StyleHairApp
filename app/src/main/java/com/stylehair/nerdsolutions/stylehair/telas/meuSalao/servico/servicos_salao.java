@@ -67,7 +67,7 @@ public class servicos_salao extends AppCompatActivity {
 
         lista = (RecyclerView) findViewById(R.id.listServicos);
         lista.setHasFixedSize(true);
-        loading.abrir("carregando");
+        loading.abrir("Aguarde...");
         getServicos(idSalao);
     }
 

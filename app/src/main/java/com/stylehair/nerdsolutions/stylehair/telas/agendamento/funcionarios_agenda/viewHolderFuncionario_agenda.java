@@ -1,21 +1,17 @@
 package com.stylehair.nerdsolutions.stylehair.telas.agendamento.funcionarios_agenda;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionarioBusca;
-import com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios_agenda;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.ver_funcionario;
+import com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios.horarios_agenda;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +90,8 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
             intent.putExtra("servicos",serv);
             intent.putExtra("idFuncionario",String.valueOf(usuarioFuncionario.getIdFuncionario()));
             intent.putExtra("idSalao",idSalao);
+            intent.putExtra("nomeFuncionario",usuarioFuncionario.getNome());
+            intent.putExtra("imagemFuncionario",usuarioFuncionario.getLinkImagem());
             intent.putStringArrayListExtra("ListaServicos", listaServicos);
             contexto.startActivity(intent);
 

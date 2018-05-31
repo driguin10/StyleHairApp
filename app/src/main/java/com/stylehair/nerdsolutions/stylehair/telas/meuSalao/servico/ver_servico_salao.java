@@ -97,7 +97,7 @@ public class ver_servico_salao extends AppCompatActivity {
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading.abrir("Salvando....");
+                loading.abrir("Aguarde...");
                 if(bundle!=null) {
                     editar();
                 }

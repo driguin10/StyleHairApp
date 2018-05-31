@@ -66,7 +66,7 @@ public class senha_gerente extends AppCompatActivity {
             public void onClick(View v) {
                 if(verificaCampos())
                 {
-                    loading.abrir("Aguarde...Transferindo !!!");
+                    loading.abrir("Aguarde...");
                     logar();
                 }
             }

@@ -134,7 +134,8 @@
         <activity android:name=".telas.agendamento.servicos_agenda.escolherServico" />
         <activity android:name=".telas.agendamento.funcionarios_agenda.escolherFuncionario" />
         <activity android:name=".telas.agendamento.servicos_agenda.escolhido.lista_servi_escolhido" />
-        <activity android:name=".telas.agendamento.horarios_agenda"></activity>
+        <activity android:name=".telas.agendamento.horarios.horarios_agenda" />
+        <activity android:name=".telas.agendamento.confirmar.confirma_agendamento"></activity>
     </application>
 
 </manifest>

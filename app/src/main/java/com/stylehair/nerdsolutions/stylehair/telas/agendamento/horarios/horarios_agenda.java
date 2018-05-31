@@ -1,4 +1,4 @@
-package com.stylehair.nerdsolutions.stylehair.telas.agendamento;
+package com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -9,15 +9,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Adapter;
 import android.widget.Button;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,8 +22,6 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.Adaptador_servico_funcionario_escolhido;
-import com.stylehair.nerdsolutions.stylehair.telas.minha_agenda;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalTime;
@@ -39,7 +32,6 @@ import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +42,8 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
     String idFuncionario;
     String idSalao;
     String data;
+    String nomeFuncionario;
+    String imagemfuncionario;
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     RecyclerView lista;
@@ -74,6 +68,8 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
             idFuncionario = bundle.getString("idFuncionario");
             idSalao = bundle.getString("idSalao");
             ServicosLista = bundle.getStringArrayList("ListaServicos");
+            nomeFuncionario = bundle.getString("nomeFuncionario");
+            imagemfuncionario = bundle.getString("imagemFuncionario");
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_horarios_agenda);
@@ -136,7 +132,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
         {
             if(!dataAtualSting.equals(dataCalendarioString)) {
                 ArrayList<String> horarios = new ArrayList<>();
-                lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista,"","",txtHoraEscolha,Prosseguir,listaServicos,idFuncionario,idSalao));
+                lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista,"","",txtHoraEscolha,Prosseguir,ServicosLista,idFuncionario,idSalao,listaServicos,"","",""));
                 Toast.makeText(horarios_agenda.this,"Esta data não possui Horarios !!",Toast.LENGTH_LONG).show();
             }
             else
@@ -171,7 +167,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
                 ArrayList<String>horarios = horariosAgenda.getHorarios();
                 String tempo = horariosAgenda.getTempoServico();
                 String intervalo = horariosAgenda.getIntervalo();
-                lista.setAdapter(new Adaptador_agenda_horarios(horarios,lista,tempo,intervalo,txtHoraEscolha,Prosseguir,listaServicos,idFuncionario,idSalao));
+                lista.setAdapter(new Adaptador_agenda_horarios(horarios,lista,tempo,intervalo,txtHoraEscolha,Prosseguir,ServicosLista,idFuncionario,idSalao,listaServicos,data,nomeFuncionario,imagemfuncionario));
                 lista.setLayoutManager(new GridLayoutManager(horarios_agenda.this,2));
                 lista.setClickable(true);
                 if(horarios !=null)

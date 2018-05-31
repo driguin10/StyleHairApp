@@ -158,6 +158,8 @@ public class logar extends AppCompatActivity {
                         String NomeUsuario = "";
                         String linkImagem = "";
                         String topico = "";
+                        String idUsuario ="";
+                        idUsuario = logar.getIdUser();
                         NomeUsuario = logar.getNomeUser();
                         linkImagem = logar.getLinkImagem();
                         topico = logar.getTopico();
@@ -173,13 +175,13 @@ public class logar extends AppCompatActivity {
                         e.putBoolean("logado", true);
                         e.putInt("idLogin", idLogin);
                         e.putString("email", Email);
+                        e.putString("idUsuario",idUsuario);
                         e.putString("nomeUser",NomeUsuario);
                         e.putString("linkImagem",linkImagem);
                         e.putBoolean("firstStart", false);
                         e.putString("topicoNotificacao",topico);
                         e.apply();
                         e.commit();
-                        Log.d("xex", "topico = "+ topico);
 
                         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.addTopico("AllNotifications");

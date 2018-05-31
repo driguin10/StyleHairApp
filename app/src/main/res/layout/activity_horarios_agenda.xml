@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".telas.agendamento.horarios_agenda">
+    tools:context=".telas.agendamento.horarios.horarios_agenda">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_horarios_agenda"
