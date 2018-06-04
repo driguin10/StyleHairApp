@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -25,19 +26,29 @@ public class CDCMessasingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         super.onMessageReceived(remoteMessage);
-        showNotification(remoteMessage.getNotification());
+        showNotification(remoteMessage.getNotification(),remoteMessage);
     }
 
-    private void showNotification(RemoteMessage.Notification notification) {
-
+    private void showNotification(RemoteMessage.Notification notification,RemoteMessage remoteMessage) {
+        String NomeSalao = "";
+        String DataNot = "";
+        String Titulo = "...";
+        String Corpo = "Houve um erro na notificação!!";
+        if (remoteMessage.getData().size() > 0) {
+             NomeSalao = remoteMessage.getData().get("salao");
+            DataNot =  remoteMessage.getData().get("data");
+        }
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
 
        int idLogin = getSharedPreferences.getInt("idLogin", -1);
 
-        String Titulo = notification.getTitle();
-        String Corpo = notification.getBody();
-        String[] info = Corpo.split("§");
+       if(!notification.getTitle().equals(""))
+         Titulo = notification.getTitle();
+
+        if(!notification.getBody().equals(""))
+         Corpo = notification.getBody();
+
 
         Intent intent = new Intent(this, notificacao.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -46,7 +57,7 @@ public class CDCMessasingService extends FirebaseMessagingService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle(Titulo)
-                .setContentText(info[0])
+                .setContentText(NomeSalao)
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
@@ -54,13 +65,9 @@ public class CDCMessasingService extends FirebaseMessagingService {
         notificationManager.notify(0,builder.build());
 
         BancoNotifyController crud = new BancoNotifyController(getBaseContext());
-        String nomeSalao = info[0];
-        String menssagem = info[1];
-        String hora = info[2];
-        String visualizado = "0";
 
-        String retorno = crud.insereDado(Titulo,menssagem,hora,visualizado,nomeSalao,String.valueOf(idLogin));
-
+        String retorno = crud.insereDado(Titulo,Corpo,DataNot,"0",NomeSalao,String.valueOf(idLogin));
+      //  Log.d("xex",retorno);
 
        /* Intent i = new Intent(this, notificacao.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

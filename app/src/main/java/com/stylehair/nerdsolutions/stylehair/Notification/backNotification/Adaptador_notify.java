@@ -17,10 +17,12 @@ import java.util.List;
 public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotification> {
 
     List<menssagem> ListaObjeto;
+    RecyclerView Lista;
 
 
-    public Adaptador_notify(List<menssagem> listaObjeto) {
+    public Adaptador_notify(List<menssagem> listaObjeto,RecyclerView lista) {
         ListaObjeto = listaObjeto;
+        Lista = lista;
     }
 
     @Override
@@ -32,6 +34,7 @@ public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotificatio
 
     @Override
     public void onBindViewHolder(viewHolderNotification holder, int position) {
+         holder.Lista = Lista;
          holder.titulo.setText(ListaObjeto.get(position).getTitulo());
          holder.nomeSalao.setText(ListaObjeto.get(position).getNome_salao());
          holder.hora.setText(ListaObjeto.get(position).getHora());

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.stylehair.nerdsolutions.stylehair.Notification.Dataa;
 import com.stylehair.nerdsolutions.stylehair.Notification.Notification;
 import com.stylehair.nerdsolutions.stylehair.Notification.ReturnMessage;
 import com.stylehair.nerdsolutions.stylehair.Notification.Sender;
@@ -137,16 +138,15 @@ public class Notificacao extends AppCompatActivity {
     }
 
     public void EnviarNotificacao(String titulo, String menssagem, String nomeSalao, String topico){
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
         Date date = new Date();
-        String tituloNotify = titulo ;
-        String nomeSalaoMen = nomeSalao;
-        String tituloMen = menssagem ;
         String horaMen = dateFormat.format(date);
 
-        String saidaMen = nomeSalaoMen+"§"+tituloMen+"§"+horaMen;
-        Notification notification = new Notification(saidaMen,tituloNotify);
-        Sender sender = new Sender(notification, "/topics/"+topico);
+
+        Notification notification = new Notification(menssagem,titulo);
+
+        Dataa dataa=new Dataa(nomeSalao,horaMen);
+        Sender sender = new Sender(notification, "/topics/"+topico,dataa);
         INotification iNotification = INotification.retrofit.create(INotification.class);
         iNotification.enviarNotificacao(sender).enqueue(new Callback<ReturnMessage>() {
             @Override

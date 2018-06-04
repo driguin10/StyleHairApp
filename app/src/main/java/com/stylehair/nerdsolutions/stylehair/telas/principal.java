@@ -41,6 +41,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragment_principal_usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 import java.util.ArrayList;
@@ -243,50 +244,14 @@ public class principal extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.pesquisa, menu);
 
-        //Pega o Componente.
-        SearchView mSearchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        mSearchView.setQueryHint("Oque está procurando ?");
-        //mSearchView.setIconifiedByDefault(false);
-        mSearchView.setSubmitButtonEnabled(true);
-
-
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent intent =new Intent(principal.this,busca_salao.class);
-                intent.putExtra("query",query);
-                startActivity(intent);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //Toast.makeText(getBaseContext(), newText, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-
-
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -358,7 +323,7 @@ public class principal extends AppCompatActivity
             if (fragment != null) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame_principal, fragment);
-                ft.commit();
+                ft.commitAllowingStateLoss();
             }
         }
         else
@@ -368,18 +333,33 @@ public class principal extends AppCompatActivity
             men.findItem(R.id.nav_meuSalao).setVisible(false);
             men.findItem(R.id.nav_agendamento).setVisible(false);
             men.findItem(R.id.nav_meu_agendamento).setVisible(true);
+            Fragment fragment = null;
+            fragment = new fragment_principal_funcionario();
+            //replacing the fragment
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame_principal, fragment);
+                ft.commitAllowingStateLoss();
+            }
         }
-        else
-        if(user == "usuario")
-        {
-            men.findItem(R.id.nav_criarSalao).setVisible(true);
-            men.findItem(R.id.nav_meuSalao).setVisible(false);
-        }
-        else
-        {
-            men.findItem(R.id.nav_criarSalao).setVisible(true);
-            men.findItem(R.id.nav_meuSalao).setVisible(false);
-            men.findItem(R.id.nav_agendamento).setVisible(false);
+        else {
+            if (user == "usuario") {
+                men.findItem(R.id.nav_criarSalao).setVisible(true);
+                men.findItem(R.id.nav_meuSalao).setVisible(false);
+            } else {
+                men.findItem(R.id.nav_criarSalao).setVisible(true);
+                men.findItem(R.id.nav_meuSalao).setVisible(false);
+                men.findItem(R.id.nav_agendamento).setVisible(false);
+            }
+
+            Fragment fragment = null;
+            fragment = new fragment_principal_usuario();
+            //replacing the fragment
+            if (fragment != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.content_frame_principal, fragment);
+                ft.commitAllowingStateLoss();
+            }
         }
     }
 

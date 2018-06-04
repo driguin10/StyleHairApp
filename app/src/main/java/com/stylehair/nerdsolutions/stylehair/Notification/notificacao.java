@@ -68,7 +68,7 @@ public class notificacao extends AppCompatActivity  {
             }while(cursor.moveToNext());
         }
         cursor.close();
-        lista.setAdapter(new Adaptador_notify(conteudo_menssagem));
+        lista.setAdapter(new Adaptador_notify(conteudo_menssagem,lista));
         lista.setLayoutManager(layout);
 
 

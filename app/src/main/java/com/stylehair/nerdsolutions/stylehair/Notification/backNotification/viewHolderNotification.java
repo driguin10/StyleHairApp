@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.ImageButton;
@@ -38,7 +39,7 @@ public class viewHolderNotification extends ViewHolder implements View.OnClickLi
 Context contexto;
     menssagem objeto;
 
-
+    RecyclerView Lista;
     List<menssagem> ListaObjeto;
 
     int idLogin;
@@ -67,7 +68,7 @@ Context contexto;
 
     @Override
     public void onClick(final View view) {
-        int position = getAdapterPosition();
+        final int position = getAdapterPosition();
          objeto = ListaObjeto.get(position);
 
         if (view.getId() == excluir.getId()) {
@@ -80,11 +81,10 @@ Context contexto;
                         public void onClick(DialogInterface dialog, int which) {
                             BancoNotifyController crud = new BancoNotifyController(view.getContext());
                             crud.deletaRegistro(Integer.valueOf(objeto.get_id()));
-                            Intent intent = new Intent(view.getContext(),notificacao.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
 
-                            view.getContext().startActivity(intent);
-                            ((Activity)view.getContext()).finish();
+                            List<menssagem> ListaObjetoAux = ListaObjeto;
+                            ListaObjetoAux.remove(position);
+                            Lista.setAdapter(new Adaptador_notify(ListaObjetoAux,Lista));
                         }
                     })
                     .setNegativeButton("não", new DialogInterface.OnClickListener() {
