@@ -146,7 +146,6 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
 
     }
 
-
     public void atualizaHorarios(final String data)
     {
         RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"), idSalao);

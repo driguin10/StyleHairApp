@@ -186,7 +186,7 @@ public class editar_salao extends AppCompatActivity {
                     novoCep = cep.replace("-", "");
 
                     if(novoCep.length() == 8) {
-                        loading.abrir("Buscando endereço...");
+                        loading.abrir("Aguarde...");
                         pegarCep(novoCep);
                     }
                 }
@@ -221,7 +221,7 @@ public class editar_salao extends AppCompatActivity {
         SalvarSalao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading.abrir("Aguarde...Enviando dados !!!");
+                loading.abrir("Aguarde...");
                 editarSalao();
 
             }
@@ -231,7 +231,7 @@ public class editar_salao extends AppCompatActivity {
         //-------- faz a busca dos dados do usuario no servidor-------
         VerificaConexao verificaConexao = new VerificaConexao();
         if(verificaConexao.verifica(this)) {
-            loading.abrir("Aguarde... Carregando dados !!!");
+            loading.abrir("Aguarde...");
             pegarSalao(IdUsuario);
         }
         else {
@@ -403,7 +403,7 @@ public class editar_salao extends AppCompatActivity {
             case imagem_interna:
                 if (resultCode == RESULT_OK) {
                     alerta.dismiss();
-                    loading.abrir("Carregando Imagem...");
+                    loading.abrir("Aguarde...");
                     Uri uri = data.getData();
                     String[] projection = {MediaStore.Images.Media.DATA};
                     Cursor cursor = this.getContentResolver().query(uri, projection, null, null, null);
@@ -433,7 +433,7 @@ public class editar_salao extends AppCompatActivity {
                 if (resultCode == RESULT_OK)
                 {
                     alerta.dismiss();
-                    loading.abrir("Carregando Imagem...");
+                    loading.abrir("Aguarde...");
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
 
                     Uri uri = image.getImageUri(this, photo);

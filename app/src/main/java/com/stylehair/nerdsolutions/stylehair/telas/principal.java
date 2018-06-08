@@ -102,42 +102,6 @@ public class principal extends AppCompatActivity
         nomeUsuario = getSharedPreferences.getString("nomeUser","");
         linkImagem = getSharedPreferences.getString("linkImagem","");
 
-
-
-
-
-/*
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-
-                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                Date date = new Date();
-
-                String tituloNotify = "Promoção 10% desconto";
-                String nomeSalaoMen = "LuizCabeleireiro";
-                String tituloMen = "Amanhã promoção de 10% de desconto Codigo-311447" ;
-                String horaMen = dateFormat.format(date);
-
-                String saidaMen = nomeSalaoMen+"§"+tituloMen+"§"+horaMen;
-                Notification notification = new Notification(saidaMen,tituloNotify);
-                Sender sender = new Sender(notification, "/topics/AllNotifications");
-                INotification iNotification = INotification.retrofit.create(INotification.class);
-                iNotification.enviarNotificacao(sender).enqueue(new Callback<ReturnMessage>() {
-                    @Override
-                    public void onResponse(Call<ReturnMessage> call, Response<ReturnMessage> response) {
-                            Toast.makeText(principal.this,"enviado",Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<ReturnMessage> call, Throwable t) {
-                        Toast.makeText(principal.this,"erro",Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });*/
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -185,7 +149,7 @@ public class principal extends AppCompatActivity
         }
 
         if(verificaConexao.verifica(principal.this)) {
-            loading.abrir("Aguarde...Carregando!!!");
+            loading.abrir("Aguarde...");
             atualizatipo();
             pegarUsuario(idLogin);
         }
@@ -272,7 +236,9 @@ public class principal extends AppCompatActivity
            Intent intent=new Intent(principal.this,saloesFavoritos.class);
             startActivityForResult(intent,2);
         } else if (id == R.id.nav_agendamento) {
-
+            Intent intent=new Intent(principal.this,minha_agenda.class);
+            intent.putExtra("tipo","0");
+            startActivityForResult(intent,7);
 
         } else if (id == R.id.nav_notificacoes) {
             Intent intent=new Intent(principal.this,notificacao.class);
@@ -293,6 +259,7 @@ public class principal extends AppCompatActivity
 
         } else if (id == R.id.nav_meu_agendamento) {
             Intent intent=new Intent(principal.this,minha_agenda.class);
+            intent.putExtra("tipo","1");
             startActivityForResult(intent,7);
 
         } else if (id == R.id.nav_configuracao) {
@@ -310,13 +277,14 @@ public class principal extends AppCompatActivity
 
 
     public void atualizaTela(String user){
+
         Menu men = navigationView.getMenu();
         if( user == "gerente")//gerente
         {
             men.findItem(R.id.nav_criarSalao).setVisible(false);
             men.findItem(R.id.nav_meuSalao).setVisible(true);
             men.findItem(R.id.nav_meu_agendamento).setVisible(true);
-
+            men.findItem(R.id.nav_agendamento).setVisible(true);
             Fragment fragment = null;
             fragment = new fragment_principal_gerente();
             //replacing the fragment
@@ -331,7 +299,7 @@ public class principal extends AppCompatActivity
         {
             men.findItem(R.id.nav_criarSalao).setVisible(false);
             men.findItem(R.id.nav_meuSalao).setVisible(false);
-            men.findItem(R.id.nav_agendamento).setVisible(false);
+            men.findItem(R.id.nav_agendamento).setVisible(true);
             men.findItem(R.id.nav_meu_agendamento).setVisible(true);
             Fragment fragment = null;
             fragment = new fragment_principal_funcionario();
@@ -346,10 +314,11 @@ public class principal extends AppCompatActivity
             if (user == "usuario") {
                 men.findItem(R.id.nav_criarSalao).setVisible(true);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
+                men.findItem(R.id.nav_agendamento).setVisible(true);
             } else {
                 men.findItem(R.id.nav_criarSalao).setVisible(true);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
-                men.findItem(R.id.nav_agendamento).setVisible(false);
+               // men.findItem(R.id.nav_agendamento).setVisible(false);
             }
 
             Fragment fragment = null;
@@ -361,6 +330,7 @@ public class principal extends AppCompatActivity
                 ft.commitAllowingStateLoss();
             }
         }
+        loading.fechar();
     }
 
 
@@ -417,12 +387,9 @@ public class principal extends AppCompatActivity
         callTipos.enqueue(new Callback<TipoUsuario>() {
             @Override
             public void onResponse(Call<TipoUsuario> call, Response<TipoUsuario> response) {
-
-
-
                 callTipos.cancel();
                 qtTentativaRealizada = 0;
-                loading.fechar();
+
                 if(response.isSuccessful()) {
                     TipoUsuario tipo = response.body();
 
@@ -453,6 +420,7 @@ public class principal extends AppCompatActivity
                     {
                         e.putString("typeUserApp","GERENTE");
                         e.putString("idSalao",String.valueOf(id_salao));
+                        e.putString("idFuncionario",String.valueOf(id_funcionario));
                         atualizaTela("gerente");
                     }
                     else
@@ -510,18 +478,6 @@ public class principal extends AppCompatActivity
                         Usuario user = users.get(0);
                         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.addTopico(user.getTopicoNotificacao());
-                        Log.d("xex", "add ao topico -" +user.getTopicoNotificacao() );
-                        break;
-
-
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
                         break;
                 }
             }

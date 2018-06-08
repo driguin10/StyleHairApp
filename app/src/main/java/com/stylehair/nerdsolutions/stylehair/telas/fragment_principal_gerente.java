@@ -106,6 +106,7 @@ Loading loading;
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), minha_agenda.class);
+                intent.putExtra("tipo","1");
                 startActivity(intent);
             }
 

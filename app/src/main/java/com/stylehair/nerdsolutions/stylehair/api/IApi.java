@@ -4,6 +4,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionarioBusca;
 import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
+import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
@@ -231,6 +232,8 @@ public interface IApi {
 
 
     //---------------------------------------AGENDA-----------------------------------------
+
+    //-----------monta os horarios para o agendamento----------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/agenda/horarios/")
@@ -239,7 +242,7 @@ public interface IApi {
                                         @Part("servicos") RequestBody servicos,
                                         @Part("data") RequestBody data);
 
-
+    //-----------salva o agendamento------------
     @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/agenda/salvar/")
@@ -250,6 +253,16 @@ public interface IApi {
                                         @Part("data") RequestBody data,
                                         @Part("horaIni") RequestBody horaIni,
                                         @Part("horaFim") RequestBody horaFim);
+
+
+    //-----------traz o agendamento------------
+    @Headers("apiKey:" + chave)
+    @GET("v1/agenda/{who}/{id}/{data}")
+    Call<List<MeuAgendamento>> buscarAgendamento(@Path("who") String who,
+                                           @Path("id") String id,
+                                           @Path("data") String data);
+
+
     //--------------------------------------------------------------------------------------
 
     //----------------------------------- FUNCIONARIOS ---------------------------------------

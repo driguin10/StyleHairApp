@@ -20,14 +20,13 @@
     android:id="@+id/nav_agendamento"
     android:icon="@drawable/icone_agendamento"
     app:actionViewClass="android.widget.TextView"
-    android:title="Meus agendamentos" />
+    android:title="agendamentos" />
 
     <item
         android:id="@+id/nav_notificacoes"
         android:icon="@drawable/icone_agendamento"
         app:actionViewClass="android.widget.TextView"
         android:title="Notificações" />
-
 
 
     <item android:title="Meu Salão">
