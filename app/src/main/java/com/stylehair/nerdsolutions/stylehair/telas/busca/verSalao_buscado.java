@@ -108,7 +108,7 @@ Config config;
                 final View view = li.inflate(R.layout.activity_avaliar, null);
                 listaComentario = (RecyclerView) view.findViewById(R.id.listaComentarios);
                 listaComentario.setHasFixedSize(true);
-                loading.abrir("aguarde");
+                loading.abrir("Aguarde...");
                 getAvaliacoes(idSalao);
 
                 view.findViewById(R.id.btSair).setOnClickListener(new View.OnClickListener() {
@@ -128,7 +128,7 @@ Config config;
                         Date date = new Date();
                         String Data = dateFormat.format(date);
                         if(estrelas.getRating()>0 || !comentario.getText().toString().equals("") ) {
-                            loading.abrir("Enviando Avaliação...");
+                            loading.abrir("Aguarde...");
                             SalvarAvaliacao(idSalao, String.valueOf(estrelas.getRating()), comentario.getText().toString(), Data);
                         }
                         else
@@ -154,7 +154,7 @@ Config config;
         nomeSalao = (TextView) findViewById(R.id.txt_nomeSalao_buscado);
         imagemSalao = (CircleImageView) findViewById(R.id.imagemSalao_buscado);
 
-        loading.abrir("aguarde");
+        loading.abrir("Aguarde...");
         pegarSalao(idSalao);
     }
 

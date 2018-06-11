@@ -51,7 +51,7 @@ public class cadastrar_login extends AppCompatActivity {
                 if(verificaConexao.verifica(cadastrar_login.this)) {
                  if(verificaCampos())
                  {
-                     loading.abrir("Aguarde...Enviando dados !!!");
+                     loading.abrir("Aguarde...");
                      cadastraLogin();
                  }
                 }

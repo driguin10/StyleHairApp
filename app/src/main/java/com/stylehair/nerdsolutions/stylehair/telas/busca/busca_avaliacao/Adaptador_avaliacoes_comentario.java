@@ -10,9 +10,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_avaliacoes_comentario extends RecyclerView.Adapter<viewHolderAvaliacoes_comentario> {
 

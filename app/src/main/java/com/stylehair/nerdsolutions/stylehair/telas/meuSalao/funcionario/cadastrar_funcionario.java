@@ -154,7 +154,7 @@ TextInputLayout LoginSenha;
        pesquisaLogin.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               loading.abrir("Pesquisando Usuarios...");
+               loading.abrir("Aguarde...");
                logar();
            }
        });
@@ -294,7 +294,7 @@ TextInputLayout LoginSenha;
                     novoCep = cep.replace("-", "");
 
                     if(novoCep.length() == 8) {
-                        loading.abrir("Buscando endereço...");
+                        loading.abrir("Aguarde...");
                         pegarCep(novoCep);
                     }
                 }
@@ -313,21 +313,15 @@ TextInputLayout LoginSenha;
                     Toast.makeText(cadastrar_funcionario.this, "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
                 }
                 else {
-
+                    loading.abrir("Aguarde...");
                     if (id_Login == -1 && id_Usuario == -1) {
                         //tipo 3 -- não tem nenhum cadastro
-                        loading.abrir("salvando....");
-
                         salvar3();
                     } else if (id_Login != -1 && id_Usuario == -1) {
                         // tipo 2 tem só login
-                        loading.abrir("salvando....");
-
                         salvar2();
                     } else if (id_Login != -1 && id_Usuario != -1) {
                         // tipo 1 tem tudo
-                        loading.abrir("salvando....");
-
                         salvar1();
                     }
                 }
@@ -930,7 +924,7 @@ TextInputLayout LoginSenha;
 
         alerta.dismiss();
         if(resultCode!=0)
-            loading.abrir("Carregando Imagem...");
+            loading.abrir("Aguarde...");
 
         super.onActivityResult(requestCode, resultCode, data);
 

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +37,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by dherrera on 15/03/2017.
  */
@@ -48,6 +52,7 @@ public class viewHolderServicoSalao extends ViewHolder implements View.OnClickLi
     CardView card;
     Context contexto;
     ImageButton excluir;
+    RecyclerView Lista;
 
     List<ServicoSalao> ListaServicoSalao;
     ServicoSalao servicoSalao;
@@ -70,12 +75,12 @@ Loading loading;
         excluir.setOnClickListener(this);
         ListaServicoSalao = dados;
         contexto = itemView.getContext();
-
+        loading = new Loading(((Activity)contexto));
     }
 
     @Override
     public void onClick(View v) {
-        int position = getAdapterPosition();
+        final int position = getAdapterPosition();
         servicoSalao = ListaServicoSalao.get(position);
 
         if (v.getId() == excluir.getId())
@@ -88,7 +93,8 @@ Loading loading;
                         public void onClick(DialogInterface dialog, int which) {
 
 
-                            excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()));
+                            excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()),position);
+                            loading.abrir("Aguarde...");
 
                         }
                     })
@@ -109,13 +115,13 @@ Loading loading;
             intent.putExtra("valor",String.valueOf(servicoSalao.getValor()));
             intent.putExtra("tempo",servicoSalao.getTempo());
             intent.putExtra("sexo",servicoSalao.getSexo());
-            v.getContext().startActivity(intent);
-            ((Activity)v.getContext()).finish();
+            ((Activity)contexto).startActivityForResult(intent,2);
+
         }
     }
 
 
-    public void excluiServico(String id)
+    public void excluiServico(String id, final int posi)
     {
 
 
@@ -125,14 +131,14 @@ Loading loading;
             callExcluiServico.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    loading.fechar();
                     qtTentativaRealizada = 0;
                     switch (response.code())
                     {
                         case 204:
-                            Intent intent = new Intent(contexto,servicos_salao.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                            contexto.startActivity(intent);
-                            ((Activity)contexto).finish();
+                            ListaServicoSalao.remove(posi);
+                            Lista.setAdapter(new Adaptador_servico_salao(ListaServicoSalao,Lista));
+
                             break;
 
                         case 400:
@@ -158,10 +164,11 @@ Loading loading;
 
                     if (qtTentativaRealizada < qtTentativas) {
                         qtTentativaRealizada++;
-                        excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()));
+                        excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()),posi);
+                        loading.fechar();
                     } else {
 
-
+                        loading.fechar();
                         if (t instanceof IOException) {
                             Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
                             Log.d("xex", String.valueOf(t.getCause()));

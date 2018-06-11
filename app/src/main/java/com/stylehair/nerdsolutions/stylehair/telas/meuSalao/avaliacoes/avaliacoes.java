@@ -65,7 +65,7 @@ public class avaliacoes extends AppCompatActivity{
         idSalao = getSharedPreferences.getString("idSalao", "");
         lista = (RecyclerView) findViewById(R.id.listComentarios);
         lista.setHasFixedSize(true);
-        loading.abrir("carregando");
+        loading.abrir("Aguarde...");
         getAvaliacoes(idSalao);
 
     }

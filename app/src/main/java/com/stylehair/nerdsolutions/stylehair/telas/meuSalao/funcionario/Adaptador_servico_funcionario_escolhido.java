@@ -1,6 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
-import android.graphics.Color;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +11,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
+
 
 public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapter<viewHolderServicoFuncionarioEscolhido> {
 

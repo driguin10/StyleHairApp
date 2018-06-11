@@ -11,9 +11,6 @@ import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.viewHold
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_servico_funcionario_busca extends RecyclerView.Adapter<viewHolderServicoFuncionario_busca> {
 

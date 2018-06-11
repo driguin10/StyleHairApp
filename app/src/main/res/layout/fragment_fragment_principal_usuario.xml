@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".telas.minhaConta.fragment_principal_usuario"
+    tools:context=".telas.fragment_principal_usuario"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -32,7 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:theme="@style/ImputLogin"
+                    android:theme="@style/ImputPesquisa"
                     android:hint="Encontre Salões..."
                     android:textColorHint="#000000">
                     <EditText
@@ -42,6 +42,7 @@
                         android:inputType="text"/>
                 </android.support.design.widget.TextInputLayout>
                 <ImageButton
+                    android:id="@+id/btPesquisar"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                    android:background="@drawable/icone_pesquisa_preto"/>
@@ -123,14 +124,14 @@
                     android:layout_height="80dp"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
-                    android:background="@drawable/icone_agendar" />
+                    android:background="@drawable/icone_favorito_preto" />
 
                 <TextView
                     android:id="@+id/textBt2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Agendar"
+                    android:text="Favoritos"
                     android:textAlignment="center"
                     android:textSize="14dp"
                     android:textStyle="bold" />

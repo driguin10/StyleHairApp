@@ -380,7 +380,7 @@ String idFuncionario;
             public void onClick(View v) {
 
                 if(verificaCampos()) {
-                    loading.abrir("Aguarde... enviando dados!!!");
+                    loading.abrir("Aguarde...");
                     editarHorarioFuncionario(idFuncionario);
                 }
                 else
@@ -393,7 +393,7 @@ String idFuncionario;
 
         VerificaConexao verificaConexao = new VerificaConexao();
         if(verificaConexao.verifica(getContext())) {
-            loading.abrir("Carregando dados.... aguarde !!");
+            loading.abrir("Aguarde...");
             pegaraHorarioFuncionario(idFuncionario);
         }
         else

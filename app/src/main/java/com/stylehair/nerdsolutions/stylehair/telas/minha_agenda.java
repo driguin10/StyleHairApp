@@ -126,7 +126,7 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
         Date dataCalend = dateSelected.toDate();
         String dataCalendarioFormatada = formataDataCalendario.format(dataCalend);
         atualizaHorarios(dataCalendarioFormatada,id,tipo);
-        loading.abrir("Carregando...");
+        loading.abrir("Aguarde...");
     }
 
     public void atualizaHorarios(final String data ,final String id, final String who)
@@ -147,6 +147,12 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
                     lista.setAdapter(new Adaptador_minhaAgenda(meuAgendamento));
                     lista.setLayoutManager(layout);
                     lista.setClickable(true);
+                }
+                else
+                {
+                    List<MeuAgendamento> meuAgendamento = new ArrayList<>();
+                    lista.setAdapter(new Adaptador_minhaAgenda(meuAgendamento));
+                    Toast.makeText(minha_agenda.this,"Esta data não possui agendamentos !!",Toast.LENGTH_LONG).show();
                 }
 
             }

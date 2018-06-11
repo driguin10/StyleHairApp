@@ -19,11 +19,13 @@ import java.util.List;
 public class Adaptador_servico_salao extends RecyclerView.Adapter<viewHolderServicoSalao> {
 
     List<ServicoSalao> ListaServicoSalao;
+    RecyclerView Lista;
 
 
 
-    public Adaptador_servico_salao(List<ServicoSalao> listaServicoSalao) {
+    public Adaptador_servico_salao(List<ServicoSalao> listaServicoSalao, RecyclerView lista) {
         ListaServicoSalao = listaServicoSalao;
+        Lista = lista;
     }
 
 
@@ -37,7 +39,7 @@ public class Adaptador_servico_salao extends RecyclerView.Adapter<viewHolderServ
     public void onBindViewHolder(viewHolderServicoSalao holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
          holder.valor.setText("R$"+String.valueOf(ListaServicoSalao.get(position).getValor()));
-
+         holder.Lista = Lista;
 }
     @Override
     public int getItemCount() {

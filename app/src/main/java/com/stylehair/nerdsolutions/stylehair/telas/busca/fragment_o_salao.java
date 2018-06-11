@@ -99,15 +99,19 @@ public class fragment_o_salao extends Fragment {
 
             if(bundle.getString("agendamento").equals("1"))
             {
-                cardAgendar.setAlpha(.9f);
+                cardAgendar.setAlpha(1f);
                 cardAgendar.setCardElevation(5);
                 cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
+                cardAgendar.setClickable(true);
+                cardAgendar.setEnabled(true);
             }
             else
             {
                 cardAgendar.setAlpha(.4f);
                 cardAgendar.setCardElevation(0);
                 cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
+                cardAgendar.setClickable(false);
+                cardAgendar.setEnabled(false);
             }
 
 

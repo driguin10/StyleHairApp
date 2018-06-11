@@ -51,7 +51,7 @@ public class fragment_funcionarios_salao extends Fragment {
         loading = new Loading(getActivity());
         lista = (RecyclerView) view.findViewById(R.id.listServicos_funcionario_busca);
         lista.setHasFixedSize(true);
-        loading.abrir("Atualizando...");
+        loading.abrir("Aguarde...");
         getFuncionarios(IdSalao);
        return view;
     }

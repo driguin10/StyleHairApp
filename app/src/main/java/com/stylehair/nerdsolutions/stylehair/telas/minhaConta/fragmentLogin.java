@@ -66,7 +66,7 @@ public class fragmentLogin extends Fragment {
         BtalterarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading.abrir("Aguarde...Enviando dados !!!");
+                loading.abrir("Aguarde...");
                 AtualizaLogin();
             }
         });
@@ -174,9 +174,6 @@ public class fragmentLogin extends Fragment {
                         }
 
                     }
-
-
-
 
                 }
             });

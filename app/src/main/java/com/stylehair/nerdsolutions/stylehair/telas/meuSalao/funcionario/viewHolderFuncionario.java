@@ -19,9 +19,6 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderFuncionario extends ViewHolder implements View.OnClickListener  {
 

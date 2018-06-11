@@ -162,7 +162,7 @@ public class cadastroSalao extends AppCompatActivity {
                     novoCep = cep.replace("-", "");
 
                     if(novoCep.length() == 8) {
-                        loading.abrir("Buscando endereço...");
+                        loading.abrir("Aguarde...");
                         pegarCep(novoCep);
                     }
                 }
@@ -197,7 +197,7 @@ public class cadastroSalao extends AppCompatActivity {
         SalvarSalao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading.abrir("Aguarde...Enviando dados !!!");
+                loading.abrir("Aguarde...");
                     salvarSalao();
 
             }
@@ -394,7 +394,7 @@ public class cadastroSalao extends AppCompatActivity {
             case imagem_interna:
                 if (resultCode == RESULT_OK) {
                     alerta.dismiss();
-                    loading.abrir("Carregando Imagem...");
+                    loading.abrir("Aguarde...");
                     Uri uri = data.getData();
                     String[] projection = {MediaStore.Images.Media.DATA};
                     Cursor cursor = this.getContentResolver().query(uri, projection, null, null, null);
@@ -424,7 +424,7 @@ public class cadastroSalao extends AppCompatActivity {
                 if (resultCode == RESULT_OK)
                 {
                     alerta.dismiss();
-                    loading.abrir("Carregando Imagem...");
+                    loading.abrir("Aguarde...");
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
 
                     Uri uri = image.getImageUri(this, photo);

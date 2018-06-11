@@ -102,7 +102,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             public void onClick(View v) {
                getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude);
 
-                loading.abrir("Aguarde Carregando...");
+                loading.abrir("Aguarde...");
             }
         });
 

@@ -80,7 +80,7 @@ public class funcionarios extends AppCompatActivity {
                 .getDefaultSharedPreferences(funcionarios.this);
         idSalao = getSharedPreferences.getString("idSalao","-1");
 
-        loading.abrir("Atualizando...");
+        loading.abrir("Aguarde...");
         getFuncionarios(idSalao);
 
     }

@@ -79,7 +79,7 @@ Button btSalvarServico;
                 salvarServicos(idFuncionario,idServicoCad);
             }
         });
-        loading.abrir("Atualizando...");
+        loading.abrir("Aguarde...");
         getServicos(idSalao);
 
     }

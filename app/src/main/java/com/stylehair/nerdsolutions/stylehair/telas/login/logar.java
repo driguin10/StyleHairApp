@@ -118,7 +118,7 @@ public class logar extends AppCompatActivity {
                 VerificaConexao verificaConexao = new VerificaConexao();
                 if(verificaConexao.verifica(logar.this)) {
                     if (verificaCampos()) {
-                        loading.abrir("Aguarde...Carregando!!!");
+                        loading.abrir("Aguarde...");
                         logar();
                     }
                 }else

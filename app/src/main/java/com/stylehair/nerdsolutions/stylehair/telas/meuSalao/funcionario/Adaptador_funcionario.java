@@ -12,9 +12,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_funcionario extends RecyclerView.Adapter<viewHolderFuncionario> {
 

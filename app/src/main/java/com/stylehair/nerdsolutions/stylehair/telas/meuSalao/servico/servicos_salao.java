@@ -40,6 +40,7 @@ public class servicos_salao extends AppCompatActivity {
     int qtTentativaRealizada = 0;
 
     Loading loading;
+    List<ServicoSalao> ListaServicos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class servicos_salao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(servicos_salao.this,ver_servico_salao.class);
-                startActivity(intent);
+               startActivityForResult(intent,2);
             }
         });
 
@@ -90,10 +91,10 @@ public class servicos_salao extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 200:
-                        List<ServicoSalao> ListaServicos = response.body();
+                        ListaServicos = response.body();
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
-                        lista.setAdapter(new Adaptador_servico_salao(ListaServicos));
+                        lista.setAdapter(new Adaptador_servico_salao(ListaServicos,lista));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
@@ -133,5 +134,24 @@ public class servicos_salao extends AppCompatActivity {
             default:break;
         }
         return true;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent){
+        if(requestCode == 1) {
+            if (ResultCode == RESULT_OK) {
+                int pos = Integer.valueOf(intent.getData().toString());
+                ListaServicos.remove(pos);
+                lista.setAdapter(new Adaptador_servico_salao(ListaServicos,lista));
+            }
+
+        }
+        else
+            getServicos(idSalao);
+
+
+
+
     }
 }

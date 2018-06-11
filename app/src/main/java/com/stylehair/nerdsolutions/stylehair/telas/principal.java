@@ -10,10 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,9 +36,7 @@ import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.Cria
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
-import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
-import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragment_principal_usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 import java.util.ArrayList;
@@ -302,7 +297,7 @@ public class principal extends AppCompatActivity
             men.findItem(R.id.nav_agendamento).setVisible(true);
             men.findItem(R.id.nav_meu_agendamento).setVisible(true);
             Fragment fragment = null;
-            fragment = new fragment_principal_funcionario();
+            fragment = new fragment_principal_gerente();
             //replacing the fragment
             if (fragment != null) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -316,9 +311,9 @@ public class principal extends AppCompatActivity
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
                 men.findItem(R.id.nav_agendamento).setVisible(true);
             } else {
-                men.findItem(R.id.nav_criarSalao).setVisible(true);
+                men.findItem(R.id.nav_criarSalao).setVisible(false);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
-               // men.findItem(R.id.nav_agendamento).setVisible(false);
+                men.findItem(R.id.nav_agendamento).setVisible(false);
             }
 
             Fragment fragment = null;
@@ -438,7 +433,7 @@ public class principal extends AppCompatActivity
                     }
                     else
                     {
-                        e.putString("typeUserApp","COMUM");
+                        e.putString("typeUserApp","COMUMUSER");
                         atualizaTela("comum");
                     }
                     e.putString("idUsuario",String.valueOf(tipo.getIdUsuario()));

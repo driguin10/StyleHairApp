@@ -66,7 +66,7 @@ public class pesquisaFuncionario extends AppCompatActivity {
                 .getDefaultSharedPreferences(pesquisaFuncionario.this);
         idSalao = getSharedPreferences.getString("idSalao","-1");
 
-        loading.abrir("Atualizando...");
+        loading.abrir("Aguarde...");
         getFuncionarios(idSalao);
     }
 

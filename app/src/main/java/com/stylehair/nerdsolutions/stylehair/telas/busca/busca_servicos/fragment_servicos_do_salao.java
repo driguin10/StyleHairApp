@@ -59,7 +59,7 @@ public class fragment_servicos_do_salao extends Fragment {
         loading = new Loading(getActivity());
         lista = (RecyclerView) view.findViewById(R.id.ListaServicos);
 
-        loading.abrir("carregando");
+        loading.abrir("Aguarde...");
         getServicos(IdSalao);
         return view;
     }

@@ -120,7 +120,7 @@ public class fragment_funcionario extends Fragment {
         //--------------------------------------------------------------------
 
         if(verificaConexao.verifica(getContext())) {
-            loading.abrir("Aguarde...Carregando dados!!!");
+            loading.abrir("Aguarde...");
             pegarFuncionario(IdUsuario);
         }
         else {

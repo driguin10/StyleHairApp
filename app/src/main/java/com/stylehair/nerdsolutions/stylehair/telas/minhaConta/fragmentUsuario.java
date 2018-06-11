@@ -141,7 +141,7 @@ public class fragmentUsuario extends Fragment {
                 .getDefaultSharedPreferences(getContext());
         IdUsuario = getSharedPreferences.getInt("idLogin", -1);
         loading = new Loading(getActivity());
-        loading.abrir("Aguarde...Carregando dados!!!");
+        loading.abrir("Aguarde...");
 
 
 //--------------- Casting dos componentes --------------------------
@@ -183,7 +183,7 @@ public class fragmentUsuario extends Fragment {
                     novoCep = cep.replace("-", "");
 
                     if(novoCep.length() == 8) {
-                        loading.abrir("Buscando endereço...");
+                        loading.abrir("Aguarde...");
                         pegarCep(novoCep);
                     }
                 }
@@ -226,7 +226,7 @@ public class fragmentUsuario extends Fragment {
                 if(verificaConexao.verifica(getActivity()))
                 {
                     //caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Enviando dados !!!");
-                    loading.abrir("Aguarde...Enviando dados !!!");
+                    loading.abrir("Aguarde...");
                     if(okUsuario) { // se na hora de buscar usuario tiver seta com true
                         editarUsuario();
                     }
@@ -650,7 +650,7 @@ public class fragmentUsuario extends Fragment {
 
         alerta.dismiss();
         if(resultCode!=0)
-            loading.abrir("Carregando Imagem...");
+            loading.abrir("Aguarde...");
 
         super.onActivityResult(requestCode, resultCode, data);
 

@@ -97,7 +97,7 @@ public class Notificacao extends AppCompatActivity {
                 String tit = tituloNot.getEditText().getText().toString();
                 String men = menssagemNotify.getEditText().getText().toString();
 
-             loading.abrir("Enviando, aguarde...");
+             loading.abrir("Aguarde...");
                 EnviarNotificacao(tit,men,NomeSalao,topico);
             }
         });

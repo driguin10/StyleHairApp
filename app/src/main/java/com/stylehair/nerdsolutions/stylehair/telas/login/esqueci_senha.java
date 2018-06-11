@@ -47,7 +47,7 @@ public class esqueci_senha extends AppCompatActivity {
                 VerificaConexao verificaConexao = new VerificaConexao();
                 if(verificaConexao.verifica(esqueci_senha.this)) {
                     if (verificaEmail()) {
-                        loading.abrir("Aguarde...Enviando dados !!!");
+                        loading.abrir("Aguarde...");
                         EnviaNotificacao();
                     }
                 }

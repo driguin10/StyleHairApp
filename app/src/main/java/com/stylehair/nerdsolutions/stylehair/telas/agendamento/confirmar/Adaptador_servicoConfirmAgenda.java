@@ -15,9 +15,6 @@ import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.v
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHolderescolherServicoConfirmAgenda> {
 

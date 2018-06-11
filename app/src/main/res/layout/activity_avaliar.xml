@@ -15,7 +15,7 @@
             android:id="@+id/btSair"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/icone_logout"/>
+            android:background="@drawable/icone_sair_vermelho"/>
     </LinearLayout>
 
     <ScrollView

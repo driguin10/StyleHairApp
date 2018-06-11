@@ -14,9 +14,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
+
 
 public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSalao> {
 
@@ -57,9 +55,15 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
              holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corAberto));
              holder.status.setText("ABERTO");
          }
-         else{
+         else
+         if(ListaObjeto.get(position).getStatus() == 0){
              holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corFechado));
              holder.status.setText("FECHADO");
+         }
+         else
+         {
+             holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corAlmoco));
+             holder.status.setText("ALMOÇO");
          }
 
 

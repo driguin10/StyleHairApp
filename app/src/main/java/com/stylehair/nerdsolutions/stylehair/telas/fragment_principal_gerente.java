@@ -181,6 +181,7 @@ Loading loading;
 
     public void mudarStatus(final int status)
     {
+        loading.abrir("Aguarde...");
             RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"),idSalao);
             RequestBody STATUS = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(status));
             IApi iApi = IApi.retrofit.create(IApi.class);

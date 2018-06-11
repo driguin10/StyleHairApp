@@ -19,9 +19,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderFuncionarioNotif extends ViewHolder implements View.OnClickListener  {
 

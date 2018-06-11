@@ -80,7 +80,7 @@ public class trocar_gerente extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(verificaCampos()) {
-                    loading.abrir("Pesquisando Usuarios...");
+                    loading.abrir("Aguarde...");
                     logar();
                 }
             }

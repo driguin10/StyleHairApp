@@ -400,7 +400,7 @@ public class configuracaoSalao extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(verificaCampos()) {
-                    loading.abrir("Aguarde... enviando dados!!!");
+                    loading.abrir("Aguarde...");
                     editarConfiguracao(idSalao);
                 }
                 else
@@ -417,7 +417,7 @@ public class configuracaoSalao extends AppCompatActivity {
         //---------------------------------------------------------------
         VerificaConexao verificaConexao = new VerificaConexao();
         if(verificaConexao.verifica(configuracaoSalao.this)) {
-            loading.abrir("Carregando dados.... aguarde !!");
+            loading.abrir("Aguarde...");
             pegarConfiguracao(idUsuario);
         }
         else

@@ -71,7 +71,7 @@ public class fragment_servicos_funcionarios extends Fragment {
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.bt_add_servico_funcionario);
         lista = (RecyclerView) view.findViewById(R.id.listServicos_funcionario);
         lista.setHasFixedSize(true);
-        loading.abrir("Atualizando...");
+        loading.abrir("Aguarde...");
         getServicos(idFuncionario);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
