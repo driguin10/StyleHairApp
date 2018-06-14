@@ -1,31 +1,23 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
-
-import java.io.IOException;
-import java.util.List;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;

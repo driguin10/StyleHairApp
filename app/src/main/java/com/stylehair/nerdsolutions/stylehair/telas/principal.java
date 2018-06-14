@@ -38,6 +38,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.favorito.saloesFavoritos;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 import java.util.ArrayList;

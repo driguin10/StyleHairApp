@@ -8,6 +8,7 @@ public class MeuAgendamento {
     private String data;
     private String horaIni;
     private String horaFim;
+    private int status;
 
     public int getIdAgenda() {
         return idAgenda;
@@ -63,5 +64,13 @@ public class MeuAgendamento {
 
     public void setHoraFim(String horaFim) {
         this.horaFim = horaFim;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

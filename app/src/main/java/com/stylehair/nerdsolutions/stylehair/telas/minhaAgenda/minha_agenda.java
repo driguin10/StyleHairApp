@@ -1,4 +1,4 @@
-package com.stylehair.nerdsolutions.stylehair.telas;
+package com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -10,11 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +22,7 @@ import com.github.jhonnyx2012.horizontalpicker.HorizontalPicker;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
-import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
 import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
-import com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios.Adaptador_agenda_horarios;
-import com.stylehair.nerdsolutions.stylehair.telas.agendamento.horarios.horarios_agenda;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import org.joda.time.DateTime;
 
@@ -37,8 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,8 +78,6 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
 
         }
 
-
-        Log.d("xex","id-"+id+" tipo-"+tipo);
         loading = new Loading(minha_agenda.this);
         lista = (RecyclerView) findViewById(R.id.listaAgendamentos);
         lista.setHasFixedSize(true);

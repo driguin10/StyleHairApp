@@ -66,7 +66,7 @@
             android:name=".telas.favorito.saloesFavoritos"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".telas.minha_agenda"
+            android:name=".telas.minhaAgenda.minha_agenda"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".telas.meuSalao.meuSalao"
