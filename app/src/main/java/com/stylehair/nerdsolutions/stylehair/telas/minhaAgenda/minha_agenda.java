@@ -134,14 +134,14 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
                     List<MeuAgendamento> meuAgendamento = response.body();
                     LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                     layout.setOrientation(LinearLayoutManager.VERTICAL);
-                    lista.setAdapter(new Adaptador_minhaAgenda(meuAgendamento));
+                    lista.setAdapter(new Adaptador_minhaAgenda(meuAgendamento,tipo));
                     lista.setLayoutManager(layout);
                     lista.setClickable(true);
                 }
                 else
                 {
                     List<MeuAgendamento> meuAgendamento = new ArrayList<>();
-                    lista.setAdapter(new Adaptador_minhaAgenda(meuAgendamento));
+                    lista.setAdapter(new Adaptador_minhaAgenda(meuAgendamento,tipo));
                     Toast.makeText(minha_agenda.this,"Esta data não possui agendamentos !!",Toast.LENGTH_LONG).show();
                 }
 

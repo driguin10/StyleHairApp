@@ -19,9 +19,11 @@ import java.util.List;
 public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaAgenda> {
 
     List<MeuAgendamento> meuAgendamentos;
-Context contexto;
-    public Adaptador_minhaAgenda(List<MeuAgendamento> MeuAgendamentos) {
+    Context contexto;
+    String Tipo;
+    public Adaptador_minhaAgenda(List<MeuAgendamento> MeuAgendamentos,String tipo) {
         meuAgendamentos = MeuAgendamentos;
+        Tipo = tipo;
     }
 
 
@@ -40,6 +42,7 @@ Context contexto;
          holder.data.setText(newData);
          holder.hora.setText(meuAgendamentos.get(position).getHoraIni());
          Picasso.with(holder.contexto).load("http://stylehair.xyz/" + meuAgendamentos.get(position).getImagem()).into(holder.imagem);
+         holder.tipo = Tipo;
 
          if(meuAgendamentos.get(position).getStatus() == 0)
              holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corFechado));
