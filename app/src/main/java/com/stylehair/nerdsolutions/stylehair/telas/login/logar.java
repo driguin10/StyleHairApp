@@ -24,8 +24,11 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.classes.Logar;
 import com.stylehair.nerdsolutions.stylehair.classes.Login;
+import com.stylehair.nerdsolutions.stylehair.classes.favorito_usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.principal;
 import com.stylehair.nerdsolutions.stylehair.telas.introducao.Introducao;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -146,7 +149,7 @@ public class logar extends AppCompatActivity {
             @Override
             public void onResponse(Call<Logar> call, Response<Logar> response) {
                 callLoga.cancel();
-
+                TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                 if(response.isSuccessful()) {
                     loading.fechar();
                     qtTentativaRealizada = 0;
@@ -169,6 +172,15 @@ public class logar extends AppCompatActivity {
                             idLogin = log.getIdLogin();
                         }
 
+                        if(logar.getFavoritos().size()>0)
+                        {
+                            for (favorito_usuario fav : logar.favoritos) {
+                                topicoNotificacao.addTopico(fav.getTopicoNotificacao());
+                            }
+                        }
+
+
+
                         SharedPreferences getSharedPreferencesL = PreferenceManager
                                 .getDefaultSharedPreferences(getBaseContext());
                         SharedPreferences.Editor e = getSharedPreferencesL.edit();
@@ -183,7 +195,6 @@ public class logar extends AppCompatActivity {
                         e.apply();
                         e.commit();
 
-                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.addTopico("AllNotifications");
                         if(!topico.equals("")) {
                             topicoNotificacao.addTopico(topico);

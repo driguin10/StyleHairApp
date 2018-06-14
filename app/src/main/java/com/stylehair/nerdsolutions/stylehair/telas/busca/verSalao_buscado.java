@@ -33,6 +33,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
@@ -478,6 +479,8 @@ Config config;
                     case 204:
                         idFavorito = "-1";
                         atualizaCoracao(false);
+                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
+                        topicoNotificacao.removeTopico(salao.getTopicoNotificacao());
                         break;
 
                     case 400:
@@ -533,6 +536,8 @@ Config config;
                         idNovoFavorito IdNovoFavorito = new idNovoFavorito();
                         IdNovoFavorito = response.body();
                         idFavorito = String.valueOf(IdNovoFavorito.getIdFavorito());
+                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
+                        topicoNotificacao.addTopico(salao.getTopicoNotificacao());
                         atualizaCoracao(true);
                         break;
 

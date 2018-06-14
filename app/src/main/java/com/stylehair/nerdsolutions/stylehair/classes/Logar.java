@@ -12,6 +12,7 @@ public class Logar {
     public String nomeUser;
     public String linkImagem;
     public String topico;
+    public List<favorito_usuario> favoritos;
 
     public List<Login> getLogin() {
         return login;
@@ -51,5 +52,13 @@ public class Logar {
 
     public void setTopico(String topico) {
         this.topico = topico;
+    }
+
+    public List<favorito_usuario> getFavoritos() {
+        return favoritos;
+    }
+
+    public void setFavoritos(List<favorito_usuario> favoritos) {
+        this.favoritos = favoritos;
     }
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.idNovoFavorito;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes.Adaptador_avaliacoes;
@@ -125,6 +126,8 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                     case 204:
                         objeto.setIdFavorito(-1);
                         atualizaCoracao(posicao,false);
+                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
+                        topicoNotificacao.removeTopico(objeto.getTopicoNotificacao());
                         break;
 
                     case 400:
@@ -181,6 +184,8 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                         IdNovoFavorito = response.body();
                         objeto.setIdFavorito(IdNovoFavorito.getIdFavorito());
                         atualizaCoracao(posicao,true);
+                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
+                        topicoNotificacao.addTopico(objeto.getTopicoNotificacao());
                         break;
 
                     case 400:
