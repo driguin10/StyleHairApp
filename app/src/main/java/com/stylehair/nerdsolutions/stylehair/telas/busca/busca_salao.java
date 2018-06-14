@@ -2,12 +2,14 @@ package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,7 +60,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
     Location myLocation;
     String Provider;
-
+    int idLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +73,9 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         Drawable upArrow = ContextCompat.getDrawable(busca_salao.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(busca_salao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
+        SharedPreferences getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        idLogin = getSharedPreferences.getInt("idLogin", -1);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)
         {
@@ -100,7 +104,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         busca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude);
+               getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude,idLogin);
 
                 loading.abrir("Aguarde...");
             }
@@ -157,16 +161,17 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
     }
 
-    public void getBusca(final int kilometro, final String nome, final String cidade, final double latitude, final double longitude)
+    public void getBusca(final int kilometro, final String nome, final String cidade, final double latitude, final double longitude,final int IdLogin)
     {
 
         RequestBody Kilometro = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(kilometro));
+        RequestBody IDLOGIN = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(IdLogin));
         RequestBody Latitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(latitude));
         RequestBody Longitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longitude));
         RequestBody Cidade = RequestBody.create(MediaType.parse("text/plain"), cidade);
         RequestBody Nome = RequestBody.create(MediaType.parse("text/plain"), nome);
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<List<BuscaSalao>> callBuscaSaloes = iApi.BuscarSalao(Latitude,Longitude,Cidade,Nome,Kilometro);
+        final Call<List<BuscaSalao>> callBuscaSaloes = iApi.BuscarSalao(Latitude,Longitude,Cidade,Nome,Kilometro,IDLOGIN);
         callBuscaSaloes.enqueue(new Callback<List<BuscaSalao>>() {
             @Override
             public void onResponse(Call<List<BuscaSalao>> call, Response<List<BuscaSalao>> response) {
@@ -201,7 +206,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
 
-                    getBusca(kilometro, nome, cidade, latitude,longitude);
+                    getBusca(kilometro, nome, cidade, latitude,longitude,IdLogin);
                 }
                 else {
                     loading.fechar();
@@ -221,6 +226,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     {
         super.onActivityResult(requestCode, resultCode, data);
 
+
       if(requestCode==1)
       {
           if (resultCode == RESULT_OK) {
@@ -238,6 +244,12 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
               busca.callOnClick();
           }
       }
+
+        if(requestCode==2)
+        {
+            Log.d("xex","chego");
+            busca.callOnClick();
+        }
 
     }
     //----------------------------------------------------------------------

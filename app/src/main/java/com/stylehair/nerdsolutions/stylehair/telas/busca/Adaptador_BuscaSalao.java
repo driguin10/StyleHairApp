@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,8 +67,7 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
              holder.status.setText("ALMOÇO");
          }
 
-
-        if(ListaObjeto.get(position).getIdFavorito() == 1)
+        if(ListaObjeto.get(position).getIdFavorito()>=0)
         {
             holder.coracao.setImageDrawable(r.getDrawable(R.drawable.icone_favorito));
 

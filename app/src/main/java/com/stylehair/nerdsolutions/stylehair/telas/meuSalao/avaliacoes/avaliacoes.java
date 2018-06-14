@@ -87,6 +87,15 @@ public class avaliacoes extends AppCompatActivity{
                 {
                     case 200:
                         List<AvaliacaoSalao> ListaAvaliacoes = response.body();
+
+                        for (int x=0;x<ListaAvaliacoes.size();x++)
+                        {
+                            if(ListaAvaliacoes.get(x).getComentario().equals(""))
+                            {
+                                ListaAvaliacoes.get(x).setComentario("...............");
+                            }
+                        }
+
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         lista.setAdapter(new Adaptador_avaliacoes(ListaAvaliacoes,pontos,qtComentarios,lista));

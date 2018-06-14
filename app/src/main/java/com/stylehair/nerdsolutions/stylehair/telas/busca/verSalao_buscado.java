@@ -1,9 +1,11 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +37,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.idNovoFavorito;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_avaliacao.Adaptador_avaliacoes_comentario;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_funcionario.fragment_funcionarios_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_servicos.fragment_servicos_do_salao;
@@ -60,7 +65,10 @@ Config config;
     int qtTentativaRealizadaSalvar = 0;
     int qtTentativaRealizadaComentario = 0;
     int qtTentativaRealizadaSalvComentario = 0;
+    int qtTentativaRealizadaExcFav = 0;
+    int qtTentativaRealizadaSavFav = 0;
     String idSalao;
+    String idFavorito;
 
     AlertDialog alerta;
 
@@ -68,12 +76,15 @@ Config config;
 
     CircleImageView imagemSalao;
     Button avaliacao;
-
+    ImageButton btFavorito;
     RecyclerView listaComentario;
 
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     TabLayout tabLayout;
+
+    Salao salao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +93,7 @@ Config config;
         if(bundle!=null)
         {
             idSalao =bundle.getString("idSalao");
+            idFavorito =bundle.getString("idFavorito");
         }
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_verSalaoBuscado);
         setSupportActionBar(myToolbar);
@@ -98,7 +110,7 @@ Config config;
 
 
         avaliacao = (Button) findViewById(R.id.btAvaliar);
-
+        btFavorito = (ImageButton) findViewById(R.id.btFavorito);
 
         avaliacao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +160,8 @@ Config config;
 
 
 
+
+
         loading = new Loading(this);
         config = new Config();
 
@@ -155,6 +169,33 @@ Config config;
         imagemSalao = (CircleImageView) findViewById(R.id.imagemSalao_buscado);
 
         loading.abrir("Aguarde...");
+
+        if(idFavorito.equals("-1"))
+        {
+            btFavorito.setBackgroundResource(R.drawable.icone_favorito_of);
+        }
+        else
+        {
+            btFavorito.setBackgroundResource(R.drawable.icone_favorito);
+        }
+        btFavorito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!idFavorito.equals("-1"))
+                {
+                    excluiFavorito(idFavorito);
+                }
+                else
+                {
+                    SharedPreferences getSharedPreferences = PreferenceManager
+                            .getDefaultSharedPreferences(verSalao_buscado.this);
+                    String idLogin = String.valueOf(getSharedPreferences.getInt("idLogin", -1));
+
+                    salvaFavorito(idSalao,idLogin);
+
+                }
+            }
+        });
         pegarSalao(idSalao);
     }
 
@@ -174,6 +215,18 @@ Config config;
                 {
                     case 200:
                         List<AvaliacaoSalao> ListaAvaliacoes = response.body();
+
+                        //não mostra comentario vazio
+                        for (int x=0;x<ListaAvaliacoes.size();x++)
+                        {
+                            if(ListaAvaliacoes.get(x).getComentario().equals(""))
+                            {
+                                ListaAvaliacoes.remove(x);
+                            }
+                        }
+
+
+
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         listaComentario.setAdapter(new Adaptador_avaliacoes_comentario(ListaAvaliacoes));
@@ -292,7 +345,7 @@ Config config;
                         VerSalao ver_salao = response.body();
 
                         List<Salao> listaSalao = ver_salao.getSalao();
-                        Salao salao = new Salao();
+                        salao = new Salao();
                         salao = listaSalao.get(0);
 
                         List<Usuario> listaGerente = ver_salao.getGerente();
@@ -407,6 +460,113 @@ Config config;
                 }
             });
         }
+
+
+
+    public void excluiFavorito( final String id)
+    {
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callExcluiFavorito = iApi.DeletarFavorito(id);
+        callExcluiFavorito.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                qtTentativaRealizadaExcFav = 0;
+                switch (response.code())
+                {
+                    case 204:
+                        idFavorito = "-1";
+                        atualizaCoracao(false);
+                        break;
+
+                    case 400:
+                        Toast.makeText(verSalao_buscado.this,"Houve um erro!!",Toast.LENGTH_LONG).show();
+                        break;
+                }
+
+                callExcluiFavorito.cancel();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (qtTentativaRealizadaExcFav < qtTentativas) {
+                    qtTentativaRealizadaExcFav++;
+                    excluiFavorito(id);
+                } else {
+
+                    if (t instanceof IOException) {
+                        Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
+                        Log.d("xex", String.valueOf(t.getCause()));
+                    } else if (t instanceof IllegalStateException) {
+                        Log.d("xex", "ConversionError");
+                        Log.d("xex", String.valueOf(t.getCause()));
+                    } else {
+                        Log.d("xex", "erro");
+                        Log.d("xex", String.valueOf(t.getCause()));
+                        Log.d("xex", String.valueOf(t.getLocalizedMessage()));
+                    }
+
+                }
+
+
+
+
+            }
+        });
+    }
+
+    public void salvaFavorito( final String idsalao,final String idlogin)
+    {
+        RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"), idsalao);
+        RequestBody IDLOGIN = RequestBody.create(MediaType.parse("text/plain"), idlogin);
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<idNovoFavorito> callSalvarFavorito = iApi.SalvarFavorito(IDSALAO,IDLOGIN);
+        callSalvarFavorito.enqueue(new Callback<idNovoFavorito>() {
+            @Override
+            public void onResponse(Call<idNovoFavorito> call, Response<idNovoFavorito> response) {
+
+                qtTentativaRealizadaSavFav = 0;
+                switch (response.code())
+                {
+                    case 200:
+                        idNovoFavorito IdNovoFavorito = new idNovoFavorito();
+                        IdNovoFavorito = response.body();
+                        idFavorito = String.valueOf(IdNovoFavorito.getIdFavorito());
+                        atualizaCoracao(true);
+                        break;
+
+                    case 400:
+                        Toast.makeText(verSalao_buscado.this,"Houve um erro!!",Toast.LENGTH_LONG).show();
+                        break;
+                }
+
+                callSalvarFavorito.cancel();
+            }
+
+            @Override
+            public void onFailure(Call<idNovoFavorito> call, Throwable t) {
+                if (qtTentativaRealizadaSavFav < qtTentativas) {
+                    qtTentativaRealizadaSavFav++;
+                    salvaFavorito(idsalao,idlogin);
+                }
+            }
+        });
+    }
+
+    public void  atualizaCoracao(boolean favorito)
+    {
+        if(favorito)
+        {
+            btFavorito.setBackgroundResource(R.drawable.icone_favorito);
+        }
+        else{
+            btFavorito.setBackgroundResource(R.drawable.icone_favorito_of);
+        }
+    }
+
+
+
     }
 
 

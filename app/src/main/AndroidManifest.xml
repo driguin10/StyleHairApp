@@ -63,7 +63,7 @@
             android:name=".telas.configuracaoApp"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".telas.saloesFavoritos"
+            android:name=".telas.favorito.saloesFavoritos"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".telas.minha_agenda"

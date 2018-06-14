@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -59,6 +60,7 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
         card = (CardView) itemView.findViewById(R.id.cardsServico);
         card.setOnLongClickListener(this);
+        card.setOnClickListener(this);
         ListaServicoSalao = dados;
         contexto = itemView.getContext();
         btProsseguir.setOnClickListener(this);
@@ -82,11 +84,28 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
                     .setIcon(R.drawable.icone_servicos)
                     .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                             int vl = Integer.valueOf(qtServicosEscolhido.getText().toString());
-                             qtServicosEscolhido.setText(String.valueOf(vl + 1));
-                             String Serv = String.valueOf(servicoSalao.getIdServicoSalao())+"#"+servicoSalao.getServico()+"#"+ String.valueOf(servicoSalao.getValor())+"#"+servicoSalao.getTempo();
-                             lista.add(Serv);
-                             Toast.makeText(contexto,servicoSalao.getServico()+" adicionado",Toast.LENGTH_LONG).show();
+
+                            boolean flag = true;
+                            for(int x=0;x<lista.size();x++)
+                            {
+                                Log.d("xex",lista.get(x).toString());
+                                Log.d("xex",String.valueOf(servicoSalao.getIdServicoSalao()));
+                                String[] id = lista.get(x).split("#");
+                               if(id[0].equals(String.valueOf(servicoSalao.getIdServicoSalao())))
+                               {
+                                   flag = false;
+                               }
+                            }
+
+                            if(flag) {
+                                int vl = Integer.valueOf(qtServicosEscolhido.getText().toString());
+                                qtServicosEscolhido.setText(String.valueOf(vl + 1));
+                                String Serv = String.valueOf(servicoSalao.getIdServicoSalao()) + "#" + servicoSalao.getServico() + "#" + String.valueOf(servicoSalao.getValor()) + "#" + servicoSalao.getTempo();
+                                lista.add(Serv);
+                                Toast.makeText(contexto, servicoSalao.getServico() + " adicionado", Toast.LENGTH_LONG).show();
+                            }
+                            else
+                                Toast.makeText(contexto, "Este serviço já foi adicionado!!", Toast.LENGTH_LONG).show();
 
                         }
                     })
@@ -104,7 +123,8 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
     public void onClick(View v) {
         int position = getAdapterPosition();
 
-        if (v.getId() == btProsseguir.getId()) {
+        if (v.getId() == btProsseguir.getId())
+        {
             if(lista.size()>0) {
                 Intent intent = new Intent(v.getContext(), escolherFuncionario.class);
                 intent.putStringArrayListExtra("escolhas", lista);
@@ -112,25 +132,24 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
                 v.getContext().startActivity(intent);
             }
             else
-            {
                 Toast.makeText(v.getContext(),"Selecione os serviços.",Toast.LENGTH_LONG).show();
-            }
-        }else
-        if (v.getId() == btListaServicos.getId()) {
+        }
 
-            if(lista.size()>0) {
+        if (v.getId() == btListaServicos.getId())
+        {
+            if (lista.size() > 0) {
                 Intent intent = new Intent(v.getContext(), lista_servi_escolhido.class);
                 intent.putStringArrayListExtra("ListaServ", lista);
-               // v.getContext().startActivity(intent);
-                ((Activity) v.getContext()).startActivityForResult(intent,1);
-
-
+                // v.getContext().startActivity(intent);
+                ((Activity) v.getContext()).startActivityForResult(intent, 1);
+            } else {
+                Toast.makeText(v.getContext(), "Selecione os serviços.", Toast.LENGTH_LONG).show();
             }
-            else
-            {
-                Toast.makeText(v.getContext(),"Selecione os serviços.",Toast.LENGTH_LONG).show();
-            }
+        }
 
+
+        if(v.getId() == card.getId()) {
+            Toast.makeText(v.getContext(), "Mantenha pressionado para selecionar os serviços.", Toast.LENGTH_LONG).show();
         }
 
 

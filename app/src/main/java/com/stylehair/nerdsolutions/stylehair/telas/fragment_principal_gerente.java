@@ -19,6 +19,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
@@ -53,7 +54,7 @@ Loading loading;
     int qtTentativaRealizada = 0;
 
     String idSalao;
-
+    Permissoes permissoes;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +66,7 @@ Loading loading;
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_fragment_principal_gerente, container, false);
         getActivity().setTitle("Bem Vindo");
+        permissoes = new Permissoes();
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
 
@@ -85,8 +87,10 @@ Loading loading;
         btPesquisaSalao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), busca_salao.class);
-                startActivity(intent);
+                if(permissoes.habilitarLocalizacao(getActivity())) {
+                    Intent intent = new Intent(getActivity(), busca_salao.class);
+                    startActivity(intent);
+                }
             }
 
         });

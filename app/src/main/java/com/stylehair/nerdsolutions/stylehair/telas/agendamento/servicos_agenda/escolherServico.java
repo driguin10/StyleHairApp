@@ -141,7 +141,6 @@ public class escolherServico extends AppCompatActivity {
             lista.setAdapter(new Adaptador_ecolherservico_salao(ListaServicos,qtServicosEscolhido,listFinal,btProsseguir,btListaServicos));
             lista.setLayoutManager(layout);
             lista.setClickable(true);
-            Log.d("xex",listFinal.toString());
         }
     }
 

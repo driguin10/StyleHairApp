@@ -17,6 +17,9 @@ import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.favorito_salao;
+import com.stylehair.nerdsolutions.stylehair.classes.favorito_usuario;
+import com.stylehair.nerdsolutions.stylehair.classes.idNovoFavorito;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -164,7 +167,8 @@ public interface IApi {
                                        @Part("longitude") RequestBody longitude,
                                        @Part("cidade") RequestBody cidade,
                                        @Part("nome") RequestBody nome,
-                                       @Part("kilometro") RequestBody kilometro);
+                                       @Part("kilometro") RequestBody kilometro,
+                                       @Part("idLogin") RequestBody idLogin);
 
 
     @Headers("apiKey:" + chave)
@@ -431,6 +435,35 @@ public interface IApi {
                                        @Part("comentario") RequestBody comentario,
                                        @Part("data") RequestBody data);
     //--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+    //------------------------FAVORITO-----------------------------------
+    @Headers("apiKey:" + chave)
+    @GET("v1/favorito/deletar/{id}")
+    Call<ResponseBody> DeletarFavorito(@Path("id") String id);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/favorito/idLog/{id}")
+    Call<List<favorito_usuario>> BuscaFavoritoUsuario(@Path("id") String id);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/favorito/idFav/{id}")
+    Call<List<favorito_salao>> BuscaFavoritoSalao(@Path("id") String id);
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/favorito/salvar/")
+    Call<idNovoFavorito> SalvarFavorito(@Part("idSalao") RequestBody idSalao,
+                                        @Part("idLogin") RequestBody idLogin);
+
+    //----------------------------------------------------------------------
+
 
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
