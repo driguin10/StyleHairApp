@@ -51,7 +51,7 @@ public class viewHolderMinhaAgenda extends ViewHolder implements View.OnClickLis
         int position = getAdapterPosition();
         meuAgendamento = ListaMeuAgendamento.get(position);
 
-        if(tipo.equals("0")){
+
             Intent intent = new Intent(v.getContext(), verAgendamento.class);
             intent.putExtra("idAgenda", String.valueOf(meuAgendamento.getIdAgenda()));
             intent.putExtra("idUsuario", String.valueOf(meuAgendamento.getIdUsuario()));
@@ -65,8 +65,6 @@ public class viewHolderMinhaAgenda extends ViewHolder implements View.OnClickLis
             intent.putExtra("idFuncionario", String.valueOf(meuAgendamento.getIdFuncionario()));
             intent.putExtra("nomeFuncionario", meuAgendamento.getNomeFuncionario());
             intent.putExtra("imagemFuncionario", meuAgendamento.getImagemFuncionario());
-
-
             intent.putExtra("endereco", meuAgendamento.getEndereco());
             intent.putExtra("numero", meuAgendamento.getNumero());
             intent.putExtra("bairro", meuAgendamento.getBairro());
@@ -74,7 +72,7 @@ public class viewHolderMinhaAgenda extends ViewHolder implements View.OnClickLis
             intent.putExtra("complemento", meuAgendamento.getComplemento());
             intent.putExtra("estado", meuAgendamento.getEstado());
             ((Activity) v.getContext()).startActivityForResult(intent, 1);
-        }
+
 
     }
 }

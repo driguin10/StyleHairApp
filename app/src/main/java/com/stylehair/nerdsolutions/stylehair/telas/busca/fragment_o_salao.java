@@ -16,36 +16,51 @@ import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.e
 public class fragment_o_salao extends Fragment {
 
 
-   /* String endereco = "";
-    String email = "";
-    String sobre = "";
-    String status = "";
-    String agendamento = "";
-    String cnpj = "";
-    String telefones = "";
-
-    String segE = "";
-    String segS = "";
-
-    String terE = "";
-    String terS = "";
-
-    String quaE = "";
-    String quaS = "";
-
-    String quiE = "";
-    String quiS = "";
-
-    String sexE = "";
-    String sexS = "";
-
-    String sabE = "";
-    String sabS = "";
-
-    String domE = "";
-    String domS = "";*/
 
 
+
+    TextView segE ;
+    TextView segS ;
+
+    TextView terE ;
+    TextView terS ;
+
+    TextView quaE ;
+    TextView quaS ;
+
+    TextView quiE ;
+    TextView quiS ;
+
+    TextView sexE;
+    TextView sexS;
+
+    TextView sabE ;
+    TextView sabS ;
+
+    TextView domE;
+    TextView domS;
+
+
+    String SegE ="folga";
+    String SegS ="folga";
+
+    String TerE="folga" ;
+    String TerS ="folga";
+
+    String QuaE="folga" ;
+    String QuaS="folga" ;
+
+    String QuiE="folga" ;
+    String QuiS ="folga";
+
+    String SexE="folga";
+    String SexS="folga";
+
+    String SabE="folga" ;
+    String SabS="folga" ;
+
+    String DomE="folga";
+    String DomS="folga";
 
 
     Bundle bundle;
@@ -77,6 +92,24 @@ public class fragment_o_salao extends Fragment {
         cardStatus=(CardView) view.findViewById(R.id.cardStatus);
         cardAgendar=(CardView) view.findViewById(R.id.cardAgendar);
 
+
+        segE=(TextView) view.findViewById(R.id.txtSegE);
+        segS=(TextView) view.findViewById(R.id.txtSegS);
+        terE=(TextView) view.findViewById(R.id.txtTerE);
+        terS=(TextView) view.findViewById(R.id.txtTerS);
+        quaE=(TextView) view.findViewById(R.id.txtQuaE);
+        quaS=(TextView) view.findViewById(R.id.txtQuaS);
+        quiE=(TextView) view.findViewById(R.id.txtQuiE);
+        quiS=(TextView) view.findViewById(R.id.txtQuiS);
+        sexE=(TextView) view.findViewById(R.id.txtSexE);
+        sexS=(TextView) view.findViewById(R.id.txtSexS);
+        sabE=(TextView) view.findViewById(R.id.txtSabE);
+        sabS=(TextView) view.findViewById(R.id.txtSabS);
+        domE=(TextView) view.findViewById(R.id.txtDomE);
+        domS=(TextView) view.findViewById(R.id.txtDomS);
+
+
+
         if(bundle!=null)
         {
             txtSobre.setText( bundle.getString("sobre"));
@@ -85,6 +118,49 @@ public class fragment_o_salao extends Fragment {
             txtEmail.setText( bundle.getString("email"));
             txtCnpj.setText( bundle.getString("cnpj"));
             idSalao = bundle.getString("idSalao");
+
+            if(bundle.getString("segE")!=null)
+            SegE = bundle.getString("segE").substring(0,5);
+
+            if(bundle.getString("segS")!=null)
+            SegS = bundle.getString("segS").substring(0,5);
+
+            if(bundle.getString("terE")!=null)
+            TerE = bundle.getString("terE").substring(0,5);
+
+            if(bundle.getString("terS")!=null)
+            TerS = bundle.getString("terS").substring(0,5);
+
+
+            if(bundle.getString("quaE")!=null)
+            QuaE = bundle.getString("quaE").substring(0,5);
+
+            if(bundle.getString("quaS")!=null)
+            QuaS = bundle.getString("quaS").substring(0,5);
+
+            if(bundle.getString("quiE")!=null)
+            QuiE = bundle.getString("quiE").substring(0,5);
+
+            if(bundle.getString("quiS")!=null)
+            QuiS = bundle.getString("quiS").substring(0,5);
+
+            if(bundle.getString("sexE")!=null)
+            SexE = bundle.getString("sexE").substring(0,5);
+
+            if(bundle.getString("sexS")!=null)
+            SexS = bundle.getString("sexS").substring(0,5);
+
+            if(bundle.getString("sabE")!=null)
+            SabE = bundle.getString("sabE").substring(0,5);
+
+            if(bundle.getString("sabS")!=null)
+            SabS = bundle.getString("sabS").substring(0,5);
+
+            if(bundle.getString("domE")!=null)
+            DomE = bundle.getString("domE").substring(0,5);
+
+            if(bundle.getString("domS")!=null)
+            DomS = bundle.getString("domS").substring(0,5);
 
             if(bundle.getString("status").equals("1"))
             {
@@ -115,29 +191,28 @@ public class fragment_o_salao extends Fragment {
             }
 
 
-           /*endereco = bundle.getString("endereco");
-           email = bundle.getString("email");
-           sobre = bundle.getString("sobre");
-           status = bundle.getString("status");
-           agendamento = bundle.getString("agendamento");
-           cnpj = bundle.getString("cnpj");
-           telefones = bundle.getString("telefones");
-           segE = bundle.getString("segE");
-            segS = bundle.getString("segS");
-            terE = bundle.getString("terE");
-            terS = bundle.getString("terS");
-            quaE = bundle.getString("quaE");
-            quaS = bundle.getString("quaS");
-            quiE = bundle.getString("quiE");
-            quiS = bundle.getString("quiS");
-            sexE = bundle.getString("sexE");
-            sexS = bundle.getString("sexS");
-            sabE = bundle.getString("sabE");
-            sabS = bundle.getString("sabS");
-            domE = bundle.getString("domE");
-            domS = bundle.getString("domS");*/
+
+
 
         }
+
+
+        segE.setText(SegE);
+        segS.setText(SegS);
+        terE.setText(TerE);
+        terS.setText(TerS);
+        quaE.setText(QuaE);
+        quaS.setText(QuaS);
+        quiE.setText(SegE);
+        quiS.setText(SegE);
+        sexE.setText(SexE);
+        sexS.setText(SexS);
+        sabE.setText(SabE);
+        sabS.setText(SabS);
+        domE.setText(DomE);
+        domS.setText(DomS);
+
+
 
        cardAgendar.setOnClickListener(new View.OnClickListener() {
            @Override

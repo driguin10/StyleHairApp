@@ -80,6 +80,7 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
 
         loading = new Loading(minha_agenda.this);
         lista = (RecyclerView) findViewById(R.id.listaAgendamentos);
+
         lista.setHasFixedSize(true);
         HorizontalPicker picker = (HorizontalPicker) findViewById(R.id.agendaH);
 

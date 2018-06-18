@@ -360,11 +360,7 @@ Config config;
                         }
 
                         setupViewPager(mViewPager,salao);
-
                         break;
-
-
-
                 }
             }
 
@@ -390,8 +386,6 @@ Config config;
 
     public void SalvarAvaliacao(final String idSalao, final String pontos, final String comentario, final String data)
     {
-
-
         RequestBody IDsalao = RequestBody.create(MediaType.parse("text/plain"),idSalao);
         RequestBody Pontos = RequestBody.create(MediaType.parse("text/plain"),pontos);
         RequestBody Comentario = RequestBody.create(MediaType.parse("text/plain"),comentario);
@@ -452,17 +446,10 @@ Config config;
                             Log.d("xex", String.valueOf(t.getCause()));
                             Log.d("xex", String.valueOf(t.getLocalizedMessage()));
                         }
-
                     }
-
-
-
-
                 }
             });
         }
-
-
 
     public void excluiFavorito( final String id)
     {

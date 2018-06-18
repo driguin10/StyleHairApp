@@ -48,10 +48,10 @@ public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaA
              holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corFechado));
          else
          if(meuAgendamentos.get(position).getStatus() == 1)
-             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAberto));
+             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAlmoco));
          else
          if(meuAgendamentos.get(position).getStatus() == 2)
-             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAlmoco));
+             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAberto));
     }
     @Override
     public int getItemCount() {

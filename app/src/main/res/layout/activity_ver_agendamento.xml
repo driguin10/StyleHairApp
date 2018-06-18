@@ -112,6 +112,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/txtLabelEndereco"
             android:text="Endereço : "/>
         <TextView
             android:id="@+id/txtEndereco"
@@ -119,6 +120,36 @@
             android:layout_height="wrap_content"
             android:text="vl adfrinao cindor 854, franca, sao paulo, vila dao dadsd"/>
     </LinearLayout>
+
+
+
+
+        <Button
+            android:id="@+id/btFinalizar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_folga_on"
+            android:visibility="gone"
+            android:text="Finalizar Agendamento"/>
+
+        <Button
+            android:id="@+id/btCancelar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_fragment"
+            android:text="Cancelar Agendamento"
+           />
+
+
+    <Button
+        android:id="@+id/btExcluir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@drawable/bt_cor_toolbar"
+        android:text="Excluir Agendamento"/>
+
+
 
 
 

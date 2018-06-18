@@ -266,6 +266,15 @@ public interface IApi {
                                            @Path("id") String id,
                                            @Path("data") String data);
 
+    @Headers("apiKey:" + chave)
+    @GET("v1/agenda/status/{idAgenda}/{status}/")
+    Call<ResponseBody> alterStatusAgendamento(@Path("idAgenda") String idAgenda,
+                                              @Path("status") String status);
+
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/agenda/excluir/{idAgenda}/")
+    Call<ResponseBody> excluirAgendamento(@Path("idAgenda") String idAgenda);
 
     //--------------------------------------------------------------------------------------
 

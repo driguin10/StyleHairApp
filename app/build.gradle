@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.github.jhonnyx2012:horizontal-picker:1.0.6'
+    implementation 'com.riyagayasen.android:easyaccordion:1.0.3'
 }
 
 

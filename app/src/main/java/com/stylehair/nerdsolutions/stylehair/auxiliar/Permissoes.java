@@ -72,6 +72,29 @@ public class Permissoes extends AppCompatActivity {
     }
 
 
+    public boolean habilitarLigacao(Activity activity)
+    {
+        //**************** Qual permissão ira solicitar **********************
+        String permissao = android.Manifest.permission.CALL_PHONE;
+
+        //********************************************************************
+
+        if( ContextCompat.checkSelfPermission( activity, permissao ) != PackageManager.PERMISSION_GRANTED )// verifica se tem a permessao
+        {
+            if( ActivityCompat.shouldShowRequestPermissionRationale( activity,permissao)) {//verifica se o usuario já ignorou a permissao
+                callDialog(activity, menssagem, new String[]{permissao});
+            }
+            else {
+                ActivityCompat.requestPermissions(activity, new String[]{permissao}, REQUEST_PERMISSIONS_CODE);// requisita a permissão novamente
+            }
+        }
+        else
+        {
+            habilitado = true;
+        }
+        return  habilitado;
+    }
+
     //-----------------------------------------------------------------------------------------------------
 
     @Override
