@@ -84,6 +84,7 @@
         android:layout_margin="20dp"
         android:layout_height="wrap_content"
         android:text="Excluir Notificação"
+        android:background="@drawable/bt_fragment"
         />
     </LinearLayout>
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -260,7 +261,7 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,7);
 
         } else if (id == R.id.nav_configuracao) {
-                Intent intent=new Intent(principal.this,configuracaoApp.class);
+               Intent intent=new Intent(principal.this,configuracaoApp.class);
                 startActivity(intent);
         } else if (id == R.id.nav_logout) {
             logout.deslogar(this,true);
@@ -430,12 +431,13 @@ public class principal extends AppCompatActivity
                     else
                     if(id_suario > -1)
                     {
-                        e.putString("typeUserApp","COMUM");
+                        e.putString("typeUserApp","COMUMUSER");
                         atualizaTela("usuario");
+
                     }
                     else
                     {
-                        e.putString("typeUserApp","COMUMUSER");
+                        e.putString("typeUserApp","COMUM");
                         atualizaTela("comum");
                     }
                     e.putString("idUsuario",String.valueOf(tipo.getIdUsuario()));

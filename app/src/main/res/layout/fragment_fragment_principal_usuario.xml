@@ -69,7 +69,9 @@
             android:layout_marginTop="5dp"
             android:layout_weight="1"
             app:cardCornerRadius="7dp"
-            app:cardElevation="2dp">
+            app:cardElevation="2dp"
+            android:clickable="false"
+            android:alpha=".4">
 
             <LinearLayout
                 android:layout_width="match_parent"

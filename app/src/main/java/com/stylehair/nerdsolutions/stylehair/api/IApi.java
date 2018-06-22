@@ -474,6 +474,30 @@ public interface IApi {
     //----------------------------------------------------------------------
 
 
+    //******************* ENCERRAR CONTA *******************************
+    @Headers("apiKey:" + chave)
+    @GET("v1/conta/deletar/{idLogin}")
+    Call<ResponseBody> EncerrarUsuarioComum(@Path("idLogin") String idLogin);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/conta/deletar/{idLogin}/{idUsuario}")
+    Call<ResponseBody> EncerrarUsuario(@Path("idLogin") String idLogin,
+                                       @Path("idUsuario") String idUsuario);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/conta/deletar/{idLogin}/{idUsuario}/{idFuncionario}")
+    Call<ResponseBody> EncerrarFuncionario(@Path("idLogin") String idLogin,
+                                           @Path("idUsuario") String idUsuario,
+                                           @Path("idFuncionario") String idFuncionario);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/conta/deletar/{idLogin}/{idUsuario}/{idFuncionario}/{idSalao}")
+    Call<ResponseBody> EncerrarGerente(@Path("idLogin") String idLogin,
+                                       @Path("idUsuario") String idUsuario,
+                                       @Path("idFuncionario") String idFuncionario,
+                                       @Path("idSalao") String idSalao);
+    //-------------------------------------------------------------------
+
     //******************* SERVICE RETROFIT ******************************
     OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
           .connectTimeout(15, TimeUnit.SECONDS)

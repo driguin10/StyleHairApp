@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -137,7 +137,7 @@
         <activity android:name=".telas.agendamento.servicos_agenda.escolhido.lista_servi_escolhido" />
         <activity android:name=".telas.agendamento.horarios.horarios_agenda" />
         <activity android:name=".telas.agendamento.confirmar.confirma_agendamento" />
-        <activity android:name=".telas.minhaAgenda.verAgenda.verAgendamento"></activity>
+        <activity android:name=".telas.minhaAgenda.verAgenda.verAgendamento" />
     </application>
 
 </manifest>
