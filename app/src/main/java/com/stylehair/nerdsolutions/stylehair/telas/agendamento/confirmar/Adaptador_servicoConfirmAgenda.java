@@ -14,6 +14,7 @@ import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.v
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHolderescolherServicoConfirmAgenda> {
@@ -30,7 +31,7 @@ public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHol
             String[] teste = ListaServicoSalao.get(x).split("#");
             total = total +  Float.valueOf(teste[2]);
         }
-        txtValor.setText("R$ "+String.valueOf(total));
+        txtValor.setText("R$ "+ String.format(Locale.getDefault(),"%.2f", total));
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHol
     public void onBindViewHolder(viewHolderescolherServicoConfirmAgenda holder, int position) {
         String[] teste = ListaServicoSalao.get(position).split("#");
          holder.NomeServico.setText(teste[1]);
-         String Valor = "R$ " + teste[2];
+         String Valor = "R$ " +String.format(Locale.getDefault(),"%.2f", Float.valueOf(teste[2])) ;
          holder.valor.setText(Valor);
     }
 

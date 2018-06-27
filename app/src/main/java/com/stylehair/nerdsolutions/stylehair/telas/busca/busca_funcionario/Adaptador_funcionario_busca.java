@@ -36,7 +36,12 @@ public class Adaptador_funcionario_busca extends RecyclerView.Adapter<viewHolder
     public void onBindViewHolder(viewHolderFuncionario_busca holder, int position) {
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
          holder.Numero.setText(ListaFuncionario.get(position).getTelefone());
-         Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
+
+        if(ListaFuncionario.get(position).linkImagem .equals(""))
+            holder.imagemFunc.setImageDrawable(holder.contexto.getResources().getDrawable(R.drawable.img_padrao_user));
+        else
+            Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
+
 }
     @Override
     public int getItemCount() {

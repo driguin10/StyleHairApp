@@ -10,6 +10,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.viewHolderServicoFuncionario;
 
 import java.util.List;
+import java.util.Locale;
 
 
 public class Adaptador_servico_funcionario_busca extends RecyclerView.Adapter<viewHolderServicoFuncionario_busca> {
@@ -30,7 +31,8 @@ public class Adaptador_servico_funcionario_busca extends RecyclerView.Adapter<vi
     @Override
     public void onBindViewHolder(viewHolderServicoFuncionario_busca holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
-         holder.valor.setText("R$"+String.valueOf(ListaServicoSalao.get(position).getValor()));
+
+        holder.valor.setText("R$ "+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
 }
     @Override
     public int getItemCount() {

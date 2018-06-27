@@ -165,10 +165,18 @@ public class verAgendamento extends AppCompatActivity {
 
 
             txtnomeFuncionario.setText(nomeFuncionario);
+        if(imagemFuncionario == null)
+            CirclimagemFuncionario.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+        else
             Picasso.with(this).load("http://stylehair.xyz/" + imagemFuncionario).into(CirclimagemFuncionario);
 
         txtnomesalao.setText(nome);
-        Picasso.with(this).load("http://stylehair.xyz/" + imagem).into(Circlimagemsalao);
+
+        if(imagem.equals(""))
+            Circlimagemsalao.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+        else
+            Picasso.with(this).load("http://stylehair.xyz/" + imagem).into(Circlimagemsalao);
+
         String ender= endereco+","+numero+","+bairro+","+cidade;
         txtendereco.setText(ender);
 

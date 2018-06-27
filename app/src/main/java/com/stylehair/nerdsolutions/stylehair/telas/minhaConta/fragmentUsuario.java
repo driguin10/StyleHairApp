@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.telas.minhaConta;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -24,6 +25,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +109,7 @@ public class fragmentUsuario extends Fragment {
     ImageButton BtPesqData;
     ImageButton BtExcluirImagem;
 
-    int IdUsuario;
+    int IdLogin;
 
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
@@ -128,7 +130,7 @@ public class fragmentUsuario extends Fragment {
 
     SharedPreferences getSharedPreferences;
     Loading loading;
-
+boolean statusCad =false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -139,9 +141,33 @@ public class fragmentUsuario extends Fragment {
         verificaConexao = new VerificaConexao();
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
-        IdUsuario = getSharedPreferences.getInt("idLogin", -1);
+        IdLogin = getSharedPreferences.getInt("idLogin", -1);
         loading = new Loading(getActivity());
         loading.abrir("Aguarde...");
+
+
+       view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener( new View.OnKeyListener()
+        {
+            @Override
+            public boolean onKey( View v, int keyCode, KeyEvent event )
+            {
+                if( keyCode == KeyEvent.KEYCODE_BACK )
+                {
+                    Intent data = new Intent();
+                    if(statusCad)
+                        data.setData(Uri.parse("userCad"));
+                    else
+                        data.setData(Uri.parse(""));
+                    ((Activity)getActivity()).setResult(RESULT_OK, data);
+                    getActivity().finish();
+                    return true;
+
+                }
+                return false;
+            }
+        } );
 
 
 //--------------- Casting dos componentes --------------------------
@@ -240,7 +266,7 @@ public class fragmentUsuario extends Fragment {
         //-------- faz a busca dos dados do usuario no servidor-------
 
         if(verificaConexao.verifica(getContext())) {
-             pegarUsuario(IdUsuario);
+             pegarUsuario(IdLogin);
         }
         else {
             //caixaDialogo.fecharCaixa();
@@ -294,7 +320,7 @@ public class fragmentUsuario extends Fragment {
         }
         else
         {
-            RequestBody iduser = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(IdUsuario));
+            RequestBody iduser = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(IdLogin));
             RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), cadNomeUser.getEditText().getText().toString());
             RequestBody apelido = RequestBody.create(MediaType.parse("text/plain"), cadApelidoUser.getEditText().getText().toString());
             RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUser.getEditText().getText().toString());
@@ -328,7 +354,10 @@ public class fragmentUsuario extends Fragment {
                         switch (response.code())
                         {
                             case 204:
+                                pegarUsuario(IdLogin);
                                 Toast.makeText(getContext(), "Salvo com sucesso", Toast.LENGTH_LONG).show();
+
+                                ((minhaConta)getActivity()).setStatus(true);
                                 break;
 
                             case 400:
@@ -344,7 +373,7 @@ public class fragmentUsuario extends Fragment {
                                 }
                                 break;
                         }
-                        pegarUsuario(IdUsuario);
+                        pegarUsuario(IdLogin);
                     }
                     callSalvaUser.cancel();
                 }
@@ -387,7 +416,7 @@ public class fragmentUsuario extends Fragment {
         }
         else
         {
-            RequestBody idlogin = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(IdUsuario));
+            RequestBody idlogin = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(IdLogin));
             RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), cadNomeUser.getEditText().getText().toString());
             RequestBody apelido = RequestBody.create(MediaType.parse("text/plain"), cadApelidoUser.getEditText().getText().toString());
             RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUser.getEditText().getText().toString());
@@ -411,6 +440,7 @@ public class fragmentUsuario extends Fragment {
             }
             else {
                 converter64 = RequestBody.create(MediaType.parse("text/plain"), LinkImagem);
+                Log.d("xex","sem imagem");
             }
 
             IApi iApi = IApi.retrofit.create(IApi.class);
@@ -443,7 +473,7 @@ public class fragmentUsuario extends Fragment {
                         }
 
                     }
-                    pegarUsuario(IdUsuario);
+                    pegarUsuario(IdLogin);
                     callEditarUser.cancel();
                 }
 
@@ -478,9 +508,9 @@ public class fragmentUsuario extends Fragment {
 
 
     //---- função para pegar dados do usuario do servidor----
-    public void pegarUsuario(final int idUsuario){
+    public void pegarUsuario(final int idLogin){
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuario(idUsuario);
+        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuario(idLogin);
         callBuscaUser.enqueue(new Callback<List<Usuario>>() {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
@@ -527,6 +557,10 @@ public class fragmentUsuario extends Fragment {
                         if (user.getLinkImagem() != "") {
                             Picasso.with(getContext()).load(config.getWebService() + user.getLinkImagem()).into(ImagemUser);
                         }
+                        else
+                        {
+                            ImagemUser.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+                        }
 
                         SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd");
                         SimpleDateFormat dataFormat2 = new SimpleDateFormat("dd-MM-yyyy");
@@ -541,6 +575,12 @@ public class fragmentUsuario extends Fragment {
 
                         SharedPreferences.Editor e = getSharedPreferences.edit();
                         e.putInt("idUsuario",user.getIdUsuario());
+
+
+                        e.putString("typeUserApp","COMUMUSER");
+                        e.putString("nomeUser",user.getNome());
+                        e.putString("linkImagem",user.getLinkImagem());
+
                         e.apply();
 
                         break;
@@ -562,7 +602,7 @@ public class fragmentUsuario extends Fragment {
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 if (qtTentativaRealizadaLoad < qtTentativas) {
                     qtTentativaRealizadaLoad++;
-                    pegarUsuario(idUsuario);
+                    pegarUsuario(idLogin);
                 }
                 else {
                     loading.fechar();

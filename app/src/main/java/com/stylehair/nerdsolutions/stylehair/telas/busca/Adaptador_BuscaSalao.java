@@ -48,7 +48,10 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
 
 
          holder.distancia.setText(format.format(distanc)+"km");
-         Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaObjeto.get(position).getLinkImagem()).into(holder.imagem);
+         if(ListaObjeto.get(position).getLinkImagem().equals(""))
+            holder.imagem.setImageDrawable(r.getDrawable(R.drawable.img_padrao_user));
+         else
+            Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaObjeto.get(position).getLinkImagem()).into(holder.imagem);
 
 
          if(ListaObjeto.get(position).getStatus() == 1)

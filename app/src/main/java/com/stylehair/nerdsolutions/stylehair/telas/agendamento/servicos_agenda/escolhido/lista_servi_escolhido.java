@@ -17,6 +17,7 @@ import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.e
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class lista_servi_escolhido extends AppCompatActivity {
     RecyclerView listaServicos;
@@ -87,7 +88,7 @@ public class lista_servi_escolhido extends AppCompatActivity {
         listaServicos.setAdapter(new Adaptador_servico_salaoE(ListaServicos,listaServicos,btInfo));
         listaServicos.setLayoutManager(layout);
         listaServicos.setClickable(true);
-        btInfo.setText("Volor Total R$ " + String.valueOf(vlTotal));
+        btInfo.setText("Volor Total R$ " + String.format(Locale.getDefault(),"%.2f", vlTotal));
 
     }
 

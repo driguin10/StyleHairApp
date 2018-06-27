@@ -116,7 +116,7 @@
                 android:visibility="visible"
                 app:isAnimated="false"
                 app:heading="Dados do Salão"
-                app:isExpanded="true"
+                app:isExpanded="false"
                 app:isPartitioned="true">
 
                     <LinearLayout

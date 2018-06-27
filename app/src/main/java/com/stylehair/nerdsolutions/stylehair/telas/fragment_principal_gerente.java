@@ -10,14 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
+import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
+
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -29,22 +34,19 @@ import retrofit2.Response;
 
 public class fragment_principal_gerente extends Fragment {
 
+    CardView btAbrir;
+    CardView btFechar;
+    CardView btAlmoco;
+    CardView btAgendaDia;
+    CardView btAgendar;
+    CardView btNotificar;
+    CardView btPesquisaSalao;
 
-
-CardView btAbrir;
-CardView btFechar;
-CardView btAlmoco;
-
-CardView btAgendaDia;
-CardView btAgendar;
-CardView btNotificar;
-CardView btPesquisaSalao;
-
-Loading loading;
+    Loading loading;
     SharedPreferences getSharedPreferences;
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
+    int qtTentativaRealizadaBuscaS = 0;
     String idSalao;
     Permissoes permissoes;
     @Override
@@ -143,7 +145,8 @@ Loading loading;
             }
         });
 
-        statusSalao(0);
+
+        pegarSalao(idSalao);
         return view;
     }
 
@@ -214,5 +217,42 @@ Loading loading;
                 }
             });
         }
+
+    public void pegarSalao(final String id_Salao){
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<Salao>> callBuscaSalao = iApi.BuscaSalaoIdSalao(Integer.valueOf(id_Salao));
+        callBuscaSalao.enqueue(new Callback<List<Salao>>() {
+            @Override
+            public void onResponse(Call<List<Salao>> call, Response<List<Salao>> response) {
+
+                callBuscaSalao.cancel();
+                switch (response.code()) {
+
+                    case 200:
+                        qtTentativaRealizadaBuscaS = 0;
+                        List<Salao> saloes = response.body();
+                        Salao salao = saloes.get(0);
+                        statusSalao(salao.getStatus());
+                        //loading.fechar();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Salao>> call, Throwable t) {
+                if (qtTentativaRealizadaBuscaS < qtTentativas) {
+                    qtTentativaRealizadaBuscaS++;
+                    pegarSalao(id_Salao);
+                }
+                else {
+                   // loading.fechar();
+                }
+            }
+        });
+
     }
+    //-------------------------------------------------------
+
+}
 

@@ -9,7 +9,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 
 import java.util.List;
-
+import java.util.Locale;
 
 
 public class Adaptador_servico_funcionario extends RecyclerView.Adapter<viewHolderServicoFuncionario> {
@@ -37,7 +37,7 @@ public class Adaptador_servico_funcionario extends RecyclerView.Adapter<viewHold
     @Override
     public void onBindViewHolder(viewHolderServicoFuncionario holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
-         holder.valor.setText("R$"+String.valueOf(ListaServicoSalao.get(position).getValor()));
+         holder.valor.setText("R$"+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
          holder.idF = idFunc;
          holder.view = view;
 

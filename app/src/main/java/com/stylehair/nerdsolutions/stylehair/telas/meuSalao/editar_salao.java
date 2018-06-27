@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telephony.CellIdentityCdma;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -168,8 +169,8 @@ public class editar_salao extends AppCompatActivity {
 
         //--------------------------------------------------------------------
 
-
-        //---------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
+        SobreSalao.getEditText().setFilters(new InputFilter[] {new InputFilter.LengthFilter(140)});
+        // --------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
         Telefone2Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone2Salao.getEditText()));
         CepSalao.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, CepSalao.getEditText()));

@@ -137,6 +137,10 @@ public interface IApi {
     Call <List<Salao>> BuscaSalao(@Path("id") int id);
 
     @Headers("apiKey:" + chave)
+    @GET("v1/saloes/idSalao/{id}")
+    Call <List<Salao>> BuscaSalaoIdSalao(@Path("id") int id);
+
+    @Headers("apiKey:" + chave)
     @Multipart
     @POST("v1/saloes/salvar/")
     Call<ResponseBody> SalvarSalao(@Part("uploaded_file") RequestBody image64,

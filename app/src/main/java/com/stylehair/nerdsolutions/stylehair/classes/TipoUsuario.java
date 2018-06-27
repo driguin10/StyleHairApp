@@ -10,6 +10,9 @@ public class TipoUsuario {
     int idUsuario;
     int idFuncionario;
     int idSalao;
+    String nomeUsuario;
+    String topicoNotificacao;
+    String linkImagem;
 
     public int getIdUsuario() {
         return idUsuario;
@@ -33,5 +36,29 @@ public class TipoUsuario {
 
     public void setIdSalão(int idSalao) {
         this.idSalao = idSalao;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public String getTopicoNotificacao() {
+        return topicoNotificacao;
+    }
+
+    public void setTopicoNotificacao(String topicoNotificacao) {
+        this.topicoNotificacao = topicoNotificacao;
+    }
+
+    public String getLinkImagem() {
+        return linkImagem;
+    }
+
+    public void setLinkImagem(String linkImagem) {
+        this.linkImagem = linkImagem;
     }
 }

@@ -1,9 +1,15 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +17,11 @@ import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
+import com.stylehair.nerdsolutions.stylehair.telas.configuracaoApp;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 
 public class fragment_o_salao extends Fragment {
-
-
-
-
 
     TextView segE ;
     TextView segS ;
@@ -73,6 +77,8 @@ public class fragment_o_salao extends Fragment {
     CardView cardStatus;
     CardView cardAgendar;
     String idSalao;
+    String tipo;
+    SharedPreferences getSharedPreferencesL;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +89,10 @@ public class fragment_o_salao extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_o_salao, container, false);
+         getSharedPreferencesL = PreferenceManager
+                .getDefaultSharedPreferences(getContext());
+         tipo = getSharedPreferencesL.getString("typeUserApp","COMUM");
+
         txtSobre=(TextView) view.findViewById(R.id.txt_SobreSalao);
         txtLocalizacao=(TextView) view.findViewById(R.id.txtLocalizacao);
         txtTelefones=(TextView) view.findViewById(R.id.txtTelefones);
@@ -175,19 +185,34 @@ public class fragment_o_salao extends Fragment {
 
             if(bundle.getString("agendamento").equals("1"))
             {
-                cardAgendar.setAlpha(1f);
-                cardAgendar.setCardElevation(5);
-                cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
-                cardAgendar.setClickable(true);
-                cardAgendar.setEnabled(true);
+
+
+                if(!tipo.equals("COMUM"))
+                {
+                    cardAgendar.setAlpha(1f);
+                    cardAgendar.setCardElevation(5);
+                    cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
+
+
+                }
+                else
+                {
+                    cardAgendar.setAlpha(.4f);
+                    cardAgendar.setCardElevation(0);
+                    cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
+
+
+
+
+                }
             }
             else
             {
                 cardAgendar.setAlpha(.4f);
                 cardAgendar.setCardElevation(0);
                 cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
-                cardAgendar.setClickable(false);
-                cardAgendar.setEnabled(false);
+
+
             }
 
 
@@ -217,13 +242,36 @@ public class fragment_o_salao extends Fragment {
        cardAgendar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent = new Intent(getActivity(),escolherServico.class);
-               intent.putExtra("idSalao",idSalao);
-               startActivity(intent);
+               if(!tipo.equals("COMUM")) {
+                   Intent intent = new Intent(getActivity(), escolherServico.class);
+                   intent.putExtra("idSalao", idSalao);
+                   startActivity(intent);
+               }else {
+
+                   new AlertDialog.Builder(getContext())
+                           .setTitle("Deseja concluir seu cadastro?")
+                           .setMessage("Para efetuar agendamentos é necessario concluir seu cadastro.")
+                           .setIcon(R.drawable.icone_funcionario_preto)
+                           .setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int which) {
+                                   Intent intent = new Intent(getContext(), minhaConta.class);
+                                   ((Activity) getContext()).startActivityForResult(intent, 0);
+                               }
+                           })
+                           .setNegativeButton("não", new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int which) {
+                                   dialog.dismiss();
+                               }
+                           })
+                           .show();
+               }
            }
        });
         return  view;
     }
+
+
+
 
 
 

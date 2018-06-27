@@ -379,13 +379,15 @@
                 android:theme="@style/estiloImputCad"
                 app:counterEnabled="true"
                 app:counterMaxLength="140"
+
                 app:counterOverflowTextAppearance="@style/estiloImputCadOverflow">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:maxLength="140"/>
             </android.support.design.widget.TextInputLayout>
 
 

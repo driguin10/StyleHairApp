@@ -36,15 +36,21 @@ public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaA
 
     @Override
     public void onBindViewHolder(viewHolderMinhaAgenda holder, int position) {
-         holder.Nome.setText(meuAgendamentos.get(position).getNome());
+        if(meuAgendamentos.get(position).getNome() == null)
+            holder.Nome.setText("Agendamento Cancelado, Salão indisponivel.");
+        else
+            holder.Nome.setText(meuAgendamentos.get(position).getNome());
          String[] data = meuAgendamentos.get(position).getData().split("-");
          String newData = data[2]+"/"+data[1]+"/"+data[0];
          holder.data.setText(newData);
          holder.hora.setText(meuAgendamentos.get(position).getHoraIni());
-         Picasso.with(holder.contexto).load("http://stylehair.xyz/" + meuAgendamentos.get(position).getImagem()).into(holder.imagem);
+         if(meuAgendamentos.get(position).getImagem() =="")
+             holder.imagem.setImageDrawable(contexto.getResources().getDrawable(R.drawable.img_padrao_user));
+         else
+             Picasso.with(holder.contexto).load("http://stylehair.xyz/" + meuAgendamentos.get(position).getImagem()).into(holder.imagem);
          holder.tipo = Tipo;
 
-         if(meuAgendamentos.get(position).getStatus() == 0)
+         if(meuAgendamentos.get(position).getStatus() == 0 || meuAgendamentos.get(position).getStatus() == 3)
              holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corFechado));
          else
          if(meuAgendamentos.get(position).getStatus() == 1)

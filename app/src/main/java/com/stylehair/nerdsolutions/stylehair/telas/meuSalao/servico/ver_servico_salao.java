@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -29,9 +32,11 @@ import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.cadastrar_funcionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.ver_funcionario;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -67,6 +72,9 @@ public class ver_servico_salao extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+        Drawable upArrow = ContextCompat.getDrawable(ver_servico_salao.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(ver_servico_salao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
          bundle = ver_servico_salao.this.getIntent().getExtras();
 
 
@@ -116,7 +124,9 @@ public class ver_servico_salao extends AppCompatActivity {
                servico.getEditText().setText(bundle.getString("servico"));
 
                 tempo.getEditText().setText(bundle.getString("tempo").substring(0,5));
-                valor.getEditText().setText(bundle.getString("valor"));
+                float valorInt = Float.valueOf(bundle.getString("valor"));
+                String valorF = String.format(Locale.getDefault(),"%.2f", valorInt);
+                        valor.getEditText().setText(valorF);
                 id_servico=bundle.getString("idServico");
 
 

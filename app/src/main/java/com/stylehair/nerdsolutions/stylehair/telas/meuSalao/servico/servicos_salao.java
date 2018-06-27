@@ -2,8 +2,11 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +26,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.Adaptador_funcionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.cadastrar_funcionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,9 @@ public class servicos_salao extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Serviços");
+        Drawable upArrow = ContextCompat.getDrawable(servicos_salao.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(servicos_salao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
         loading = new Loading(servicos_salao.this);
 
         SharedPreferences getSharedPreferences = PreferenceManager

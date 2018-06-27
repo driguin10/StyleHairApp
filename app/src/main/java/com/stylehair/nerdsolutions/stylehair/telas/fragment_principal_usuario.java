@@ -17,6 +17,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.favorito.saloesFavoritos;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
 
 
 public class fragment_principal_usuario extends Fragment {
@@ -53,7 +54,7 @@ public class fragment_principal_usuario extends Fragment {
 
         typeUser = getSharedPreferences.getString("typeUserApp", "");
 
-        if(typeUser.equals("COMUMUSER"))
+        if(typeUser.equals("COMUM"))
         {
             btAgendaDia.setEnabled(false);
             btAgendaDia.setClickable(false);
@@ -70,7 +71,7 @@ public class fragment_principal_usuario extends Fragment {
         btAgendaDia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),busca_salao.class);
+                Intent intent = new Intent(getActivity(),minha_agenda.class);
                 intent.putExtra("tipo","0");
                 startActivity(intent);
             }

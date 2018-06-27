@@ -41,7 +41,10 @@ public class Adaptador_favorito extends RecyclerView.Adapter<viewHolderFavorito>
     public void onBindViewHolder(viewHolderFavorito holder, int position) {
         holder.lista = lista;
         holder.nome.setText(ListaFavorito.get(position).getNome());
-        Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFavorito.get(position).getLinkImagem()).into(holder.imagem);
+        if(ListaFavorito.get(position).getLinkImagem()=="")
+            holder.imagem.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.img_padrao_user));
+        else
+            Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFavorito.get(position).getLinkImagem()).into(holder.imagem);
 }
     @Override
     public int getItemCount() {

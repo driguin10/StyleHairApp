@@ -64,6 +64,9 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
          holder.idSalao =IdSalao;
          holder.listaServicos = ListaServicos;
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
+        if(ListaFuncionario.get(position).linkImagem .equals(""))
+            holder.imagemFunc.setImageDrawable(holder.contexto.getResources().getDrawable(R.drawable.img_padrao_user));
+            else
          Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
 }
     @Override

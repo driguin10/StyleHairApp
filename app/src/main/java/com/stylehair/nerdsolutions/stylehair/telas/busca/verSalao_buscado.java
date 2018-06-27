@@ -1,14 +1,18 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -34,6 +39,7 @@ import com.stylehair.nerdsolutions.stylehair.api.Config;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
+import com.stylehair.nerdsolutions.stylehair.classes.AtualizaInfos;
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
@@ -85,6 +91,7 @@ Config config;
     TabLayout tabLayout;
 
     Salao salao;
+    SectionsPageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +162,7 @@ Config config;
                 builder.setView(view);
                 alerta = builder.create();
                 alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alerta.setCanceledOnTouchOutside(false);
                 alerta.show();
             }
         });
@@ -257,10 +265,7 @@ Config config;
     }
 
     private void setupViewPager(ViewPager viewPager,Salao salao) {
-        SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-
-
-
+        adapter = new SectionsPageAdapter(getSupportFragmentManager());
         Bundle bundleOSalao = new Bundle();
         bundleOSalao.putString("idSalao",String.valueOf(salao.getIdSalao()));
         String endereco = salao.getEndereco()+", "+String.valueOf(salao.getNumero())+", "+salao.getBairro()+", "+salao.getCidade()+", "+salao.getComplemento();
@@ -293,6 +298,7 @@ Config config;
         Osalao.setArguments(bundleOSalao);
 
         adapter.addFragment(Osalao, "");
+
 
         Bundle Bservico = new Bundle();
         Bservico.putString("idServico", String.valueOf(salao.getIdSalao()));
@@ -355,9 +361,11 @@ Config config;
 
 
                         nomeSalao.setText(salao.getNome());
-                        if (salao.getLinkImagem() != "") {
+                        if (salao.getLinkImagem() != "")
                             Picasso.with(verSalao_buscado.this).load(config.getWebService() + salao.getLinkImagem()).centerCrop().resize(250, 250).into(imagemSalao);
-                        }
+
+
+
 
                         setupViewPager(mViewPager,salao);
                         break;
@@ -557,8 +565,24 @@ Config config;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent) {
+        if (requestCode == 0) {
+            if (ResultCode == RESULT_OK) {
+                    if(intent.getData().toString().equals("userCad")) {
 
+                        AtualizaInfos atualizaInfos = new AtualizaInfos(verSalao_buscado.this);
+                        atualizaInfos.atualizatipo(false);
 
+                     Intent intent2 = new Intent(this,verSalao_buscado.class);
+                      intent2.putExtra("idSalao",idSalao);
+                        intent2.putExtra("idFavorito",idFavorito);
+                        startActivity(intent2);
+                        finish();
+                    }
+            }
+        }
+    }
     }
 
 

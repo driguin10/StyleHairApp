@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -35,6 +36,7 @@ import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menss
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
+import com.stylehair.nerdsolutions.stylehair.classes.AtualizaInfos;
 import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.favorito.saloesFavoritos;
@@ -80,8 +82,8 @@ public class principal extends AppCompatActivity
      Logout logout;
     AlertDialog alerta;
     Loading loading;
-
-
+    AtualizaInfos atualizaInfos ;
+    SharedPreferences getSharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +93,9 @@ public class principal extends AppCompatActivity
         loading = new Loading(principal.this);
         verificaConexao = new VerificaConexao();
         logout = new Logout();
+         atualizaInfos = new AtualizaInfos(principal.this);
 
-        SharedPreferences getSharedPreferences = PreferenceManager
+         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
 
         idLogin = getSharedPreferences.getInt("idLogin", -1);
@@ -148,15 +151,12 @@ public class principal extends AppCompatActivity
 
         if(verificaConexao.verifica(principal.this)) {
             loading.abrir("Aguarde...");
-            atualizatipo();
-            pegarUsuario(idLogin);
+            atualizaInfos.atualizatipo(true);
         }
         else
         {
             Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
-           // atualizaTela(typeUser);
             logout.deslogar(this,true);
-
         }
 
 
@@ -273,11 +273,22 @@ public class principal extends AppCompatActivity
     }
 
 
-
-    public void atualizaTela(String user){
+    //é chamado apenas pela classe Atualizainfos
+    public void atualizaTela(){
 
         Menu men = navigationView.getMenu();
-        if( user == "gerente")//gerente
+        String user = getSharedPreferences.getString("typeUserApp","COMUM");
+        nomeUsuario = getSharedPreferences.getString("nomeUser","");
+        linkImagem = getSharedPreferences.getString("linkImagem","");
+
+        NomeDrawer.setText(nomeUsuario);
+        if(linkImagem!="")
+            Picasso.with(getBaseContext()).load("http://stylehair.xyz/" + linkImagem).into(imgUser);
+        else
+            imgUser.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+
+
+        if( user == "GERENTE")//gerente
         {
             men.findItem(R.id.nav_criarSalao).setVisible(false);
             men.findItem(R.id.nav_meuSalao).setVisible(true);
@@ -285,7 +296,6 @@ public class principal extends AppCompatActivity
             men.findItem(R.id.nav_agendamento).setVisible(true);
             Fragment fragment = null;
             fragment = new fragment_principal_gerente();
-            //replacing the fragment
             if (fragment != null) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.content_frame_principal, fragment);
@@ -293,7 +303,7 @@ public class principal extends AppCompatActivity
             }
         }
         else
-        if(user == "funcionario")//funcionario
+        if(user == "FUNCIONARIO")//funcionario
         {
             men.findItem(R.id.nav_criarSalao).setVisible(false);
             men.findItem(R.id.nav_meuSalao).setVisible(false);
@@ -309,7 +319,7 @@ public class principal extends AppCompatActivity
             }
         }
         else {
-            if (user == "usuario") {
+            if (user == "COMUMUSER") {
                 men.findItem(R.id.nav_criarSalao).setVisible(true);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
                 men.findItem(R.id.nav_agendamento).setVisible(true);
@@ -331,169 +341,12 @@ public class principal extends AppCompatActivity
         loading.fechar();
     }
 
-
-
     @Override
-    protected void onActivityResult(int requestCode, int ResultCode, Intent intent){
-        if(requestCode == 1){
-            atualizatipo();
-            String qt = atualizaNotificacoes();
-            initializeCountDrawer(qt);
-        }else
-        if(requestCode == 2){
-            atualizatipo();
-            String qt = atualizaNotificacoes();
-            initializeCountDrawer(qt);
-        }else
-        if(requestCode == 3){
-            atualizatipo();
-            String qt = atualizaNotificacoes();
-            initializeCountDrawer(qt);
-        }else
-        if(requestCode == 4)
-        {
-           String qt = atualizaNotificacoes();
-           initializeCountDrawer(qt);
-        }
-        else
-        if(requestCode == 5)
-        {
-            atualizatipo();
-            String qt = atualizaNotificacoes();
-            initializeCountDrawer(qt);
-        }
-        else
-        if(requestCode == 6)
-        {
-            atualizatipo();
-            String qt = atualizaNotificacoes();
-            initializeCountDrawer(qt);
-        }
-        else
-        if(requestCode == 8)
-        {
-            atualizatipo();
-            String qt = atualizaNotificacoes();
-            initializeCountDrawer(qt);
-        }
-}
-
-
-    public void atualizatipo(){
-        IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<TipoUsuario> callTipos = iApi.tipoUsuario(idLogin);
-        callTipos.enqueue(new Callback<TipoUsuario>() {
-            @Override
-            public void onResponse(Call<TipoUsuario> call, Response<TipoUsuario> response) {
-                callTipos.cancel();
-                qtTentativaRealizada = 0;
-
-                if(response.isSuccessful()) {
-                    TipoUsuario tipo = response.body();
-
-                    int id_suario = -1;
-                    int id_funcionario = -1;
-                    int id_salao = -1;
-
-                    if(tipo.getIdSalao()>=0) {
-                        id_salao = tipo.getIdSalao();
-                    }
-
-                    if(tipo.getIdFuncionario()>=0) {
-                        id_funcionario = tipo.getIdFuncionario();
-                    }
-
-                    if(tipo.getIdUsuario()>=0) {
-                        id_suario = tipo.getIdUsuario();
-                    }
-
-
-
-                    SharedPreferences getSharedPreferencesL = PreferenceManager
-                            .getDefaultSharedPreferences(getBaseContext());
-                    SharedPreferences.Editor e = getSharedPreferencesL.edit();
-
-
-                    if( id_salao > -1)//gerente
-                    {
-                        e.putString("typeUserApp","GERENTE");
-                        e.putString("idSalao",String.valueOf(id_salao));
-                        e.putString("idFuncionario",String.valueOf(id_funcionario));
-                        atualizaTela("gerente");
-                    }
-                    else
-                    if(id_funcionario > -1)//funcionario
-                    {
-                        e.putString("typeUserApp","FUNCIONARIO");
-                        e.putString("idFuncionario",String.valueOf(id_funcionario));
-                        atualizaTela("funcionario");
-                    }
-                    else
-                    if(id_suario > -1)
-                    {
-                        e.putString("typeUserApp","COMUMUSER");
-                        atualizaTela("usuario");
-
-                    }
-                    else
-                    {
-                        e.putString("typeUserApp","COMUM");
-                        atualizaTela("comum");
-                    }
-                    e.putString("idUsuario",String.valueOf(tipo.getIdUsuario()));
-                    e.apply();
-                    e.commit();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<TipoUsuario> call, Throwable t) {
-                if(qtTentativaRealizada < qtTentativas) {
-                    qtTentativaRealizada++;
-                    atualizatipo();
-                }
-                else
-                {
-                    loading.fechar();
-                }
-            }
-        });
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent)
+    {
+        initializeCountDrawer(atualizaNotificacoes());
+        atualizaInfos.atualizatipo(true);
     }
 
-    //---- função para pegar dados do usuario do servidor----
-    public void pegarUsuario(final int id_Usuario){
-        IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuario(id_Usuario);
-        callBuscaUser.enqueue(new Callback<List<Usuario>>() {
-            @Override
-            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
-                loading.fechar();
-                callBuscaUser.cancel();
-                switch (response.code()) {
-                    case 200:
-                        qtTentativaRealizadaUser = 0;
-                        List<Usuario> users = response.body();
-                        Usuario user = users.get(0);
-                        TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
-                        topicoNotificacao.addTopico(user.getTopicoNotificacao());
-                        break;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Usuario>> call, Throwable t) {
-                if (qtTentativaRealizadaUser < qtTentativas) {
-                    qtTentativaRealizadaUser++;
-                    pegarUsuario(idLogin);
-                }
-                else {
-                    loading.fechar();
-                }
-            }
-        });
-
-    }
-    //-------------------------------------------------------
 
 }

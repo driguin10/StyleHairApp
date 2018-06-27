@@ -13,6 +13,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by dherrera on 15/03/2017.
@@ -46,7 +47,7 @@ public class Adaptador_ecolherservico_salao extends RecyclerView.Adapter<viewHol
     @Override
     public void onBindViewHolder(viewHolderescolherServicoSalao holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
-         holder.valor.setText("R$"+String.valueOf(ListaServicoSalao.get(position).getValor()));
+        holder.valor.setText("R$ "+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
          holder.qtServicosEscolhido = qtServicosEscolhido;
          holder.lista = lista;
 }
