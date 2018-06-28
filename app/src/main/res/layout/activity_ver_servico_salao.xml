@@ -31,6 +31,8 @@
             android:id="@+id/cadServico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:theme="@style/estiloImputCad"
             android:hint="Serviço"
             android:textColorHint="#000000">
@@ -47,60 +49,56 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp">
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Sexo"/>
             <Spinner
                 android:id="@+id/spn_cadServSexo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-
+                android:layout_marginTop="2dp"
                 android:backgroundTint="#da1818"
-                android:entries="@array/sexo_values"
+                android:entries="@array/sexo_values_servico"
                 android:popupBackground="#f3f9f7f7"
                 android:prompt="@string/sexo_prompt"
                 android:theme="@style/estiloSpinner" />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_cadtempo"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:theme="@style/estiloImputCad"
-                android:hint="Tempo"
-                android:textColorHint="#000000"
-                >
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="time"/>
-            </android.support.design.widget.TextInputLayout>
+                android:layout_marginTop="20dp"
+                android:text="Tempo de execução"/>
+            <Spinner
+                android:id="@+id/spn_cadTempo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="#da1818"
+                android:entries="@array/tempoServico"
+                android:popupBackground="#f3f9f7f7"
+                android:prompt="@string/sexo_prompt"
+                android:theme="@style/estiloSpinner">
 
-            <ImageButton
-                android:id="@+id/pesquisa_tempo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
+            </Spinner>
 
-                android:layout_alignBottom="@+id/id_search_EditText"
-                android:layout_alignRight="@+id/id_search_EditText"
-                android:layout_alignTop="@+id/id_search_EditText"
-                android:backgroundTint="#ee313745"
-                android:background="@drawable/icone_time" />
+
 
 
         </LinearLayout>
+
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/cadValor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:theme="@style/estiloImputCad"
             android:hint="Valor R$"
             android:textColorHint="#000000">
@@ -108,6 +106,8 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 app:titleTextColor="#000000"
                 android:inputType="numberDecimal"/>
 
@@ -117,13 +117,14 @@
             android:id="@+id/bt_salvarServico"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="Salvar"
             android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginBottom="12dp"
+            android:layout_marginTop="20dp"
             android:textColor="#fff"
             android:textSize="20dp"
+
             android:background="@drawable/bt_fragment"/>
 
     </LinearLayout>

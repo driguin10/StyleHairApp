@@ -252,7 +252,7 @@ public class cadastroSalao extends AppCompatActivity {
 
 
         if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
-                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals("")&& verificaTelefone(VTelefone2Salao))
+                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
         {
             if(verificaTelefone(VTelefone1Salao))
                 status = true;
@@ -289,13 +289,16 @@ public class cadastroSalao extends AppCompatActivity {
             else
             if(VEmailSalao.equals(""))
                 EmailSalao.getEditText().requestFocus();
-            else
-            if(!verificaTelefone(VTelefone1Salao))
-                Telefone1Salao.requestFocus();
-            else
-            if(!verificaTelefone(VTelefone2Salao))
+        }
+        if(!VTelefone2Salao.equals(""))
+        {
+            if(verificaTelefone(VTelefone2Salao)) {
+                status = true;
+            }
+            else {
+                status = false;
                 Telefone2Salao.requestFocus();
-
+            }
         }
         return  status;
     }

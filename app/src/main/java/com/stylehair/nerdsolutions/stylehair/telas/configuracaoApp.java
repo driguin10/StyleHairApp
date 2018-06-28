@@ -68,7 +68,7 @@ Button btEncerrarConta;
             public void onClick(View v) {
                 new AlertDialog.Builder(configuracaoApp.this)
                         .setTitle("Deseja excluir esta conta?")
-                        .setMessage("Está conta pode possuir agendamentos, os mesmos seram cancelados se prosseguir!")
+                        .setMessage("Todas informações relacionadas a esta conta seram excluidas!!")
                         .setIcon(R.drawable.icone_delete)
                         .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -234,12 +234,11 @@ Button btEncerrarConta;
                         break;
                 }
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (qtTentativaRealizadaGerente < qtTentativas) {
                     qtTentativaRealizadaGerente++;
-                    encerrarContaFuncionario(id_login,id_usuario,id_funcionario);
+                    encerrarContaGerente(id_login,id_usuario,id_funcionario,id_gerente);
                 }
                 else {
                     loading.fechar();

@@ -311,15 +311,16 @@ public class editar_salao extends AppCompatActivity {
 
 
         if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
-                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals("")&& verificaTelefone(VTelefone2Salao))
+                && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
         {
-            if(verificaTelefone(VTelefone1Salao))
+            if(verificaTelefone(VTelefone1Salao)) {
                 status = true;
-
+            }
             else {
                 status = false;
                 Telefone1Salao.requestFocus();
             }
+
         }
         else
         {
@@ -349,12 +350,19 @@ public class editar_salao extends AppCompatActivity {
             else
             if(VEmailSalao.equals(""))
                 EmailSalao.getEditText().requestFocus();
-            else
-            if(!verificaTelefone(VTelefone1Salao))
-                Telefone1Salao.requestFocus();
-            else
-            if(!verificaTelefone(VTelefone2Salao))
+
+
+        }
+
+        if(!VTelefone2Salao.equals(""))
+        {
+            if(verificaTelefone(VTelefone2Salao)) {
+                status = true;
+            }
+            else {
+                status = false;
                 Telefone2Salao.requestFocus();
+            }
         }
         return  status;
     }
@@ -500,6 +508,7 @@ public class editar_salao extends AppCompatActivity {
                         idSalao = salao.getIdSalao();
                         NomeSalao.getEditText().setText(salao.getNome());
                         Telefone1Salao.getEditText().setText(salao.getTelefone1());
+                        if(!salao.getTelefone2().equals(""))
                         Telefone2Salao.getEditText().setText(salao.getTelefone2());
                         CepSalao.getEditText().setText(salao.getCep());
                         EnderecoSalao.getEditText().setText(salao.getEndereco());

@@ -1,26 +1,38 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Tutorial;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.notificacoes.Notificacao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 import java.util.List;
 
@@ -44,11 +56,14 @@ public class fragment_principal_gerente extends Fragment {
 
     Loading loading;
     SharedPreferences getSharedPreferences;
+    SharedPreferences.Editor editorShared ;
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     int qtTentativaRealizadaBuscaS = 0;
     String idSalao;
     Permissoes permissoes;
+    ShowcaseView sv;
+    Tutorial tutorial;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +76,7 @@ public class fragment_principal_gerente extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_fragment_principal_gerente, container, false);
         getActivity().setTitle("Bem Vindo");
         permissoes = new Permissoes();
+        tutorial = new Tutorial(getContext());
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
 
@@ -81,7 +97,7 @@ public class fragment_principal_gerente extends Fragment {
         btPesquisaSalao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(permissoes.habilitarLocalizacao(getActivity())) {
+               if(permissoes.habilitarLocalizacao(getActivity())) {
                     Intent intent = new Intent(getActivity(), busca_salao.class);
                     startActivity(intent);
                 }
@@ -128,11 +144,25 @@ public class fragment_principal_gerente extends Fragment {
             }
         });
 
+        btAbrir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               Toast.makeText(getContext(),"Mantenha pressionado para atualizar o status", Toast.LENGTH_LONG).show();
+            }
+        });
+
         btFechar.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
               mudarStatus(0);
                 return true;
+            }
+        });
+
+        btFechar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Mantenha pressionado para atualizar o status", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -144,10 +174,49 @@ public class fragment_principal_gerente extends Fragment {
                 return true;
             }
         });
+        btAlmoco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(),"Mantenha pressionado para atualizar o status", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         pegarSalao(idSalao);
         return view;
+    }
+
+
+    public void tutorial(){
+
+
+        if(!tutorial.verTutorial("fragmentGerente")) {
+            sv = new ShowcaseView.Builder(getActivity())
+                    .withMaterialShowcase()
+                    .setTarget(new ViewTarget(btPesquisaSalao))
+                    .setContentTitle("teste")
+                    .setContentText("mem")
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .setShowcaseEventListener(new SimpleShowcaseEventListener() {
+
+                        @Override
+                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                            sv = new ShowcaseView.Builder(getActivity())
+                                    .withMaterialShowcase()
+                                    .setTarget(new ViewTarget(btAbrir))
+                                    .setContentTitle("abrir salao")
+                                    .setContentText("mem")
+                                    .setStyle(R.style.CustomShowcaseTheme2)
+                                    .setShowcaseEventListener(new SimpleShowcaseEventListener() {
+                                        @Override
+                                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                                            tutorial.salvaShared("fragmentGerente");
+                                        }
+                                    })
+                                    .build();
+                        }
+                    }).build();
+        }
     }
 
     public void statusSalao(int status)
@@ -235,6 +304,7 @@ public class fragment_principal_gerente extends Fragment {
                         Salao salao = saloes.get(0);
                         statusSalao(salao.getStatus());
                         //loading.fechar();
+                        tutorial();
                         break;
                 }
             }
@@ -253,6 +323,9 @@ public class fragment_principal_gerente extends Fragment {
 
     }
     //-------------------------------------------------------
+
+
+
 
 }
 

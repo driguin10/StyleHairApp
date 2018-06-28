@@ -1,9 +1,11 @@
 package com.stylehair.nerdsolutions.stylehair.Notification.backNotification;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -13,6 +15,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
+import com.stylehair.nerdsolutions.stylehair.telas.principal;
 
 
 /**
@@ -72,6 +75,10 @@ public class CDCMessasingService extends FirebaseMessagingService {
        /* Intent i = new Intent(this, notificacao.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);*/
+
+
+
+
 
     }
 }

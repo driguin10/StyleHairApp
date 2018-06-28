@@ -3,6 +3,7 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao;
 
 import android.app.DialogFragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -10,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,9 +29,11 @@ import android.widget.ToggleButton;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
+import com.stylehair.nerdsolutions.stylehair.telas.configuracaoApp;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.troca_gerente.trocar_gerente;
 
@@ -95,13 +99,15 @@ public class configuracaoSalao extends AppCompatActivity {
 
     Button salvarConfig;
     Button trocarGerente;
+    Button excluirSalao;
 
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
 
     int qtTentativasSalvar = 3;
     int qtTentativaRealizadaSalvar = 0;
-
+    int qtTentativaRealizadaExcluir = 0;
+    SharedPreferences getSharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,10 +120,13 @@ public class configuracaoSalao extends AppCompatActivity {
         Drawable upArrow = ContextCompat.getDrawable(configuracaoSalao.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(configuracaoSalao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
+        getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
 
         loading = new Loading(configuracaoSalao.this);
         salvarConfig = (Button) findViewById(R.id.bt_salvarConfiguracao);
         trocarGerente = (Button) findViewById(R.id.btTrocaGerente);
+        excluirSalao = (Button) findViewById(R.id.bt_deletar_salao);
         txtSegE = (TextInputLayout) findViewById(R.id.txt_hora_segE);
         txtSegS = (TextInputLayout) findViewById(R.id.txt_hora_segS);
         btStatusSegunda = (ToggleButton) findViewById(R.id.bt_folga_seg);
@@ -410,6 +419,33 @@ public class configuracaoSalao extends AppCompatActivity {
             }
         });
 
+        excluirSalao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(configuracaoSalao.this)
+                        .setTitle("Deseja excluir este salão?")
+                        .setMessage("Todas informações relacionadas a este salão seram excluidos!!")
+                        .setIcon(R.drawable.icone_delete)
+                        .setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                loading.abrir("Aguarde...");
+                                String idUsuario = getSharedPreferences.getString("idUsuario", "-1");
+                                String idFuncionario = getSharedPreferences.getString("idFuncionario", "-1");
+                                String idSalao = getSharedPreferences.getString("idSalao", "-1");
+                                encerrarSalao(idUsuario,idFuncionario,idSalao);
+                            }
+                        })
+                        .setNegativeButton("não", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+
+            }
+        });
+
         //-------pega o id do login para fazer a consulta---------------
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -625,7 +661,6 @@ public boolean verificaCampos(){
                 txtSabE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -644,7 +679,6 @@ public boolean verificaCampos(){
                 txtDomE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -654,10 +688,7 @@ public boolean verificaCampos(){
                 txtDomS.getEditText().setError("*");
                 status = false;
             }
-
         }
-
-
       return status;
 }
 
@@ -902,5 +933,35 @@ public boolean verificaCampos(){
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void encerrarSalao(final String id_usuario,final String id_funcionario,final String id_gerente) {
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callExcluiContaGerente = iApi.EncerrarGerenteLogin(id_usuario, id_funcionario, id_gerente);
+        callExcluiContaGerente.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                loading.fechar();
+                qtTentativaRealizadaExcluir = 0;
+                callExcluiContaGerente.cancel();
+                switch (response.code()) {
+                    case 200:
+                        //Logout logout = new Logout();
+                       //logout.deslogar(configuracaoApp.this, false);
+                        finish();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                if (qtTentativaRealizadaExcluir < qtTentativas) {
+                    qtTentativaRealizadaExcluir++;
+                    encerrarSalao(id_usuario, id_funcionario,id_gerente);
+                } else {
+                    loading.fechar();
+                }
+            }
+        });
     }
 }

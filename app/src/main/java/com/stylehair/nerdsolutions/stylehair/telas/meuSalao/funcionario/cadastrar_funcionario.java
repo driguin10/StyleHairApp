@@ -438,6 +438,16 @@ TextInputLayout LoginSenha;
                         }
                     }
                 }
+                else
+                {
+                    switch (response.code()) {
+                        case 400:
+                            if(response.message().equals("08"))
+                                Toast.makeText(getBaseContext(), "Este usuario já é um FUNCIONÁRIO!!", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
+
             }
 
             @Override
@@ -591,6 +601,15 @@ TextInputLayout LoginSenha;
                         finish();
                     }
                 }
+                else
+                {
+                    switch (response.code()) {
+                        case 400:
+                            if (response.message().equals("09"))
+                                Toast.makeText(getBaseContext(), "Este Email já esta em uso!!", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                }
             }
 
             @Override
@@ -614,20 +633,17 @@ TextInputLayout LoginSenha;
         login.setSenha(LoginSenha.getEditText().getText().toString());
 
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<Logar> callLoga = iApi.Logar(login);
+        final Call<Logar> callLoga = iApi.BuscaUsuarioFuncionario(login);
         callLoga.enqueue(new Callback<Logar>() {
             @Override
             public void onResponse(Call<Logar> call, Response<Logar> response) {
                 callLoga.cancel();
+                qtTentativaRealizada = 0;
 
                 if(response.isSuccessful()) {
-
-                    qtTentativaRealizada = 0;
                     Logar logar = response.body();
-
                     if(logar.login!=null)
                     {
-
                         String Email = "";
                         for (Login log : logar.login) {
                             Email = log.getEmail();
@@ -642,8 +658,6 @@ TextInputLayout LoginSenha;
                         senhaNova.setClickable(false);
                         senhaNova.setEnabled(false);
                         senhaNova.setAlpha(.4f);
-
-
                         if(!logar.getIdUser().equals(""))
                         {
                             pegarUsuario(Integer.valueOf(id_Login));
@@ -651,15 +665,6 @@ TextInputLayout LoginSenha;
                         {
                             loading.fechar();
                         }
-
-
-                       /* String NomeUsuario = logar.getNomeUser();
-                        String linkImagem = logar.getLinkImagem();
-                        cadNomeUser.getEditText().setText(NomeUsuario);
-
-                        if (linkImagem != "") {
-                            Picasso.with(cadastrar_funcionario.this).load(config.getWebService() + linkImagem).into(ImagemUser);
-                        }*/
                     }
                 }
                 else
@@ -674,7 +679,13 @@ TextInputLayout LoginSenha;
                             else
                             if(response.message().equals("02"))
                                 Toast.makeText(getBaseContext(), "parametros incorretos", Toast.LENGTH_SHORT).show();
+                            else
+                            if(response.message().equals("08"))
+                                Toast.makeText(getBaseContext(), "Este usuario já é um FUNCIONÁRIO!!", Toast.LENGTH_SHORT).show();
+
                             break;
+
+
 
                         case 401:
                             Toast.makeText(getBaseContext(), "não autorizado", Toast.LENGTH_SHORT).show();

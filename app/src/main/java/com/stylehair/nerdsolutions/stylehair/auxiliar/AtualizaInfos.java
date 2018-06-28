@@ -1,4 +1,4 @@
-package com.stylehair.nerdsolutions.stylehair.classes;
+package com.stylehair.nerdsolutions.stylehair.auxiliar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
+import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
 import com.stylehair.nerdsolutions.stylehair.telas.principal;
 
 import retrofit2.Call;

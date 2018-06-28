@@ -34,6 +34,8 @@ import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.cadastra
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.ver_funcionario;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -47,12 +49,14 @@ import retrofit2.Response;
 
 public class ver_servico_salao extends AppCompatActivity {
     TextInputLayout servico;
-    TextInputLayout tempo;
+
     TextInputLayout valor;
     Spinner sexo;
-    ImageButton btPesquisaTempo;
+    Spinner tempoServico;
+
     Button salvar;
     Loading loading;
+
 
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
@@ -61,6 +65,7 @@ public class ver_servico_salao extends AppCompatActivity {
     String id_Salao;
     String id_servico;
     Bundle bundle;
+    String[] tempoServ = {"00:10","00:15","00:20","00:25","00:30","00:40","00:45","00:50","01:00","01:30","02:00"};
 
     AutoCompleteTextView EdtServico;
 
@@ -79,19 +84,19 @@ public class ver_servico_salao extends AppCompatActivity {
 
 
 
+
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         id_Salao = getSharedPreferences.getString("idSalao", "");
         loading = new Loading(ver_servico_salao.this);
         servico = (TextInputLayout) findViewById(R.id.cadServico);
-        tempo = (TextInputLayout) findViewById(R.id.txt_cadtempo);
-        tempo.setEnabled(false);
+
         valor = (TextInputLayout) findViewById(R.id.cadValor);
         sexo = (Spinner) findViewById(R.id.spn_cadServSexo);
-        btPesquisaTempo =(ImageButton) findViewById(R.id.pesquisa_tempo);
-        salvar = (Button) findViewById(R.id.bt_salvarServico);
 
-        btPesquisaTempo.requestFocus();
+        salvar = (Button) findViewById(R.id.bt_salvarServico);
+        tempoServico = (Spinner) findViewById(R.id.spn_cadTempo);
+
 
         List<String> servicosSal =
                 Arrays.asList(getResources().getStringArray(R.array.servicos_salao));
@@ -106,14 +111,10 @@ public class ver_servico_salao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loading.abrir("Aguarde...");
-                if(bundle!=null) {
+                if(bundle!=null)
                     editar();
-                }
                 else
-                {
                     salvar();
-
-                }
             }
         });
 
@@ -123,7 +124,18 @@ public class ver_servico_salao extends AppCompatActivity {
                 getSupportActionBar().setTitle("Serviço - " + bundle.getString("servico"));
                servico.getEditText().setText(bundle.getString("servico"));
 
-                tempo.getEditText().setText(bundle.getString("tempo").substring(0,5));
+              for(int x=0;x<tempoServ.length;x++)
+              {
+                  if(tempoServ[x].equals(bundle.getString("tempo").substring(0,5)))
+                  {
+                      tempoServico.setSelection(x);
+                  }
+              }
+
+
+
+
+
                 float valorInt = Float.valueOf(bundle.getString("valor"));
                 String valorF = String.format(Locale.getDefault(),"%.2f", valorInt);
                         valor.getEditText().setText(valorF);
@@ -137,7 +149,6 @@ public class ver_servico_salao extends AppCompatActivity {
                         sexo.setSelection(i);
                     }
                 }
-
             }
 
         }
@@ -145,22 +156,10 @@ public class ver_servico_salao extends AppCompatActivity {
             getSupportActionBar().setTitle("Cadastro de Serviços");
         }
 
-        btPesquisaTempo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_cadtempo);
-               // tempo.getEditText().setError(null);
-            }
-        });
     }
 
 
-    public void showTimePickerDialog(View v,int idCampo) {
-        timerPick tim = new timerPick();
-        tim.setId(idCampo);
-        DialogFragment newFragment = tim;
-        newFragment.show(getFragmentManager(), "timePicker");
-    }
+
 
 
     @Override
@@ -184,7 +183,8 @@ public class ver_servico_salao extends AppCompatActivity {
         RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),EdtServico.getText().toString());
         RequestBody Sexo = RequestBody.create(MediaType.parse("text/plain"), sexo.getSelectedItem().toString());
         RequestBody Valor = RequestBody.create(MediaType.parse("text/plain"), valor.getEditText().getText().toString());
-        RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"), tempo.getEditText().getText().toString());
+
+        RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"),tempoServ[tempoServico.getSelectedItemPosition()] );
 
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callSalvaServico = iApi.SalvarServicoSalao(IdSalao,Servico,Tempo,Sexo,Valor);
@@ -239,7 +239,7 @@ public class ver_servico_salao extends AppCompatActivity {
         RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),EdtServico.getText().toString());
         RequestBody Sexo = RequestBody.create(MediaType.parse("text/plain"), sexo.getSelectedItem().toString());
         RequestBody Valor = RequestBody.create(MediaType.parse("text/plain"), valor.getEditText().getText().toString());
-        RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"), tempo.getEditText().getText().toString());
+        RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"),tempoServ[tempoServico.getSelectedItemPosition()] );
 
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callSalvaServico = iApi.EditarServicoSalao(IdServicoSalao,Servico,Tempo,Sexo,Valor);

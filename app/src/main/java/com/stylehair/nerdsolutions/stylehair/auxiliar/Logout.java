@@ -34,16 +34,24 @@ public class Logout {
         String topic = getSharedPreferencesL.getString("topicoNotificacao","");
         idLogin = getSharedPreferencesL.getInt("idLogin",-1);
         SharedPreferences.Editor e = getSharedPreferencesL.edit();
-        e.clear();
-        e.apply();
-        e.commit();
+
+        e.remove("logado");
+        e.remove("idLogin");
+        e.remove("email");
+        e.remove("idUsuario");
+        e.remove("nomeUser");
+        e.remove("linkImagem");
+        e.remove("typeUserApp");
+        e.remove("idSalao");
+        e.remove("idFuncionario");
+        
         e.putBoolean("firstStart",false);
         e.apply();
         e.commit();
 
-        if(!topic.equals("")) {
+       /* if(!topic.equals("")) {
             topicoNotificacao.removeTopico(topic);
-        }
+        }*/
 
         getFavoritos(String.valueOf(idLogin));
 

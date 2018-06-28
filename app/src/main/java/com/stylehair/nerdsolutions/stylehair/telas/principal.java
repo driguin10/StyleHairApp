@@ -1,6 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -26,19 +25,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
-import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.Notification.backNotification.menssagem;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
-import com.stylehair.nerdsolutions.stylehair.classes.AtualizaInfos;
-import com.stylehair.nerdsolutions.stylehair.classes.TipoUsuario;
-import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.AtualizaInfos;
 import com.stylehair.nerdsolutions.stylehair.telas.favorito.saloesFavoritos;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
@@ -49,9 +44,6 @@ import java.util.List;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class principal extends AppCompatActivity
@@ -87,6 +79,7 @@ public class principal extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -196,6 +189,7 @@ public class principal extends AppCompatActivity
         notificacoes.setTextSize(15);
 
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -243,10 +237,32 @@ public class principal extends AppCompatActivity
             startActivityForResult(intent,4);
 
         } else if (id == R.id.nav_criarSalao) {
-
-            if(permissoes.habilitarLocalizacao(principal.this)) {
-                Intent intent = new Intent(principal.this, cadastroSalao.class);
-                startActivityForResult(intent, 5);
+            String user = getSharedPreferences.getString("typeUserApp","COMUM");
+            if(!user.equals("COMUM"))
+            {
+                if(permissoes.habilitarLocalizacao(principal.this)) {
+                    Intent intent = new Intent(principal.this, cadastroSalao.class);
+                    startActivityForResult(intent, 5);
+                }
+            }
+            else
+            {
+                new AlertDialog.Builder(this)
+                        .setTitle("Deseja concluir seu cadastro?")
+                        .setMessage("Para cadastrar um Salão é necessario concluir seu cadastro.")
+                        .setIcon(R.drawable.icone_funcionario_preto)
+                        .setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(principal.this, minhaConta.class);
+                               startActivityForResult(intent, 0);
+                            }
+                        })
+                        .setNegativeButton("não", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
             }
 
         } else if (id == R.id.nav_meuSalao) {
@@ -269,6 +285,7 @@ public class principal extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
@@ -324,7 +341,7 @@ public class principal extends AppCompatActivity
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
                 men.findItem(R.id.nav_agendamento).setVisible(true);
             } else {
-                men.findItem(R.id.nav_criarSalao).setVisible(false);
+                men.findItem(R.id.nav_criarSalao).setVisible(true);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
                 men.findItem(R.id.nav_agendamento).setVisible(false);
             }

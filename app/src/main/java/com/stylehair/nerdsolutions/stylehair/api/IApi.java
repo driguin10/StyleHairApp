@@ -317,6 +317,11 @@ public interface IApi {
     Call <GetUsuarioFuncionarioBusca> buscaFuncionariosBusca(@Path("id") int id, @Path("idServ") String servicos);
 
 
+    @Headers("apiKey:" + chave)
+    @POST(versao + "/logins/funcionario/")
+    Call<Logar> BuscaUsuarioFuncionario(@Body Login login);
+
+
     //criar funcionario -- já tem usuario e login
     @Headers("apiKey:" + chave)
     @Multipart
@@ -498,6 +503,12 @@ public interface IApi {
     @GET("v1/conta/deletar/{idLogin}/{idUsuario}/{idFuncionario}/{idSalao}")
     Call<ResponseBody> EncerrarGerente(@Path("idLogin") String idLogin,
                                        @Path("idUsuario") String idUsuario,
+                                       @Path("idFuncionario") String idFuncionario,
+                                       @Path("idSalao") String idSalao);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/conta/deletar/gerenteL/{idUsuario}/{idFuncionario}/{idSalao}")
+    Call<ResponseBody> EncerrarGerenteLogin(@Path("idUsuario") String idUsuario,
                                        @Path("idFuncionario") String idFuncionario,
                                        @Path("idSalao") String idSalao);
     //-------------------------------------------------------------------

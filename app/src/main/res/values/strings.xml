@@ -10,8 +10,19 @@
     <string name="title_activity_minha_conta">Minha Conta</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="tempoServico">
+        <item>10 min</item>
+        <item>15 min</item>
+        <item>20 min</item>
+        <item>25 min</item>
+        <item>30 min</item>
+        <item>40 min</item>
+        <item>45 min</item>
+        <item>50 min</item>
+        <item>1 h</item>
+        <item>1:30 h</item>
+        <item>2 h</item>
+    </string-array>
 
     <string-array name="estados_values">
         <item>Acre</item>
@@ -78,6 +89,12 @@
     <string-array name="sexo_values">
         <item>Homem</item>
         <item>Mulher</item>
+    </string-array>
+
+    <string-array name="sexo_values_servico">
+        <item>Homem</item>
+        <item>Mulher</item>
+        <item>Unixex</item>
     </string-array>
 
 
