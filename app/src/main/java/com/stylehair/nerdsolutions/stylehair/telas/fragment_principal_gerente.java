@@ -27,6 +27,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Tutorial;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
+import com.stylehair.nerdsolutions.stylehair.telas.agendamento.pesqAgendaUser;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
@@ -109,7 +110,7 @@ public class fragment_principal_gerente extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(),escolherServico.class);
+                Intent intent = new Intent(getActivity(),pesqAgendaUser.class);
                 intent.putExtra("idSalao",idSalao);
                 startActivity(intent);
             }

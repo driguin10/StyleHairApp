@@ -100,7 +100,12 @@ public class confirma_agendamento extends AppCompatActivity {
         SharedPreferences getSharedPreferencesL = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
-         idUsuario = getSharedPreferencesL.getString("idUsuario","");
+        String idUserAgendamento = getSharedPreferencesL.getString("idUserAgendamento","");
+        if(idUserAgendamento.equals(""))
+            idUsuario = getSharedPreferencesL.getString("idUsuario","");
+        else
+            idUsuario = idUserAgendamento;
+
 
         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
         layout.setOrientation(LinearLayoutManager.VERTICAL);
