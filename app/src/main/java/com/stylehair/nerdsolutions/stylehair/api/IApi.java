@@ -172,7 +172,9 @@ public interface IApi {
                                        @Part("cidade") RequestBody cidade,
                                        @Part("nome") RequestBody nome,
                                        @Part("kilometro") RequestBody kilometro,
-                                       @Part("idLogin") RequestBody idLogin);
+                                       @Part("idLogin") RequestBody idLogin,
+                                       @Part("pagina") RequestBody pagina,
+                                       @Part("qtRegistro") RequestBody qtRegistro);
 
 
     @Headers("apiKey:" + chave)

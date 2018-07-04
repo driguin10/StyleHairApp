@@ -130,15 +130,34 @@
         <activity
             android:name=".telas.busca.verSalao_buscado"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.meuSalao.troca_gerente.trocar_gerente" />
-        <activity android:name=".telas.meuSalao.troca_gerente.senha_gerente" />
-        <activity android:name=".telas.agendamento.servicos_agenda.escolherServico" />
-        <activity android:name=".telas.agendamento.funcionarios_agenda.escolherFuncionario" />
-        <activity android:name=".telas.agendamento.servicos_agenda.escolhido.lista_servi_escolhido" />
-        <activity android:name=".telas.agendamento.horarios.horarios_agenda" />
-        <activity android:name=".telas.agendamento.confirmar.confirma_agendamento" />
-        <activity android:name=".telas.minhaAgenda.verAgenda.verAgendamento" />
-        <activity android:name=".telas.agendamento.pesqAgendaUser"></activity>
+        <activity
+            android:name=".telas.meuSalao.troca_gerente.trocar_gerente"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.meuSalao.troca_gerente.senha_gerente"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.agendamento.servicos_agenda.escolherServico"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.agendamento.funcionarios_agenda.escolherFuncionario"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.agendamento.servicos_agenda.escolhido.lista_servi_escolhido"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.agendamento.horarios.horarios_agenda"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.agendamento.confirmar.confirma_agendamento"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.minhaAgenda.verAgenda.verAgendamento"
+            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".telas.agendamento.pesqAgendaUser"
+            android:windowSoftInputMode="stateHidden"/>
+
     </application>
 
 </manifest>

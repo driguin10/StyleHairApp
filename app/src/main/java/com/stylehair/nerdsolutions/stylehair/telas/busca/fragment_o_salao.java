@@ -15,7 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Tutorial;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.configuracaoApp;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
@@ -79,6 +83,8 @@ public class fragment_o_salao extends Fragment {
     String idSalao;
     String tipo;
     SharedPreferences getSharedPreferencesL;
+    Tutorial tutorial;
+    ShowcaseView sv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +99,8 @@ public class fragment_o_salao extends Fragment {
                 .getDefaultSharedPreferences(getContext());
          tipo = getSharedPreferencesL.getString("typeUserApp","COMUM");
 
+
+         tutorial = new Tutorial(getContext());
         txtSobre=(TextView) view.findViewById(R.id.txt_SobreSalao);
         txtLocalizacao=(TextView) view.findViewById(R.id.txtLocalizacao);
         txtTelefones=(TextView) view.findViewById(R.id.txtTelefones);
@@ -172,6 +180,12 @@ public class fragment_o_salao extends Fragment {
             if(bundle.getString("domS")!=null)
             DomS = bundle.getString("domS").substring(0,5);
 
+            if(bundle.getString("status").equals("2"))
+            {
+                txtStatus.setText("Almoço");
+                cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corAlmoco));
+            }
+            else
             if(bundle.getString("status").equals("1"))
             {
                txtStatus.setText("Salão Aberto");
@@ -211,16 +225,8 @@ public class fragment_o_salao extends Fragment {
                 cardAgendar.setAlpha(.4f);
                 cardAgendar.setCardElevation(0);
                 cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
-
-
             }
-
-
-
-
-
         }
-
 
         segE.setText(SegE);
         segS.setText(SegS);
@@ -273,7 +279,35 @@ public class fragment_o_salao extends Fragment {
 
 
 
+  /*  public void tutorial(){
+        if(!tutorial.verTutorial("fragmentGerente")) {
+            sv = new ShowcaseView.Builder(getActivity())
+                    .withMaterialShowcase()
+                    .setTarget(new ViewTarget(btPesquisaSalao))
+                    .setContentTitle("teste")
+                    .setContentText("mem")
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .setShowcaseEventListener(new SimpleShowcaseEventListener() {
 
+                        @Override
+                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                            sv = new ShowcaseView.Builder(getActivity())
+                                    .withMaterialShowcase()
+                                    .setTarget(new ViewTarget(btAbrir))
+                                    .setContentTitle("abrir salao")
+                                    .setContentText("mem")
+                                    .setStyle(R.style.CustomShowcaseTheme2)
+                                    .setShowcaseEventListener(new SimpleShowcaseEventListener() {
+                                        @Override
+                                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                                            tutorial.salvaShared("fragmentGerente");
+                                        }
+                                    })
+                                    .build();
+                        }
+                    }).build();
+        }
+    }*/
 
 
 

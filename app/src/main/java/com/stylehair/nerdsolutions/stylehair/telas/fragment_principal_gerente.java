@@ -189,14 +189,12 @@ public class fragment_principal_gerente extends Fragment {
 
 
     public void tutorial(){
-
-
         if(!tutorial.verTutorial("fragmentGerente")) {
             sv = new ShowcaseView.Builder(getActivity())
                     .withMaterialShowcase()
                     .setTarget(new ViewTarget(btPesquisaSalao))
-                    .setContentTitle("teste")
-                    .setContentText("mem")
+                    .setContentTitle("Pesquisar Salões")
+                    .setContentText("Aqui você pode buscar por salões, agendar horarios...")
                     .setStyle(R.style.CustomShowcaseTheme2)
                     .setShowcaseEventListener(new SimpleShowcaseEventListener() {
 
@@ -206,7 +204,7 @@ public class fragment_principal_gerente extends Fragment {
                                     .withMaterialShowcase()
                                     .setTarget(new ViewTarget(btAbrir))
                                     .setContentTitle("abrir salao")
-                                    .setContentText("mem")
+                                    .setContentText("Mude o status do salão mantendo pressionado a opção desejada.")
                                     .setStyle(R.style.CustomShowcaseTheme2)
                                     .setShowcaseEventListener(new SimpleShowcaseEventListener() {
                                         @Override

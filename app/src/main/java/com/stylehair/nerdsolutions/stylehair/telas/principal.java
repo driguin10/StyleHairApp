@@ -340,6 +340,7 @@ public class principal extends AppCompatActivity
                 men.findItem(R.id.nav_criarSalao).setVisible(true);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);
                 men.findItem(R.id.nav_agendamento).setVisible(true);
+                men.findItem(R.id.nav_meu_agendamento).setVisible(false);
             } else {
                 men.findItem(R.id.nav_criarSalao).setVisible(true);
                 men.findItem(R.id.nav_meuSalao).setVisible(false);

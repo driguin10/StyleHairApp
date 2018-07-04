@@ -29,6 +29,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.SimpleShowcaseEventListener;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -40,6 +43,7 @@ import com.stylehair.nerdsolutions.stylehair.auxiliar.Image;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Mask;
+import com.stylehair.nerdsolutions.stylehair.auxiliar.Tutorial;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.UfToName;
 import com.stylehair.nerdsolutions.stylehair.classes.cep.CEP;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.editar_salao;
@@ -98,7 +102,8 @@ public class cadastroSalao extends AppCompatActivity {
     String latitude="";
     String longitude="";
     Button pegarPosicao;
-
+    Tutorial tutorial;
+    ShowcaseView sv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +120,7 @@ public class cadastroSalao extends AppCompatActivity {
         loading = new Loading(this);
         config = new Config();
         image = new Image();
+        tutorial = new Tutorial(cadastroSalao.this);
 
         //-------pega o id do login para fazer a consulta---------------
         SharedPreferences getSharedPreferences = PreferenceManager
@@ -224,6 +230,11 @@ public class cadastroSalao extends AppCompatActivity {
             }
         });
         //------
+
+        if(!tutorial.verTutorial("tutorialCadSalao")) {
+            EmailSalao.getEditText().requestFocus();
+            tutorial();
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -602,6 +613,22 @@ public class cadastroSalao extends AppCompatActivity {
     //---------------------------------------------------
 
 
+    public void tutorial(){
+            sv = new ShowcaseView.Builder(cadastroSalao.this)
+                    .withMaterialShowcase()
+                    .setTarget(new ViewTarget(pegarPosicao))
+                    .setContentTitle("Localização do Salão")
+                    .setContentText("Selecione no mapa a localização correta do seu estabelecimento, para que seus clientes o encontre mais facilmente.")
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .setShowcaseEventListener(new SimpleShowcaseEventListener() {
+
+                        @Override
+                        public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                            tutorial.salvaShared("tutorialCadSalao");
+                            NomeSalao.getEditText().requestFocus();
+                        }
+                    }).build();
+        }
 
 
 }

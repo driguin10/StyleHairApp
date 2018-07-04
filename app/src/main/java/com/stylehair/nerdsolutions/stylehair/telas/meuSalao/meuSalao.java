@@ -70,7 +70,7 @@ public class meuSalao extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(meuSalao.this,configuracaoSalao.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -108,5 +108,14 @@ public class meuSalao extends AppCompatActivity {
             default:break;
         }
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent)
+    {
+        if(requestCode==1)
+        {
+            finish();
+        }
     }
 }

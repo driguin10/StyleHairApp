@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -948,6 +949,7 @@ public boolean verificaCampos(){
                     case 200:
                         //Logout logout = new Logout();
                        //logout.deslogar(configuracaoApp.this, false);
+
                         finish();
                         break;
                 }

@@ -83,11 +83,27 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-    <android.support.v7.widget.RecyclerView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:id="@+id/listBuscaSaloes"
-        android:background="#eaeaea"/>
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:id="@+id/listBuscaSaloes"
+            android:background="#eaeaea"/>
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/CircularProgress"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/progressMais"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+
 
 </LinearLayout>

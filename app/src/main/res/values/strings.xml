@@ -151,5 +151,7 @@
     <string name="tempo_m_nimo">Tempo mínimo</string>
     <string name="intervalo">Intervalo</string>
     <string name="segunda_feira">Segunda Feira</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>
