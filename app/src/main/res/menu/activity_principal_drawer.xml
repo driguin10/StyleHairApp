@@ -56,7 +56,6 @@
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/icone_sair_vermelho"
                 android:title="logout" />
-
         </menu>
     </item>
 </menu>

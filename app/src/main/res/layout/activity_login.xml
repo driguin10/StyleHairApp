@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fundoscuro"
+    android:background="@drawable/fundogradiente"
     tools:context="com.stylehair.nerdsolutions.stylehair.telas.login.logar">
 
     <LinearLayout
@@ -14,9 +14,7 @@
         android:orientation="vertical"
         android:gravity="center"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-
-        >
+        android:layout_marginLeft="20dp">
 
         <ImageView
             android:id="@+id/imageView"
@@ -73,13 +71,11 @@
 
             <Button
                 android:id="@+id/bt_loginLogar"
-                style="@android:style/Widget.Button.Inset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bt_azul"
-                android:text="LOGAR"
-
+                android:text="ENTRAR"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/corTextos"
                 android:textSize="20dp"/>
@@ -87,13 +83,11 @@
 
             <Button
                 android:id="@+id/bt_loginCadastrar"
-                style="@android:style/Widget.Button.Inset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="left"
                 android:layout_marginLeft="5dp"
-
                 android:background="@drawable/bt_verde"
                 android:text="CADASTRAR"
                 android:textColor="@color/corTextos"

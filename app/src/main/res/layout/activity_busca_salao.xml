@@ -89,9 +89,9 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="5dp"
+            android:paddingTop="1dp"
             android:id="@+id/listBuscaSaloes"
-            android:background="#eaeaea"/>
+            android:background="@drawable/fundogradiente"/>
 
         <ProgressBar
             android:layout_width="match_parent"
