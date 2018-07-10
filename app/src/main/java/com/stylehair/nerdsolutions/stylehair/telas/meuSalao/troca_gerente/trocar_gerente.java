@@ -95,6 +95,8 @@ public class trocar_gerente extends AppCompatActivity {
                 LoginSenha.getEditText().setText("");
                 LoginEmail.getEditText().requestFocus();
                 nomeUsuario.setText("");
+                id_Usuario = "";
+                id_Login=-1;
             }
         });
 
@@ -183,14 +185,14 @@ public class trocar_gerente extends AppCompatActivity {
         login.setSenha(LoginSenha.getEditText().getText().toString());
 
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<Logar> callLoga = iApi.Logar(login);
+        final Call<Logar> callLoga = iApi.BuscaUsuarioGerente(login);
         callLoga.enqueue(new Callback<Logar>() {
             @Override
             public void onResponse(Call<Logar> call, Response<Logar> response) {
                 callLoga.cancel();
 
                 if(response.isSuccessful()) {
-
+                    loading.fechar();
                     qtTentativaRealizada = 0;
                     Logar logar = response.body();
 
@@ -201,15 +203,27 @@ public class trocar_gerente extends AppCompatActivity {
                         }
                         if(!logar.getIdUser().equals(""))
                         {
-                            pegarUsuario(Integer.valueOf(id_Login));
-                        }else
-                        {
-                            loading.fechar();
+                            nomeUsuario.setText(logar.getNomeUser());
+
+                            if (logar.getLinkImagem() != "") {
+                                Picasso.with(trocar_gerente.this).load(config.getWebService() + logar.getLinkImagem()).into(imagem);
+                            }
+                            else
+                            {
+                                imagem.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+                            }
+
+                            id_Usuario = String.valueOf(logar.getIdUser());
+                            //pegarUsuario(Integer.valueOf(id_Login));
                         }
                     }
                 }
                 else
                 {
+                    id_Usuario = "";
+                    imagem.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
+                    nomeUsuario.setText("");
+                    id_Login=-1;
                     loading.fechar();
                     switch (response.code()) {
                         case 400:
@@ -218,6 +232,12 @@ public class trocar_gerente extends AppCompatActivity {
                             else
                             if(response.message().equals("02"))
                                 Toast.makeText(getBaseContext(), "parametros incorretos", Toast.LENGTH_SHORT).show();
+                            else
+                            if(response.message().equals("09"))
+                                Toast.makeText(getBaseContext(), "Usuario já é um Gerente", Toast.LENGTH_SHORT).show();
+                            else
+                            if(response.message().equals("10"))
+                                Toast.makeText(getBaseContext(), "Usuario Precisa finalizar o cadastro", Toast.LENGTH_SHORT).show();
                             break;
 
                         case 401:

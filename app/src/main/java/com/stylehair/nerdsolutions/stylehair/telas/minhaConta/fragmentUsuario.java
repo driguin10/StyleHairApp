@@ -279,7 +279,21 @@ boolean statusCad =false;
         return view;
     }
 
+    public boolean  verificaTelefone(String telefone){
+        boolean verifica = false;
+        String num = "";
+        String num2 = "";
+        num = telefone.replace("(" , " ");
+        num = num.replace(")" , " ");
+        num2 = num.replaceAll(" ","");
 
+        if(num2.length()>= 10)
+            verifica = true;
+        else
+            verifica = false;
+
+        return  verifica;
+    }
 
     public boolean verificaCampos()
     {
@@ -292,7 +306,13 @@ boolean statusCad =false;
 
         if(!Vnome.equals("") && !Vtelefone.equals("") && !Vestado.equals("") && !Vcidade.equals(""))
         {
-            status = true;
+            if(verificaTelefone(Vtelefone)) {
+                status = true;
+            }
+            else {
+                status = false;
+                cadTelefoneUser.getEditText().requestFocus();
+            }
         }
         else
         {
@@ -316,6 +336,7 @@ boolean statusCad =false;
     public void salvarUsuario() {
         if(!verificaCampos())
         {
+            loading.fechar();
             Toast.makeText(getContext(), "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
         }
         else

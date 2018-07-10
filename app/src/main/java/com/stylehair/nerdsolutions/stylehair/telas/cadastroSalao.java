@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -393,6 +395,7 @@ public class cadastroSalao extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view);
         alerta = builder.create();
+        alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alerta.show();
     }
     //-------------------------------------

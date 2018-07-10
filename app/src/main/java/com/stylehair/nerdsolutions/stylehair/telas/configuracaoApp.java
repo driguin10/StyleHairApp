@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -24,10 +25,13 @@ import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.verSalao_buscado;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.configuracaoSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -126,8 +130,10 @@ Button btEncerrarConta;
     }
 
     public void encerrarContaComum(final String id_login){
+
+        RequestBody IdLogin = RequestBody.create(MediaType.parse("text/plain"),id_login);
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ResponseBody> callExcluiConta = iApi.EncerrarUsuarioComum(id_login);
+        final Call<ResponseBody> callExcluiConta = iApi.EncerrarUsuarioComum(IdLogin);
         callExcluiConta.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -157,8 +163,11 @@ Button btEncerrarConta;
     }
 
     public void encerrarContaUsuario(final String id_login,final String id_usuario){
+        RequestBody IdLogin = RequestBody.create(MediaType.parse("text/plain"),id_login);
+        RequestBody IdUsuario = RequestBody.create(MediaType.parse("text/plain"),id_usuario);
+
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ResponseBody> callExcluiContaUsuario = iApi.EncerrarUsuario(id_login,id_usuario);
+        final Call<ResponseBody> callExcluiContaUsuario = iApi.EncerrarUsuario(IdLogin,IdUsuario);
         callExcluiContaUsuario.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -188,8 +197,11 @@ Button btEncerrarConta;
     }
 
     public void encerrarContaFuncionario(final String id_login,final String id_usuario,final String id_funcionario){
+        RequestBody IdLogin = RequestBody.create(MediaType.parse("text/plain"),id_login);
+        RequestBody IdUsuario = RequestBody.create(MediaType.parse("text/plain"),id_usuario);
+        RequestBody IdFuncionario = RequestBody.create(MediaType.parse("text/plain"),id_funcionario);
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ResponseBody> callExcluiContaFuncionario = iApi.EncerrarFuncionario(id_login,id_usuario,id_funcionario);
+        final Call<ResponseBody> callExcluiContaFuncionario = iApi.EncerrarFuncionario(IdLogin,IdUsuario,IdFuncionario);
         callExcluiContaFuncionario.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -219,8 +231,12 @@ Button btEncerrarConta;
     }
 
     public void encerrarContaGerente(final String id_login,final String id_usuario,final String id_funcionario,final String id_gerente){
+        RequestBody IdLogin = RequestBody.create(MediaType.parse("text/plain"),id_login);
+        RequestBody IdUsuario = RequestBody.create(MediaType.parse("text/plain"),id_usuario);
+        RequestBody IdFuncionario = RequestBody.create(MediaType.parse("text/plain"),id_funcionario);
+        RequestBody IdGerente = RequestBody.create(MediaType.parse("text/plain"),id_gerente);
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ResponseBody> callExcluiContaGerente = iApi.EncerrarGerente(id_login,id_usuario,id_funcionario,id_gerente);
+        final Call<ResponseBody> callExcluiContaGerente = iApi.EncerrarGerente(IdLogin,IdUsuario,IdFuncionario,IdGerente);
         callExcluiContaGerente.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -231,6 +247,10 @@ Button btEncerrarConta;
                     case 200:
                         Logout logout = new Logout();
                         logout.deslogar(configuracaoApp.this,false);
+                        break;
+
+                    default:
+                        Toast.makeText(configuracaoApp.this,"Houve um erro...",Toast.LENGTH_LONG).show();
                         break;
                 }
             }

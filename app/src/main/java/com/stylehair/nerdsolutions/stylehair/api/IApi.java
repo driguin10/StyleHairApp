@@ -324,6 +324,10 @@ public interface IApi {
     Call<Logar> BuscaUsuarioFuncionario(@Body Login login);
 
 
+    @Headers("apiKey:" + chave)
+    @POST(versao + "/logins/novoGerente/")
+    Call<Logar> BuscaUsuarioGerente(@Body Login login);
+
     //criar funcionario -- já tem usuario e login
     @Headers("apiKey:" + chave)
     @Multipart
@@ -487,32 +491,37 @@ public interface IApi {
 
     //******************* ENCERRAR CONTA *******************************
     @Headers("apiKey:" + chave)
-    @GET("v1/conta/deletar/{idLogin}")
-    Call<ResponseBody> EncerrarUsuarioComum(@Path("idLogin") String idLogin);
+    @Multipart
+    @POST("v1/conta/deletar/comum/")
+    Call<ResponseBody> EncerrarUsuarioComum(@Part("idLogin") RequestBody idLogin);
 
     @Headers("apiKey:" + chave)
-    @GET("v1/conta/deletar/{idLogin}/{idUsuario}")
-    Call<ResponseBody> EncerrarUsuario(@Path("idLogin") String idLogin,
-                                       @Path("idUsuario") String idUsuario);
+    @Multipart
+    @POST("v1/conta/deletar/usuario/")
+    Call<ResponseBody> EncerrarUsuario(@Part("idLogin") RequestBody idLogin,
+                                       @Part("idUsuario") RequestBody idUsuario);
 
     @Headers("apiKey:" + chave)
-    @GET("v1/conta/deletar/{idLogin}/{idUsuario}/{idFuncionario}")
-    Call<ResponseBody> EncerrarFuncionario(@Path("idLogin") String idLogin,
-                                           @Path("idUsuario") String idUsuario,
-                                           @Path("idFuncionario") String idFuncionario);
+    @Multipart
+    @POST("v1/conta/deletar/funcionario/")
+    Call<ResponseBody> EncerrarFuncionario(@Part("idLogin") RequestBody idLogin,
+                                           @Part("idUsuario") RequestBody idUsuario,
+                                           @Part("idFuncionario") RequestBody idFuncionario);
 
     @Headers("apiKey:" + chave)
-    @GET("v1/conta/deletar/{idLogin}/{idUsuario}/{idFuncionario}/{idSalao}")
-    Call<ResponseBody> EncerrarGerente(@Path("idLogin") String idLogin,
-                                       @Path("idUsuario") String idUsuario,
-                                       @Path("idFuncionario") String idFuncionario,
-                                       @Path("idSalao") String idSalao);
+    @Multipart
+    @POST("v1/conta/deletar/gerente/")
+    Call<ResponseBody> EncerrarGerente(@Part("idLogin") RequestBody idLogin,
+                                       @Part("idUsuario") RequestBody idUsuario,
+                                       @Part("idFuncionario") RequestBody idFuncionario,
+                                       @Part("idSalao") RequestBody idSalao);
 
     @Headers("apiKey:" + chave)
-    @GET("v1/conta/deletar/gerenteL/{idUsuario}/{idFuncionario}/{idSalao}")
-    Call<ResponseBody> EncerrarGerenteLogin(@Path("idUsuario") String idUsuario,
-                                       @Path("idFuncionario") String idFuncionario,
-                                       @Path("idSalao") String idSalao);
+    @Multipart
+    @POST("v1/conta/deletar/gerenteLogin/")
+    Call<ResponseBody> EncerrarGerenteLogin(@Part("idUsuario") RequestBody idUsuario,
+                                       @Part("idFuncionario") RequestBody idFuncionario,
+                                       @Part("idSalao") RequestBody idSalao);
     //-------------------------------------------------------------------
 
     //******************* SERVICE RETROFIT ******************************

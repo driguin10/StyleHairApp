@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context="com.stylehair.nerdsolutions.stylehair.splash"
-    android:background="@drawable/fundogradiente">
+    android:background="@drawable/novofundo">
 
     <ImageView
         android:id="@+id/imageView2"

@@ -287,7 +287,7 @@ public class editar_salao extends AppCompatActivity {
         num = num.replace(")" , " ");
         num2 = num.replaceAll(" ","");
 
-        if(num2.length()>= 8 )
+        if(num2.length()>= 10 )
             verifica = true;
         else
             verifica = false;

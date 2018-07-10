@@ -91,7 +91,7 @@
             android:layout_height="match_parent"
             android:paddingTop="1dp"
             android:id="@+id/listBuscaSaloes"
-            android:background="@drawable/fundogradiente"/>
+            android:background="@drawable/novofundo"/>
 
         <ProgressBar
             android:layout_width="match_parent"

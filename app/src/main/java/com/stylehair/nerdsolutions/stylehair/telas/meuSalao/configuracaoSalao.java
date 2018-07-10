@@ -433,8 +433,8 @@ public class configuracaoSalao extends AppCompatActivity {
                                 loading.abrir("Aguarde...");
                                 String idUsuario = getSharedPreferences.getString("idUsuario", "-1");
                                 String idFuncionario = getSharedPreferences.getString("idFuncionario", "-1");
-                                String idSalao = getSharedPreferences.getString("idSalao", "-1");
-                                encerrarSalao(idUsuario,idFuncionario,idSalao);
+                                String id_Salao = getSharedPreferences.getString("idSalao", "-1");
+                                encerrarSalao(idUsuario,idFuncionario,id_Salao);
                             }
                         })
                         .setNegativeButton("não", new DialogInterface.OnClickListener() {
@@ -936,22 +936,28 @@ public boolean verificaCampos(){
         return super.onOptionsItemSelected(item);
     }
 
-    public void encerrarSalao(final String id_usuario,final String id_funcionario,final String id_gerente) {
+    public void encerrarSalao(final String id_usuario,final String id_funcionario,final String id_salao) {
+        RequestBody IdUsuario = RequestBody.create(MediaType.parse("text/plain"),id_usuario);
+        RequestBody IdFuncionario = RequestBody.create(MediaType.parse("text/plain"),id_funcionario);
+        RequestBody IdSalao = RequestBody.create(MediaType.parse("text/plain"),id_salao);
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ResponseBody> callExcluiContaGerente = iApi.EncerrarGerenteLogin(id_usuario, id_funcionario, id_gerente);
+        final Call<ResponseBody> callExcluiContaGerente = iApi.EncerrarGerenteLogin(IdUsuario, IdFuncionario, IdSalao);
         callExcluiContaGerente.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
                 loading.fechar();
                 qtTentativaRealizadaExcluir = 0;
                 callExcluiContaGerente.cancel();
                 switch (response.code()) {
                     case 200:
-                        //Logout logout = new Logout();
-                       //logout.deslogar(configuracaoApp.this, false);
-
+                        if(response.message().equals("01"))
                         finish();
                         break;
+
+                        default:
+                            Toast.makeText(configuracaoSalao.this,"Houve um erro...",Toast.LENGTH_LONG).show();
+                            break;
                 }
             }
 
@@ -959,7 +965,7 @@ public boolean verificaCampos(){
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (qtTentativaRealizadaExcluir < qtTentativas) {
                     qtTentativaRealizadaExcluir++;
-                    encerrarSalao(id_usuario, id_funcionario,id_gerente);
+                    encerrarSalao(id_usuario, id_funcionario,id_salao);
                 } else {
                     loading.fechar();
                 }
