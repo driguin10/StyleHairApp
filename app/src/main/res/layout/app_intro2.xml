@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="10"
-    android:background="#03a373"
+    android:background="@drawable/fundo_splash"
     android:orientation="vertical">
 
     <TextView
@@ -33,7 +33,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/icone_favorito_of"
+            android:src="@drawable/icone_favorito"
              />
     </LinearLayout>
 

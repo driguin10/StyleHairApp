@@ -156,5 +156,6 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="intro3">*Funcionarios "\n" *Serviços "\n" *Agendamentos ...</string>
 
 </resources>

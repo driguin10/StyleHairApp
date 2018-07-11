@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/fundoscuro"
+    android:background="@drawable/fundo_app"
     tools:context="com.stylehair.nerdsolutions.stylehair.telas.login.esqueci_senha">
 
     <ImageView
@@ -46,6 +46,6 @@
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:textColor="@color/corTextos"
-        android:background="@drawable/bt_azul_esuro"
+        android:background="@drawable/bt_azul"
         android:text="ALTERAR SENHA" />
 </LinearLayout>

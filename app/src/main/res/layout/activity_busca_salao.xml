@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".telas.busca.busca_salao"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/fundo_app">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_busca"
@@ -90,8 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="1dp"
-            android:id="@+id/listBuscaSaloes"
-            android:background="@drawable/novofundo"/>
+            android:id="@+id/listBuscaSaloes"/>
 
         <ProgressBar
             android:layout_width="match_parent"
