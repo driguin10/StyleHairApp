@@ -186,10 +186,17 @@ public class fragment_ferias_funcionario extends Fragment {
                 callFerias.cancel();
                 if(response.isSuccessful()) {
                     FeriasFuncionario feriasFuncionario = response.body();
-                    String[] feriasI = feriasFuncionario.getFeriasIni().split("-");
-                    String[] feriasF = feriasFuncionario.getFeriasFim().split("-");
-                    TXTferiasIni.getEditText().setText(feriasI[2]+"-"+feriasI[1]+"-"+feriasI[0]);
-                    TXTferiasFim.getEditText().setText(feriasF[2]+"-"+feriasF[1]+"-"+feriasF[0]);
+                    if(feriasFuncionario.getFeriasIni()!=null) {
+                        String[] feriasI = feriasFuncionario.getFeriasIni().split("-");
+                        TXTferiasIni.getEditText().setText(feriasI[2]+"-"+feriasI[1]+"-"+feriasI[0]);
+                    }
+
+                    if(feriasFuncionario.getFeriasFim()!=null) {
+                        String[] feriasF = feriasFuncionario.getFeriasFim().split("-");
+                        TXTferiasFim.getEditText().setText(feriasF[2]+"-"+feriasF[1]+"-"+feriasF[0]);
+                    }
+
+
                 }
                 else {
                     switch (response.code())

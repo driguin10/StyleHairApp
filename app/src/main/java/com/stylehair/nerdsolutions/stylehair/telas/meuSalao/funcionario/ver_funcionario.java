@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -28,7 +29,7 @@ public class ver_funcionario extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        getSupportActionBar().setTitle("Funcionario");
+        getSupportActionBar().setTitle("Funcionário");
         Drawable upArrow = ContextCompat.getDrawable(ver_funcionario.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(ver_funcionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
@@ -43,6 +44,36 @@ public class ver_funcionario extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
         tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.icone_time));
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch ( tab.getPosition())
+                {
+                    case 0:
+                        getSupportActionBar().setTitle("Funcionário");
+                        break;
+                    case 1:
+                        getSupportActionBar().setTitle("Horários");
+                        break;
+                    case 2:
+                        getSupportActionBar().setTitle("Serviços");
+                        break;
+                    case 3:
+                        getSupportActionBar().setTitle("Férias");
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
