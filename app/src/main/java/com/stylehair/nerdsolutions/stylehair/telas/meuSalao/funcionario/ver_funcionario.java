@@ -41,6 +41,7 @@ public class ver_funcionario extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_funcionario_preto));
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_time));
         tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
+        tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.icone_time));
 
 
     }
@@ -50,6 +51,7 @@ public class ver_funcionario extends AppCompatActivity {
         adapter.addFragment(new fragment_funcionario(), "");
         adapter.addFragment(new fragment_horarios_funcionario(), "");
         adapter.addFragment(new fragment_servicos_funcionarios(), "");
+        adapter.addFragment(new fragment_ferias_funcionario(), "");
         viewPager.setAdapter(adapter);
     }
 

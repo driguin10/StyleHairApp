@@ -2,6 +2,7 @@ package com.stylehair.nerdsolutions.stylehair.api;
 
 
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
+import com.stylehair.nerdsolutions.stylehair.classes.FeriasFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionarioBusca;
 import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
 import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
@@ -383,6 +384,20 @@ public interface IApi {
                                                       @Part("cidade") RequestBody cidade,
                                                       @Part("obs") RequestBody obs);
 
+
+
+    //criar funcionario -- já tem usuario e login
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/funcionarios/ferias/")
+    Call<ResponseBody> FeriasFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
+                                                @Part("feriasIni") RequestBody feriasIni,
+                                                @Part("feriasFim") RequestBody feriasFim);
+
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/funcionarios/ferias/{idFuncionario}")
+    Call<FeriasFuncionario> BuscaFeriasFuncionario(@Path("idFuncionario") String idFuncionario);
     //--------------------------------------------------------------------------------
 
 

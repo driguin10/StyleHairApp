@@ -72,7 +72,8 @@
         <activity
             android:name=".telas.meuSalao.meuSalao"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".telas.carregando" />
+        <activity
+            android:name=".telas.carregando" />
         <activity
             android:name=".telas.meuSalao.editar_salao"
             android:windowSoftInputMode="stateHidden" />
