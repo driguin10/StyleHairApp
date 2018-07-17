@@ -28,9 +28,11 @@ import com.stylehair.nerdsolutions.stylehair.classes.FeriasFuncionario;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.fragmentUsuario;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -107,8 +109,38 @@ public class fragment_ferias_funcionario extends Fragment {
         BTsalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loading.abrir("Aguarde...");
-                AtualizaFerias();
+            String dtIni = TXTferiasIni.getEditText().getText().toString();
+            String dtFim = TXTferiasFim.getEditText().getText().toString();
+if(dtIni.equals("") && !dtFim.equals("") || !dtIni.equals("") && dtFim.equals(""))
+{
+    Toast.makeText(getContext(),"Preencha os campos corretamente",Toast.LENGTH_LONG).show();
+}
+else {
+if(!dtIni.equals("")||!dtFim.equals("")) {
+    try {
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        Date dateA = df.parse(TXTferiasIni.getEditText().getText().toString());
+        Date dateB = df.parse(TXTferiasFim.getEditText().getText().toString());
+
+        int compara = dateA.compareTo(dateB);
+        if (compara != 1) {
+            loading.abrir("Aguarde...");
+            AtualizaFerias();
+        } else {
+            Toast.makeText(getContext(), "Data inicial não pode ser menor que data Final!", Toast.LENGTH_LONG).show();
+        }
+    } catch (ParseException e) {
+    }
+}else
+{
+    loading.abrir("Aguarde...");
+    AtualizaFerias();
+}
+
+
+
+}
+
             }
         });
         loading.abrir("Aguarde...");
@@ -229,12 +261,6 @@ public class fragment_ferias_funcionario extends Fragment {
 
 
     }
-
-
-
-
-
-
 
 
     public void showDatePickerDialog(View v,int idCampo) {

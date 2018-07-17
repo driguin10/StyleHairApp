@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -70,6 +71,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
             ServicosLista = bundle.getStringArrayList("ListaServicos");
             nomeFuncionario = bundle.getString("nomeFuncionario");
             imagemfuncionario = bundle.getString("imagemFuncionario");
+
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_horarios_agenda);
@@ -158,22 +160,33 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
         callHorarios.enqueue(new Callback<HorariosAgenda>() {
             @Override
             public void onResponse(Call<HorariosAgenda> call, Response<HorariosAgenda> response) {
-
                 loading.fechar();
                 qtTentativaRealizada = 0;
-                HorariosAgenda horariosAgenda = new HorariosAgenda();
-                horariosAgenda = response.body();
-                ArrayList<String>horarios = horariosAgenda.getHorarios();
-                String tempo = horariosAgenda.getTempoServico();
-                String intervalo = horariosAgenda.getIntervalo();
-                lista.setAdapter(new Adaptador_agenda_horarios(horarios,lista,tempo,intervalo,txtHoraEscolha,Prosseguir,ServicosLista,idFuncionario,idSalao,listaServicos,data,nomeFuncionario,imagemfuncionario));
-                lista.setLayoutManager(new GridLayoutManager(horarios_agenda.this,2));
-                lista.setClickable(true);
-                if(horarios !=null)
-                    if(horarios.size()==0)
+                if(response.isSuccessful()) {
+                    HorariosAgenda horariosAgenda = new HorariosAgenda();
+                    horariosAgenda = response.body();
+                    ArrayList<String> horarios = horariosAgenda.getHorarios();
+                    String tempo = horariosAgenda.getTempoServico();
+                    String intervalo = horariosAgenda.getIntervalo();
+                    lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista, tempo, intervalo, txtHoraEscolha, Prosseguir, ServicosLista, idFuncionario, idSalao, listaServicos, data, nomeFuncionario, imagemfuncionario));
+                    lista.setLayoutManager(new GridLayoutManager(horarios_agenda.this, 2));
+                    lista.setClickable(true);
+                    if (horarios != null)
+                        if (horarios.size() == 0) {
+                            Toast.makeText(horarios_agenda.this, "Esta data não possui Horarios !!", Toast.LENGTH_LONG).show();
+                        }
+                }
+                else
+                {
+                    switch (response.code())
                     {
-                        Toast.makeText(horarios_agenda.this,"Esta data não possui Horarios !!",Toast.LENGTH_LONG).show();
+                        case 400:
+                            if(response.message().equals("08"))
+                                Toast.makeText(getBaseContext(), "Funcionário está de Ferias!!", Toast.LENGTH_SHORT).show();
+
+                            break;
                     }
+                }
             }
 
             @Override

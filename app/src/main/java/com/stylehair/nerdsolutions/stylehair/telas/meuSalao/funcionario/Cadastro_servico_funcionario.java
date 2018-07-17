@@ -2,7 +2,10 @@ package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +55,9 @@ Button btSalvarServico;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Adicionar Serviços");
+        Drawable upArrow = ContextCompat.getDrawable(Cadastro_servico_funcionario.this, R.drawable.abc_ic_ab_back_material);
+        upArrow.setColorFilter(ContextCompat.getColor(Cadastro_servico_funcionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+        getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)

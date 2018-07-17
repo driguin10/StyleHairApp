@@ -67,6 +67,7 @@ public class AtualizaInfos {
                     int id_suario = -1;
                     int id_funcionario = -1;
                     int id_salao = -1;
+                    int id_salao_funcionario = -1;
 
                     if(tipo.getIdSalao()>=0) {
                         id_salao = tipo.getIdSalao();
@@ -74,6 +75,7 @@ public class AtualizaInfos {
 
                     if(tipo.getIdFuncionario()>=0) {
                         id_funcionario = tipo.getIdFuncionario();
+                        id_salao_funcionario = tipo.getIdSalaoFuncionario();
                     }
 
                     if(tipo.getIdUsuario()>=0) {
@@ -95,6 +97,7 @@ public class AtualizaInfos {
                         e.putString("typeUserApp","FUNCIONARIO");
                         e.putString("idFuncionario",String.valueOf(id_funcionario));
                         e.putString("idUsuario",String.valueOf(tipo.getIdUsuario()));
+                        e.putString("idSalao",String.valueOf(id_salao_funcionario));
                     }
                     else
                     if(id_suario > -1)

@@ -9,7 +9,9 @@ package com.stylehair.nerdsolutions.stylehair.classes;
 public class TipoUsuario {
     int idUsuario;
     int idFuncionario;
+    int idSalaoFuncionario;
     int idSalao;
+
     String nomeUsuario;
     String topicoNotificacao;
     String linkImagem;
@@ -60,5 +62,17 @@ public class TipoUsuario {
 
     public void setLinkImagem(String linkImagem) {
         this.linkImagem = linkImagem;
+    }
+
+    public int getIdSalaoFuncionario() {
+        return idSalaoFuncionario;
+    }
+
+    public void setIdSalaoFuncionario(int idSalaoFuncionario) {
+        this.idSalaoFuncionario = idSalaoFuncionario;
+    }
+
+    public void setIdSalao(int idSalao) {
+        this.idSalao = idSalao;
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -58,8 +59,12 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
         int position = getAdapterPosition();
         usuarioFuncionario = ListaUsuario.get(position);
 
+
+
+
         if(v.getId() == card.getId())
         {
+
             for (int x = 0; x < lista.getChildCount(); x++) {
                 if (lista.getChildAt(x).findViewById(R.id.cardsFunc).isSelected()) {
                     CardView cv = (CardView) lista.getChildAt(x).findViewById(R.id.cardsFunc);
@@ -86,9 +91,19 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
             serv = serv.replace("["," ");
             serv = serv.replace("]"," ");
 
+
+            int posIdFunc = -1;
+            for (int x = 0; x < lista.getChildCount(); x++)
+            {
+                if (lista.getChildAt(x).findViewById(R.id.cardsFunc).isSelected()) {
+                   posIdFunc = x;
+                }
+            }
+
+
             Intent intent = new Intent(contexto,horarios_agenda.class);
             intent.putExtra("servicos",serv);
-            intent.putExtra("idFuncionario",String.valueOf(usuarioFuncionario.getIdFuncionario()));
+            intent.putExtra("idFuncionario",String.valueOf(ListaUsuario.get(posIdFunc).idFuncionario));
             intent.putExtra("idSalao",idSalao);
             intent.putExtra("nomeFuncionario",usuarioFuncionario.getNome());
             intent.putExtra("imagemFuncionario",usuarioFuncionario.getLinkImagem());

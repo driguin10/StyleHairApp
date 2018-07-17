@@ -54,7 +54,7 @@ public class CDCMessasingService extends FirebaseMessagingService {
 
 
         Intent intent = new Intent(this, notificacao.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent =  PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
