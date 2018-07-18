@@ -90,7 +90,7 @@
 
     <style name="estiloImputCad">
         <item name="colorControlNormal">#000000</item>
-        <item name="colorControlActivated">#c4482f</item>
+        <item name="colorControlActivated">@color/corToobar</item>
         <item name="colorControlHighlight">@color/accent_material_light</item>
     </style>
 

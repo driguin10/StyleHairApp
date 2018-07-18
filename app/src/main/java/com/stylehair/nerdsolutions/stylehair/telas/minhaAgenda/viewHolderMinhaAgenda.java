@@ -29,6 +29,8 @@ public class viewHolderMinhaAgenda extends ViewHolder implements View.OnClickLis
     TextView Nome;
     TextView data;
     TextView hora;
+    TextView status;
+    CardView CardStatus;
     Context contexto;
     CardView card;
     List<MeuAgendamento> ListaMeuAgendamento;
@@ -45,6 +47,10 @@ public class viewHolderMinhaAgenda extends ViewHolder implements View.OnClickLis
         data = (TextView) itemView.findViewById(R.id.Txtdata);
         hora = (TextView) itemView.findViewById(R.id.Txthora);
         card = (CardView) itemView.findViewById(R.id.cardsAgendamentos);
+
+        status = (TextView) itemView.findViewById(R.id.Txtstatus);
+        CardStatus = (CardView) itemView.findViewById(R.id.card_status);
+
         card.setOnClickListener(this);
         ListaMeuAgendamento = dados;
         contexto = itemView.getContext();

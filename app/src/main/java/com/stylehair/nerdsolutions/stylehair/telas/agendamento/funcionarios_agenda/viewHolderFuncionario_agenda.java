@@ -105,8 +105,8 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
             intent.putExtra("servicos",serv);
             intent.putExtra("idFuncionario",String.valueOf(ListaUsuario.get(posIdFunc).idFuncionario));
             intent.putExtra("idSalao",idSalao);
-            intent.putExtra("nomeFuncionario",usuarioFuncionario.getNome());
-            intent.putExtra("imagemFuncionario",usuarioFuncionario.getLinkImagem());
+            intent.putExtra("nomeFuncionario",ListaUsuario.get(posIdFunc).getNome());
+            intent.putExtra("imagemFuncionario",ListaUsuario.get(posIdFunc).getLinkImagem());
             intent.putStringArrayListExtra("ListaServicos", listaServicos);
             contexto.startActivity(intent);
 

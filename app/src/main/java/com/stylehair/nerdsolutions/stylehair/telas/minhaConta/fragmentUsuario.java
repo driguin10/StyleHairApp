@@ -88,7 +88,6 @@ public class fragmentUsuario extends Fragment {
 
 
     CircleImageView ImagemUser;
-
     TextInputLayout cadNomeUser;
     TextInputLayout cadApelidoUser;
     TextInputLayout cadTelefoneUser;
@@ -130,7 +129,7 @@ public class fragmentUsuario extends Fragment {
 
     SharedPreferences getSharedPreferences;
     Loading loading;
-boolean statusCad =false;
+    boolean statusCad =false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

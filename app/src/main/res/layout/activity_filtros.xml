@@ -93,10 +93,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Cidade "
-                    android:shadowColor="@color/corToobar"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    android:textColorLink="@color/corToobar" />
+
+                 android:textColorHint="@color/corTextos"
+                    android:textColor="@color/corTextos"
+                    android:theme="@style/estiloImput"/>
             </LinearLayout>
 
         </LinearLayout>

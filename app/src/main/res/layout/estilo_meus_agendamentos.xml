@@ -9,7 +9,6 @@
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="#ffffff"
     android:id="@+id/cardsAgendamentos">
 
 
@@ -110,11 +109,48 @@
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
+                            android:backgroundTint="#72a301"
                             android:background="@drawable/icone_time"
                             />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="right">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/Txtstatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="4dp"
+                            android:textSize="15sp"
+                            android:text="...................."
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            />
+                        <ImageView
+
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:backgroundTint="#fff"
+                            android:background="@drawable/icone_alerta"
+                            />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
 
             </LinearLayout>
         </LinearLayout>

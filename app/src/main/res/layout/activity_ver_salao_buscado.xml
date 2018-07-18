@@ -115,7 +115,7 @@
                                     android:id="@+id/btAvaliar"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
-                                    android:backgroundTint="@color/corToobar"
+                                    android:backgroundTint="@color/corTextos"
                                     android:background="@drawable/icone_avaliacoes" />
 
                                 <TextView

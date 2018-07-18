@@ -74,7 +74,7 @@
                         android:textSize="15sp"
                         android:text="(16)99252 6521"
                         android:gravity="center"
-                        android:textColor="#050505"
+                        android:textColor="#000000"
                         />
                     <ImageView
                         android:id="@+id/coracao"

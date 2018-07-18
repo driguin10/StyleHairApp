@@ -141,7 +141,6 @@
                 android:src="@drawable/img_padrao_user"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -160,7 +159,7 @@
                     android:textColor="#fff"
                     android:elevation="12dp"
 
-                    android:background="@drawable/bt_fragment_carregar"/>
+                    android:background="@drawable/bt_fragment"/>
                 <ImageButton
                     android:id="@+id/bt_excluiImgNovo"
                     android:layout_width="40dp"
@@ -173,13 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-
-
-
-
-
-
-                    <android.support.design.widget.TextInputLayout
+            <android.support.design.widget.TextInputLayout
                         android:id="@+id/txt_EmailNovo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -195,9 +188,7 @@
                             android:textColor="#000000"
                             android:inputType="textEmailAddress"/>
                     </android.support.design.widget.TextInputLayout>
-
-
-                    <android.support.design.widget.TextInputLayout
+            <android.support.design.widget.TextInputLayout
                         android:id="@+id/txt_SenhaNova"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -214,10 +205,6 @@
                             android:textColor="#000000"
                             android:inputType="textPassword"/>
                     </android.support.design.widget.TextInputLayout>
-
-
-
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_NomeNovo"
                 android:layout_width="match_parent"
@@ -233,9 +220,6 @@
                     android:textColor="#000000"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-
-
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_ApelidoNovo"
                 android:layout_width="match_parent"
@@ -251,7 +235,6 @@
                     android:textColor="#000000"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -274,7 +257,6 @@
                     android:popupBackground="#f3f9f7f7"
                     android:prompt="@string/sexo_prompt"
                     android:theme="@style/estiloSpinner" />
-
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/txt_nascimentoNovo"
                     android:layout_width="match_parent"
@@ -290,7 +272,6 @@
                         android:textColor="#000000"
                         android:inputType="date"/>
                 </android.support.design.widget.TextInputLayout>
-
                 <ImageButton
                     android:id="@+id/pesquisa_dataNovo"
                     android:layout_width="50dp"
@@ -300,12 +281,9 @@
                     android:layout_alignBottom="@+id/id_search_EditText"
                     android:layout_alignRight="@+id/id_search_EditText"
                     android:layout_alignTop="@+id/id_search_EditText"
-                    android:backgroundTint="#ee313745"
+                    android:backgroundTint="@color/corToobar"
                     android:background="@drawable/icone_calendario" />
-
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -346,8 +324,6 @@
                         android:inputType="number"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_EnderecoNovo"
                 android:layout_width="match_parent"
@@ -363,7 +339,6 @@
                     android:textColor="#000000"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_BairroNovo"
                 android:layout_width="match_parent"
@@ -379,9 +354,6 @@
                     android:textColor="#000000"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -421,9 +393,6 @@
 
                     android:theme="@style/estiloSpinner" />
             </LinearLayout>
-
-
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_CidadeNovo"
                 android:layout_width="match_parent"
@@ -439,9 +408,6 @@
                     android:textColor="#000000"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
-
-
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_ObsNovo"
                 android:layout_width="match_parent"
@@ -460,8 +426,6 @@
                     android:textColor="#000000"
                     android:inputType="textMultiLine"/>
             </android.support.design.widget.TextInputLayout>
-
-
             <Button
                 android:id="@+id/bt_salvarNovo"
                 android:layout_width="match_parent"

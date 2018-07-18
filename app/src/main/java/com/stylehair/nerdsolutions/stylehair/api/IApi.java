@@ -5,6 +5,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.FeriasFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionarioBusca;
 import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
+import com.stylehair.nerdsolutions.stylehair.classes.IdNovoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
@@ -127,6 +128,27 @@ public interface IApi {
     @Headers("apiKey:" + chave)
     @GET("v1/usuarios/tipos/{id}")
     Call<TipoUsuario> tipoUsuario(@Path("id") int id);
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/usuarios/criarLoginUser/")
+    Call<IdNovoUsuario> CadastroLoginUsuario(@Part("email") RequestBody email,
+                                             @Part("senha") RequestBody senha,
+                                             @Part("uploaded_file") RequestBody image64,
+                                             @Part("mine_file") RequestBody tipoImg,
+                                             @Part("nome") RequestBody nome,
+                                             @Part("apelido") RequestBody apelido,
+                                             @Part("sexo") RequestBody sexo,
+                                             @Part("dataNascimento") RequestBody dataNascimento,
+                                             @Part("telefone") RequestBody telefone,
+                                             @Part("cep") RequestBody cep,
+                                             @Part("endereco") RequestBody endereco,
+                                             @Part("numero") RequestBody numero,
+                                             @Part("bairro") RequestBody bairro,
+                                             @Part("estado") RequestBody estado,
+                                             @Part("cidade") RequestBody cidade,
+                                             @Part("obs") RequestBody obs);
 
     //----------------------------------------------------------------------------
 

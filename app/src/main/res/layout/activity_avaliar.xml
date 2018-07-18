@@ -47,7 +47,9 @@
                         <RatingBar
                             android:id="@+id/estrelasAvalia"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                           android:progressTint="@color/corToobar"
+                            android:stepSize="1.0"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -59,6 +61,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ems="10"
+                            android:theme="@style/estiloImputCad"
                             android:hint="Deixe Seu comentário..."
                             android:inputType="textMultiLine" />
                     </LinearLayout>

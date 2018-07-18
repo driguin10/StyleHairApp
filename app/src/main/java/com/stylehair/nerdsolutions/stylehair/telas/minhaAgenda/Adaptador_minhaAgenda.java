@@ -50,14 +50,20 @@ public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaA
              Picasso.with(holder.contexto).load("http://stylehair.xyz/" + meuAgendamentos.get(position).getImagem()).into(holder.imagem);
          holder.tipo = Tipo;
 
-         if(meuAgendamentos.get(position).getStatus() == 0 || meuAgendamentos.get(position).getStatus() == 3)
-             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corFechado));
+         if(meuAgendamentos.get(position).getStatus() == 0 || meuAgendamentos.get(position).getStatus() == 3) {
+             holder.CardStatus.setCardBackgroundColor(contexto.getResources().getColor(R.color.corFechado));
+             holder.status.setText("Cancelado");
+         }
          else
-         if(meuAgendamentos.get(position).getStatus() == 1)
-             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAlmoco));
+         if(meuAgendamentos.get(position).getStatus() == 1) {
+             holder.CardStatus.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAlmoco));
+             holder.status.setText("Aguardando atentimento");
+         }
          else
-         if(meuAgendamentos.get(position).getStatus() == 2)
-             holder.card.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAberto));
+         if(meuAgendamentos.get(position).getStatus() == 2) {
+             holder.CardStatus.setCardBackgroundColor(contexto.getResources().getColor(R.color.corAberto));
+             holder.status.setText("Finalizado");
+         }
     }
     @Override
     public int getItemCount() {

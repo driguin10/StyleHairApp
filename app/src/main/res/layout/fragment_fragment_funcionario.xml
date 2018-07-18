@@ -311,6 +311,7 @@
                     android:id="@+id/btExcluirFunc"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:backgroundTint="@color/corToobar"
                     android:background="@drawable/icone_delete"
                     />
             </LinearLayout>

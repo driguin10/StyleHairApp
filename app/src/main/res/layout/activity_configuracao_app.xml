@@ -16,7 +16,11 @@
         app:titleTextColor="@color/corTextos"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
     <Button
         android:id="@+id/bt_deletar_conta"
         android:layout_width="match_parent"
@@ -26,6 +30,8 @@
         android:layout_marginLeft="12dp"
         android:textColor="#fff"
         android:textSize="20dp"
-        android:background="@drawable/bt_azul_esuro"/>
+        android:background="@drawable/bt_fragment"/>
+</LinearLayout>
+
 
 </LinearLayout>

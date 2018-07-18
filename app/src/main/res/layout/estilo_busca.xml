@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/endereco"
                 android:textSize="15sp"
-                android:text="Rua voluntario Adriano cintra 843 Vila São Sebastião"
+                android:text=""
                 android:textColor="#050505"
                 />
         </LinearLayout>
@@ -150,6 +150,7 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:backgroundTint="@color/corToobar"
                     android:background="@drawable/icone_place"
                     />
             </LinearLayout>

@@ -23,7 +23,7 @@
             android:layout_height="200dp"
             android:layout_marginBottom="40dp"
             android:layout_marginTop="20dp"
-            app:srcCompat="@drawable/img_padrao_user" />
+            app:srcCompat="@drawable/icone_add_funcionario" />
 
 
 
