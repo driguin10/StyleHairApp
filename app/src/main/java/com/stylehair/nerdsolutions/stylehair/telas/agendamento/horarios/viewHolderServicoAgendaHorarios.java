@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -64,6 +65,8 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
             LocalTime HoraSelect = LocalTime.parse(ListaHorarioAux.get(position));
             LocalTime HoraIntervalo = LocalTime.parse(intervalo);
             LocalTime HoraTotalServico = LocalTime.parse(tempo);
+
+
 
             int ver = 0;
             for (int x = 0; x < ListaHorarioAux.size(); x++) {
@@ -124,7 +127,7 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
                 intent.putExtra("idSalao",idSalao);
                 intent.putExtra("idFuncionario",idFuncionario);
                 intent.putExtra("idServicos",idServicos);
-                intent.putStringArrayListExtra("listaServicos",ServicosLista);
+                intent.putStringArrayListExtra("listaServicos",ServicosLista);// lista dos serviços que vai ser prestado
                 intent.putExtra("horaIni",horaInicio);
                 intent.putExtra("horaFim",horaFim);
                 intent.putExtra("data",Data);

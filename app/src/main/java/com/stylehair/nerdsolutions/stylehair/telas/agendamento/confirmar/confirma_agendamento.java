@@ -64,6 +64,7 @@ public class confirma_agendamento extends AppCompatActivity {
     int qtTentativaRealizada = 0;
     Loading loading;
     Button btConfirmar;
+    SharedPreferences getSharedPreferencesL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +87,7 @@ public class confirma_agendamento extends AppCompatActivity {
         if(bundle !=null)
         {
             listaServicos = bundle.getString("idServicos");//só ids dos serviços
+
             idFuncionario = bundle.getString("idFuncionario");
             idSalao = bundle.getString("idSalao");
             ServicosLista = bundle.getStringArrayList("listaServicos");
@@ -97,7 +99,7 @@ public class confirma_agendamento extends AppCompatActivity {
              nomeFuncionario= bundle.getString("nomeFuncionario");
              imagemfuncionario= bundle.getString("imagemFuncionario");
         }
-        SharedPreferences getSharedPreferencesL = PreferenceManager
+         getSharedPreferencesL = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
         String idUserAgendamento = getSharedPreferencesL.getString("idUserAgendamento","");
@@ -159,6 +161,10 @@ public class confirma_agendamento extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 204:
+                        SharedPreferences.Editor e = getSharedPreferencesL.edit();
+                        e.remove("idUserAgendamento");
+                        e.apply();
+                        e.commit();
                         Toast.makeText(confirma_agendamento.this,"Agendado com sucesso",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(confirma_agendamento.this, principal.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

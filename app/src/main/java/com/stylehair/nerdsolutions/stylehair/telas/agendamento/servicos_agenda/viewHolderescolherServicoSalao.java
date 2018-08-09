@@ -88,8 +88,6 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
                             boolean flag = true;
                             for(int x=0;x<lista.size();x++)
                             {
-                                Log.d("xex",lista.get(x).toString());
-                                Log.d("xex",String.valueOf(servicoSalao.getIdServicoSalao()));
                                 String[] id = lista.get(x).split("#");
                                if(id[0].equals(String.valueOf(servicoSalao.getIdServicoSalao())))
                                {

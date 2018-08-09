@@ -34,25 +34,15 @@ public class viewHolderServicoFuncionarioEscolhido extends ViewHolder implements
     public void onClick(View v) {
         final int position = getAdapterPosition();
         servicoSalao = ListaServicoSalao.get(position);
-        for(int x= 0; x< lista.getChildCount(); x++)
-        {
-            if(lista.getChildAt(x).findViewById(R.id.cardsServicoEscolhido).isSelected())
-            {
-                CardView cv = (CardView) lista.getChildAt(x).findViewById(R.id.cardsServicoEscolhido);
-                cv.setCardBackgroundColor(contexto.getResources().getColor(R.color.corTextos));
-                cv.setCardElevation(5);
-                lista.getChildAt(x).findViewById(R.id.cardsServicoEscolhido).setSelected(false);
-               TextView textoNome = (TextView) lista.getChildAt(x).findViewById(R.id.nome_servico);
-               textoNome.setTextColor(contexto.getResources().getColor(R.color.black_de));
+
+        for (int x = 0; x < ListaServicoSalao.size(); x++) {
+            if (ListaServicoSalao.get(x).isSelected()) {
+                ListaServicoSalao.get(x).setSelected(false);
             }
         }
-        boolean selecionado = lista.getChildAt(position).findViewById(R.id.cardsServicoEscolhido).isSelected();
-        CardView cv = (CardView) lista.getChildAt(position).findViewById(R.id.cardsServicoEscolhido);
-        cv.setCardBackgroundColor(contexto.getResources().getColor(R.color.corItemEscolhido));
-        cv.setCardElevation(7);
-        lista.getChildAt(position).findViewById(R.id.cardsServicoEscolhido).setSelected(true);
-        TextView textoNome = (TextView) lista.getChildAt(position).findViewById(R.id.nome_servico);
-        textoNome.setTextColor(contexto.getResources().getColor(R.color.corToobar));
+        lista.getAdapter().notifyDataSetChanged();
+        ListaServicoSalao.get(position).setSelected(true);
+        lista.getAdapter().notifyDataSetChanged();
     }
 }
 

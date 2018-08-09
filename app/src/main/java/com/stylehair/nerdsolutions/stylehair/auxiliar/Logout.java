@@ -44,7 +44,7 @@ public class Logout {
         e.remove("typeUserApp");
         e.remove("idSalao");
         e.remove("idFuncionario");
-        
+        e.remove("idUserAgendamento");
         e.putBoolean("firstStart",false);
         e.apply();
         e.commit();

@@ -47,6 +47,7 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
 
     @Override
     public void onBindViewHolder(viewHolderFuncionario_agenda holder, int position) {
+
          holder.lista = lista;
          String[] Lservicos = ListaFuncionario.get(position).getServico().split("#");
         ArrayList<String> LServaux = new ArrayList<>();
@@ -59,16 +60,29 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
          }
 
 
-         holder.ListaIdServ = LServaux;
+
+         holder.ListaIdServ = LServaux;// serviços q o funcionario faz e que o cliente escolheu
          holder.Servicos.setText(Sconcat);
          holder.idSalao =IdSalao;
-         holder.listaServicos = ListaServicos;
+         holder.listaServicos = ListaServicos; // lista de serviço q o cliente quer
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
         if(ListaFuncionario.get(position).linkImagem .equals(""))
             holder.imagemFunc.setImageDrawable(holder.contexto.getResources().getDrawable(R.drawable.img_padrao_user));
-            else
-         Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
-}
+        else
+            Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaFuncionario.get(position).linkImagem).into(holder.imagemFunc);
+
+        if(ListaFuncionario.get(position).isSelected()) {
+            holder.card.setCardBackgroundColor(holder.contexto.getResources().getColor(R.color.corItemEscolhido));
+            holder.NomeFuncionario.setTextColor(holder.contexto.getResources().getColor(R.color.corToobar));
+            holder.card.setCardElevation(7);
+        }
+        else {
+            holder.card.setCardBackgroundColor(holder.contexto.getResources().getColor(R.color.corTextos));
+            holder.NomeFuncionario.setTextColor(holder.contexto.getResources().getColor(R.color.black_de));
+            holder.card.setCardElevation(4);
+        }
+
+    }
     @Override
     public int getItemCount() {
         return ListaFuncionario.size();

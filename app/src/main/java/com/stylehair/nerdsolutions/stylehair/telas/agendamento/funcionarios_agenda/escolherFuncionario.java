@@ -60,7 +60,7 @@ public class escolherFuncionario extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if(bundle !=null)
         {
-            listaServicos = bundle.getStringArrayList("escolhas");
+            listaServicos = bundle.getStringArrayList("escolhas");//servico que o cliente escolheu
             idSalao = bundle.getString("idSalao");
 
         }
@@ -147,6 +147,8 @@ public class escolherFuncionario extends AppCompatActivity {
                                 funcsAux.add(funcs.get(x));
                             }
                         }
+
+
 
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);

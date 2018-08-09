@@ -68,7 +68,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
             listaServicos = bundle.getString("servicos");//só ids dos serviços
             idFuncionario = bundle.getString("idFuncionario");
             idSalao = bundle.getString("idSalao");
-            ServicosLista = bundle.getStringArrayList("ListaServicos");
+            ServicosLista = bundle.getStringArrayList("ListaServicos");//lista do serviço que sera prestado
             nomeFuncionario = bundle.getString("nomeFuncionario");
             imagemfuncionario = bundle.getString("imagemFuncionario");
 
@@ -150,6 +150,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
 
     public void atualizaHorarios(final String data)
     {
+        Log.d("xex","Atualizahorarios - " +listaServicos);
         RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"), idSalao);
         RequestBody IDFUNCIONARIO = RequestBody.create(MediaType.parse("text/plain"), idFuncionario);
         RequestBody SERVICOS = RequestBody.create(MediaType.parse("text/plain"), listaServicos);
@@ -167,6 +168,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
                     horariosAgenda = response.body();
                     ArrayList<String> horarios = horariosAgenda.getHorarios();
                     String tempo = horariosAgenda.getTempoServico();
+                    Log.d("xex","Atualizahorarios(tempo) - " +tempo);
                     String intervalo = horariosAgenda.getIntervalo();
                     lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista, tempo, intervalo, txtHoraEscolha, Prosseguir, ServicosLista, idFuncionario, idSalao, listaServicos, data, nomeFuncionario, imagemfuncionario));
                     lista.setLayoutManager(new GridLayoutManager(horarios_agenda.this, 2));

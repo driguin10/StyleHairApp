@@ -295,6 +295,11 @@ public interface IApi {
                                            @Path("id") String id,
                                            @Path("data") String data);
 
+    //-----------traz os servicos do agendamento------------
+    @Headers("apiKey:" + chave)
+    @GET("v1/servicoAgenda/{id}/")
+    Call<List<ServicoSalao>> buscarServicosAgendamento(@Path("id") String id);
+
     @Headers("apiKey:" + chave)
     @GET("v1/agenda/status/{idAgenda}/{status}/")
     Call<ResponseBody> alterStatusAgendamento(@Path("idAgenda") String idAgenda,

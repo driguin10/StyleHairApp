@@ -10,6 +10,7 @@ public class ServicoSalao {
     private String tempo;
     private String sexo;
     protected float valor;
+    private  boolean selected;
 
     public int getIdServicoSalao() {
         return idServicoSalao;
@@ -58,4 +59,12 @@ public class ServicoSalao {
     public void setValor(float valor) {
         this.valor = valor;
     }
+
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
 }

@@ -82,7 +82,26 @@ Button btSalvarServico;
                     }
                 }
 
-                salvarServicos(idFuncionario,idServicoCad);
+
+                int posIdServCad = -1;
+                for (int x = 0; x < ListaServicos.size(); x++) {
+                    if (ListaServicos.get(x).isSelected()) {
+                        posIdServCad = x;
+                    }
+                }
+                if (posIdServCad == -1) {
+                    Toast.makeText(Cadastro_servico_funcionario.this, "Escolha uma serviço.", Toast.LENGTH_LONG).show();
+                } else {
+                    idServicoCad = String.valueOf(ListaServicos.get(posIdServCad).getIdServicoSalao());
+                    salvarServicos(idFuncionario,idServicoCad);
+                }
+
+
+
+
+
+
+
             }
         });
         loading.abrir("Aguarde...");

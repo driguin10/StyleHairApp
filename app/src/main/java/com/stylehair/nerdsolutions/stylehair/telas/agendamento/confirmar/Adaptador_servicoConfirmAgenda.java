@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.telas.agendamento.confirmar;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHol
     public Adaptador_servicoConfirmAgenda(List<String> listaServicoSalao,TextView txtValorTotal) {
         ListaServicoSalao = listaServicoSalao;
         txtValor = txtValorTotal;
-        float total = 0;
+
+
+       float total = 0;
         for(int x =0;x<ListaServicoSalao.size();x++)
         {
             String[] teste = ListaServicoSalao.get(x).split("#");

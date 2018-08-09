@@ -10,6 +10,7 @@ public class UsuarioFuncionarioBusca {
     public int idServico;
     public String servico;
     public String[] listaAux;
+    boolean selected;
 
     public UsuarioFuncionarioBusca(int idFuncionario, int idUsuario, String nome, String linkImagem, String telefone, int idServico, String servico) {
         this.idFuncionario = idFuncionario;
@@ -75,5 +76,12 @@ public class UsuarioFuncionarioBusca {
 
     public void setServico(String servico) {
         this.servico = servico;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

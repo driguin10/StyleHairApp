@@ -20,6 +20,8 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
+import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.Adaptador_servico_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.Adaptador_minhaAgenda;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
 
@@ -55,7 +57,7 @@ public class verAgendamento extends AppCompatActivity {
      String complemento;
      String estado;
 
-    RecyclerView lista;
+
     TextView txthorario;
     TextView txtdata;
     TextView txtstatus;
@@ -74,6 +76,9 @@ public class verAgendamento extends AppCompatActivity {
     int qtTentativaRealizadaCancelar = 0;
     int qtTentativaRealizadaExcluir = 0;
     int qtTentativaRealizadaFinalizar = 0;
+
+    TextView txtValorTotal;
+    RecyclerView listaServicos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +114,8 @@ public class verAgendamento extends AppCompatActivity {
              complemento= bundle.getString("complemento");
              estado= bundle.getString("estado");
         }
+        txtValorTotal= (TextView) findViewById(R.id.txt_vlTotal);
+        listaServicos = (RecyclerView) findViewById(R.id.listaServicos);
         txtLabelEnd = (TextView) findViewById(R.id.txtLabelEndereco);
         btCancelarAgenda = (Button) findViewById(R.id.btCancelar);
         btFinalizarAgenda = (Button) findViewById(R.id.btFinalizar);
@@ -213,6 +220,8 @@ public class verAgendamento extends AppCompatActivity {
             CirclimagemFuncionario.setVisibility(View.GONE);
             txtLabelEnd.setVisibility(View.GONE);
         }
+        loading.abrir("Aguarde...");
+        getServicos(idAgenda);
     }
 
     public void finalizarAgendamento(final String idAgenda ,final String status)
@@ -317,6 +326,39 @@ public class verAgendamento extends AppCompatActivity {
                 loading.fechar();
             }
         });
+    }
+
+    public void getServicos(String id)
+    {
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<ServicoSalao>> callBuscaServico = iApi.buscarServicosAgendamento(id);
+        callBuscaServico.enqueue(new Callback<List<ServicoSalao>>() {
+            @Override
+            public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
+                Log.d("xex",String.valueOf(response.code()) + " - " + response.message());
+                callBuscaServico.cancel();
+
+                loading.fechar();
+                if(response.isSuccessful())
+                {
+                   List<ServicoSalao> Lservicos  = response.body();
+                    LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
+                    layout.setOrientation(LinearLayoutManager.VERTICAL);
+                    listaServicos.setAdapter(new Adaptador_servico_salao_agendado(Lservicos,listaServicos,txtValorTotal));
+                    listaServicos.setLayoutManager(layout);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ServicoSalao>> call, Throwable t) {
+                loading.fechar();
+            }
+        });
+
+
     }
 
 

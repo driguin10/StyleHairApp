@@ -42,7 +42,16 @@ public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapte
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
          holder.idF = idFunc;
          holder.lista = lista;
-
+        if(ListaServicoSalao.get(position).isSelected()) {
+            holder.card.setCardBackgroundColor(holder.contexto.getResources().getColor(R.color.corItemEscolhido));
+            holder.NomeServico.setTextColor(holder.contexto.getResources().getColor(R.color.corToobar));
+            holder.card.setCardElevation(7);
+        }
+        else {
+            holder.card.setCardBackgroundColor(holder.contexto.getResources().getColor(R.color.corTextos));
+            holder.NomeServico.setTextColor(holder.contexto.getResources().getColor(R.color.black_de));
+            holder.card.setCardElevation(4);
+        }
 
 }
 

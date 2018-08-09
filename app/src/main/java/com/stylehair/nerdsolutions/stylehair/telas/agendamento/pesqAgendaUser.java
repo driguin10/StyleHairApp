@@ -502,13 +502,15 @@ public class pesqAgendaUser extends AppCompatActivity {
     public boolean verificaCamposCadastro()
     {
         Boolean status = false;
+        String Vemail = cadEmailNovo.getEditText().getText().toString();
+        String Vsenha = cadSenhaNova.getEditText().getText().toString();
         String Vnome =nomeUsuario.getEditText().getText().toString();
         String Vtelefone = cadTelefoneUser.getEditText().getText().toString();
         String Vestado = cadEstadoUser.getSelectedItem().toString();
         String Vcidade = cadCidadeUser.getEditText().getText().toString();
 
 
-        if(!Vnome.equals("") && !Vtelefone.equals("") && !Vestado.equals("") && !Vcidade.equals(""))
+        if(!Vnome.equals("") && !Vtelefone.equals("") && !Vestado.equals("") && !Vcidade.equals("") && !Vemail.equals("") && !Vsenha.equals(""))
         {
             if(verificaTelefone(Vtelefone)) {
                 status = true;
@@ -520,6 +522,12 @@ public class pesqAgendaUser extends AppCompatActivity {
         }
         else
         {
+            if(Vemail.equals(""))
+                cadEmailNovo.getEditText().requestFocus();
+            else
+            if(Vsenha.equals(""))
+                cadSenhaNova.getEditText().requestFocus();
+            else
             if(Vnome.equals(""))
                 nomeUsuario.getEditText().requestFocus();
             else
@@ -709,6 +717,10 @@ public class pesqAgendaUser extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                SharedPreferences.Editor e = getSharedPreferences.edit();
+                e.remove("idUserAgendamento");
+                e.apply();
+                e.commit();
                 finish();
                 break;
             default:break;
