@@ -43,7 +43,7 @@ public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaA
          String[] data = meuAgendamentos.get(position).getData().split("-");
          String newData = data[2]+"/"+data[1]+"/"+data[0];
          holder.data.setText(newData);
-         holder.hora.setText(meuAgendamentos.get(position).getHoraIni());
+         holder.hora.setText(meuAgendamentos.get(position).getHoraIni().substring(0,5));
          if(meuAgendamentos.get(position).getImagem() =="")
              holder.imagem.setImageDrawable(contexto.getResources().getDrawable(R.drawable.img_padrao_user));
          else

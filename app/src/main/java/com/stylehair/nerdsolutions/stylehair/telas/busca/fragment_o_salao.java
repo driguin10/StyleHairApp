@@ -130,7 +130,11 @@ public class fragment_o_salao extends Fragment {
 
         if(bundle!=null)
         {
-            txtSobre.setText( bundle.getString("sobre"));
+            if(bundle.getString("sobre")!=null)
+               if(!bundle.getString("sobre").equals(""))
+                   txtSobre.setText( bundle.getString("sobre"));
+               else
+                   txtSobre.setText("..........");
             txtLocalizacao.setText( bundle.getString("endereco"));
             txtTelefones.setText( bundle.getString("telefones"));
             txtEmail.setText( bundle.getString("email"));

@@ -103,8 +103,8 @@ public class verAgendamento extends AppCompatActivity {
              nome = bundle.getString("nome");
              imagem = bundle.getString("imagem");
              data = bundle.getString("data");
-             horaIni = bundle.getString("horaIni");
-             horaFim = bundle.getString("horaFim");
+             horaIni = bundle.getString("horaIni").substring(0,5);
+             horaFim = bundle.getString("horaFim").substring(0,5);
              status = bundle.getString("status");
              tipo = bundle.getString("tipo");
              nomeFuncionario = bundle.getString("nomeFuncionario");
