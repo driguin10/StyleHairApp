@@ -322,6 +322,8 @@ public interface IApi {
     @Multipart
     @POST("v1/funcionarios/editar/")
     Call<ResponseBody> EditarHoraFuncionario(@Part("idFuncionario") RequestBody idFuncionario,
+                                                @Part("almocoIni") RequestBody almocoIni,
+                                                @Part("almocoFim") RequestBody almocoFim,
                                                 @Part("segE") RequestBody segE,
                                                 @Part("segS") RequestBody segS,
                                                 @Part("terE") RequestBody terE,

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +80,8 @@ public class verAgendamento extends AppCompatActivity {
 
     TextView txtValorTotal;
     RecyclerView listaServicos;
+    LinearLayout lay_func;
+    TextView txt_salao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +117,8 @@ public class verAgendamento extends AppCompatActivity {
              complemento= bundle.getString("complemento");
              estado= bundle.getString("estado");
         }
+        lay_func= (LinearLayout) findViewById(R.id.lay_funcionario);
+        txt_salao= (TextView) findViewById(R.id.txt_salao);
         txtValorTotal= (TextView) findViewById(R.id.txt_vlTotal);
         listaServicos = (RecyclerView) findViewById(R.id.listaServicos);
         txtLabelEnd = (TextView) findViewById(R.id.txtLabelEndereco);
@@ -219,7 +224,10 @@ public class verAgendamento extends AppCompatActivity {
             txtendereco.setVisibility(View.GONE);
             CirclimagemFuncionario.setVisibility(View.GONE);
             txtLabelEnd.setVisibility(View.GONE);
+            lay_func.setVisibility(View.GONE);
+            txt_salao.setText("Cliente");
         }
+
         loading.abrir("Aguarde...");
         getServicos(idAgenda);
     }

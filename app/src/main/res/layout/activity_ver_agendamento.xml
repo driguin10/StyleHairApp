@@ -74,6 +74,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@drawable/line"/>
+
+            <LinearLayout
+                android:id="@+id/lay_funcionario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,11 +103,15 @@
                     android:text="Rodrigo Pereira"
                     android:gravity="center|left"/>
             </LinearLayout>
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
                 android:background="@drawable/line"/>
             <TextView
+                android:id="@+id/txt_salao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Salão"
@@ -126,38 +136,6 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:background="@drawable/line"/>
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/listaServicos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Valor Total R$ "/>
-                <TextView
-                    android:id="@+id/txt_vlTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:background="@drawable/line"/>
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
@@ -169,8 +147,45 @@
                     android:id="@+id/txtEndereco"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="vl adfrinao cindor 854, franca, sao paulo, vila dao dadsd"/>
+                    android:text=""/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@drawable/line"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/listaServicos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/txt_vlTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:textColor="@color/corAberto"
+                    android:textAlignment="center"
+                    android:text=""/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Valor Total"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@drawable/line"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
@@ -181,6 +196,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/bt_folga_on"
                 android:visibility="gone"
+                android:textColor="#ffffff"
                 android:text="Finalizar Agendamento"/>
             <Button
                 android:id="@+id/btCancelar"
@@ -195,6 +211,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:background="@drawable/bt_cor_toolbar"
+                android:textColor="#ffffff"
                 android:text="Excluir Agendamento"/>
         </LinearLayout>
     </ScrollView>

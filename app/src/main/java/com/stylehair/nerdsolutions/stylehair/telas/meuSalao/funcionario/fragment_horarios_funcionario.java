@@ -38,6 +38,13 @@ public class fragment_horarios_funcionario extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    ImageButton horaAlmocoIni;
+    ImageButton horaAlmocoFim;
+    TextInputLayout txtAlmocoIni;
+    TextInputLayout txtAlmocoFim;
+    ToggleButton btStatusAlmoco;
+
+
     ImageButton horaSegE;
     ImageButton horaSegS;
     TextInputLayout txtSegE;
@@ -111,6 +118,14 @@ String idFuncionario;
             idFuncionario = bundle.getString("idFuncionario");
         }
         salvarConfig = (Button) view.findViewById(R.id.ver_bt_salvarConfiguracao);
+
+        txtAlmocoIni = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_almocoIni);
+        txtAlmocoFim = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_almocoFim);
+        btStatusAlmoco = (ToggleButton)view. findViewById(R.id.ver_bt_almoco);
+        horaAlmocoIni = (ImageButton)view. findViewById(R.id.ver_pesquisa_hora_almocoIni);
+        horaAlmocoFim = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_almocoFim);
+
+
         txtSegE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_segE);
         txtSegS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_segS);
         btStatusSegunda = (ToggleButton)view. findViewById(R.id.ver_bt_folga_seg);
@@ -153,6 +168,9 @@ String idFuncionario;
         horaDomE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_domE);
         horaDomS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_domS);
 
+        txtAlmocoIni.setEnabled(false);
+        txtAlmocoFim.setEnabled(false);
+
         txtSegE.setEnabled(false);
         txtSegS.setEnabled(false);
 
@@ -174,6 +192,8 @@ String idFuncionario;
         txtDomE.setEnabled(false);
         txtDomS.setEnabled(false);
 
+
+        btStatusAlmoco.setChecked(true);
         btStatusSegunda.setChecked(true);
         btStatusTerca.setChecked(true);
         btStatusQuarta.setChecked(true);
@@ -182,6 +202,7 @@ String idFuncionario;
         btStatusSabado.setChecked(true);
         btStatusDomingo.setChecked(true);
 
+        muda(true,txtAlmocoIni,txtAlmocoFim,horaAlmocoIni,horaAlmocoFim,btStatusAlmoco);
         muda(true,txtSegE,txtSegS,horaSegE,horaSegS,btStatusSegunda);
         muda(true,txtTerE,txtTerS,horaTerE,horaTerS,btStatusTerca);
         muda(true,txtQuaE,txtQuaS,horaQuaE,horaQuaS,btStatusQuarta);
@@ -189,6 +210,22 @@ String idFuncionario;
         muda(true,txtSexE,txtSexS,horaSexE,horaSexS,btStatusSexta);
         muda(true,txtSabE,txtSabS,horaSabE,horaSabS,btStatusSabado);
         muda(true,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
+
+        horaAlmocoIni.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_ver_hora_almocoIni);
+                txtAlmocoIni.getEditText().setError(null);
+            }
+        });
+
+        horaAlmocoFim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimePickerDialog(v,R.id.txt_ver_hora_almocoFim);
+                txtAlmocoFim.getEditText().setError(null);
+            }
+        });
 
         horaSegE.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,6 +339,16 @@ String idFuncionario;
             }
         });
 
+
+        btStatusAlmoco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    muda(true,txtAlmocoIni,txtAlmocoFim,horaAlmocoIni,horaAlmocoFim,btStatusAlmoco);
+                else
+                    muda(false,txtAlmocoIni,txtAlmocoFim,horaAlmocoIni,horaAlmocoFim,btStatusAlmoco);
+            }
+        });
 
         btStatusSegunda.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -427,6 +474,16 @@ String idFuncionario;
                             Funcionario func = funcionario.get(0);
 
 
+                        if(func.getAlmocoIni()!=null && func.getAlmocoFim()!=null) {
+                            muda(true, txtAlmocoIni, txtAlmocoFim, horaAlmocoIni, horaAlmocoFim, btStatusAlmoco);
+                            txtAlmocoIni.getEditText().setText(func.getAlmocoIni().substring(0,5));
+                            txtAlmocoFim.getEditText().setText(func.getAlmocoFim().substring(0,5));
+                        }
+                        else
+                        {
+                            muda(false, txtAlmocoIni, txtAlmocoFim, horaAlmocoIni, horaAlmocoFim, btStatusAlmoco);
+                            btStatusAlmoco.setChecked(false);
+                        }
 
 
                         if(func.getSegE()!=null && func.getSegS()!=null) {
@@ -554,6 +611,8 @@ String idFuncionario;
 
         RequestBody IdFuncionario = RequestBody.create(MediaType.parse("text/plain"),idFuncionario);
 
+        RequestBody AlmocoIni = RequestBody.create(MediaType.parse("text/plain"),txtAlmocoIni.getEditText().getText().toString());
+        RequestBody AlmocoFim = RequestBody.create(MediaType.parse("text/plain"),txtAlmocoFim.getEditText().getText().toString());
 
         RequestBody SegE = RequestBody.create(MediaType.parse("text/plain"),txtSegE.getEditText().getText().toString());
         RequestBody SegS = RequestBody.create(MediaType.parse("text/plain"),txtSegS.getEditText().getText().toString());
@@ -577,7 +636,7 @@ String idFuncionario;
         RequestBody DomS = RequestBody.create(MediaType.parse("text/plain"),txtDomS.getEditText().getText().toString());
 
         IApi iApi = IApi.retrofit.create(IApi.class);
-        final Call<ResponseBody> callEditaConfiguracao = iApi.EditarHoraFuncionario(IdFuncionario,SegE,SegS,TerE,TerS,QuaE,QuaS,QuiE,QuiS,SexE,SexS,SabE,SabS,DomE,DomS);
+        final Call<ResponseBody> callEditaConfiguracao = iApi.EditarHoraFuncionario(IdFuncionario,AlmocoIni,AlmocoFim,SegE,SegS,TerE,TerS,QuaE,QuaS,QuiE,QuiS,SexE,SexS,SabE,SabS,DomE,DomS);
         callEditaConfiguracao.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -623,6 +682,23 @@ String idFuncionario;
 
     public boolean verificaCampos(){
         boolean status = true;
+
+        if(txtAlmocoIni.isClickable())
+        {
+            if(txtAlmocoIni.getEditText().getText().toString().equals("")) {
+                txtAlmocoIni.getEditText().setError("*");
+                status = false;
+            }
+        }
+
+        if(txtAlmocoFim.isClickable())
+        {
+            if(txtAlmocoFim.getEditText().getText().toString().equals("")) {
+                txtAlmocoFim.getEditText().setError("*");
+                status = false;
+            }
+
+        }
 
         if(txtSegE.isClickable())
         {

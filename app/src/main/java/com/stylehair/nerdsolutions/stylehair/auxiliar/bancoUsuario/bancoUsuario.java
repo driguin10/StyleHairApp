@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class bancoUsuario extends SQLiteOpenHelper {
 
-
     public static final String NOME_BANCO = "bancoSamartSalao.db";
     public static final String TABELA = "notificacoes";
     public static final String ID = "_id";
@@ -18,8 +17,6 @@ public class bancoUsuario extends SQLiteOpenHelper {
     public  static final String TEXTO = "texto";
     public  static final String VISUALIZACAO = "no";
     public  static final int VERSAO = 1;
-
-
 
     public bancoUsuario(Context context) {
         super(context, NOME_BANCO, null, VERSAO);
@@ -39,11 +36,8 @@ public class bancoUsuario extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
-
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
-
 
 }

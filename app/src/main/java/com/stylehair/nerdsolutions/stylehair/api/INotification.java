@@ -20,12 +20,7 @@ import retrofit2.http.POST;
 
 public interface INotification {
 
-
     String WebService = "https://fcm.googleapis.com/";
-
-
-
-
 
     @Headers({
             "Content-Type:application/json",

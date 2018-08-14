@@ -19,7 +19,8 @@ public class Funcionario {
     private String sabS;
     private String domE;
     private String domS;
-
+    private String almocoIni;
+    private String almocoFim;
 
     public int getIdFuncionario() {
         return idFuncionario;
@@ -155,5 +156,21 @@ public class Funcionario {
 
     public void setDomS(String domS) {
         this.domS = domS;
+    }
+
+    public String getAlmocoIni() {
+        return almocoIni;
+    }
+
+    public void setAlmocoIni(String almocoIni) {
+        this.almocoIni = almocoIni;
+    }
+
+    public String getAlmocoFim() {
+        return almocoFim;
+    }
+
+    public void setAlmocoFim(String almocoFim) {
+        this.almocoFim = almocoFim;
     }
 }

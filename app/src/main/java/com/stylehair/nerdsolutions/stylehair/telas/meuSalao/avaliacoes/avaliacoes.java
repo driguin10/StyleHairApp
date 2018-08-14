@@ -12,19 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.EnviarReceber;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.AvaliacaoSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
-import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.Adaptador_servico_salao;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.servico.servicos_salao;
 
 import java.util.List;
 

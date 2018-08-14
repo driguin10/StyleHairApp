@@ -16,8 +16,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AtualizaInfos {
-     int qtTentativas = 3;
-     int qtTentativaRealizada = 0;
+    int qtTentativas = 3;
+    int qtTentativaRealizada = 0;
     SharedPreferences getSharedPreferences;
     Context context;
     boolean telaPrincipal;
@@ -32,7 +32,6 @@ public class AtualizaInfos {
         int idLogin = getSharedPreferences.getInt("idLogin",-1);
         busca(idLogin);
     }
-
 
     private void busca(final int id)
     {
@@ -60,7 +59,6 @@ public class AtualizaInfos {
                         topicoNotificacao.addTopico(tipo.getTopicoNotificacao());
                     }
 
-
                     e.apply();
                     e.commit();
 
@@ -81,8 +79,6 @@ public class AtualizaInfos {
                     if(tipo.getIdUsuario()>=0) {
                         id_suario = tipo.getIdUsuario();
                     }
-
-
 
                     if( id_salao > -1)//gerente
                     {
@@ -115,10 +111,7 @@ public class AtualizaInfos {
 
                     if(telaPrincipal)
                     ((principal)context).atualizaTela();
-
-
                 }
-
             }
 
             @Override
@@ -127,7 +120,6 @@ public class AtualizaInfos {
                     qtTentativaRealizada++;
                     busca(id);
                 }
-
             }
         });
     }

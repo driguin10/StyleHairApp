@@ -72,7 +72,6 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
             lista.getAdapter().notifyDataSetChanged();
             ListaUsuario.get(position).setSelected(true);
             lista.getAdapter().notifyDataSetChanged();
-            Log.d("xex","servico escolhido -" + listaServicos.toString());
         }
 
             if(v.getId() == btProsseguir.getId())

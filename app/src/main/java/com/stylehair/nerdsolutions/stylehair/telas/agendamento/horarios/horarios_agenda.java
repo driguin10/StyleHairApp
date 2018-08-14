@@ -134,7 +134,7 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
         {
             if(!dataAtualSting.equals(dataCalendarioString)) {
                 ArrayList<String> horarios = new ArrayList<>();
-                lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista,"","",txtHoraEscolha,Prosseguir,ServicosLista,idFuncionario,idSalao,listaServicos,"","",""));
+                lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista,"","",txtHoraEscolha,Prosseguir,ServicosLista,idFuncionario,idSalao,listaServicos,"","","","",""));
                 Toast.makeText(horarios_agenda.this,"Esta data não possui Horarios !!",Toast.LENGTH_LONG).show();
             }
             else
@@ -150,7 +150,6 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
 
     public void atualizaHorarios(final String data)
     {
-        Log.d("xex","Atualizahorarios - " +listaServicos);
         RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"), idSalao);
         RequestBody IDFUNCIONARIO = RequestBody.create(MediaType.parse("text/plain"), idFuncionario);
         RequestBody SERVICOS = RequestBody.create(MediaType.parse("text/plain"), listaServicos);
@@ -168,9 +167,10 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
                     horariosAgenda = response.body();
                     ArrayList<String> horarios = horariosAgenda.getHorarios();
                     String tempo = horariosAgenda.getTempoServico();
-                    Log.d("xex","Atualizahorarios(tempo) - " +tempo);
                     String intervalo = horariosAgenda.getIntervalo();
-                    lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista, tempo, intervalo, txtHoraEscolha, Prosseguir, ServicosLista, idFuncionario, idSalao, listaServicos, data, nomeFuncionario, imagemfuncionario));
+                    String almocoIni = horariosAgenda.getAlmocoIni();
+                    String almocoFim = horariosAgenda.getAlmocoFim();
+                    lista.setAdapter(new Adaptador_agenda_horarios(horarios, lista, tempo, intervalo, txtHoraEscolha, Prosseguir, ServicosLista, idFuncionario, idSalao, listaServicos, data, nomeFuncionario, imagemfuncionario,almocoIni,almocoFim));
                     lista.setLayoutManager(new GridLayoutManager(horarios_agenda.this, 2));
                     lista.setClickable(true);
                     if (horarios != null)

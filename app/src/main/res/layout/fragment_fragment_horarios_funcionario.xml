@@ -31,6 +31,122 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Almoço"
+                    android:textAlignment="center"
+                    android:textColor="@color/corToobar"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/txt_ver_hora_almocoIni"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:theme="@style/estiloImputCad"
+                                android:hint="Ida Almoço"
+                                android:textColorHint="#000000">
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#000000"
+                                    android:inputType="date"/>
+                            </android.support.design.widget.TextInputLayout>
+
+                            <ImageButton
+                                android:id="@+id/ver_pesquisa_hora_almocoIni"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_alignBottom="@+id/id_search_EditText"
+                                android:layout_alignRight="@+id/id_search_EditText"
+                                android:layout_alignTop="@+id/id_search_EditText"
+                                android:backgroundTint="#ee313745"
+                                android:background="@drawable/icone_time" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/txt_ver_hora_almocoFim"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:theme="@style/estiloImputCad"
+                                android:hint="Volta Almoço"
+                                android:textColorHint="#000000">
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#000000"
+                                    android:inputType="date"/>
+                            </android.support.design.widget.TextInputLayout>
+
+                            <ImageButton
+                                android:id="@+id/ver_pesquisa_hora_almocoFim"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_alignBottom="@+id/id_search_EditText"
+                                android:layout_alignRight="@+id/id_search_EditText"
+                                android:layout_alignTop="@+id/id_search_EditText"
+                                android:backgroundTint="#ee313745"
+                                android:background="@drawable/icone_time" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <ToggleButton
+                            android:id="@+id/ver_bt_almoco"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textOn="ALMOÇO"
+                            android:textOff="A̶L̶M̶O̶Ç̶O̶"
+                            android:textColor="@color/corTextos"
+                            android:background="@drawable/bt_folga_off"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="1dp"
+                app:cardCornerRadius="7dp"
+                android:elevation="4dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/segunda_feira"
                     android:textAlignment="center"
                     android:textColor="@color/corToobar"/>

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.telas.agendamento.confirmar.confirma_agendamento;
 
+import org.joda.time.Hours;
 import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
     RecyclerView lista;
     String tempo;
     String intervalo;
+    String AlmocoIni;
+    String AlmocoFim;
     LocalTime ultimo;
     TextView txtHoraEscolhido;
     Button Prosseguir;
@@ -65,9 +68,8 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
             LocalTime HoraSelect = LocalTime.parse(ListaHorarioAux.get(position));
             LocalTime HoraIntervalo = LocalTime.parse(intervalo);
             LocalTime HoraTotalServico = LocalTime.parse(tempo);
-
-
-
+            LocalTime HoraAlmocoIni = LocalTime.parse(AlmocoIni);
+            LocalTime HoraAlmocoFim = LocalTime.parse(AlmocoFim);
             int ver = 0;
             for (int x = 0; x < ListaHorarioAux.size(); x++) {
                 if (ListaHorarioAux.get(x).equals(ultimo.toString()))
@@ -77,10 +79,8 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
                 ListaHorarioAux.add(ultimo.toString());
             }
 
-
             LocalTime proximaTempo = HoraSelect.plusHours(HoraTotalServico.getHourOfDay())
                     .plusMinutes(HoraTotalServico.getMinuteOfHour());
-
 
             vetAux.add(HoraSelect.toString());
             int posAux = 0;
@@ -89,8 +89,15 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
                 LocalTime Hvetor = LocalTime.parse(vetAux.get(posAux));
                 LocalTime soma = Hvetor.plusHours(HoraIntervalo.getHourOfDay())
                         .plusMinutes(HoraIntervalo.getMinuteOfHour());
+
+                Boolean flagHorarioPertoAlmoco = false;
+                if(proximaTempo.compareTo(HoraAlmocoIni) == -1 || proximaTempo.compareTo(HoraAlmocoIni) == 0 && proximaTempo.equals(HoraAlmocoIni))
+                {
+                    flagHorarioPertoAlmoco = true;
+                }
+
                 if (soma.toString().equals(LocalTime.parse(ListaHorarioAux.get(x)).toString())) {
-                    if (LocalTime.parse(ListaHorarioAux.get(x)).toString().equals(proximaTempo.toString())) {
+                    if (LocalTime.parse(ListaHorarioAux.get(x)).toString().equals(proximaTempo.toString()) || flagHorarioPertoAlmoco) {
                         vetAux.add(ListaHorarioAux.get(x));
                         flag = 1;
                         break;
@@ -119,17 +126,24 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
         else
             if(v.getId() == Prosseguir.getId())
             {
-                String horaInicio = vetAux.get(0).substring(0,5);
-                String horaFim = vetAux.get(vetAux.size()-1).substring(0,5);
+                LocalTime HoraInicioServico = LocalTime.parse(vetAux.get(0));
 
+                //somar horarios do servicolista e somar a horainicio para dar o tempo de serviço
+                LocalTime horaFimAux = HoraInicioServico;
+                for(int x=0;x<ServicosLista.size();x++)
+                {
+                    LocalTime Hservico = LocalTime.parse(ServicosLista.get(x).split("#")[3]);
+                    horaFimAux = horaFimAux.plusHours(Hservico.getHourOfDay())
+                            .plusMinutes(Hservico.getMinuteOfHour());
+                }
 
                 Intent intent = new Intent(contexto,confirma_agendamento.class);
                 intent.putExtra("idSalao",idSalao);
                 intent.putExtra("idFuncionario",idFuncionario);
                 intent.putExtra("idServicos",idServicos);
                 intent.putStringArrayListExtra("listaServicos",ServicosLista);// lista dos serviços que vai ser prestado
-                intent.putExtra("horaIni",horaInicio);
-                intent.putExtra("horaFim",horaFim);
+                intent.putExtra("horaIni",HoraInicioServico.toString().substring(0,5));
+                intent.putExtra("horaFim",horaFimAux.toString().substring(0,5));
                 intent.putExtra("data",Data);
                 intent.putExtra("nomeFuncionario",NomeFuncionario);
                 intent.putExtra("imagemFuncionario",Imagemfuncionario);

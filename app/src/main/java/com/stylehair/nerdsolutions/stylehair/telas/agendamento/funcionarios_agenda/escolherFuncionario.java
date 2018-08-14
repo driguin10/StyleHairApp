@@ -175,8 +175,6 @@ public class escolherFuncionario extends AppCompatActivity {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });

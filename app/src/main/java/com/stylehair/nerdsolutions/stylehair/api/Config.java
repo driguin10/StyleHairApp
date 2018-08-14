@@ -13,8 +13,6 @@ public class Config {
     private String versao ="v1";
     private static String nomeBanco ="bancoSamartSalao.db";
 
-
-
     public String getWebService() {
         return WebService;
     }

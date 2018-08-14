@@ -1,6 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.verAgenda;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,7 @@ public class Adaptador_servico_salao_agendado extends RecyclerView.Adapter<viewH
     public void onBindViewHolder(viewHolderServicoSalaoAgendado holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
          holder.valor.setText("R$ "+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
-         holder.tempo.setText("Tempo "+ListaServicoSalao.get(position).getTempo());
+         holder.tempo.setText("Tempo "+ListaServicoSalao.get(position).getTempo().substring(0,5));
 
         float vlCampo = 0;
          if(!vlTotal.getText().toString().equals(""))
@@ -48,7 +49,9 @@ public class Adaptador_servico_salao_agendado extends RecyclerView.Adapter<viewH
 
 
          float vlPeca = ListaServicoSalao.get(position).getValor();
-         vlTotal.setText(String.valueOf(vlCampo + vlPeca));
+
+        vlTotal.setText(String.format(Locale.getDefault(),"%.2f", vlCampo + vlPeca));
+
 }
     @Override
     public int getItemCount() {

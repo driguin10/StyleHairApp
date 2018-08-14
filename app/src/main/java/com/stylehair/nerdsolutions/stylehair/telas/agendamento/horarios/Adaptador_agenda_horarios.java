@@ -23,6 +23,8 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
     RecyclerView lista;
     String Tempo;
     String Intervalo;
+    String AlmocoIni;
+    String AlmocoFim;
     TextView txtHoraEscolhido;
     Button Prosseguir;
     String IdServicos;
@@ -35,7 +37,7 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
     String NomeFuncionario;
     String Imagemfuncionario;
 
-    public Adaptador_agenda_horarios(ArrayList<String> listaHorario, RecyclerView listaa,String tempo,String intervalo,TextView txtHora_Escolhido, Button prosseguir, ArrayList<String> servicosLista, String idFuncionario,  String idSalao,String idServicos,String data,String nomeFuncionario, String imagemfuncionario) {
+    public Adaptador_agenda_horarios(ArrayList<String> listaHorario, RecyclerView listaa,String tempo,String intervalo,TextView txtHora_Escolhido, Button prosseguir, ArrayList<String> servicosLista, String idFuncionario,  String idSalao,String idServicos,String data,String nomeFuncionario, String imagemfuncionario ,String almocoIni, String almocoFim) {
         ListaHorario = listaHorario;
         lista = listaa;
         Tempo = tempo;
@@ -49,6 +51,8 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
         Data = data;
         NomeFuncionario = nomeFuncionario;
         Imagemfuncionario = imagemfuncionario;
+        AlmocoIni =almocoIni;
+        AlmocoFim =almocoFim;
     }
 
 
@@ -63,6 +67,8 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
          holder.hora.setText(ListaHorario.get(position).substring(0,5));
          holder.lista = lista;
          holder.tempo = Tempo;
+         holder.AlmocoIni = AlmocoIni;
+         holder.AlmocoFim = AlmocoFim;
          holder.intervalo = Intervalo;
          holder.txtHoraEscolhido = txtHoraEscolhido;
          holder.Data = Data;
