@@ -11,7 +11,6 @@ public class TipoUsuario {
     int idFuncionario;
     int idSalaoFuncionario;
     int idSalao;
-
     String nomeUsuario;
     String topicoNotificacao;
     String linkImagem;

@@ -10,15 +10,10 @@ import com.stylehair.nerdsolutions.stylehair.R;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotification> {
-
     List<menssagem> ListaObjeto;
     RecyclerView Lista;
-
 
     public Adaptador_notify(List<menssagem> listaObjeto,RecyclerView lista) {
         ListaObjeto = listaObjeto;
@@ -28,7 +23,6 @@ public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotificatio
     @Override
     public viewHolderNotification onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_notificacao, parent, false);
-
         return new viewHolderNotification(vista,ListaObjeto);
     }
 
@@ -39,9 +33,8 @@ public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotificatio
          holder.nomeSalao.setText(ListaObjeto.get(position).getNome_salao());
          holder.hora.setText(ListaObjeto.get(position).getHora());
          Resources r = holder.resources;
-
-            String titulo = ListaObjeto.get(position).getTitulo();
-            String visualizado = ListaObjeto.get(position).getVisualizacao();
+         String titulo = ListaObjeto.get(position).getTitulo();
+         String visualizado = ListaObjeto.get(position).getVisualizacao();
 
 
         if(verifica(titulo).equals("menssagem"))
@@ -61,9 +54,7 @@ public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotificatio
 
         if(visualizado.equals("0"))
         {
-
             holder.card.setCardBackgroundColor(r.getColor(R.color.corNotificacao0));
-
         }
 }
 
@@ -71,8 +62,6 @@ public class Adaptador_notify extends RecyclerView.Adapter<viewHolderNotificatio
 public String verifica(String texto)
 {
     String imagem ="menssagem";
-
-
     String[] titulosPromocionais ={"promoção","corra","imperdivel"};
     String[] titulosAtencao ={"atenção","alerta"};
 
@@ -88,12 +77,8 @@ public String verifica(String texto)
             imagem = "atencao";
 
     }
-
     return imagem;
-
 }
-
-
 
     @Override
     public int getItemCount() {

@@ -16,7 +16,6 @@ public class datePick extends android.support.v4.app.DialogFragment implements D
     public int id;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
@@ -28,7 +27,6 @@ public class datePick extends android.support.v4.app.DialogFragment implements D
         String DataNasc = String.valueOf(day)+"-"+String.valueOf(month +1)+"-" +String.valueOf(year);
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy");
         String output =  "";
-
         try {
             output = dataFormat.format(dataFormat.parse(DataNasc));
         }catch (ParseException p) { }

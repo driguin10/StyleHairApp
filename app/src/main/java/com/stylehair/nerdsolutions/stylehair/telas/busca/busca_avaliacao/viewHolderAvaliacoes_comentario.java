@@ -24,12 +24,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
-
 public class viewHolderAvaliacoes_comentario extends ViewHolder   {
-
     TextView comentario;
     TextView data;
     Context contexto;

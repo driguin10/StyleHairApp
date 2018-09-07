@@ -13,20 +13,15 @@ import java.util.Locale;
 
 
 public class Adaptador_servico_funcionario extends RecyclerView.Adapter<viewHolderServicoFuncionario> {
-
     List<ServicoSalao> ListaServicoSalao;
     String idFunc;
     View view;
-
-
 
     public Adaptador_servico_funcionario(List<ServicoSalao> listaServicoSalao,String idFuncionario,View v) {
         ListaServicoSalao = listaServicoSalao;
         idFunc = idFuncionario;
         view = v;
-
     }
-
 
     @Override
     public viewHolderServicoFuncionario onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,8 +35,7 @@ public class Adaptador_servico_funcionario extends RecyclerView.Adapter<viewHold
          holder.valor.setText("R$"+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
          holder.idF = idFunc;
          holder.view = view;
-
-}
+    }
     @Override
     public int getItemCount() {
         return ListaServicoSalao.size();

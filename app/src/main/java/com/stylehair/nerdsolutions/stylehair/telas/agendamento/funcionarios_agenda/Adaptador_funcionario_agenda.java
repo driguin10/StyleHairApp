@@ -17,18 +17,13 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolderFuncionario_agenda> {
-
     List<UsuarioFuncionarioBusca> ListaFuncionario;
     RecyclerView lista;
     Button Btprosseguir;
     String IdSalao;
     ArrayList<String> ListaServicos;
-
 
     public Adaptador_funcionario_agenda(List<UsuarioFuncionarioBusca> listaFuncionario, RecyclerView listaa, Button btProsseguir,String idSalao,ArrayList<String> listaServicos) {
         ListaFuncionario = listaFuncionario;
@@ -47,19 +42,16 @@ public class Adaptador_funcionario_agenda extends RecyclerView.Adapter<viewHolde
 
     @Override
     public void onBindViewHolder(viewHolderFuncionario_agenda holder, int position) {
-
          holder.lista = lista;
          String[] Lservicos = ListaFuncionario.get(position).getServico().split("#");
-        ArrayList<String> LServaux = new ArrayList<>();
-        String Sconcat = "";
+         ArrayList<String> LServaux = new ArrayList<>();
+         String Sconcat = "";
          for (int x = 0 ; x<Lservicos.length;x++)
          {
              String[] Laux = Lservicos[x].split("-");
              LServaux.add(Laux[0]);
              Sconcat = Sconcat + "\n" + Laux[1];
          }
-
-
 
          holder.ListaIdServ = LServaux;// serviços q o funcionario faz e que o cliente escolheu
          holder.Servicos.setText(Sconcat);

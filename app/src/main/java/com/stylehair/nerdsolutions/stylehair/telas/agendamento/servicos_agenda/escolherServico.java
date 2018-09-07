@@ -28,23 +28,19 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class escolherServico extends AppCompatActivity {
-
     RecyclerView lista;
     List<ServicoSalao> servicosSalao;
     String idSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
-
     Button btProsseguir;
     ImageButton btListaServicos;
     TextView qtServicosEscolhido;
     ArrayList<String> listFinal;
-
     LinearLayoutManager layout;
     List<ServicoSalao> ListaServicos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,26 +56,19 @@ public class escolherServico extends AppCompatActivity {
         }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_escolherServico);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Escolha os Serviços");
         Drawable upArrow = ContextCompat.getDrawable(escolherServico.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(escolherServico.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         qtServicosEscolhido = (TextView) findViewById(R.id.txtQuantidadeServico);
         btProsseguir = (Button) findViewById(R.id.btProsseguir) ;
         btListaServicos = (ImageButton) findViewById(R.id.btVerListaServicos);
-
         lista = (RecyclerView) findViewById(R.id.listaServicosSalao);
         lista.setHasFixedSize(true);
         loading.abrir("atualizando");
         getServicos(idSalao);
-
-
-
-
     }
 
     @Override
@@ -102,9 +91,7 @@ public class escolherServico extends AppCompatActivity {
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaServico.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
@@ -113,8 +100,6 @@ public class escolherServico extends AppCompatActivity {
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
-
-
                 }
             }
 
@@ -129,7 +114,6 @@ public class escolherServico extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
@@ -143,5 +127,4 @@ public class escolherServico extends AppCompatActivity {
             lista.setClickable(true);
         }
     }
-
 }

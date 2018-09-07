@@ -1,8 +1,5 @@
 package com.stylehair.nerdsolutions.stylehair.classes;
 
-
-
-
 public class ServicoSalao {
     private int idServicoSalao;
     private int idSalao;

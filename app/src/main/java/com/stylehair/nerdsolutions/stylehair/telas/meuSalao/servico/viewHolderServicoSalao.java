@@ -39,39 +39,27 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderServicoSalao extends ViewHolder implements View.OnClickListener  {
-
-
-
     TextView NomeServico;
     TextView valor;
     CardView card;
     Context contexto;
     ImageButton excluir;
     RecyclerView Lista;
-
     List<ServicoSalao> ListaServicoSalao;
     ServicoSalao servicoSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
-Loading loading;
+    Loading loading;
 
     public viewHolderServicoSalao(View itemView, List<ServicoSalao> dados) {
         super(itemView);
-
-
         NomeServico = (TextView) itemView.findViewById(R.id.nome_servico);
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
         card = (CardView) itemView.findViewById(R.id.cardsServico);
         excluir = (ImageButton) itemView.findViewById(R.id.bt_excluir_servico);
         card.setOnClickListener(this);
-
         excluir.setOnClickListener(this);
         ListaServicoSalao = dados;
         contexto = itemView.getContext();
@@ -82,7 +70,6 @@ Loading loading;
     public void onClick(View v) {
         final int position = getAdapterPosition();
         servicoSalao = ListaServicoSalao.get(position);
-
         if (v.getId() == excluir.getId())
         {
             new AlertDialog.Builder(contexto)
@@ -91,11 +78,8 @@ Loading loading;
                     .setIcon(R.drawable.icone_delete)
                     .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-
-
                             excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()),position);
                             loading.abrir("Aguarde...");
-
                         }
                     })
                     .setNegativeButton("não", new DialogInterface.OnClickListener() {
@@ -116,16 +100,11 @@ Loading loading;
             intent.putExtra("tempo",servicoSalao.getTempo());
             intent.putExtra("sexo",servicoSalao.getSexo());
             ((Activity)contexto).startActivityForResult(intent,2);
-
         }
     }
 
-
     public void excluiServico(String id, final int posi)
     {
-
-
-
             IApi iApi = IApi.retrofit.create(IApi.class);
             final Call<ResponseBody> callExcluiServico = iApi.ExcluirServicosSalao(id);
             callExcluiServico.enqueue(new Callback<ResponseBody>() {
@@ -138,7 +117,6 @@ Loading loading;
                         case 204:
                             ListaServicoSalao.remove(posi);
                             Lista.setAdapter(new Adaptador_servico_salao(ListaServicoSalao,Lista));
-
                             break;
 
                         case 400:
@@ -154,38 +132,18 @@ Loading loading;
                             }
                             break;
                     }
-
                     callExcluiServico.cancel();
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
                     if (qtTentativaRealizada < qtTentativas) {
                         qtTentativaRealizada++;
                         excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()),posi);
                         loading.fechar();
                     } else {
-
                         loading.fechar();
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
-
-
-
-
                 }
             });
         }

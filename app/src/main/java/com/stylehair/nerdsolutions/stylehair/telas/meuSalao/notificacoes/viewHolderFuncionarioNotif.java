@@ -21,21 +21,16 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class viewHolderFuncionarioNotif extends ViewHolder implements View.OnClickListener  {
-
-
     CircleImageView imagemFunc;
     TextView NomeFuncionario;
     CardView card;
     Context contexto;
-
     List<UsuarioFuncionario> ListaUsuario;
     UsuarioFuncionario usuarioFuncionario;
-
     Activity activity;
 
     public viewHolderFuncionarioNotif(View itemView, List<UsuarioFuncionario> dados) {
         super(itemView);
-
         imagemFunc = (CircleImageView) itemView.findViewById(R.id.img_funcionario);
         NomeFuncionario = (TextView) itemView.findViewById(R.id.nome_funcionario);
         card = (CardView) itemView.findViewById(R.id.cardsFunc);
@@ -48,13 +43,6 @@ public class viewHolderFuncionarioNotif extends ViewHolder implements View.OnCli
     public void onClick(View v) {
         int position = getAdapterPosition();
         usuarioFuncionario = ListaUsuario.get(position);
-
-        /*Intent intent = new Intent(v.getContext(),ver_funcionario.class);
-        intent.putExtra("idUsuario", String.valueOf(usuarioFuncionario.getIdUsuario()));
-        intent.putExtra("idFuncionario",String.valueOf(usuarioFuncionario.getIdFuncionario()));
-        v.getContext().startActivity(intent);
-        ((Activity)v.getContext()).finish();*/
-
         Intent data = new Intent();
         String text = usuarioFuncionario.getNome()+"#"+String.valueOf(usuarioFuncionario.getIdUsuario());
         data.setData(Uri.parse(text));

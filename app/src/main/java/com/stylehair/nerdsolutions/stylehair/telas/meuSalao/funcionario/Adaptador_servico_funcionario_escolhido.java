@@ -14,15 +14,10 @@ import java.util.List;
 
 
 public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapter<viewHolderServicoFuncionarioEscolhido> {
-
     List<ServicoSalao> ListaServicoSalao;
     String idFunc;
     RecyclerView lista;
-
-
-
     int selected_position = 0;
-
 
     public Adaptador_servico_funcionario_escolhido(List<ServicoSalao> listaServicoSalao, String idFuncionario,RecyclerView listaa) {
         ListaServicoSalao = listaServicoSalao;
@@ -52,7 +47,6 @@ public class Adaptador_servico_funcionario_escolhido extends RecyclerView.Adapte
             holder.NomeServico.setTextColor(holder.contexto.getResources().getColor(R.color.black_de));
             holder.card.setCardElevation(4);
         }
-
 }
 
 

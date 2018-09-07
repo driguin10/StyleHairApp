@@ -29,7 +29,6 @@ import retrofit2.Response;
 
 
 public class viewHolderServicoFuncionario_busca extends ViewHolder  {
-
     TextView NomeServico;
     TextView valor;
     CardView card;
@@ -44,7 +43,6 @@ public class viewHolderServicoFuncionario_busca extends ViewHolder  {
         card = (CardView) itemView.findViewById(R.id.cardsServico);
         ListaServicoSalao = dados;
         contexto = itemView.getContext();
-
     }
     }
 

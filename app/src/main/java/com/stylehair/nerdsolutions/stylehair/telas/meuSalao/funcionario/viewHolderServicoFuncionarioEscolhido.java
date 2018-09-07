@@ -34,7 +34,6 @@ public class viewHolderServicoFuncionarioEscolhido extends ViewHolder implements
     public void onClick(View v) {
         final int position = getAdapterPosition();
         servicoSalao = ListaServicoSalao.get(position);
-
         for (int x = 0; x < ListaServicoSalao.size(); x++) {
             if (ListaServicoSalao.get(x).isSelected()) {
                 ListaServicoSalao.get(x).setSelected(false);

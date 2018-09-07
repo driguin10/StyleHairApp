@@ -33,14 +33,12 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
     LocalTime ultimo;
     TextView txtHoraEscolhido;
     Button Prosseguir;
-
     String idServicos;
     String idFuncionario;
     String idSalao;
     ArrayList<String> vetAux;
     ArrayList<String> ServicosLista;
     String Data;
-
     String NomeFuncionario;
     String Imagemfuncionario;
     public viewHolderServicoAgendaHorarios(View itemView,  ArrayList<String> dados,Button prosseguir,ArrayList<String> vet) {
@@ -60,7 +58,6 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
     public void onClick(View v) {
         final int position = getAdapterPosition();
 
-
         if(v.getId() == card.getId())
         {
             vetAux.clear();
@@ -68,8 +65,12 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
             LocalTime HoraSelect = LocalTime.parse(ListaHorarioAux.get(position));
             LocalTime HoraIntervalo = LocalTime.parse(intervalo);
             LocalTime HoraTotalServico = LocalTime.parse(tempo);
-            LocalTime HoraAlmocoIni = LocalTime.parse(AlmocoIni);
-            LocalTime HoraAlmocoFim = LocalTime.parse(AlmocoFim);
+            LocalTime HoraAlmocoIni = new LocalTime();
+            if(AlmocoIni !=null){
+                 HoraAlmocoIni = LocalTime.parse(AlmocoIni);
+            }
+
+            //LocalTime HoraAlmocoFim = LocalTime.parse(AlmocoFim);
             int ver = 0;
             for (int x = 0; x < ListaHorarioAux.size(); x++) {
                 if (ListaHorarioAux.get(x).equals(ultimo.toString()))
@@ -91,9 +92,10 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
                         .plusMinutes(HoraIntervalo.getMinuteOfHour());
 
                 Boolean flagHorarioPertoAlmoco = false;
-                if(proximaTempo.compareTo(HoraAlmocoIni) == -1 || proximaTempo.compareTo(HoraAlmocoIni) == 0 && proximaTempo.equals(HoraAlmocoIni))
-                {
-                    flagHorarioPertoAlmoco = true;
+                if(AlmocoIni != null) {
+                    if (proximaTempo.compareTo(HoraAlmocoIni) == -1 || proximaTempo.compareTo(HoraAlmocoIni) == 0 && proximaTempo.equals(HoraAlmocoIni)) {
+                        flagHorarioPertoAlmoco = true;
+                    }
                 }
 
                 if (soma.toString().equals(LocalTime.parse(ListaHorarioAux.get(x)).toString())) {
@@ -149,8 +151,6 @@ public class viewHolderServicoAgendaHorarios extends ViewHolder implements View.
                 intent.putExtra("imagemFuncionario",Imagemfuncionario);
                 contexto.startActivity(intent);
             }
-
-
     }
 
 

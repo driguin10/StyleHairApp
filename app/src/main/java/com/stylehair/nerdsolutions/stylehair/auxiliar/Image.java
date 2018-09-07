@@ -21,8 +21,6 @@ public class Image {
 	private String mime;
 	private Bitmap bitmap;
 
-	
-	
 	public String getMime() {
 		return mime;
 	}
@@ -45,15 +43,12 @@ public class Image {
 
 	public String getBitmapBase64(){
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		
 		if(mime.equalsIgnoreCase("png"))
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 		else
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 		byte[] byteArray = stream.toByteArray();
 		return(Base64.encodeBytes(byteArray));
-
-
 	}
 	
 

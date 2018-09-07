@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public class BancoNotifyController {
-
     private SQLiteDatabase db;
     private CriaBancoNotificacao banco;
 
@@ -17,7 +16,6 @@ public class BancoNotifyController {
     public String insereDado(String titulo, String texto, String hora, String visualizado, String nome_salao, String id_usuario){
         ContentValues valores;
         long resultado;
-
         db = banco.getWritableDatabase();
         valores = new ContentValues();
         valores.put(CriaBancoNotificacao.TITULO, titulo);
@@ -82,10 +80,8 @@ public class BancoNotifyController {
     }
 
     public void deletaRegistro(int id){
-
         db = banco.getReadableDatabase();
         db.execSQL("DELETE FROM notificacoes WHERE _id = " + id);
         db.close();
-
     }
 }

@@ -1,10 +1,12 @@
 package com.stylehair.nerdsolutions.stylehair.telas;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Typeface;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
@@ -38,26 +41,18 @@ import com.stylehair.nerdsolutions.stylehair.telas.favorito.saloesFavoritos;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
-
 import java.util.ArrayList;
 import java.util.List;
-
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class principal extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-
     NavigationView navigationView;
     int idLogin = -1;
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
-
-
     public int qtTentativaRealizadaUser = 0;
-
     String typeUser="";
     int ResultCode = 0;
     TextView NomeDrawer;
@@ -67,64 +62,48 @@ public class principal extends AppCompatActivity
     String linkImagem ="";
     String qtNotificacoes;
     TextView notificacoes;
-
      CircleImageView imgUser;
      Permissoes permissoes;
-
      Logout logout;
-    AlertDialog alerta;
     Loading loading;
     AtualizaInfos atualizaInfos ;
     SharedPreferences getSharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_principal);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Bem vindo");
         loading = new Loading(principal.this);
         verificaConexao = new VerificaConexao();
         logout = new Logout();
          atualizaInfos = new AtualizaInfos(principal.this);
-
          getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
-
         idLogin = getSharedPreferences.getInt("idLogin", -1);
         typeUser = getSharedPreferences.getString("typeUserApp","COMUM");
         nomeUsuario = getSharedPreferences.getString("nomeUser","");
         linkImagem = getSharedPreferences.getString("linkImagem","");
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
-
         View headerView = navigationView.getHeaderView(0);
-
         Menu men = navigationView.getMenu();
         men.findItem(R.id.nav_meuSalao).setVisible(false);
         men.findItem(R.id.nav_agendamento).setVisible(false);
         men.findItem(R.id.nav_meu_agendamento).setVisible(false);
-
-
         qtNotificacoes = atualizaNotificacoes();
-
         notificacoes=(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
               findItem(R.id.nav_notificacoes));
         initializeCountDrawer(qtNotificacoes);
-
-
         EmailDrawerr = (TextView) headerView.findViewById(R.id.txtemaildrawer);
         EmailDrawerr.setText(getSharedPreferences.getString("email","..."));
-
-
         NomeDrawer = (TextView) headerView.findViewById(R.id.nomeuser);
         if(nomeUsuario!="")
             NomeDrawer.setText(nomeUsuario);
@@ -132,10 +111,7 @@ public class principal extends AppCompatActivity
             NomeDrawer.setText("...");
 
        imgUser = (CircleImageView) headerView.findViewById((R.id.imagemUser));
-
-
         if(linkImagem!="") {
-
             Picasso.with(getBaseContext()).load("http://stylehair.xyz/" + linkImagem).into(imgUser);
         }else
         {
@@ -151,9 +127,6 @@ public class principal extends AppCompatActivity
             Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
             logout.deslogar(this,true);
         }
-
-
-
     }
 
 
@@ -177,8 +150,6 @@ public class principal extends AppCompatActivity
     }
 
     public void initializeCountDrawer(String qt){
-        //Gravity property aligns the text
-
         notificacoes.setGravity(Gravity.CENTER);
         notificacoes.setTypeface(null, Typeface.BOLD);
         notificacoes.setTextColor(getResources().getColor(R.color.corToobar));
@@ -187,7 +158,6 @@ public class principal extends AppCompatActivity
         else
             notificacoes.setText(qt);
         notificacoes.setTextSize(15);
-
     }
 
     @Override
@@ -304,7 +274,6 @@ public class principal extends AppCompatActivity
         else
             imgUser.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
 
-
         if( user == "GERENTE")//gerente
         {
             men.findItem(R.id.nav_criarSalao).setVisible(false);
@@ -366,5 +335,10 @@ public class principal extends AppCompatActivity
         atualizaInfos.atualizatipo(true);
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+      //  Appodeal.onResume(principal.this, Appodeal.BANNER_BOTTOM);
+    }
 
 }

@@ -19,16 +19,13 @@ import java.util.Locale;
 
 
 public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHolderescolherServicoConfirmAgenda> {
-
     List<String> ListaServicoSalao;
     TextView txtValor;
 
     public Adaptador_servicoConfirmAgenda(List<String> listaServicoSalao,TextView txtValorTotal) {
         ListaServicoSalao = listaServicoSalao;
         txtValor = txtValorTotal;
-
-
-       float total = 0;
+        float total = 0;
         for(int x =0;x<ListaServicoSalao.size();x++)
         {
             String[] teste = ListaServicoSalao.get(x).split("#");

@@ -13,22 +13,14 @@ import com.stylehair.nerdsolutions.stylehair.classes.UsuarioFuncionario;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
-
 public class Adaptador_servico_salao extends RecyclerView.Adapter<viewHolderServicoSalao> {
-
     List<ServicoSalao> ListaServicoSalao;
     RecyclerView Lista;
-
-
 
     public Adaptador_servico_salao(List<ServicoSalao> listaServicoSalao, RecyclerView lista) {
         ListaServicoSalao = listaServicoSalao;
         Lista = lista;
     }
-
 
     @Override
     public viewHolderServicoSalao onCreateViewHolder(ViewGroup parent, int viewType) {

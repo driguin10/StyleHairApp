@@ -24,10 +24,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.Config;
@@ -48,6 +51,7 @@ import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapte
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,8 +64,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class verSalao_buscado extends AppCompatActivity {
-Loading loading ;
-Config config;
+    SharedPreferences getSharedPreferences;
+    Loading loading ;
+    Config config;
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
     int qtTentativaRealizadaComentario = 0;
@@ -70,20 +75,16 @@ Config config;
     int qtTentativaRealizadaSavFav = 0;
     String idSalao;
     String idFavorito;
-
     AlertDialog alerta;
-
     TextView nomeSalao;
-
     CircleImageView imagemSalao;
+    ImageView imgFundo;
     Button avaliacao;
     ImageButton btFavorito;
     RecyclerView listaComentario;
-
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
     TabLayout tabLayout;
-
     Salao salao;
     SectionsPageAdapter adapter;
 
@@ -92,6 +93,8 @@ Config config;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_salao_buscado);
         Bundle bundle = getIntent().getExtras();
+        getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(verSalao_buscado.this);
         if(bundle!=null)
         {
             idSalao =bundle.getString("idSalao");
@@ -109,35 +112,28 @@ Config config;
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container_salaoBuscado);
         tabLayout = (TabLayout) findViewById(R.id.tabs_salaoBuscado);
-
-
         avaliacao = (Button) findViewById(R.id.btAvaliar);
         btFavorito = (ImageButton) findViewById(R.id.btFavorito);
-
+        imgFundo = (ImageView) findViewById(R.id.img_fundo_salao);
         avaliacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 LayoutInflater li = getLayoutInflater();
                 final View view = li.inflate(R.layout.activity_avaliar, null);
                 listaComentario = (RecyclerView) view.findViewById(R.id.listaComentarios);
                 listaComentario.setHasFixedSize(true);
                 loading.abrir("Aguarde...");
                 getAvaliacoes(idSalao);
-
                 view.findViewById(R.id.btSair).setOnClickListener(new View.OnClickListener() {
                     public void onClick(View arg0) {
                         alerta.dismiss();
                     }
                 });
-
                 view.findViewById(R.id.btAvaliar).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         RatingBar estrelas = (RatingBar) view.findViewById(R.id.estrelasAvalia);
                         EditText comentario = (EditText)view.findViewById(R.id.txtComentario);
-
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                         Date date = new Date();
                         String Data = dateFormat.format(date);
@@ -161,18 +157,11 @@ Config config;
             }
         });
 
-
-
-
-
         loading = new Loading(this);
         config = new Config();
-
         nomeSalao = (TextView) findViewById(R.id.txt_nomeSalao_buscado);
         imagemSalao = (CircleImageView) findViewById(R.id.imagemSalao_buscado);
-
         loading.abrir("Aguarde...");
-
         if(idFavorito.equals("-1"))
         {
             btFavorito.setBackgroundResource(R.drawable.icone_favorito_of);
@@ -193,9 +182,7 @@ Config config;
                     SharedPreferences getSharedPreferences = PreferenceManager
                             .getDefaultSharedPreferences(verSalao_buscado.this);
                     String idLogin = String.valueOf(getSharedPreferences.getInt("idLogin", -1));
-
                     salvaFavorito(idSalao,idLogin);
-
                 }
             }
         });
@@ -205,7 +192,6 @@ Config config;
 
     public void getAvaliacoes(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<AvaliacaoSalao>> callBuscaAvaliacoes = iApi.BuscarAvaliacoes(id);
         callBuscaAvaliacoes.enqueue(new Callback<List<AvaliacaoSalao>>() {
@@ -218,7 +204,6 @@ Config config;
                 {
                     case 200:
                         List<AvaliacaoSalao> ListaAvaliacoes = response.body();
-
                         //não mostra comentario vazio
                         for (int x=0;x<ListaAvaliacoes.size();x++)
                         {
@@ -227,17 +212,11 @@ Config config;
                                 ListaAvaliacoes.remove(x);
                             }
                         }
-
-
-
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         listaComentario.setAdapter(new Adaptador_avaliacoes_comentario(ListaAvaliacoes));
                         listaComentario.setLayoutManager(layout);
                         listaComentario.setClickable(true);
-                        break;
-
-                    case 400:
                         break;
                 }
             }
@@ -250,8 +229,6 @@ Config config;
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
@@ -285,29 +262,19 @@ Config config;
         bundleOSalao.putString("sabS",salao.getSabS());
         bundleOSalao.putString("domE",salao.getDomE());
         bundleOSalao.putString("domS",salao.getDomS());
-
-
-
         Fragment Osalao = new fragment_o_salao();
         Osalao.setArguments(bundleOSalao);
-
         adapter.addFragment(Osalao, "");
-
-
         Bundle Bservico = new Bundle();
         Bservico.putString("idServico", String.valueOf(salao.getIdSalao()));
         Fragment Fservicos = new fragment_servicos_do_salao();
         Fservicos.setArguments(Bservico);
         adapter.addFragment(Fservicos, "");
-
         Bundle Bfuncionarios = new Bundle();
         Bfuncionarios.putString("idServico", String.valueOf(salao.getIdSalao()));
         Fragment Ffuncionarios = new fragment_funcionarios_salao();
         Ffuncionarios.setArguments(Bfuncionarios);
         adapter.addFragment(Ffuncionarios, "");
-
-
-
         viewPager.setAdapter(adapter);
         configuraTab();
     }
@@ -333,7 +300,6 @@ Config config;
 
 
     public void pegarSalao(final String idSalao){
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<VerSalao> callVisualizaSalao = iApi.verSalaoBusca(idSalao);
         callVisualizaSalao.enqueue(new Callback<VerSalao>() {
@@ -344,23 +310,18 @@ Config config;
                 switch (response.code()) {
                     case 200:
                         VerSalao ver_salao = response.body();
-
                         List<Salao> listaSalao = ver_salao.getSalao();
                         salao = new Salao();
                         salao = listaSalao.get(0);
-
                         List<Usuario> listaGerente = ver_salao.getGerente();
                         Usuario gerente = new Usuario();
                         gerente = listaGerente.get(0);
-
-
                         nomeSalao.setText(salao.getNome());
-                        if (salao.getLinkImagem() != "")
+                        if (salao.getLinkImagem() != "") {
+
                             Picasso.with(verSalao_buscado.this).load(config.getWebService() + salao.getLinkImagem()).centerCrop().resize(250, 250).into(imagemSalao);
 
-
-
-
+                        }
                         setupViewPager(mViewPager,salao);
                         break;
                 }
@@ -375,9 +336,7 @@ Config config;
                 }
                 else {
                     loading.fechar();
-
                 }
-
             }
         });
 
@@ -392,11 +351,9 @@ Config config;
         RequestBody Pontos = RequestBody.create(MediaType.parse("text/plain"),pontos);
         RequestBody Comentario = RequestBody.create(MediaType.parse("text/plain"),comentario);
         RequestBody Data = RequestBody.create(MediaType.parse("text/plain"),data);
-
-
-            IApi iApi = IApi.retrofit.create(IApi.class);
-            final Call<ResponseBody> callSalvarAvaliacao = iApi.SalvarAvaliacao(IDsalao,Pontos,Comentario,Data);
-            callSalvarAvaliacao.enqueue(new Callback<ResponseBody>() {
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callSalvarAvaliacao = iApi.SalvarAvaliacao(IDsalao,Pontos,Comentario,Data);
+        callSalvarAvaliacao.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     callSalvarAvaliacao.cancel();
@@ -419,35 +376,18 @@ Config config;
                                 case "04":
                                     Toast.makeText(verSalao_buscado.this,"Erro!!",Toast.LENGTH_LONG).show();
                                     break;
-
                             }
                             break;
                     }
-
-
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
                     if (qtTentativaRealizadaSalvComentario < qtTentativas) {
                         qtTentativaRealizadaSalvComentario++;
                         SalvarAvaliacao( idSalao, pontos,  comentario, data);
                     } else {
                        loading.fechar();
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
                     }
                 }
             });
@@ -455,13 +395,11 @@ Config config;
 
     public void excluiFavorito( final String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callExcluiFavorito = iApi.DeletarFavorito(id);
         callExcluiFavorito.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 qtTentativaRealizadaExcFav = 0;
                 switch (response.code())
                 {
@@ -470,6 +408,30 @@ Config config;
                         atualizaCoracao(false);
                         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.removeTopico(salao.getTopicoNotificacao());
+                        /*
+                        pegar lista do shared jogar em uma lista procurar qual topico que é igual e remover e depois salvar novamente
+                         */
+
+
+                        String topicos = getSharedPreferences.getString("topicosFavoritos","");
+                        ArrayList<String> arrayTopFavoritos = new ArrayList<>();
+                        Gson gson = new Gson();
+                        if(!topicos.equals(""))
+                        {
+                            arrayTopFavoritos = gson.fromJson(topicos, new TypeToken<ArrayList<String>>(){}.getType());
+
+                            for(int x=0;x<arrayTopFavoritos.size();x++){
+                                if(arrayTopFavoritos.get(x).equals(salao.getTopicoNotificacao())){
+                                    arrayTopFavoritos.remove(x);
+                                }
+                            }
+                            String jsonTopicoFavoritos = gson.toJson(arrayTopFavoritos);
+                            SharedPreferences.Editor e = getSharedPreferences.edit();
+                            e.putString("topicosFavoritos",jsonTopicoFavoritos);
+                            e.apply();
+                            e.commit();
+
+                        }
                         break;
 
                     case 400:
@@ -485,25 +447,7 @@ Config config;
                 if (qtTentativaRealizadaExcFav < qtTentativas) {
                     qtTentativaRealizadaExcFav++;
                     excluiFavorito(id);
-                } else {
-
-                    if (t instanceof IOException) {
-                        Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                    } else if (t instanceof IllegalStateException) {
-                        Log.d("xex", "ConversionError");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                    } else {
-                        Log.d("xex", "erro");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                        Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                    }
-
                 }
-
-
-
-
             }
         });
     }
@@ -517,7 +461,6 @@ Config config;
         callSalvarFavorito.enqueue(new Callback<idNovoFavorito>() {
             @Override
             public void onResponse(Call<idNovoFavorito> call, Response<idNovoFavorito> response) {
-
                 qtTentativaRealizadaSavFav = 0;
                 switch (response.code())
                 {
@@ -527,6 +470,34 @@ Config config;
                         idFavorito = String.valueOf(IdNovoFavorito.getIdFavorito());
                         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.addTopico(salao.getTopicoNotificacao());
+
+
+
+                        String topicos = getSharedPreferences.getString("topicosFavoritos","");
+                        ArrayList<String> arrayTopFavoritos = new ArrayList<>();
+                        Gson gson = new Gson();
+                        if(!topicos.equals(""))
+                        {
+                            Log.d("xex", "tem coisa");
+                            arrayTopFavoritos = gson.fromJson(topicos, new TypeToken<ArrayList<String>>(){}.getType());
+                            if(arrayTopFavoritos.size()>0)
+                            {
+                                Log.d("xex", "é maior q zero");
+                                for(int x=0;x<arrayTopFavoritos.size();x++)
+                                {
+                                    topicoNotificacao.removeTopico(arrayTopFavoritos.get(x));
+                                    Log.d("xex", "remove topic - "+ arrayTopFavoritos.get(x));
+                                }
+                            }
+                            arrayTopFavoritos.add(salao.getTopicoNotificacao());
+                        }
+                        String jsonTopicoFavoritos = gson.toJson(arrayTopFavoritos);
+                        SharedPreferences.Editor e = getSharedPreferences.edit();
+                        e.putString("topicosFavoritos",jsonTopicoFavoritos);
+                        e.apply();
+                        e.commit();
+
+
                         atualizaCoracao(true);
                         break;
 
@@ -564,12 +535,10 @@ Config config;
         if (requestCode == 0) {
             if (ResultCode == RESULT_OK) {
                     if(intent.getData().toString().equals("userCad")) {
-
                         AtualizaInfos atualizaInfos = new AtualizaInfos(verSalao_buscado.this);
                         atualizaInfos.atualizatipo(false);
-
-                     Intent intent2 = new Intent(this,verSalao_buscado.class);
-                      intent2.putExtra("idSalao",idSalao);
+                        Intent intent2 = new Intent(this,verSalao_buscado.class);
+                        intent2.putExtra("idSalao",idSalao);
                         intent2.putExtra("idFavorito",idFavorito);
                         startActivity(intent2);
                         finish();

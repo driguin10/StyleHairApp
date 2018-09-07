@@ -14,7 +14,6 @@ import java.util.Locale;
 
 
 public class Adaptador_servico_funcionario_busca extends RecyclerView.Adapter<viewHolderServicoFuncionario_busca> {
-
     List<ServicoSalao> ListaServicoSalao;
 
     public Adaptador_servico_funcionario_busca(List<ServicoSalao> listaServicoSalao) {
@@ -30,14 +29,12 @@ public class Adaptador_servico_funcionario_busca extends RecyclerView.Adapter<vi
 
     @Override
     public void onBindViewHolder(viewHolderServicoFuncionario_busca holder, int position) {
-         holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
-
+        holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
         holder.valor.setText("R$ "+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
 }
     @Override
     public int getItemCount() {
         return ListaServicoSalao.size();
     }
-
 }
 

@@ -39,21 +39,15 @@ public class fragment_servicos_funcionarios extends Fragment {
     RecyclerView lista;
     List<Usuario> usuarios;
     String idFuncionario;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
-
     View view;
-    private OnFragmentInteractionListener mListener;
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -79,10 +73,8 @@ public class fragment_servicos_funcionarios extends Fragment {
                 Intent intent = new Intent(getContext(),Cadastro_servico_funcionario.class);
                 intent.putExtra("idFuncionario",idFuncionario);
                 startActivityForResult(intent,1);
-
             }
         });
-
         return view;
     }
 
@@ -91,7 +83,6 @@ public class fragment_servicos_funcionarios extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 1) {
            getServicos(idFuncionario);
         }
@@ -100,8 +91,6 @@ public class fragment_servicos_funcionarios extends Fragment {
 
     public void getServicos(String id)
     {
-
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<ServicoSalao>> callBuscaServicosfunc = iApi.BuscaServicosFuncionario(id);
         callBuscaServicosfunc.enqueue(new Callback<List<ServicoSalao>>() {
@@ -109,9 +98,7 @@ public class fragment_servicos_funcionarios extends Fragment {
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaServicosfunc.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
@@ -122,14 +109,7 @@ public class fragment_servicos_funcionarios extends Fragment {
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
@@ -141,37 +121,9 @@ public class fragment_servicos_funcionarios extends Fragment {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
 
-    }
-
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

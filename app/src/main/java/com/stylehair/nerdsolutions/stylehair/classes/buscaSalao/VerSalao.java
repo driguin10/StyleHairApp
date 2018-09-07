@@ -8,7 +8,6 @@ import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.FuncionarioVerSa
 import java.util.List;
 
 public class VerSalao {
-
     private List<Salao> salao;
     private List<Usuario> gerente;
     private List<FuncionarioVerSalao> funcionarios;
@@ -21,7 +20,6 @@ public class VerSalao {
     public void setSalao(List<Salao> salao) {
         this.salao = salao;
     }
-
 
     public List<Usuario> getGerente() {
         return gerente;

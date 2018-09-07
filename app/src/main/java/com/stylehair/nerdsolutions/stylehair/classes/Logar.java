@@ -2,9 +2,6 @@ package com.stylehair.nerdsolutions.stylehair.classes;
 
 import java.util.List;
 
-/**
- * Created by Rodrigo on 28/01/2018.
- */
 
 public class Logar {
     public List<Login> login;

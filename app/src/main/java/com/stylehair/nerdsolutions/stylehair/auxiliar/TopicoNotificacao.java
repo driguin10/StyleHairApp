@@ -3,8 +3,6 @@ package com.stylehair.nerdsolutions.stylehair.auxiliar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class TopicoNotificacao {
-
-
     public void addTopico(String topico)
     {
         FirebaseMessaging.getInstance().subscribeToTopic(topico);

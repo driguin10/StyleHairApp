@@ -34,28 +34,23 @@ import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 
 public class fragment_principal_usuario extends Fragment {
-
-
     TextInputLayout txtPesquisa;
     ImageButton btPesquisar;
     String typeUser;
     CardView btAgendaDia;
     CardView btFavoritos;
     CardView btNotificacoes;
-
     Permissoes permissoes;
     ShowcaseView sv;
     Tutorial tutorial;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         permissoes = new Permissoes();
         View v = inflater.inflate(R.layout.fragment_fragment_principal_usuario, container, false);
         txtPesquisa = (TextInputLayout)v.findViewById(R.id.txtProcura);
@@ -64,15 +59,9 @@ public class fragment_principal_usuario extends Fragment {
         btFavoritos = (CardView)v.findViewById(R.id.card_bt2);
         btNotificacoes = (CardView)v.findViewById(R.id.card_bt3);
         tutorial = new Tutorial(getContext());
-
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getContext());
-
         typeUser = getSharedPreferences.getString("typeUserApp", "");
-
-
-
         btAgendaDia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,16 +95,12 @@ public class fragment_principal_usuario extends Fragment {
         btPesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(permissoes.habilitarLocalizacao(getActivity())) {
                     Intent intent = new Intent(getActivity(),busca_salao.class);
                     intent.putExtra("query",txtPesquisa.getEditText().getText().toString());
                     startActivity(intent);
                     txtPesquisa.getEditText().setText("");
                 }
-
-
-
             }
         });
 

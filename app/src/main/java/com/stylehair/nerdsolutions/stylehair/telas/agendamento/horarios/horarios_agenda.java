@@ -38,7 +38,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class horarios_agenda extends AppCompatActivity implements DatePickerListener {
-
     String listaServicos;
     String idFuncionario;
     String idSalao;
@@ -71,7 +70,6 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
             ServicosLista = bundle.getStringArrayList("ListaServicos");//lista do serviço que sera prestado
             nomeFuncionario = bundle.getString("nomeFuncionario");
             imagemfuncionario = bundle.getString("imagemFuncionario");
-
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_horarios_agenda);
@@ -99,13 +97,10 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
                 .setTodayDateTextColor(Color.RED)//numero do dia atual
                 .setUnselectedDayTextColor(Color.GRAY)
                 .setDayOfWeekTextColor(Color.WHITE)
-
                 //botao today----------
                 .setTodayButtonTextColor(Color.RED)
                 .showTodayButton(true)
-
                 //----------------------
-
                 .init();
         picker.setBackgroundColor(Color.DKGRAY);
         TextView btToday = (TextView)findViewById(com.github.jhonnyx2012.horizontalpicker.R.id.tvToday);
@@ -123,8 +118,6 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
         String dataCalendarioFormatada = formataDataCalendario.format(dataCalend);
         String dataAtualSting= formataData.format(dataAtual);
         String dataCalendarioString = formataData.format(dataCalend);
-
-
         if(dataCalend.after(dataAtual))
         {
             atualizaHorarios(dataCalendarioFormatada);
@@ -197,7 +190,6 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
                     qtTentativaRealizada++;
                     atualizaHorarios(data);
                 }
-
                 loading.fechar();
             }
         });
@@ -207,7 +199,6 @@ public class horarios_agenda extends AppCompatActivity implements DatePickerList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {

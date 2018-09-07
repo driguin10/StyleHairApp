@@ -1,8 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.Notification;
 
-/**
- * Created by Rodrigo on 20/02/2018.
- */
+
 
 public class Notification {
     public String body;

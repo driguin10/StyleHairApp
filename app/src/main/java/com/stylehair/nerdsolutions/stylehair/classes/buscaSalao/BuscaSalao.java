@@ -1,8 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.classes.buscaSalao;
 
 public class BuscaSalao {
-
-
     private int idSalao;
     private String topicoNotificacao;
     private String nome;
@@ -19,7 +17,6 @@ public class BuscaSalao {
     private int pontos;
     private int idFavorito;
     private Float distancia;
-
 
     public int getIdSalao() {
         return idSalao;

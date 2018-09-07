@@ -14,11 +14,9 @@ public class Loading {
     private AlertDialog alerta;
     private View view;
 
-
      public Loading(Activity activity){
         LayoutInflater li = activity.getLayoutInflater();
         this.view = li.inflate(R.layout.activity_carregando, null);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(this.view);
         this.alerta = builder.create();

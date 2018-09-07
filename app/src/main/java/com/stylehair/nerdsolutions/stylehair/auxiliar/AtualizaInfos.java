@@ -15,6 +15,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+//atualiza informações da tele principal
 public class AtualizaInfos {
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;

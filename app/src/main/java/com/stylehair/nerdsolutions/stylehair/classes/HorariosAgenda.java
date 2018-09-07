@@ -3,9 +3,6 @@ package com.stylehair.nerdsolutions.stylehair.classes;
 import java.util.ArrayList;
 
 public class HorariosAgenda {
-
-
-
     private String tempoServico;
     private String almocoIni;
     private String almocoFim;

@@ -19,24 +19,18 @@ import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.Banc
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 public class ver_notificacao extends AppCompatActivity {
-
     String id;
-
     TextView texto;
     TextView nome_salao;
     TextView hora;
     String visualizacao;
     Button excluir;
-
     BancoNotifyController crud;
-
-
     String Btitulo;
     String Btexto;
     String Bnome_salao;
     String Bhora;
     String BidLogin;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +38,12 @@ public class ver_notificacao extends AppCompatActivity {
         setContentView(R.layout.activity_ver_notificacao);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_notificacoes);
         setSupportActionBar(myToolbar);
-
         Bundle extra = getIntent().getExtras();
-
-         crud = new BancoNotifyController(getBaseContext());
-
-
+        crud = new BancoNotifyController(getBaseContext());
         texto = (TextView) findViewById(R.id.texto_Lnotificacao);
         nome_salao = (TextView) findViewById(R.id.nome_salao_Lnotificacao);
         hora = (TextView) findViewById(R.id.hora_Lnotificacao);
         excluir = (Button) findViewById(R.id.bt_excluir_Lnotificacao);
-
-
 
         if(extra!=null)
         {
@@ -64,7 +52,6 @@ public class ver_notificacao extends AppCompatActivity {
             visualizacao = extra.getString("visualizacao_notificacao");
             hora.setText(extra.getString("hora_notificacao"));
             nome_salao.setText(extra.getString("nome_salao_notificacao"));
-
             Btitulo = extra.getString("titulo_notificacao");
             Btexto = extra.getString("texto_notificacao");
             Bnome_salao = extra.getString("nome_salao_notificacao");
@@ -82,7 +69,6 @@ public class ver_notificacao extends AppCompatActivity {
         excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 new AlertDialog.Builder(ver_notificacao.this)
                         .setTitle("Excluir")
                         .setMessage("Deseja excluir esta notificação?")
@@ -102,14 +88,9 @@ public class ver_notificacao extends AppCompatActivity {
                             }
                         })
                         .show();
-
-
             }
         });
-
-
         crud.alteraRegistro(Integer.valueOf(id),Btitulo,Btexto,Bhora,"1",Bnome_salao);
-
     }
 
     @Override

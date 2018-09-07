@@ -23,7 +23,6 @@ import retrofit2.Response;
 
 
 public class viewHolderAvaliacoes extends ViewHolder implements View.OnClickListener  {
-
     TextView comentario;
     TextView data;
     TextView pontos;
@@ -32,17 +31,13 @@ public class viewHolderAvaliacoes extends ViewHolder implements View.OnClickList
     List<AvaliacaoSalao> ListaAvaliacao;
     AvaliacaoSalao avaliacaoSalao;
     RecyclerView lista;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
-
     TextView txtPontos;
     TextView txtComentarios ;
 
     public viewHolderAvaliacoes(View itemView, List<AvaliacaoSalao> dados) {
         super(itemView);
-
         comentario = (TextView) itemView.findViewById(R.id.txtComentario);
         pontos = (TextView) itemView.findViewById(R.id.txtQtpontos);
         data = (TextView) itemView.findViewById(R.id.txtDataComentario);
@@ -78,27 +73,21 @@ public class viewHolderAvaliacoes extends ViewHolder implements View.OnClickList
 
     public void excluiComentario( final String id, final int posicao)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callExcluiServico = iApi.ExcluirAvaliacao(id);
         callExcluiServico.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 qtTentativaRealizada = 0;
                 switch (response.code())
                 {
                     case 204:
-
                         int pont = Integer.valueOf(txtPontos.getText().toString());
-
                         txtPontos.setText(String.valueOf(pont - ListaAvaliacao.get(posicao).getPontos()));
                         Toast.makeText(contexto,"Apagado com sucesso!!",Toast.LENGTH_LONG).show();
                         ListaAvaliacao.remove(posicao);
-
                         lista.setAdapter(new Adaptador_avaliacoes(ListaAvaliacao,txtPontos,txtComentarios,lista));
                         txtComentarios.setText(String.valueOf(ListaAvaliacao.size()));
-
                         break;
 
                     case 400:
@@ -114,7 +103,6 @@ public class viewHolderAvaliacoes extends ViewHolder implements View.OnClickList
                         }
                         break;
                 }
-
                 callExcluiServico.cancel();
             }
 
@@ -123,27 +111,8 @@ public class viewHolderAvaliacoes extends ViewHolder implements View.OnClickList
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
                     excluiComentario(String.valueOf(avaliacaoSalao.getIdAvaliacao()),posicao);
-                } else {
-
-                    if (t instanceof IOException) {
-                        Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                    } else if (t instanceof IllegalStateException) {
-                        Log.d("xex", "ConversionError");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                    } else {
-                        Log.d("xex", "erro");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                        Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                    }
-
                 }
-
-
-
-
             }
         });
     }
-
 }

@@ -64,7 +64,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class cadastroSalao extends AppCompatActivity {
-
     AlertDialog alerta;
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
@@ -131,7 +130,6 @@ public class cadastroSalao extends AppCompatActivity {
         //---------------------------------------------------------------
 
         //--------------- Casting dos componentes --------------------------
-
         NomeSalao = (TextInputLayout) findViewById(R.id.txt_NomeSalao);
         Telefone1Salao = (TextInputLayout) findViewById(R.id.txt_Telefone1Salao);
         Telefone2Salao = (TextInputLayout) findViewById(R.id.txt_Telefone2Salao);
@@ -163,7 +161,6 @@ public class cadastroSalao extends AppCompatActivity {
         CepSalao.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if(!hasFocus) {
                     String cep = CepSalao.getEditText().getText().toString();
                     String novoCep = cep.trim();
@@ -178,7 +175,6 @@ public class cadastroSalao extends AppCompatActivity {
         });
         //-------guarda a imagem padrao ---------
         bitmapPadrao = ImagemSalao.getDrawable();
-
         //----------- abre dialog para escolher imagem-------------------
         CaregaImgSalao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,9 +182,6 @@ public class cadastroSalao extends AppCompatActivity {
                 EscolhaImagem();
             }
         });
-
-
-
         //----- exclui a imagem selecionada do usuario-------------------
         ExcluiImgSalao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +200,6 @@ public class cadastroSalao extends AppCompatActivity {
             public void onClick(View v) {
                 loading.abrir("Aguarde...");
                     salvarSalao();
-
             }
         });
 
@@ -220,7 +212,6 @@ public class cadastroSalao extends AppCompatActivity {
                 String cidade = CidadeSalao.getEditText().getText().toString();
                 String estado = EstadoSalao.getSelectedItem().toString();
                 String nome = NomeSalao.getEditText().getText().toString();
-
                 String saida = endereco + "," + numero + "," + Bairro + "," + cidade + "," + estado;
                 Intent intent = new Intent(cadastroSalao.this, Mapa.class);
                 intent .putExtra("nome",nome);
@@ -228,10 +219,8 @@ public class cadastroSalao extends AppCompatActivity {
                 intent.putExtra("latitude",0);
                 intent.putExtra("longitude",0);
                 startActivityForResult(intent,mapa);
-
             }
         });
-        //------
 
         if(!tutorial.verTutorial("tutorialCadSalao")) {
             EmailSalao.getEditText().requestFocus();
@@ -247,7 +236,6 @@ public class cadastroSalao extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public boolean verificaCampos()
     {
@@ -330,7 +318,6 @@ public class cadastroSalao extends AppCompatActivity {
         else
             verifica = false;
         return  verifica;
-
     }
 
     public void pegarCep(String cep)
@@ -363,7 +350,6 @@ public class cadastroSalao extends AppCompatActivity {
             @Override
             public void onFailure(Call<CEP> call, Throwable t) {
                 loading.fechar();
-                Log.d("xex", "erro no cep");
             }
         });
     }
@@ -419,7 +405,6 @@ public class cadastroSalao extends AppCompatActivity {
                     int columnIndex = cursor.getColumnIndex(projection[0]);
                     filepath = cursor.getString(columnIndex);
                     cursor.close();
-
                     File f64 = new File(filepath);
                     if(f64!=null)
                     {
@@ -428,7 +413,6 @@ public class cadastroSalao extends AppCompatActivity {
                     }
                     img64  = image.getBitmapBase64();
                     tipoImagem = image.getMime();
-
                     if(image.getBitmap()!=null)
                     {
                         ImagemSalao.setImageBitmap(image.getBitmap());
@@ -443,9 +427,7 @@ public class cadastroSalao extends AppCompatActivity {
                     alerta.dismiss();
                     loading.abrir("Aguarde...");
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-
                     Uri uri = image.getImageUri(this, photo);
-
                     File file = new File(image.getRealPathFromURI(this,uri));
                     String pathImgCamera = file.getPath();
                     File f64 = new File(pathImgCamera);
@@ -508,17 +490,12 @@ public class cadastroSalao extends AppCompatActivity {
 
             if(!latitude.equals("") && !longitude.equals(""))
             {
-
-
                 String Eendereco = EnderecoSalao.getEditText().getText().toString();
                 String Nnumero = NumeroSalao.getEditText().getText().toString();
                 String Bbairro = BairroSalao.getEditText().getText().toString();
                 String Ccidade = CidadeSalao.getEditText().getText().toString();
                 String Eestado = EstadoSalao.getSelectedItem().toString();
-
-
                 String saida = Eendereco + "," + Nnumero + "," + Bbairro + "," + Ccidade + "," + Eestado;
-
                 Geocoder geocoder = new Geocoder(cadastroSalao.this);
                 try {
                     List<Address> enderecos = geocoder.getFromLocationName(saida, 1);
@@ -529,12 +506,9 @@ public class cadastroSalao extends AppCompatActivity {
                     }
                 }catch (IOException e)
                 {
-
                 }
-
             }
             else {
-
                 lati = RequestBody.create(MediaType.parse("text/plain"), latitude);
                 longi = RequestBody.create(MediaType.parse("text/plain"), longitude);
             }
@@ -543,7 +517,6 @@ public class cadastroSalao extends AppCompatActivity {
            {
                agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
            }
-
 
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("multipart/form-data"), tipoImagem);
@@ -581,10 +554,6 @@ public class cadastroSalao extends AppCompatActivity {
                             }
                             break;
                     }
-
-
-
-
                     callSalvaSalao.cancel();
                 }
 
@@ -595,19 +564,6 @@ public class cadastroSalao extends AppCompatActivity {
                         salvarSalao();
                     } else {
                         loading.fechar();
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
                 }
             });
@@ -632,6 +588,4 @@ public class cadastroSalao extends AppCompatActivity {
                         }
                     }).build();
         }
-
-
 }

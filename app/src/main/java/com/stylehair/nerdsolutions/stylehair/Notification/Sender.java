@@ -2,14 +2,9 @@ package com.stylehair.nerdsolutions.stylehair.Notification;
 
 
 
-/**
- * Created by Rodrigo on 20/02/2018.
- */
-
 public class Sender {
     public Notification notification;
     public String to;
-
     public Dataa data;
 
     public Sender(Notification notification, String to, Dataa data) {

@@ -73,20 +73,14 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class fragmentUsuario extends Fragment {
-
-    private OnFragmentInteractionListener mListener;
-
     AlertDialog alerta;
     ProgressDialog dialog;
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
-
     int qtTentativas = 3;
     int qtTentativaRealizadaLoad = 0;
     int qtTentativaRealizadaSalvar = 0;
     int qtTentativaRealizadaEditar = 0;
-
-
     CircleImageView ImagemUser;
     TextInputLayout cadNomeUser;
     TextInputLayout cadApelidoUser;
@@ -98,35 +92,25 @@ public class fragmentUsuario extends Fragment {
     TextInputLayout cadCidadeUser;
     TextInputLayout cadObsUser;
     TextInputLayout cadNascimento;
-
     Spinner cadEstadoUser;
     Spinner cadSexoUser;
-
     Button BtSalvar;
     Button BtCarregaImagem ;
-
     ImageButton BtPesqData;
     ImageButton BtExcluirImagem;
-
     int IdLogin;
-
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
-    int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
-    int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
-
+    int percentImgArq = 99; //compressao da imagem vinda do arquivo interno 20
+    int percentImgCam = 99; //compressao da imagem vinda do arquivo interno  99
     Drawable bitmapPadrao;//guarda a imagem padrao do usuario
     Config config;
-
     Boolean okUsuario = false;
     String LinkImagem = "";
     String ImageAntiga = "";
     View view;
     VerificaConexao verificaConexao;
-
-
-
     SharedPreferences getSharedPreferences;
     Loading loading;
     boolean statusCad =false;
@@ -134,8 +118,6 @@ public class fragmentUsuario extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_fragment_usuario, container, false);
-       // caixaDialogo = new CaixaDialogo();
-        //caixaDialogo.MenssagemDialog(getActivity(),"Aguarde...Carregando!!!");
         config = new Config();
         verificaConexao = new VerificaConexao();
         getSharedPreferences = PreferenceManager
@@ -143,9 +125,7 @@ public class fragmentUsuario extends Fragment {
         IdLogin = getSharedPreferences.getInt("idLogin", -1);
         loading = new Loading(getActivity());
         loading.abrir("Aguarde...");
-
-
-       view.setFocusableInTouchMode(true);
+        view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener( new View.OnKeyListener()
         {
@@ -162,7 +142,6 @@ public class fragmentUsuario extends Fragment {
                     ((Activity)getActivity()).setResult(RESULT_OK, data);
                     getActivity().finish();
                     return true;
-
                 }
                 return false;
             }
@@ -195,8 +174,6 @@ public class fragmentUsuario extends Fragment {
         cadCepUser.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, cadCepUser.getEditText()));
         cadNascimento.getEditText().addTextChangedListener(Mask.insert(Mask.DATA_MASK, cadNascimento.getEditText()));
         //---------------------------------------------------------------------------------------------------------------
-
-
 
         cadCepUser.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -302,7 +279,6 @@ public class fragmentUsuario extends Fragment {
         String Vestado = cadEstadoUser.getSelectedItem().toString();
         String Vcidade = cadCidadeUser.getEditText().getText().toString();
 
-
         if(!Vnome.equals("") && !Vtelefone.equals("") && !Vestado.equals("") && !Vcidade.equals(""))
         {
             if(verificaTelefone(Vtelefone)) {
@@ -405,19 +381,6 @@ public class fragmentUsuario extends Fragment {
                         salvarUsuario();
                     } else {
                         loading.fechar();
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
                 }
             });
@@ -453,14 +416,12 @@ public class fragmentUsuario extends Fragment {
             RequestBody converter64 = RequestBody.create(MediaType.parse("text/plain"), "");
             RequestBody imagemAntiga = RequestBody.create(MediaType.parse("text/plain"), ImageAntiga);
 
-
             if (tipoImagem != "" && img64 != "") {
                 mine = RequestBody.create(MediaType.parse("text/plain"), tipoImagem);
                 converter64 = RequestBody.create(MediaType.parse("text/plain"), img64);
             }
             else {
                 converter64 = RequestBody.create(MediaType.parse("text/plain"), LinkImagem);
-                Log.d("xex","sem imagem");
             }
 
             IApi iApi = IApi.retrofit.create(IApi.class);
@@ -471,7 +432,6 @@ public class fragmentUsuario extends Fragment {
                     loading.fechar();
                     if (response.isSuccessful()) {
                         qtTentativaRealizadaEditar = 0;
-
                         switch (response.code())
                         {
                             case 204:
@@ -506,19 +466,6 @@ public class fragmentUsuario extends Fragment {
                         editarUsuario();
                     } else {
                         loading.fechar();
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
                 }
             });
@@ -538,9 +485,7 @@ public class fragmentUsuario extends Fragment {
                 callBuscaUser.cancel();
                 switch (response.code()) {
                     case 200:
-
                         BtSalvar.setText("Salvar alteração");
-
                         List<Usuario> users = response.body();
                         Usuario user = users.get(0);
                         cadNomeUser.getEditText().setText(user.getNome());
@@ -552,7 +497,6 @@ public class fragmentUsuario extends Fragment {
                         cadCidadeUser.getEditText().setText(user.getCidade());
                         cadObsUser.getEditText().setText(user.getObs());
                         cadCepUser.getEditText().setText(user.getCep());
-
                         okUsuario = true;
                         LinkImagem = user.getLinkImagem();
                         ImageAntiga = user.getLinkImagem();
@@ -589,30 +533,19 @@ public class fragmentUsuario extends Fragment {
                             outputNascimento = dataFormat2.format(dataFormat.parse(user.getDataNascimento()));
                         } catch (ParseException p) {
                         }
-
                         cadNascimento.getEditText().setText(outputNascimento);
-
-
                         SharedPreferences.Editor e = getSharedPreferences.edit();
                         e.putInt("idUsuario",user.getIdUsuario());
-
-
                         e.putString("typeUserApp","COMUMUSER");
                         e.putString("nomeUser",user.getNome());
                         e.putString("linkImagem",user.getLinkImagem());
-
                         e.apply();
-
                         break;
 
 
                     case 400:
                         if (response.message().equals("1")) {
                             BtSalvar.setText("Salvar");
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
                         }
                         break;
                 }
@@ -648,9 +581,7 @@ public class fragmentUsuario extends Fragment {
         view.findViewById(R.id.bt_get_camera).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-
                 startActivityForResult(intent,imagem_camera);
-
             }
         });
 
@@ -665,7 +596,6 @@ public class fragmentUsuario extends Fragment {
         alerta = builder.create();
         alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alerta.show();
-
     }
     //-------------------------------------
 
@@ -707,7 +637,6 @@ public class fragmentUsuario extends Fragment {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-
         alerta.dismiss();
         if(resultCode!=0)
             loading.abrir("Aguarde...");
@@ -809,32 +738,7 @@ public class fragmentUsuario extends Fragment {
             }catch (ParseException p) { }
 
             ((TextInputLayout) getActivity().findViewById(R.id.txt_nascimento)).getEditText().setText(output);
-
         }
     }
     //------------------------------------------------------------
-
-
-    // do fragment
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        //void onFragmentInteraction(Uri uri);
-    }
 }

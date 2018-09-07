@@ -39,10 +39,8 @@ public class servicos_salao extends AppCompatActivity {
     RecyclerView lista;
     List<ServicoSalao> servicosSalao;
     String idSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
     List<ServicoSalao> ListaServicos;
     @Override
@@ -58,7 +56,6 @@ public class servicos_salao extends AppCompatActivity {
         upArrow.setColorFilter(ContextCompat.getColor(servicos_salao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
         loading = new Loading(servicos_salao.this);
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         idSalao = getSharedPreferences.getString("idSalao", "");
@@ -71,8 +68,6 @@ public class servicos_salao extends AppCompatActivity {
                startActivityForResult(intent,2);
             }
         });
-
-
         lista = (RecyclerView) findViewById(R.id.listServicos);
         lista.setHasFixedSize(true);
         loading.abrir("Aguarde...");
@@ -84,7 +79,6 @@ public class servicos_salao extends AppCompatActivity {
 
     public void getServicos(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<ServicoSalao>> callBuscaServico = iApi.BuscaServicosSalao(id);
         callBuscaServico.enqueue(new Callback<List<ServicoSalao>>() {
@@ -92,9 +86,7 @@ public class servicos_salao extends AppCompatActivity {
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaServico.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
@@ -105,14 +97,7 @@ public class servicos_salao extends AppCompatActivity {
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
@@ -124,12 +109,9 @@ public class servicos_salao extends AppCompatActivity {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
 
     @Override
@@ -152,13 +134,8 @@ public class servicos_salao extends AppCompatActivity {
                 ListaServicos.remove(pos);
                 lista.setAdapter(new Adaptador_servico_salao(ListaServicos,lista));
             }
-
         }
         else
             getServicos(idSalao);
-
-
-
-
     }
 }

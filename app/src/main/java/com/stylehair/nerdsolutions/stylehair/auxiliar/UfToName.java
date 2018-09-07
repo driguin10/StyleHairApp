@@ -12,17 +12,17 @@ public class UfToName {
             "PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO"};
 
 
-public String estado(String uf)
-{
-    int pos = -1;
-    for(int x= 0; x<UfEstados.length;x++)
+    public String estado(String uf)
     {
-        if(UfEstados[x].equals(uf))
+        int pos = -1;
+        for(int x= 0; x<UfEstados.length;x++)
         {
-            pos = x;
+            if(UfEstados[x].equals(uf))
+            {
+                pos = x;
+            }
         }
+        return NomeEstados[pos];
     }
-    return NomeEstados[pos];
-}
 
 }

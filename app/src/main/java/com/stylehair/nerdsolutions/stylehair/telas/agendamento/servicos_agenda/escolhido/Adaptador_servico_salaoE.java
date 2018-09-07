@@ -12,17 +12,11 @@ import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_servico_salaoE extends RecyclerView.Adapter<viewHolderServicoSalao_escolhido> {
-
     List<ServicoSalao> ListaServicoSalao;
     RecyclerView Rlista;
     Button BtInfo;
-
-
 
     public Adaptador_servico_salaoE(List<ServicoSalao> listaServicoSalao, RecyclerView lista,Button bt_info) {
         ListaServicoSalao = listaServicoSalao;

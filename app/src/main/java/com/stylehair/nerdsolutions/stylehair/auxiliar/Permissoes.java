@@ -21,9 +21,6 @@ public class Permissoes extends AppCompatActivity {
     private Boolean habilitado = false;
     private static String menssagem = "É preciso habilitar a permissão para continuar!!!";
 
-
-
-
     public boolean habilitarIMagem(Activity activity)
     {
         //**************** Qual permissão ira solicitar **********************

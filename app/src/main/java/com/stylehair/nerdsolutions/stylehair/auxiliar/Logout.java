@@ -9,11 +9,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.classes.favorito_usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.favorito.Adaptador_favorito;
 import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,7 +35,25 @@ public class Logout {
         SharedPreferences getSharedPreferencesL = PreferenceManager
                 .getDefaultSharedPreferences(activity);
 
-        String topic = getSharedPreferencesL.getString("topicoNotificacao","");
+        String topicos = getSharedPreferencesL.getString("topicosFavoritos","");
+
+        ArrayList<String> arrayTopFavoritos = new ArrayList<>();
+        Gson gson = new Gson();
+        if(!topicos.equals(""))
+        {
+
+            arrayTopFavoritos = gson.fromJson(topicos, new TypeToken<ArrayList<String>>(){}.getType());
+            if(arrayTopFavoritos.size()>0)
+            {
+                for(int x=0;x<arrayTopFavoritos.size();x++)
+                {
+                    topicoNotificacao.removeTopico(arrayTopFavoritos.get(x));
+                    Log.d("xex", "remove topic - "+ arrayTopFavoritos.get(x));
+                }
+            }
+        }
+
+
         idLogin = getSharedPreferencesL.getInt("idLogin",-1);
         SharedPreferences.Editor e = getSharedPreferencesL.edit();
 
@@ -45,16 +67,11 @@ public class Logout {
         e.remove("idSalao");
         e.remove("idFuncionario");
         e.remove("idUserAgendamento");
+        e.remove("topicoNotificacao");
         e.putBoolean("firstStart",false);
         e.apply();
         e.commit();
-
-       /* if(!topic.equals("")) {
-            topicoNotificacao.removeTopico(topic);
-        }*/
-
         getFavoritos(String.valueOf(idLogin));
-
         Intent intent = new Intent(activity,logar.class);
         if(!principal)
             ActivityCompat.finishAffinity(activity);
@@ -65,7 +82,6 @@ public class Logout {
 
     public void getFavoritos(final String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<favorito_usuario>> callBuscaFavorito = iApi.BuscaFavoritoUsuario(id);
         callBuscaFavorito.enqueue(new Callback<List<favorito_usuario>>() {
@@ -73,7 +89,6 @@ public class Logout {
             public void onResponse(Call<List<favorito_usuario>> call, Response<List<favorito_usuario>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaFavorito.cancel();
-
                 switch (response.code())
                 {
                     case 200:

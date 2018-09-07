@@ -1,11 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.classes.cep;
 
-/**
- * Created by thiagocury on 21/11/17.
- */
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 public class CEP {
 

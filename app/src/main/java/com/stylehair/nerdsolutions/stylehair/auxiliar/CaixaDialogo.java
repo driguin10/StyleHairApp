@@ -8,11 +8,9 @@ import android.app.ProgressDialog;
  */
 
 public class CaixaDialogo {
-
     Activity activity;
     ProgressDialog dialog;
     String Texto;
-
     public void MenssagemDialog(Activity activity, String texto)
     {
         this.activity = activity;

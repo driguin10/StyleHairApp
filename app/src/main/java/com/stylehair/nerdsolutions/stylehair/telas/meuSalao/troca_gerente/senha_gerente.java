@@ -27,7 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class senha_gerente extends AppCompatActivity {
-
     String idSalao;
     String idUsuario;
     Button btTransferir;
@@ -35,10 +34,10 @@ public class senha_gerente extends AppCompatActivity {
     TextInputLayout senha;
     TextInputLayout Rsenha;
     Loading loading;
+    int qtTentativas = 3;
+    int qtTentativaRealizada = 0;
+    int qtTentativaRealizadaT = 0;
 
-    public int qtTentativas = 3;
-    public int qtTentativaRealizada = 0;
-    public int qtTentativaRealizadaT = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +52,6 @@ public class senha_gerente extends AppCompatActivity {
         senha = (TextInputLayout) findViewById(R.id.SenhaGerente);
         Rsenha = (TextInputLayout) findViewById(R.id.RSenhaGerente);
         btTransferir = (Button) findViewById(R.id.bt_transferir);
-
         cancelar = (Button) findViewById(R.id.bt_cancelar);
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +73,6 @@ public class senha_gerente extends AppCompatActivity {
 
     public boolean verificaCampos(){
         Boolean status = false;
-
         String Senha =senha.getEditText().getText().toString();
         String RSenha=Rsenha.getEditText().getText().toString();
 
@@ -120,8 +117,6 @@ public class senha_gerente extends AppCompatActivity {
 
 
     public void logar(){
-
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
 
@@ -137,7 +132,6 @@ public class senha_gerente extends AppCompatActivity {
                 callLoga.cancel();
                 loading.fechar();
                 if(response.isSuccessful()) {
-
                     qtTentativaRealizada = 0;
                     Logar logar = response.body();
 
@@ -148,7 +142,6 @@ public class senha_gerente extends AppCompatActivity {
                 }
                 else
                 {
-
                     switch (response.code()) {
                         case 400:
                             if(response.message().equals("01"))
@@ -179,11 +172,7 @@ public class senha_gerente extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-
 
 
     public void transferirGerente(){
@@ -194,12 +183,8 @@ public class senha_gerente extends AppCompatActivity {
         callTrocaGerencia.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 loading.fechar();
-
-
                 qtTentativaRealizadaT = 0;
-
                 switch (response.code()){
                     case 204:
                         Logout logout = new Logout();
@@ -223,7 +208,6 @@ public class senha_gerente extends AppCompatActivity {
 
                 }
                 callTrocaGerencia.cancel();
-
             }
 
             @Override
@@ -233,7 +217,6 @@ public class senha_gerente extends AppCompatActivity {
                     transferirGerente();
                 } else {
                     loading.fechar();
-                    Log.d("xex",call.request().toString());
                 }
             }
         });

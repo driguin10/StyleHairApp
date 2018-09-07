@@ -33,7 +33,6 @@ public class ver_funcionario extends AppCompatActivity {
         Drawable upArrow = ContextCompat.getDrawable(ver_funcionario.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(ver_funcionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.containerFuncionario);
         setupViewPager(mViewPager);
@@ -43,7 +42,6 @@ public class ver_funcionario extends AppCompatActivity {
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_time));
         tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_servicos));
         tabLayout.getTabAt(3).setIcon(getResources().getDrawable(R.drawable.icone_time));
-
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -66,12 +64,10 @@ public class ver_funcionario extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
 
@@ -90,7 +86,6 @@ public class ver_funcionario extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-
                 Intent intent = new Intent(ver_funcionario.this,funcionarios.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

@@ -27,7 +27,6 @@ import retrofit2.Response;
 
 
 public class viewHolderServicoFuncionario extends ViewHolder implements View.OnClickListener  {
-
     TextView NomeServico;
     TextView valor;
     CardView card;
@@ -43,29 +42,20 @@ public class viewHolderServicoFuncionario extends ViewHolder implements View.OnC
 
     public viewHolderServicoFuncionario(View itemView, List<ServicoSalao> dados) {
         super(itemView);
-
-
         NomeServico = (TextView) itemView.findViewById(R.id.nome_servico);
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
         card = (CardView) itemView.findViewById(R.id.cardsServico);
         excluir = (ImageButton) itemView.findViewById(R.id.bt_excluir_servico);
         card.setOnClickListener(this);
-
         excluir.setOnClickListener(this);
         ListaServicoSalao = dados;
         contexto = itemView.getContext();
-
-
-
-
     }
 
     @Override
     public void onClick(View v) {
         final int position = getAdapterPosition();
         servicoSalao = ListaServicoSalao.get(position);
-
-
         if (v.getId() == excluir.getId())
         {
             new AlertDialog.Builder(contexto)
@@ -74,12 +64,7 @@ public class viewHolderServicoFuncionario extends ViewHolder implements View.OnC
                     .setIcon(R.drawable.icone_delete)
                     .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-
-
                             excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()),position);
-
-
-
                         }
                     })
                     .setNegativeButton("não", new DialogInterface.OnClickListener() {
@@ -118,12 +103,10 @@ public class viewHolderServicoFuncionario extends ViewHolder implements View.OnC
                     {
                         case 204:
                             Toast.makeText(contexto,"Excluido com sucesso!!",Toast.LENGTH_LONG).show();
-
                             ListaServicoSalao.remove(posicao);
                             RecyclerView lista;
                             lista = (RecyclerView) view.findViewById(R.id.listServicos_funcionario);
                             lista.setAdapter(new Adaptador_servico_funcionario(ListaServicoSalao,idF,view));
-
                             break;
 
                         case 400:
@@ -139,42 +122,17 @@ public class viewHolderServicoFuncionario extends ViewHolder implements View.OnC
                             }
                             break;
                     }
-
                     callExcluiServico.cancel();
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
                     if (qtTentativaRealizada < qtTentativas) {
                         qtTentativaRealizada++;
                         excluiServico(String.valueOf(servicoSalao.getIdServicoSalao()),posicao);
-                    } else {
-
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
-
-
-
-
                 }
             });
         }
-
-
-
     }
 

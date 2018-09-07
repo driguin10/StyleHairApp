@@ -21,6 +21,7 @@
 
 
             <ImageView
+                android:id="@+id/img_fundo_salao"
                 android:layout_width="match_parent"
                 android:layout_height="225dp"
                 android:contentDescription="@string/app_name"

@@ -27,25 +27,17 @@ import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderUsuario extends ViewHolder implements View.OnClickListener  {
-
-
     ImageView imagemFunc;
     TextView NomeFuncionario;
     CardView card;
     Context contexto;
-
     List<Usuario> ListaUsuario;
     Usuario usuario;
 
-
     public viewHolderUsuario(View itemView, List<Usuario> dados) {
         super(itemView);
-
         imagemFunc = (ImageView) itemView.findViewById(R.id.img_funcionario);
         NomeFuncionario = (TextView) itemView.findViewById(R.id.nome_funcionario);
         card = (CardView) itemView.findViewById(R.id.cardsFunc);
@@ -58,7 +50,5 @@ public class viewHolderUsuario extends ViewHolder implements View.OnClickListene
     public void onClick(View v) {
         int position = getAdapterPosition();
         usuario = ListaUsuario.get(position);
-
-        Log.d("xex","foi - " + usuario.getNome());
     }
 }

@@ -29,26 +29,20 @@ public class meuSalao extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meu_salao);
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_meu_salao);
         setSupportActionBar(myToolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Meu Salão");
         Drawable upArrow = ContextCompat.getDrawable(meuSalao.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(meuSalao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         bt_meuSalao = (CardView) findViewById(R.id.card_bt1);
         bt_funcionario = (CardView) findViewById(R.id.card_bt2);
         bt_Servicos = (CardView) findViewById(R.id.card_bt3);
         bt_notificacao = (CardView) findViewById(R.id.card_bt4);
         bt_avaliacoes = (CardView) findViewById(R.id.card_bt5);
         bt_Configuracao = (CardView) findViewById(R.id.card_bt6);
-
-
-
 
         bt_meuSalao.setOnClickListener(new View.OnClickListener() {
             @Override

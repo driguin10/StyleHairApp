@@ -36,8 +36,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class minha_agenda extends AppCompatActivity implements DatePickerListener{
-
-
     RecyclerView lista;
     Loading loading;
     int qtTentativas = 3;
@@ -80,10 +78,8 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
 
         loading = new Loading(minha_agenda.this);
         lista = (RecyclerView) findViewById(R.id.listaAgendamentos);
-
         lista.setHasFixedSize(true);
         HorizontalPicker picker = (HorizontalPicker) findViewById(R.id.agendaH);
-
         // initialize it and attach a listener
         Resources resources = getBaseContext().getResources();
         picker
@@ -97,13 +93,10 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
                 .setTodayDateTextColor(Color.RED)//numero do dia atual
                 .setUnselectedDayTextColor(Color.GRAY)
                 .setDayOfWeekTextColor(Color.WHITE)
-
                 //botao today----------
                 .setTodayButtonTextColor(Color.RED)
                 .showTodayButton(true)
-
                 //----------------------
-
                 .init();
         picker.setBackgroundColor(Color.DKGRAY);
         TextView btToday = (TextView)findViewById(com.github.jhonnyx2012.horizontalpicker.R.id.tvToday);
@@ -122,13 +115,11 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
 
     public void atualizaHorarios(final String data ,final String id, final String who)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<MeuAgendamento>> callAgendamento = iApi.buscarAgendamento(who,id,data);
         callAgendamento.enqueue(new Callback<List<MeuAgendamento>>() {
             @Override
             public void onResponse(Call<List<MeuAgendamento>> call, Response<List<MeuAgendamento>> response) {
-
                 loading.fechar();
                 qtTentativaRealizada = 0;
                 if(response.isSuccessful()) {
@@ -161,7 +152,6 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {

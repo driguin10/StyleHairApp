@@ -12,13 +12,11 @@ import java.util.List;
 
 
 public class Adaptador_avaliacoes_comentario extends RecyclerView.Adapter<viewHolderAvaliacoes_comentario> {
-
     List<AvaliacaoSalao> ListaAvaliacao;
 
     public  Adaptador_avaliacoes_comentario(List<AvaliacaoSalao> avaliacaoSalao) {
         ListaAvaliacao = avaliacaoSalao;
     }
-
 
     @Override
     public viewHolderAvaliacoes_comentario onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -28,12 +28,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderServicoSalaoAgendado extends ViewHolder  {
-
     TextView NomeServico;
     TextView valor;
     TextView tempo;
@@ -47,5 +43,5 @@ public class viewHolderServicoSalaoAgendado extends ViewHolder  {
         tempo = (TextView) itemView.findViewById(R.id.tempo_servico);
         card = (CardView) itemView.findViewById(R.id.cardsServico);
     }
-    }
+}
 

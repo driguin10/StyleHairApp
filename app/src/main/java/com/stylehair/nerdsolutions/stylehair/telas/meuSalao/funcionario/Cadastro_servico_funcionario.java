@@ -38,11 +38,10 @@ public class Cadastro_servico_funcionario extends AppCompatActivity {
     List<Usuario> usuarios;
     String idSalao;
     String idFuncionario;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     int qtTentativaRealizadaSalvar = 0;
-Button btSalvarServico;
+    Button btSalvarServico;
     Loading loading;
     List<ServicoSalao> ListaServicos;
     @Override
@@ -58,7 +57,6 @@ Button btSalvarServico;
         Drawable upArrow = ContextCompat.getDrawable(Cadastro_servico_funcionario.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(Cadastro_servico_funcionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)
         {
@@ -81,8 +79,6 @@ Button btSalvarServico;
                         idServicoCad = String.valueOf(ListaServicos.get(x).getIdServicoSalao());
                     }
                 }
-
-
                 int posIdServCad = -1;
                 for (int x = 0; x < ListaServicos.size(); x++) {
                     if (ListaServicos.get(x).isSelected()) {
@@ -95,26 +91,16 @@ Button btSalvarServico;
                     idServicoCad = String.valueOf(ListaServicos.get(posIdServCad).getIdServicoSalao());
                     salvarServicos(idFuncionario,idServicoCad);
                 }
-
-
-
-
-
-
-
             }
         });
         loading.abrir("Aguarde...");
         getServicos(idSalao);
-
     }
 
     public void salvarServicos(final String idFunc, final String idServ)
     {
-
         RequestBody func = RequestBody.create(MediaType.parse("text/plain"),idFunc);
         RequestBody serv = RequestBody.create(MediaType.parse("text/plain"),idServ);
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callServicoFunc = iApi.SalvarServicoFuncionario(func,serv);
         callServicoFunc.enqueue(new Callback<ResponseBody>() {
@@ -122,7 +108,6 @@ Button btSalvarServico;
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 qtTentativaRealizadaSalvar = 0 ;
                 callServicoFunc.cancel();
-
                 loading.fechar();
                 switch (response.code())
                 {
@@ -144,9 +129,6 @@ Button btSalvarServico;
                         }
                         break;
                 }
-
-
-
             }
 
             @Override
@@ -158,20 +140,14 @@ Button btSalvarServico;
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
-
-
 
 
     public void getServicos(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<ServicoSalao>> callBuscaFuncionarios = iApi.BuscaServicosSalao(id);
         callBuscaFuncionarios.enqueue(new Callback<List<ServicoSalao>>() {
@@ -179,7 +155,6 @@ Button btSalvarServico;
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaFuncionarios.cancel();
-
                 loading.fechar();
 
                 switch (response.code())
@@ -192,14 +167,7 @@ Button btSalvarServico;
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
@@ -211,12 +179,9 @@ Button btSalvarServico;
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
 
 

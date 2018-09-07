@@ -27,14 +27,11 @@ import retrofit2.Response;
 
 
 public class fragment_servicos_do_salao extends Fragment {
-
     String IdSalao="-1";
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     Loading loading;
-    //GridView lista;
     RecyclerView lista;
-
     List<ServicoSalao> servicosSalao;
     Bundle bundle;
     @Override
@@ -44,21 +41,14 @@ public class fragment_servicos_do_salao extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_servicos_do_salao, container, false);
-
-
-
         if(bundle !=null)
         {
             IdSalao =  bundle.getString("idServico");
         }
-
         loading = new Loading(getActivity());
         lista = (RecyclerView) view.findViewById(R.id.ListaServicos);
-
         loading.abrir("Aguarde...");
         getServicos(IdSalao);
         return view;
@@ -74,7 +64,6 @@ public class fragment_servicos_do_salao extends Fragment {
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaServico.cancel();
-
                 loading.fechar();
                 switch (response.code())
                 {
@@ -100,8 +89,5 @@ public class fragment_servicos_do_salao extends Fragment {
                 }
             }
         });
-
     }
-
-
 }

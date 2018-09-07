@@ -41,17 +41,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class busca_salao extends AppCompatActivity implements LocationListener {
-
     RecyclerView lista;
     List<BuscaSalao> salaos;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     int qtTentativaRealizadaMais = 0;
     Loading loading;
     private LocationManager locationManager;
     String query = "";
-
     ImageButton busca;
     ImageButton filtrar;
     EditText nome;
@@ -60,30 +57,25 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     double latitude;
     double longitude;
     int kilometro = 5;
-
     Location myLocation;
     String Provider;
     int idLogin;
-
-
-
     private int  totalItemCount, firstVisibleItem, currentitem;
     boolean isScrolling;
     ProgressBar progressoMais;
-
     LinearLayoutManager layout;
-
     List<BuscaSalao> ListaSalao;
-
-
     int QTRESULT = 10; // quantidade de registros que ira trazer do banco a cada atualização
     int CURRENTRESULT = 0; //  guarda a pagina que ja foi solicitada na atualizacao
     int inicioAUX = 0; // guarda o periodo inicial da atualizacao
     int fimAUX = 0; // guarda o periodo final da atualizacao
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busca_salao);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_busca);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
@@ -106,7 +98,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
          layout = new LinearLayoutManager(getApplicationContext());
         lista = (RecyclerView) findViewById(R.id.listBuscaSaloes);
         lista.setHasFixedSize(true);
-
         busca = (ImageButton) findViewById(R.id.bt_encontrar);
         nome = (EditText) findViewById(R.id.txt_query);
         nome.setText(query);
@@ -119,7 +110,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                 startActivityForResult(intent,1);
             }
         });
-
         busca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,7 +121,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
         minhaPosicao();
         lista.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -143,16 +132,13 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
                 currentitem = layout.findLastVisibleItemPosition();
                 totalItemCount = layout.getItemCount();
-
                 firstVisibleItem = layout.findFirstVisibleItemPosition();
-
                 if(isScrolling && (currentitem + firstVisibleItem == totalItemCount) )
                 {
                     isScrolling = false;
-                    teste();
+                    carregarMais();
                 }
 
             }
@@ -161,7 +147,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     }
 
 
-    public void teste(){
+    public void carregarMais(){
         int inii = CURRENTRESULT;
         int fim = CURRENTRESULT + QTRESULT;
         if(inii != inicioAUX && fim !=fimAUX)
@@ -183,12 +169,9 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     }
 
 
-//*************************** mudar isso************************////////////////*******************
     public void minhaPosicao()
     {
-
         Provider = locationManager.getBestProvider(new Criteria(),true);
-
         try
         {
             myLocation = locationManager.getLastKnownLocation(Provider);
@@ -200,20 +183,11 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             {
                 latitude = -20.52717426;
                 longitude = -47.42805847;
-               // Log.d("xex","setou padrao");
             }
             busca.callOnClick();
         }
         catch (SecurityException seg)
-        {
-           // Log.d("xex","erro");
-        }
-        //Log.d("xex","lat - " +String.valueOf(myLocation.getLatitude()));
-        //Log.d("xex","long - " +String.valueOf(myLocation.getLongitude()));
-
-        //latitude = -20.52717426;
-        //longitude = -47.42805847;
-
+        { }
     }
 
     public void getBusca(final int kilometro, final String nome, final String cidade, final double latitude, final double longitude,final int IdLogin)
@@ -224,7 +198,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         RequestBody Longitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longitude));
         RequestBody Cidade = RequestBody.create(MediaType.parse("text/plain"), cidade);
         RequestBody Nome = RequestBody.create(MediaType.parse("text/plain"), nome);
-
         RequestBody Pagina = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
         RequestBody QtResultados = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(QTRESULT));
         IApi iApi = IApi.retrofit.create(IApi.class);
@@ -234,42 +207,28 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             public void onResponse(Call<List<BuscaSalao>> call, Response<List<BuscaSalao>> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaSaloes.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
-
-                         ListaSalao = response.body();
-
+                        ListaSalao = response.body();
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         lista.setAdapter(new Adaptador_BuscaSalao(ListaSalao));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         CURRENTRESULT = CURRENTRESULT + QTRESULT;
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
             public void onFailure(Call<List<BuscaSalao>> call, Throwable t) {
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
-
                     getBusca(kilometro, nome, cidade, latitude,longitude,IdLogin);
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
@@ -284,7 +243,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         RequestBody Longitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longitude));
         RequestBody Cidade = RequestBody.create(MediaType.parse("text/plain"), cidade);
         RequestBody Nome = RequestBody.create(MediaType.parse("text/plain"), nome);
-
         RequestBody LimiteIni = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(limIni));
         RequestBody QtResultados = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(limFim));
         IApi iApi = IApi.retrofit.create(IApi.class);
@@ -303,29 +261,20 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                         lista.getAdapter().notifyDataSetChanged();
                         CURRENTRESULT= CURRENTRESULT+QTRESULT;
                         break;
-
-
                 }
-
-
-
             }
 
             @Override
             public void onFailure(Call<List<BuscaSalao>> call, Throwable t) {
                 if (qtTentativaRealizadaMais < qtTentativas) {
                     qtTentativaRealizadaMais++;
-
                     getMais(kilometro, nome, cidade, latitude,longitude,IdLogin,limIni,limFim);
                 }
                 else {
                     progressoMais.setVisibility(View.GONE);
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
 
     //--------- quando escolhe uma imagem---------------------------------
@@ -333,7 +282,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-
 
       if(requestCode==1)
       {
@@ -345,7 +293,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                   kilometroRedor.setText("cidade : " + cidade);
               }
               else {
-                  
                   kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você");
               }
 
@@ -355,7 +302,6 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
         if(requestCode==2)
         {
-            Log.d("xex","chego");
             busca.callOnClick();
         }
 
@@ -383,22 +329,17 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-
-    }
+    public void onLocationChanged(Location location) { }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
 
     @Override
-    public void onProviderEnabled(String provider) {
-
-    }
+    public void onProviderEnabled(String provider) {}
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(String provider) {}
 
-    }
+
+
 }

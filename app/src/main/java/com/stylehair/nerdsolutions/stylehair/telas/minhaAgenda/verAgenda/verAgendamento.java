@@ -36,7 +36,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class verAgendamento extends AppCompatActivity {
-
     String idAgenda;
     String idUsuario;
     String nome;
@@ -46,19 +45,15 @@ public class verAgendamento extends AppCompatActivity {
     String horaFim;
     String status;
     String tipo;
-
     String nomeFuncionario;
     String idFuncionario;
     String imagemFuncionario;
-
-     String endereco;
-     String numero;
-     String bairro;
-     String cidade;
-     String complemento;
-     String estado;
-
-
+    String endereco;
+    String numero;
+    String bairro;
+    String cidade;
+    String complemento;
+    String estado;
     TextView txthorario;
     TextView txtdata;
     TextView txtstatus;
@@ -71,13 +66,11 @@ public class verAgendamento extends AppCompatActivity {
     Button btCancelarAgenda;
     Button btExcluirAgenda;
     Button btFinalizarAgenda;
-
     Loading loading;
     int qtTentativas = 3;
     int qtTentativaRealizadaCancelar = 0;
     int qtTentativaRealizadaExcluir = 0;
     int qtTentativaRealizadaFinalizar = 0;
-
     TextView txtValorTotal;
     RecyclerView listaServicos;
     LinearLayout lay_func;
@@ -138,13 +131,9 @@ public class verAgendamento extends AppCompatActivity {
         String[] d = data.split("-");
         data =d[2]+"/"+d[1]+"/"+d[0];
         txtdata.setText(data);
-
-
-
             if(status.equals("1")) {
                 txtstatus.setText("Aguardando Atendimento");
                 btExcluirAgenda.setVisibility(View.GONE);
-
                 if(tipo.equals("1"))
                 {
                     btFinalizarAgenda.setVisibility(View.VISIBLE);
@@ -203,7 +192,6 @@ public class verAgendamento extends AppCompatActivity {
         btExcluirAgenda.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                     ExcluirAgendamento(idAgenda);
                     loading.abrir("Aguarde...");
             }
@@ -216,7 +204,6 @@ public class verAgendamento extends AppCompatActivity {
                 loading.abrir("Aguarde...");
             }
         });
-
 
        if(tipo.equals("1"))
         {
@@ -239,7 +226,6 @@ public class verAgendamento extends AppCompatActivity {
         callAgendamento.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 loading.fechar();
                 qtTentativaRealizadaFinalizar = 0;
                 if(response.isSuccessful()) {
@@ -272,7 +258,6 @@ public class verAgendamento extends AppCompatActivity {
         callAgendamento.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 loading.fechar();
                 qtTentativaRealizadaCancelar = 0;
                 if(response.isSuccessful()) {
@@ -312,7 +297,6 @@ public class verAgendamento extends AppCompatActivity {
         callAgendamento.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 loading.fechar();
                 qtTentativaRealizadaExcluir = 0;
                 if(response.isSuccessful()) {
@@ -338,15 +322,12 @@ public class verAgendamento extends AppCompatActivity {
 
     public void getServicos(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<ServicoSalao>> callBuscaServico = iApi.buscarServicosAgendamento(id);
         callBuscaServico.enqueue(new Callback<List<ServicoSalao>>() {
             @Override
             public void onResponse(Call<List<ServicoSalao>> call, Response<List<ServicoSalao>> response) {
-                Log.d("xex",String.valueOf(response.code()) + " - " + response.message());
                 callBuscaServico.cancel();
-
                 loading.fechar();
                 if(response.isSuccessful())
                 {
@@ -355,9 +336,7 @@ public class verAgendamento extends AppCompatActivity {
                     layout.setOrientation(LinearLayoutManager.VERTICAL);
                     listaServicos.setAdapter(new Adaptador_servico_salao_agendado(Lservicos,listaServicos,txtValorTotal));
                     listaServicos.setLayoutManager(layout);
-
                 }
-
             }
 
             @Override
@@ -368,7 +347,6 @@ public class verAgendamento extends AppCompatActivity {
 
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

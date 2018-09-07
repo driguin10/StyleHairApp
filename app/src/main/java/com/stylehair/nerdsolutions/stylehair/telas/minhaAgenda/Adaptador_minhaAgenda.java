@@ -12,12 +12,9 @@ import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
+
 
 public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaAgenda> {
-
     List<MeuAgendamento> meuAgendamentos;
     Context contexto;
     String Tipo;
@@ -25,7 +22,6 @@ public class Adaptador_minhaAgenda extends RecyclerView.Adapter<viewHolderMinhaA
         meuAgendamentos = MeuAgendamentos;
         Tipo = tipo;
     }
-
 
     @Override
     public viewHolderMinhaAgenda onCreateViewHolder(ViewGroup parent, int viewType) {

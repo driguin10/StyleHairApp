@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.CaixaDialogo;
@@ -28,6 +29,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.favorito_usuario;
 import com.stylehair.nerdsolutions.stylehair.telas.principal;
 import com.stylehair.nerdsolutions.stylehair.telas.introducao.Introducao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,16 +44,11 @@ public class logar extends AppCompatActivity {
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
     public String emailUser;
-
     public TextInputLayout logEmail;
     public TextInputLayout logSenha;
     public Button btLogar;
     public Button btCadastrar;
     public TextView btEsqueci;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +64,8 @@ public class logar extends AppCompatActivity {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-
                 SharedPreferences getSharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(getBaseContext());
-
 
                 isFirstStart = getSharedPreferences.getBoolean("firstStart", true);
                 isLogado = getSharedPreferences.getBoolean("logado", false);
@@ -90,7 +85,6 @@ public class logar extends AppCompatActivity {
                          startActivity(i);
                          finish();
                     }
-
                 }
             }
         });
@@ -117,7 +111,6 @@ public class logar extends AppCompatActivity {
         btLogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 VerificaConexao verificaConexao = new VerificaConexao();
                 if(verificaConexao.verifica(logar.this)) {
                     if (verificaCampos()) {
@@ -130,19 +123,12 @@ public class logar extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
 
     public void logar(){
-
         Login login = new Login();
         login.setEmail(logEmail.getEditText().getText().toString());
         login.setSenha(logSenha.getEditText().getText().toString());
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<Logar> callLoga = iApi.Logar(login);
         callLoga.enqueue(new Callback<Logar>() {
@@ -154,7 +140,6 @@ public class logar extends AppCompatActivity {
                     loading.fechar();
                     qtTentativaRealizada = 0;
                     Logar logar = response.body();
-
                     if(logar.login!=null) {
                         int idLogin = -1;
                         String Email = "";
@@ -166,19 +151,31 @@ public class logar extends AppCompatActivity {
                         NomeUsuario = logar.getNomeUser();
                         linkImagem = logar.getLinkImagem();
                         topico = logar.getTopico();
-
                         for (Login log : logar.login) {
                             Email = log.getEmail();
                             idLogin = log.getIdLogin();
                         }
-
+                        ArrayList<String> arrayTopFavoritos = new ArrayList<>();
                         if(logar.getFavoritos().size()>0)
                         {
                             for (favorito_usuario fav : logar.favoritos) {
                                 topicoNotificacao.addTopico(fav.getTopicoNotificacao());
+                                arrayTopFavoritos.add(fav.getTopicoNotificacao());
+
+                                    Log.d("xex", "add topic - "+ fav.getTopicoNotificacao());
+
                             }
                         }
+                        topicoNotificacao.addTopico("AllNotifications");
 
+
+
+                        if(!topico.equals("")) {
+                            topicoNotificacao.addTopico(topico);
+                        }
+
+                        Gson gson = new Gson();
+                        String jsonTopicoFavoritos = gson.toJson(arrayTopFavoritos);
 
 
                         SharedPreferences getSharedPreferencesL = PreferenceManager
@@ -192,24 +189,19 @@ public class logar extends AppCompatActivity {
                         e.putString("linkImagem",linkImagem);
                         e.putBoolean("firstStart", false);
                         e.putString("topicoNotificacao",topico);
+                        e.putString("topicosFavoritos",jsonTopicoFavoritos);
                         e.apply();
                         e.commit();
 
-                        topicoNotificacao.addTopico("AllNotifications");
-                        if(!topico.equals("")) {
-                            topicoNotificacao.addTopico(topico);
-                        }
+
 
                         Intent i = new Intent(com.stylehair.nerdsolutions.stylehair.telas.login.logar.this, principal.class);
                         startActivity(i);
                         finish();
-
                     }
                 }
                 else
                 {
-
-
                     loading.fechar();
                     switch (response.code()) {
                         case 400:
@@ -225,11 +217,6 @@ public class logar extends AppCompatActivity {
                             break;
                     }
                 }
-
-
-
-
-
             }
 
             @Override
@@ -245,16 +232,12 @@ public class logar extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public boolean verificaCampos(){
         Boolean status = false;
         String Email = logEmail.getEditText().getText().toString();
         String Senha =logSenha.getEditText().getText().toString();
-
-
         if(!Email.equals("") && !Senha.equals(""))
         {
             if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
@@ -290,8 +273,4 @@ public class logar extends AppCompatActivity {
         }
         return status;
     }
-
-
-
-
 }

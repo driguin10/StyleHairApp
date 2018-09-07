@@ -1,6 +1,8 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.BlurMaskFilter;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +17,8 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.List;
 
-
-
 public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSalao> {
-
     List<BuscaSalao> ListaObjeto;
-
 
     public Adaptador_BuscaSalao(List<BuscaSalao> listaObjeto) {
         ListaObjeto = listaObjeto;
@@ -37,22 +35,21 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
          Resources r = holder.resources;
          holder.nomeSalao.setText(ListaObjeto.get(position).getNome());
          holder.endereco.setText(ListaObjeto.get(position).getEndereco()+","+ListaObjeto.get(position).getNumero()+","+ListaObjeto.get(position).getCidade());
-
-
         float distanc = ListaObjeto.get(position).getDistancia();
         NumberFormat format = NumberFormat.getInstance();
         format.setMaximumFractionDigits(1);
         format.setMinimumFractionDigits(1);
         format.setMaximumIntegerDigits(2);
         format.setRoundingMode(RoundingMode.HALF_UP);
-
-
          holder.distancia.setText(format.format(distanc)+"km");
          if(ListaObjeto.get(position).getLinkImagem().equals(""))
-            holder.imagem.setImageDrawable(r.getDrawable(R.drawable.img_padrao_user));
-         else
-            Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaObjeto.get(position).getLinkImagem()).into(holder.imagem);
 
+            holder.imagem.setImageDrawable(r.getDrawable(R.drawable.img_padrao_user));
+         else {
+             Picasso.with(holder.contexto).load("http://stylehair.xyz/" + ListaObjeto.get(position).getLinkImagem()).into(holder.imagem);
+
+
+         }
 
          if(ListaObjeto.get(position).getStatus() == 1)
          {
@@ -71,22 +68,13 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
          }
 
         if(ListaObjeto.get(position).getIdFavorito()>=0)
-        {
             holder.coracao.setImageDrawable(r.getDrawable(R.drawable.icone_favorito));
-
-        }
-        else{
+        else
             holder.coracao.setImageDrawable(r.getDrawable(R.drawable.icone_favorito_of));
-
-        }
 
          holder.pontos.setText(String.valueOf(ListaObjeto.get(position).getPontos()));
 
 }
-
-
-
-
 
     @Override
     public int getItemCount() {

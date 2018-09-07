@@ -62,12 +62,9 @@ public class editar_salao extends AppCompatActivity {
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
     static final int mapa = 2;
-
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
-
     CircleImageView ImagemSalao;
-
     TextInputLayout NomeSalao;
     TextInputLayout Telefone1Salao;
     TextInputLayout Telefone2Salao;
@@ -78,73 +75,51 @@ public class editar_salao extends AppCompatActivity {
     TextInputLayout CidadeSalao;
     TextInputLayout SobreSalao;
     TextInputLayout EmailSalao;
-
     TextInputLayout CnpjSalao;
     TextInputLayout ComplementoSalao;
-
     Spinner EstadoSalao;
-
     Button SalvarSalao;
     Button CaregaImgSalao ;
-
-
     ImageButton ExcluiImgSalao;
-
     String IdUsuario;
     int idSalao = -1;
-
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
-    int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
-    int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
-
+    int percentImgArq = 99; //compressao da imagem vinda do arquivo interno 20
+    int percentImgCam = 99; //compressao da imagem vinda do arquivo interno 99
     Image image;
     String ImageAntiga="";
-
     Drawable bitmapPadrao;//guarda a imagem padrao do usuario
     Config config;
-
     String LinkImagem = "";
     Loading loading;
     Boolean okSalao = false;
-
-
     Switch agendar;
-
     Button pegarPosicao;
-
     String latitude;
     String longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_salao);
-
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_editar_salao);
         setSupportActionBar(myToolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Meu Salão");
-
         Drawable upArrow = ContextCompat.getDrawable(editar_salao.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(editar_salao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-
         loading = new Loading(this);
         config = new Config();
         image = new Image();
-
         //-------pega o id do login para fazer a consulta---------------
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         IdUsuario = getSharedPreferences.getString("idUsuario", "");
         //---------------------------------------------------------------
-
         //--------------- Casting dos componentes --------------------------
-
         NomeSalao = (TextInputLayout) findViewById(R.id.edt_txt_NomeSalao);
         Telefone1Salao = (TextInputLayout) findViewById(R.id.edt_txt_Telefone1Salao);
         Telefone2Salao = (TextInputLayout) findViewById(R.id.edt_txt_Telefone2Salao);
@@ -155,7 +130,6 @@ public class editar_salao extends AppCompatActivity {
         CidadeSalao = (TextInputLayout) findViewById(R.id.edt_txt_CidadeSalao);
         SobreSalao = (TextInputLayout) findViewById(R.id.edt_txt_SobreSalao);
         EmailSalao = (TextInputLayout) findViewById(R.id.edt_txt_EmailSalao);
-
         CnpjSalao = (TextInputLayout) findViewById(R.id.edt_txt_CnpjSalao);
         ComplementoSalao = (TextInputLayout) findViewById(R.id.edt_txt_ComplementoSalao);
         EstadoSalao = (Spinner) findViewById(R.id.edt_Sp_EstadoSalao);
@@ -164,23 +138,17 @@ public class editar_salao extends AppCompatActivity {
         SalvarSalao = (Button)findViewById(R.id.edt_bt_salvarSalao);
         ImagemSalao = (CircleImageView) findViewById(R.id.edt_imagemSalao);
         agendar = (Switch)findViewById(R.id.sw_agenda);
-
         pegarPosicao =(Button) findViewById(R.id.bt_pegarLocalizacao);
-
         //--------------------------------------------------------------------
-
         SobreSalao.getEditText().setFilters(new InputFilter[] {new InputFilter.LengthFilter(140)});
         // --------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
         Telefone1Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone1Salao.getEditText()));
         Telefone2Salao.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, Telefone2Salao.getEditText()));
         CepSalao.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, CepSalao.getEditText()));
-
         //---------------------------------------------------------------------------------------------------------------
-
         CepSalao.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if(!hasFocus) {
                     String cep = CepSalao.getEditText().getText().toString();
                     String novoCep = cep.trim();
@@ -195,7 +163,6 @@ public class editar_salao extends AppCompatActivity {
         });
         //-------guarda a imagem padrao ---------
         bitmapPadrao = ImagemSalao.getDrawable();
-
         //----------- abre dialog para escolher imagem-------------------
         CaregaImgSalao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,9 +170,6 @@ public class editar_salao extends AppCompatActivity {
                 EscolhaImagem();
             }
         });
-
-
-
         //----- exclui a imagem selecionada do usuario-------------------
         ExcluiImgSalao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +181,6 @@ public class editar_salao extends AppCompatActivity {
             }
         });
 
-
         //--------- botão salvar usuario--------------------------------
         SalvarSalao.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,7 +190,6 @@ public class editar_salao extends AppCompatActivity {
 
             }
         });
-        //------
 
         //-------- faz a busca dos dados do usuario no servidor-------
         VerificaConexao verificaConexao = new VerificaConexao();
@@ -240,7 +202,6 @@ public class editar_salao extends AppCompatActivity {
             Toast.makeText(editar_salao.this, "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
             Logout logout = new Logout();
             logout.deslogar(editar_salao.this,false);
-
         }
 
         pegarPosicao.setOnClickListener(new View.OnClickListener() {
@@ -252,7 +213,6 @@ public class editar_salao extends AppCompatActivity {
                 String cidade = CidadeSalao.getEditText().getText().toString();
                 String estado = EstadoSalao.getSelectedItem().toString();
                 String nome = NomeSalao.getEditText().getText().toString();
-
                 String saida = endereco + "," + numero + "," + Bairro + "," + cidade + "," + estado;
                 Intent intent = new Intent(editar_salao.this, Mapa.class);
                 intent .putExtra("nome",nome);
@@ -260,11 +220,8 @@ public class editar_salao extends AppCompatActivity {
                 intent.putExtra("latitude",latitude);
                 intent.putExtra("longitude",longitude);
                 startActivityForResult(intent,2);
-
             }
         });
-
-        //-
     }
 
     @Override
@@ -309,7 +266,6 @@ public class editar_salao extends AppCompatActivity {
         String VEmailSalao = EmailSalao.getEditText().getText().toString();
         String VEstadoSalao = EstadoSalao.getSelectedItem().toString();
 
-
         if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
                 && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
         {
@@ -350,8 +306,6 @@ public class editar_salao extends AppCompatActivity {
             else
             if(VEmailSalao.equals(""))
                 EmailSalao.getEditText().requestFocus();
-
-
         }
 
         if(!VTelefone2Salao.equals(""))
@@ -380,9 +334,7 @@ public class editar_salao extends AppCompatActivity {
         view.findViewById(R.id.bt_get_camera).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-
                 startActivityForResult(intent,imagem_camera);
-
             }
         });
 
@@ -397,7 +349,6 @@ public class editar_salao extends AppCompatActivity {
         alerta = builder.create();
         alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alerta.show();
-
     }
     //-------------------------------------
 
@@ -407,7 +358,6 @@ public class editar_salao extends AppCompatActivity {
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
             case imagem_interna:
                 if (resultCode == RESULT_OK) {
@@ -420,7 +370,6 @@ public class editar_salao extends AppCompatActivity {
                     int columnIndex = cursor.getColumnIndex(projection[0]);
                     filepath = cursor.getString(columnIndex);
                     cursor.close();
-
                     File f64 = new File(filepath);
                     if(f64!=null)
                     {
@@ -444,9 +393,7 @@ public class editar_salao extends AppCompatActivity {
                     alerta.dismiss();
                     loading.abrir("Aguarde...");
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-
                     Uri uri = image.getImageUri(this, photo);
-
                     File file = new File(image.getRealPathFromURI(this,uri));
                     String pathImgCamera = file.getPath();
                     File f64 = new File(pathImgCamera);
@@ -463,7 +410,6 @@ public class editar_salao extends AppCompatActivity {
                         ImagemSalao.setImageBitmap(image.getBitmap());
                     }
                     loading.fechar();
-
                 }
                 break;
 
@@ -491,7 +437,6 @@ public class editar_salao extends AppCompatActivity {
 
 
     public void pegarSalao(final String idUsuario){
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<Salao>> callBuscaSalao = iApi.BuscaSalao(Integer.valueOf(idUsuario));
         callBuscaSalao.enqueue(new Callback<List<Salao>>() {
@@ -501,10 +446,8 @@ public class editar_salao extends AppCompatActivity {
                 callBuscaSalao.cancel();
                 switch (response.code()) {
                     case 200:
-
                         List<Salao> saloes = response.body();
                         Salao salao = saloes.get(0);
-
                         idSalao = salao.getIdSalao();
                         NomeSalao.getEditText().setText(salao.getNome());
                         Telefone1Salao.getEditText().setText(salao.getTelefone1());
@@ -521,8 +464,6 @@ public class editar_salao extends AppCompatActivity {
                         ComplementoSalao.getEditText().setText(salao.getComplemento());
                         latitude = String.valueOf(salao.getLatitude());
                         longitude = String.valueOf(salao.getLongitude());
-
-
                         if(salao.getAgendamento() == 1)
                         {
                             agendar.setChecked(true);
@@ -532,8 +473,6 @@ public class editar_salao extends AppCompatActivity {
                             agendar.setChecked(false);
                         }
 
-
-
                         for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
                         {
                             if(EstadoSalao.getAdapter().getItem(i).toString().contains(salao.getEstado()))
@@ -541,11 +480,9 @@ public class editar_salao extends AppCompatActivity {
                                 EstadoSalao.setSelection(i);
                             }
                         }
-
                         okSalao = true;
                         LinkImagem = salao.getLinkImagem();
                         qtTentativaRealizadaSalvar = 0;
-
                         if (salao.getLinkImagem() != "") {
                             ImageAntiga = salao.getLinkImagem();
                             Picasso.with(editar_salao.this).load(config.getWebService() + salao.getLinkImagem()).into(ImagemSalao);
@@ -585,8 +522,6 @@ public class editar_salao extends AppCompatActivity {
     }
     //-------------------------------------------------------
 
-
-
 public void pegarCep(String cep)
 {
     APICepService apiCepService = APICepService.retrofit.create(APICepService.class);
@@ -617,15 +552,9 @@ public void pegarCep(String cep)
         @Override
         public void onFailure(Call<CEP> call, Throwable t) {
             loading.fechar();
-            Log.d("xex", "erro no cep");
         }
     });
 }
-
-
-
-
-
 
 
     public void editarSalao()
@@ -649,17 +578,14 @@ public void pegarCep(String cep)
             RequestBody estadoSalao = RequestBody.create(MediaType.parse("text/plain"), EstadoSalao.getSelectedItem().toString());
             RequestBody sobreSalao = RequestBody.create(MediaType.parse("text/plain"), SobreSalao.getEditText().getText().toString());
             RequestBody emailSalao = RequestBody.create(MediaType.parse("text/plain"), EmailSalao.getEditText().getText().toString());
-
             RequestBody cnpjSalao = RequestBody.create(MediaType.parse("text/plain"), CnpjSalao.getEditText().getText().toString());
             RequestBody complementoSalao = RequestBody.create(MediaType.parse("text/plain"), ComplementoSalao.getEditText().getText().toString());
             RequestBody mine = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody converter64 = RequestBody.create(MediaType.parse("multipart/form-data"), "");
             RequestBody imagemAntiga = RequestBody.create(MediaType.parse("text/plain"), ImageAntiga);
             RequestBody agendamento = RequestBody.create(MediaType.parse("text/plain"), "0");
-
             RequestBody lati = RequestBody.create(MediaType.parse("text/plain"), latitude);
             RequestBody longi = RequestBody.create(MediaType.parse("text/plain"), longitude);
-
             if(agendar.isChecked())
                 agendamento = RequestBody.create(MediaType.parse("text/plain"), "1");
 
@@ -672,16 +598,11 @@ public void pegarCep(String cep)
 
             }
 
-
-
-
             IApi iApi = IApi.retrofit.create(IApi.class);
             final Call<ResponseBody> callEditarSalao = iApi.EditarSalao(converter64, mine, id_Salao, nome, telefone1Salao, telefone2Salao, enderecoSalao, bairroSalao, cepSalao, numeroSalao, estadoSalao,lati,longi, cidadeSalao, emailSalao, sobreSalao,cnpjSalao,complementoSalao,agendamento,imagemAntiga);
-
             callEditarSalao.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                     loading.fechar();
                     qtTentativaRealizadaSalvar = 0;
                     Log.d("xex",String.valueOf(response.code()) +  "*" + response.message());
@@ -713,30 +634,14 @@ public void pegarCep(String cep)
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
                     if (qtTentativaRealizadaSalvar < qtTentativas) {
                         qtTentativaRealizadaSalvar++;
                         editarSalao();
                     } else {
                         loading.fechar();
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
                 }
             });
         }
     }
-    //-----------------
 }

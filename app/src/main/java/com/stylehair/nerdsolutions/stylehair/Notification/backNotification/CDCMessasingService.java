@@ -1,33 +1,22 @@
 package com.stylehair.nerdsolutions.stylehair.Notification.backNotification;
 
-import android.app.Activity;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
-import com.stylehair.nerdsolutions.stylehair.telas.principal;
-
-
-/**
- * Created by Rodrigo on 19/02/2018.
- */
-
 public class CDCMessasingService extends FirebaseMessagingService {
 
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         super.onMessageReceived(remoteMessage);
         showNotification(remoteMessage.getNotification(),remoteMessage);
     }
@@ -66,19 +55,12 @@ public class CDCMessasingService extends FirebaseMessagingService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(0,builder.build());
-
         BancoNotifyController crud = new BancoNotifyController(getBaseContext());
-
         String retorno = crud.insereDado(Titulo,Corpo,DataNot,"0",NomeSalao,String.valueOf(idLogin));
-      //  Log.d("xex",retorno);
 
        /* Intent i = new Intent(this, notificacao.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);*/
-
-
-
-
 
     }
 }

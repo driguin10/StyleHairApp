@@ -17,17 +17,16 @@ import android.widget.TextView;
 import com.stylehair.nerdsolutions.stylehair.R;
 
 public class Filtros extends AppCompatActivity {
-TextView textoDistancia;
-TextView cidade;
-SeekBar seekDistancia;
-Button salvar;
-ImageButton fechar;
-int progresso = 0;
+    TextView textoDistancia;
+    TextView cidade;
+    SeekBar seekDistancia;
+    Button salvar;
+    ImageButton fechar;
+    int progresso = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtros);
-
         textoDistancia = (TextView) findViewById(R.id.txt_distancia);
         cidade = (TextView) findViewById(R.id.txtCidadeFiltro);
         seekDistancia = (SeekBar) findViewById(R.id.SeekDistancia);
@@ -54,31 +53,26 @@ int progresso = 0;
             }
         });
         cidade.addTextChangedListener(new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
-    }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()>0)
+                {
+                    seekDistancia.setEnabled(false);
+                    progresso = 0;
+                }
+                else
+                {
+                   progresso = seekDistancia.getProgress();
+                   seekDistancia.setEnabled(true);
+                }
+            }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(s.length()>0)
-        {
-            seekDistancia.setEnabled(false);
-            progresso = 0;
-        }
-        else
-        {
-           progresso = seekDistancia.getProgress();
-           seekDistancia.setEnabled(true);
-        }
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-});
+            @Override
+            public void afterTextChanged(Editable s) { }
+        });
 
         seekDistancia.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -88,14 +82,10 @@ int progresso = 0;
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
 }

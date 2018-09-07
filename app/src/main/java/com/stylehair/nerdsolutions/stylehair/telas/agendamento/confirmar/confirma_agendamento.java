@@ -87,7 +87,6 @@ public class confirma_agendamento extends AppCompatActivity {
         if(bundle !=null)
         {
             listaServicos = bundle.getString("idServicos");//só ids dos serviços
-
             idFuncionario = bundle.getString("idFuncionario");
             idSalao = bundle.getString("idSalao");
             ServicosLista = bundle.getStringArrayList("listaServicos");
@@ -115,16 +114,13 @@ public class confirma_agendamento extends AppCompatActivity {
         lista.setHasFixedSize(true);
         lista.setAdapter(new Adaptador_servicoConfirmAgenda(ServicosLista,txtValorTotal));
         lista.setLayoutManager(layout);
-
         String horarioAux = "Dia "+Data+"\n"+ "ás " +horaIni;
         txtData.setText(horarioAux);
-
         Picasso.with(this).load("http://stylehair.xyz/" + imagemfuncionario).into(imageFunc);
         nomeFunc.setText(nomeFuncionario);
         btConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 loading.abrir("Aguarde...");
                 salvarAgendamento();
             }
@@ -134,16 +130,12 @@ public class confirma_agendamento extends AppCompatActivity {
 
     public void salvarAgendamento()
     {
-
         RequestBody IDSALAO = RequestBody.create(MediaType.parse("text/plain"), idSalao);
         RequestBody IDFUNCIONARIO = RequestBody.create(MediaType.parse("text/plain"), idFuncionario);
         RequestBody IDSERVICO = RequestBody.create(MediaType.parse("text/plain"),listaServicos);
         RequestBody IDUSUARIO = RequestBody.create(MediaType.parse("text/plain"),idUsuario);
-
         String[] DataAux = Data.split("/");
         String DataPServer = DataAux[2]+"-"+DataAux[1]+"-"+DataAux[0];
-
-
         RequestBody DATA = RequestBody.create(MediaType.parse("text/plain"), DataPServer);
         RequestBody HORAINI = RequestBody.create(MediaType.parse("text/plain"), horaIni);
         RequestBody HORAFIM = RequestBody.create(MediaType.parse("text/plain"), horaFim);
@@ -152,12 +144,9 @@ public class confirma_agendamento extends AppCompatActivity {
         callSalvaAgenda.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 qtTentativaRealizada = 0 ;
                 callSalvaAgenda.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 204:
@@ -171,8 +160,6 @@ public class confirma_agendamento extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                         break;
-
-
                 }
             }
 
@@ -192,7 +179,6 @@ public class confirma_agendamento extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {

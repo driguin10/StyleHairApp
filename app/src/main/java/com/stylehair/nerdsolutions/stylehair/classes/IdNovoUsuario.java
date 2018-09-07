@@ -1,7 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.classes;
 
 public class IdNovoUsuario {
-
     private int idUsuario;
 
     public int getIdUsuario() {

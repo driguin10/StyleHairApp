@@ -15,28 +15,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
-
 public class Adaptador_ecolherservico_salao extends RecyclerView.Adapter<viewHolderescolherServicoSalao> {
-
     List<ServicoSalao> ListaServicoSalao;
     TextView qtServicosEscolhido;
     ArrayList<String> lista;
     Button bt_Prosseguir;
     ImageButton bt_ListaServicos;
-
-
     public Adaptador_ecolherservico_salao(List<ServicoSalao> listaServicoSalao,TextView ServicosEscolhido, ArrayList<String> list, Button BtProsseguir,ImageButton BtListaServicos) {
         ListaServicoSalao = listaServicoSalao;
         qtServicosEscolhido = ServicosEscolhido;
         lista = list;
         bt_Prosseguir = BtProsseguir;
         bt_ListaServicos = BtListaServicos;
-
     }
-
 
     @Override
     public viewHolderescolherServicoSalao onCreateViewHolder(ViewGroup parent, int viewType) {

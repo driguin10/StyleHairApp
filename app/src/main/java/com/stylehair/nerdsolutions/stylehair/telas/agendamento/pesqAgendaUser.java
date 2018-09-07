@@ -71,16 +71,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class pesqAgendaUser extends AppCompatActivity {
-
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
     public int qtTentativaUsuario= 0;
     int qtTentativaRealizadaSalvar = 0;
     AlertDialog alerta;
-
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
-
     CircleImageView imagem;
     TextInputLayout nomeUsuario;
     TextInputLayout cadApelidoUser;
@@ -92,38 +89,30 @@ public class pesqAgendaUser extends AppCompatActivity {
     TextInputLayout cadCidadeUser;
     TextInputLayout cadObsUser;
     TextInputLayout cadNascimento;
-
     Spinner cadEstadoUser;
     Spinner cadSexoUser;
-
     Button BtSalvar;
     Button BtCarregaImagem ;
     Button BTCadastrar;
     ImageButton BtPesqData;
     ImageButton BtExcluirImagem;
-
     TextInputLayout LoginEmail;
     TextInputLayout LoginSenha;
-
     TextInputLayout cadEmailNovo;
     TextInputLayout cadSenhaNova;
-
     Button pesquisaLogin;
     Button escolherUser;
     Loading loading;
     Button Limparcampos;
-
     int IdLogin;
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
     int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
-
     int id_Login = -1;
     String id_Usuario="";
     Config config;
-
     String LinkImagem = "";
     String idSalao;
     boolean flagCadastro = false;
@@ -144,10 +133,8 @@ public class pesqAgendaUser extends AppCompatActivity {
         Drawable upArrow = ContextCompat.getDrawable(pesqAgendaUser.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(pesqAgendaUser.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
-
         verificaConexao = new VerificaConexao();
         Bundle bundle = getIntent().getExtras();
         if(bundle !=null)
@@ -161,14 +148,10 @@ public class pesqAgendaUser extends AppCompatActivity {
         pesquisaLogin = (Button) findViewById(R.id.bt_pesquisaLogin);
         escolherUser = (Button) findViewById(R.id.bt_Confirmar);
         Limparcampos = (Button) findViewById(R.id.bt_limparLogin);
-
-
         LayBtsImagem = (LinearLayout) findViewById(R.id.layout_bts_imagem);
         LayCampos = (LinearLayout) findViewById(R.id.layout_campos);
-
         cadEmailNovo = (TextInputLayout) findViewById(R.id.txt_EmailNovo);
         cadSenhaNova = (TextInputLayout) findViewById(R.id.txt_SenhaNova);
-
         nomeUsuario = (TextInputLayout) findViewById(R.id.txt_userNome);
         cadApelidoUser = (TextInputLayout) findViewById(R.id.txt_usrApelido);
         cadTelefoneUser = (TextInputLayout) findViewById(R.id.txt_usrTelefone);
@@ -186,22 +169,18 @@ public class pesqAgendaUser extends AppCompatActivity {
         BtCarregaImagem = (Button) findViewById(R.id.bt_caregaImg);
         BtSalvar = (Button) findViewById(R.id.bt_Cadastrar);
         imagem = (CircleImageView) findViewById(R.id.imgUsuario);
-
         //---------------- adiciona as mascaras no Telefone-Cep-Data --------------------------------------------------
         cadTelefoneUser.getEditText().addTextChangedListener(Mask.insert(Mask.CELULAR_MASK, cadTelefoneUser.getEditText()));
         cadCepUser.getEditText().addTextChangedListener(Mask.insert(Mask.CEP_MASK, cadCepUser.getEditText()));
         cadNascimento.getEditText().addTextChangedListener(Mask.insert(Mask.DATA_MASK, cadNascimento.getEditText()));
         //---------------------------------------------------------------------------------------------------------------
-
         cadCepUser.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-
                 if(!hasFocus) {
                     String cep = cadCepUser.getEditText().getText().toString();
                     String novoCep = cep.trim();
                     novoCep = cep.replace("-", "");
-
                     if(novoCep.length() == 8) {
                         loading.abrir("Aguarde...");
                         pegarCep(novoCep);
@@ -247,9 +226,7 @@ public class pesqAgendaUser extends AppCompatActivity {
             }
         });
 
-
         BTCadastrar = (Button) findViewById(R.id.bt_cadastrar);
-
         BTCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,8 +263,6 @@ public class pesqAgendaUser extends AppCompatActivity {
             }
         });
 
-
-
         pesquisaLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -297,7 +272,6 @@ public class pesqAgendaUser extends AppCompatActivity {
                 }
             }
         });
-
 
         Limparcampos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -309,7 +283,6 @@ public class pesqAgendaUser extends AppCompatActivity {
                 nomeUsuario.getEditText().setText("");
                 escolherUser.setVisibility(View.GONE);
                 nomeUsuario.getEditText().setEnabled(true);
-
                 imagem.setVisibility(View.GONE);
                 nomeUsuario.setVisibility(View.GONE);
                 escolherUser.setVisibility(View.GONE);
@@ -319,7 +292,6 @@ public class pesqAgendaUser extends AppCompatActivity {
         escolherUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!id_Usuario.equals("")) {
                     Intent intent = new Intent(pesqAgendaUser.this, escolherServico.class);
                     intent.putExtra("idSalao", idSalao);
@@ -327,7 +299,6 @@ public class pesqAgendaUser extends AppCompatActivity {
                     e.putString("idUserAgendamento",id_Usuario);
                     e.apply();
                     e.commit();
-
                     startActivity(intent);
                 }
                 else
@@ -347,13 +318,11 @@ public class pesqAgendaUser extends AppCompatActivity {
             public void onResponse(Call<CEP> call, Response<CEP> response) {
                 loading.fechar();
                 if (!response.isSuccessful()) {
-
                 } else {
                     CEP cep = response.body();
                     cadEnderecoUser.getEditText().setText(cep.getLogradouro());
                     cadBairroUser.getEditText().setText(cep.getBairro());
                     cadCidadeUser.getEditText().setText(cep.getLocalidade());
-
                     if(cep.getUf()!=null) {
                         UfToName ufToName = new UfToName();
                         for (int i = 0; i < cadEstadoUser.getAdapter().getCount(); i++) {
@@ -386,9 +355,7 @@ public class pesqAgendaUser extends AppCompatActivity {
         view.findViewById(R.id.bt_get_camera).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-
                 startActivityForResult(intent,imagem_camera);
-
             }
         });
 
@@ -403,7 +370,6 @@ public class pesqAgendaUser extends AppCompatActivity {
         alerta = builder.create();
         alerta.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alerta.show();
-
     }
     //-------------------------------------
 
@@ -418,7 +384,6 @@ public class pesqAgendaUser extends AppCompatActivity {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
@@ -430,13 +395,11 @@ public class pesqAgendaUser extends AppCompatActivity {
             String DataNasc = String.valueOf(day)+"-"+String.valueOf(month +1)+"-" +String.valueOf(year);
             SimpleDateFormat dataFormat = new SimpleDateFormat("dd-MM-yyyy");
             String output =  "";
-
             try {
                 output = dataFormat.format(dataFormat.parse(DataNasc));
             }catch (ParseException p) { }
 
             ((TextInputLayout) getActivity().findViewById(R.id.txt_nascimento)).getEditText().setText(output);
-
         }
     }
     //------------------------------------------------------------
@@ -448,7 +411,6 @@ public class pesqAgendaUser extends AppCompatActivity {
         num = telefone.replace("(" , " ");
         num = num.replace(")" , " ");
         num2 = num.replaceAll(" ","");
-
         if(num2.length()>= 10)
             verifica = true;
         else
@@ -461,7 +423,6 @@ public class pesqAgendaUser extends AppCompatActivity {
         Boolean status = false;
         String Email = LoginEmail.getEditText().getText().toString();
         String Senha =LoginSenha.getEditText().getText().toString();
-
 
         if(!Email.equals("") && !Senha.equals(""))
         {
@@ -508,7 +469,6 @@ public class pesqAgendaUser extends AppCompatActivity {
         String Vtelefone = cadTelefoneUser.getEditText().getText().toString();
         String Vestado = cadEstadoUser.getSelectedItem().toString();
         String Vcidade = cadCidadeUser.getEditText().getText().toString();
-
 
         if(!Vnome.equals("") && !Vtelefone.equals("") && !Vestado.equals("") && !Vcidade.equals("") && !Vemail.equals("") && !Vsenha.equals(""))
         {
@@ -596,7 +556,6 @@ public class pesqAgendaUser extends AppCompatActivity {
                                 e.putString("idUserAgendamento",String.valueOf(idNovoUsuario.getIdUsuario()));
                                 e.apply();
                                 e.commit();
-
                                 startActivity(intent);
                                 break;
 
@@ -640,7 +599,6 @@ public class pesqAgendaUser extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-
         alerta.dismiss();
         if(resultCode!=0)
             loading.abrir("Aguarde...");
@@ -711,8 +669,6 @@ public class pesqAgendaUser extends AppCompatActivity {
 
     }
     //----------------------------------------------------------------------
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
@@ -729,20 +685,16 @@ public class pesqAgendaUser extends AppCompatActivity {
     }
 
     public void logar(){
-
         final Login login = new Login();
         login.setEmail(LoginEmail.getEditText().getText().toString());
         login.setSenha(LoginSenha.getEditText().getText().toString());
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<Logar> callLoga = iApi.Logar(login);
         callLoga.enqueue(new Callback<Logar>() {
             @Override
             public void onResponse(Call<Logar> call, Response<Logar> response) {
                 callLoga.cancel();
-
                 if(response.isSuccessful()) {
-
                     qtTentativaRealizada = 0;
                     Logar logar = response.body();
 
@@ -820,23 +772,11 @@ public class pesqAgendaUser extends AppCompatActivity {
                         {
                             imagem.setImageDrawable(getResources().getDrawable(R.drawable.img_padrao_user));
                         }
-
                         id_Usuario = String.valueOf(user.getIdUsuario());
                         imagem.setVisibility(View.VISIBLE);
                         nomeUsuario.setVisibility(View.VISIBLE);
                         escolherUser.setVisibility(View.VISIBLE);
                         nomeUsuario.getEditText().setEnabled(false);
-                        break;
-
-
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
                         break;
                 }
             }

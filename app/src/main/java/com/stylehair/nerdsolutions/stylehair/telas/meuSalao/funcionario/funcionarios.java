@@ -37,14 +37,12 @@ public class funcionarios extends AppCompatActivity {
     RecyclerView lista;
     List<Usuario> usuarios;
     String idSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
-
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +50,6 @@ public class funcionarios extends AppCompatActivity {
         loading = new Loading(funcionarios.this);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_funcionarios);
         setSupportActionBar(myToolbar);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.bt_add_funcionario);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,26 +63,17 @@ public class funcionarios extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         getSupportActionBar().setTitle("Funcionarios");
-
         Drawable upArrow = ContextCompat.getDrawable(funcionarios.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(funcionarios.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-
         lista = (RecyclerView) findViewById(R.id.listFuncionarios);
         lista.setHasFixedSize(true);
-
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(funcionarios.this);
         idSalao = getSharedPreferences.getString("idSalao","-1");
-
         loading.abrir("Aguarde...");
         getFuncionarios(idSalao);
-
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
@@ -101,7 +89,6 @@ public class funcionarios extends AppCompatActivity {
 
     public void getFuncionarios(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<GetUsuarioFuncionario> callBuscaFuncionarios = iApi.buscaFuncionarios(Integer.valueOf(id));
         callBuscaFuncionarios.enqueue(new Callback<GetUsuarioFuncionario>() {
@@ -109,16 +96,13 @@ public class funcionarios extends AppCompatActivity {
             public void onResponse(Call<GetUsuarioFuncionario> call, Response<GetUsuarioFuncionario> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaFuncionarios.cancel();
-
                 loading.fechar();
 
                     switch (response.code())
                     {
                         case 200:
-
                             GetUsuarioFuncionario func = response.body();
                             List<UsuarioFuncionario> funcs = new ArrayList<>();
-
                             for (UsuarioFuncionario Ufunc : func.funcionarios) {
                                 int IdFuncionario = Ufunc.getIdFuncionario();
                                 int IdUsuario = Ufunc.getIdUsuario();
@@ -136,14 +120,7 @@ public class funcionarios extends AppCompatActivity {
                             lista.setLayoutManager(layout);
                             lista.setClickable(true);
                             break;
-
-                        case 400:
-
-                            break;
                     }
-
-
-
             }
 
             @Override
@@ -155,12 +132,8 @@ public class funcionarios extends AppCompatActivity {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
-
 }

@@ -23,34 +23,20 @@ import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.e
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
-
 public class viewHolderescolherServicoSalao extends ViewHolder implements View.OnLongClickListener,View.OnClickListener  {
-
-
-
     TextView NomeServico;
     TextView valor;
     CardView card;
     Context contexto;
     TextView qtServicosEscolhido;
-
     List<ServicoSalao> ListaServicoSalao;
     ServicoSalao servicoSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
-        Loading loading;
-
-        ArrayList<String> lista;
-
+    Loading loading;
+    ArrayList<String> lista;
     Button btProsseguir;
     ImageButton btListaServicos;
-
-
 
     public viewHolderescolherServicoSalao(View itemView, List<ServicoSalao> dados,Button bt_Prosseguir,ImageButton bt_ListaServicos) {
         super(itemView);
@@ -67,15 +53,10 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
         btListaServicos.setOnClickListener(this);
     }
 
-
-
-
     @Override
     public boolean onLongClick(View v) {
         int position = getAdapterPosition();
         servicoSalao = ListaServicoSalao.get(position);
-
-
         if(v.getId() == card.getId())
         {
             new AlertDialog.Builder(contexto)
@@ -149,11 +130,6 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
         if(v.getId() == card.getId()) {
             Toast.makeText(v.getContext(), "Mantenha pressionado para selecionar os serviços.", Toast.LENGTH_LONG).show();
         }
-
-
     }
-
-
-
 }
 

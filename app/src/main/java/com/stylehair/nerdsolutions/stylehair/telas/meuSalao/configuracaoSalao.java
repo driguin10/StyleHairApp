@@ -48,63 +48,51 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class configuracaoSalao extends AppCompatActivity {
-
     ImageButton horaSegE;
     ImageButton horaSegS;
     TextInputLayout txtSegE;
     TextInputLayout txtSegS;
     ToggleButton btStatusSegunda;
-
     ImageButton horaTerE;
     ImageButton horaTerS;
     TextInputLayout txtTerE;
     TextInputLayout txtTerS;
     ToggleButton btStatusTerca;
-
     ImageButton horaQuaE;
     ImageButton horaQuaS;
     TextInputLayout txtQuaE;
     TextInputLayout txtQuaS;
     ToggleButton btStatusQuarta;
-
     ImageButton horaQuiE;
     ImageButton horaQuiS;
     TextInputLayout txtQuiE;
     TextInputLayout txtQuiS;
     ToggleButton btStatusQuinta;
-
     ImageButton horaSexE;
     ImageButton horaSexS;
     TextInputLayout txtSexE;
     TextInputLayout txtSexS;
     ToggleButton btStatusSexta;
-
     ImageButton horaSabE;
     ImageButton horaSabS;
     TextInputLayout txtSabE;
     TextInputLayout txtSabS;
     ToggleButton btStatusSabado;
-
     ImageButton horaDomE;
     ImageButton horaDomS;
     TextInputLayout txtDomE;
     TextInputLayout txtDomS;
     ToggleButton btStatusDomingo;
-
     Spinner intervaloAgenda;
     Spinner tempoMinimo;
-
     Loading loading;
     String idUsuario;
     String idSalao;
-
     Button salvarConfig;
     Button trocarGerente;
     Button excluirSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     int qtTentativasSalvar = 3;
     int qtTentativaRealizadaSalvar = 0;
     int qtTentativaRealizadaExcluir = 0;
@@ -133,44 +121,36 @@ public class configuracaoSalao extends AppCompatActivity {
         btStatusSegunda = (ToggleButton) findViewById(R.id.bt_folga_seg);
         horaSegE = (ImageButton) findViewById(R.id.pesquisa_hora_segE);
         horaSegS = (ImageButton) findViewById(R.id.pesquisa_hora_segS);
-
         txtTerE = (TextInputLayout) findViewById(R.id.txt_hora_terE);
         txtTerS = (TextInputLayout) findViewById(R.id.txt_hora_terS);
         btStatusTerca = (ToggleButton) findViewById(R.id.bt_folga_ter);
         horaTerE = (ImageButton) findViewById(R.id.pesquisa_hora_terE);
         horaTerS = (ImageButton) findViewById(R.id.pesquisa_hora_terS);
-
         txtQuaE = (TextInputLayout) findViewById(R.id.txt_hora_quaE);
         txtQuaS = (TextInputLayout) findViewById(R.id.txt_hora_quaS);
         btStatusQuarta = (ToggleButton) findViewById(R.id.bt_folga_qua);
         horaQuaE = (ImageButton) findViewById(R.id.pesquisa_hora_quaE);
         horaQuaS = (ImageButton) findViewById(R.id.pesquisa_hora_quaS);
-
         txtQuiE = (TextInputLayout) findViewById(R.id.txt_hora_quiE);
         txtQuiS = (TextInputLayout) findViewById(R.id.txt_hora_quiS);
         btStatusQuinta = (ToggleButton) findViewById(R.id.bt_folga_qui);
         horaQuiE = (ImageButton) findViewById(R.id.pesquisa_hora_quiE);
         horaQuiS = (ImageButton) findViewById(R.id.pesquisa_hora_quiS);
-
         txtSexE = (TextInputLayout) findViewById(R.id.txt_hora_sexE);
         txtSexS = (TextInputLayout) findViewById(R.id.txt_hora_sexS);
         btStatusSexta = (ToggleButton) findViewById(R.id.bt_folga_sex);
         horaSexE = (ImageButton) findViewById(R.id.pesquisa_hora_sexE);
         horaSexS = (ImageButton) findViewById(R.id.pesquisa_hora_sexS);
-
         txtSabE = (TextInputLayout) findViewById(R.id.txt_hora_sabE);
         txtSabS = (TextInputLayout) findViewById(R.id.txt_hora_sabS);
         btStatusSabado = (ToggleButton) findViewById(R.id.bt_folga_sab);
         horaSabE = (ImageButton) findViewById(R.id.pesquisa_hora_sabE);
         horaSabS = (ImageButton) findViewById(R.id.pesquisa_hora_sabS);
-
         txtDomE = (TextInputLayout) findViewById(R.id.txt_hora_domE);
         txtDomS = (TextInputLayout) findViewById(R.id.txt_hora_domS);
         btStatusDomingo = (ToggleButton) findViewById(R.id.bt_folga_dom);
         horaDomE = (ImageButton) findViewById(R.id.pesquisa_hora_domE);
         horaDomS = (ImageButton) findViewById(R.id.pesquisa_hora_domS);
-
-
         intervaloAgenda = (Spinner) findViewById(R.id.spn_intervalo_agenda);
         tempoMinimo = (Spinner) findViewById(R.id.spn_min_agenda);
 
@@ -491,31 +471,22 @@ public void editarConfiguracao(String id_Salao)
     }
 
     RequestBody IdSalao = RequestBody.create(MediaType.parse("text/plain"),id_Salao);
-
     RequestBody intervalo_Agenda = RequestBody.create(MediaType.parse("text/plain"),tempoIntervalo);
     RequestBody tempo_Minimo = RequestBody.create(MediaType.parse("text/plain"),tempoM);
-
     RequestBody SegE = RequestBody.create(MediaType.parse("text/plain"),txtSegE.getEditText().getText().toString());
     RequestBody SegS = RequestBody.create(MediaType.parse("text/plain"),txtSegS.getEditText().getText().toString());
-
     RequestBody TerE = RequestBody.create(MediaType.parse("text/plain"),txtTerE.getEditText().getText().toString());
     RequestBody TerS = RequestBody.create(MediaType.parse("text/plain"),txtTerS.getEditText().getText().toString());
-
     RequestBody QuaE = RequestBody.create(MediaType.parse("text/plain"),txtQuaE.getEditText().getText().toString());
     RequestBody QuaS = RequestBody.create(MediaType.parse("text/plain"),txtQuaS.getEditText().getText().toString());
-
     RequestBody QuiE = RequestBody.create(MediaType.parse("text/plain"),txtQuiE.getEditText().getText().toString());
     RequestBody QuiS = RequestBody.create(MediaType.parse("text/plain"),txtQuiS.getEditText().getText().toString());
-
     RequestBody SexE = RequestBody.create(MediaType.parse("text/plain"),txtSexE.getEditText().getText().toString());
     RequestBody SexS = RequestBody.create(MediaType.parse("text/plain"),txtSexS.getEditText().getText().toString());
-
     RequestBody SabE = RequestBody.create(MediaType.parse("text/plain"),txtSabE.getEditText().getText().toString());
     RequestBody SabS = RequestBody.create(MediaType.parse("text/plain"),txtSabS.getEditText().getText().toString());
-
     RequestBody DomE = RequestBody.create(MediaType.parse("text/plain"),txtDomE.getEditText().getText().toString());
     RequestBody DomS = RequestBody.create(MediaType.parse("text/plain"),txtDomS.getEditText().getText().toString());
-
     IApi iApi = IApi.retrofit.create(IApi.class);
     final Call<ResponseBody> callEditaConfiguracao = iApi.EditarConfiguracoesSalao(IdSalao,intervalo_Agenda,tempo_Minimo,SegE,SegS,TerE,TerS,QuaE,QuaS,QuiE,QuiS,SexE,SexS,SabE,SabS,DomE,DomS);
     callEditaConfiguracao.enqueue(new Callback<ResponseBody>() {
@@ -541,7 +512,6 @@ public void editarConfiguracao(String id_Salao)
                     }
                     break;
             }
-
         }
 
         @Override
@@ -604,7 +574,6 @@ public boolean verificaCampos(){
                 txtQuaE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtQuaS.isClickable())
@@ -613,7 +582,6 @@ public boolean verificaCampos(){
                 txtQuaS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -623,7 +591,6 @@ public boolean verificaCampos(){
                 txtQuiE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -633,7 +600,6 @@ public boolean verificaCampos(){
                 txtQuiS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -643,7 +609,6 @@ public boolean verificaCampos(){
                 txtSexE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -653,7 +618,6 @@ public boolean verificaCampos(){
                 txtSexS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtSabE.isClickable())
@@ -671,7 +635,6 @@ public boolean verificaCampos(){
                 txtSabS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtDomE.isClickable())
@@ -708,18 +671,14 @@ public boolean verificaCampos(){
                 callBuscaConfiguracao.cancel();
                 switch (response.code()) {
                     case 200:
-
                         List<Salao> saloes = response.body();
                         Salao salao = saloes.get(0);
-
                         idSalao = String.valueOf(salao.getIdSalao());
-
                         if(salao.getAgendamento() == 1)
                         {
                             intervaloAgenda.setClickable(true);
                             intervaloAgenda.setEnabled(true);
                             intervaloAgenda.setAlpha(.9f);
-
                             tempoMinimo.setAlpha(.9f);
                             tempoMinimo.setClickable(true);
                             tempoMinimo.setEnabled(true);
@@ -729,7 +688,6 @@ public boolean verificaCampos(){
                             intervaloAgenda.setClickable(false);
                             intervaloAgenda.setEnabled(false);
                             intervaloAgenda.setAlpha(.3f);
-
                             tempoMinimo.setAlpha(.3f);
                             tempoMinimo.setClickable(false);
                             tempoMinimo.setEnabled(false);
@@ -874,8 +832,6 @@ public boolean verificaCampos(){
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });

@@ -15,20 +15,15 @@ import java.util.List;
 
 
 public class Adaptador_funcionario_busca extends RecyclerView.Adapter<viewHolderFuncionario_busca> {
-
     List<UsuarioFuncionario> ListaFuncionario;
-
-
 
     public Adaptador_funcionario_busca(List<UsuarioFuncionario> listaFuncionario) {
         ListaFuncionario = listaFuncionario;
     }
 
-
     @Override
     public viewHolderFuncionario_busca onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_verfuncionario_busca, parent, false);
-
         return new viewHolderFuncionario_busca(vista,ListaFuncionario);
     }
 

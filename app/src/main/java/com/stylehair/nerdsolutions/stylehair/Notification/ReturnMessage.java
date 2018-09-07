@@ -4,9 +4,6 @@ package com.stylehair.nerdsolutions.stylehair.Notification;
 
 import java.util.List;
 
-/**
- * Created by Rodrigo on 20/02/2018.
- */
 
 public class ReturnMessage {
     public long multicast_id;

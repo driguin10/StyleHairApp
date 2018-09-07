@@ -14,17 +14,12 @@ import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.viewHold
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_avaliacoes extends RecyclerView.Adapter<viewHolderAvaliacoes> {
-
     List<AvaliacaoSalao> ListaAvaliacao;
-
-int qtPontos = 0;
-int qtComentarios = 0;
-TextView txtPontos;
+    int qtPontos = 0;
+    int qtComentarios = 0;
+    TextView txtPontos;
     TextView txtComentarios ;
     RecyclerView lista;
     public Adaptador_avaliacoes(List<AvaliacaoSalao> avaliacaoSalao, TextView text_Pontos,TextView text_Comentarios,RecyclerView Rlista) {
@@ -32,21 +27,18 @@ TextView txtPontos;
         txtPontos = text_Pontos;
         txtComentarios = text_Comentarios;
         lista = Rlista;
-
     }
 
 
     @Override
     public viewHolderAvaliacoes onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_avaliacao, parent, false);
-
         return new viewHolderAvaliacoes(vista,ListaAvaliacao);
     }
 
     @Override
     public void onBindViewHolder(viewHolderAvaliacoes holder, int position) {
         holder.comentario.setText(ListaAvaliacao.get(position).getComentario());
-
         String[] data = ListaAvaliacao.get(position).getData().split("-");
         holder.data.setText(data[2]+"/"+data[1]+"/"+data[0]);
          qtPontos = qtPontos + ListaAvaliacao.get(position).getPontos();
@@ -54,16 +46,13 @@ TextView txtPontos;
          qtComentarios = qtComentarios + 1;
          txtComentarios.setText(String.valueOf(qtComentarios));
         holder.lista = lista;
-
         holder.txtComentarios = txtComentarios;
         holder.txtPontos = txtPontos;
         holder.pontos.setText(String.valueOf(ListaAvaliacao.get(position).getPontos()) + "pts");
-
-}
+    }
     @Override
     public int getItemCount() {
         return ListaAvaliacao.size();
     }
-
 }
 

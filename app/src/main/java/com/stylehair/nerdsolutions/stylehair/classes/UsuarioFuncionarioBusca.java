@@ -1,7 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.classes;
 
 public class UsuarioFuncionarioBusca {
-
     public int idFuncionario;
     public int idUsuario;
     public String nome;

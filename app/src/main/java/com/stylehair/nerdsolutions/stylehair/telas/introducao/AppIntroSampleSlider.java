@@ -14,11 +14,9 @@ public class AppIntroSampleSlider extends Fragment {
 
     public static AppIntroSampleSlider newInstance(int layoutResId) {
         AppIntroSampleSlider sampleSlide = new AppIntroSampleSlider();
-
         Bundle bundleArgs = new Bundle();
         bundleArgs.putInt(ARG_LAYOUT_RES_ID, layoutResId);
         sampleSlide.setArguments(bundleArgs);
-
         return sampleSlide;
     }
 

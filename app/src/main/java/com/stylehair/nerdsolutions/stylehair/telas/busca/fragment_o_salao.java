@@ -26,7 +26,6 @@ import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 
 public class fragment_o_salao extends Fragment {
-
     TextView segE ;
     TextView segS ;
 
@@ -99,8 +98,7 @@ public class fragment_o_salao extends Fragment {
                 .getDefaultSharedPreferences(getContext());
          tipo = getSharedPreferencesL.getString("typeUserApp","COMUM");
 
-
-         tutorial = new Tutorial(getContext());
+        tutorial = new Tutorial(getContext());
         txtSobre=(TextView) view.findViewById(R.id.txt_SobreSalao);
         txtLocalizacao=(TextView) view.findViewById(R.id.txtLocalizacao);
         txtTelefones=(TextView) view.findViewById(R.id.txtTelefones);
@@ -109,8 +107,6 @@ public class fragment_o_salao extends Fragment {
         txtStatus=(TextView) view.findViewById(R.id.txtStatus);
         cardStatus=(CardView) view.findViewById(R.id.cardStatus);
         cardAgendar=(CardView) view.findViewById(R.id.cardAgendar);
-
-
         segE=(TextView) view.findViewById(R.id.txtSegE);
         segS=(TextView) view.findViewById(R.id.txtSegS);
         terE=(TextView) view.findViewById(R.id.txtTerE);
@@ -125,8 +121,6 @@ public class fragment_o_salao extends Fragment {
         sabS=(TextView) view.findViewById(R.id.txtSabS);
         domE=(TextView) view.findViewById(R.id.txtDomE);
         domS=(TextView) view.findViewById(R.id.txtDomS);
-
-
 
         if(bundle!=null)
         {
@@ -152,7 +146,6 @@ public class fragment_o_salao extends Fragment {
 
             if(bundle.getString("terS")!=null)
             TerS = bundle.getString("terS").substring(0,5);
-
 
             if(bundle.getString("quaE")!=null)
             QuaE = bundle.getString("quaE").substring(0,5);
@@ -203,25 +196,17 @@ public class fragment_o_salao extends Fragment {
 
             if(bundle.getString("agendamento").equals("1"))
             {
-
-
                 if(!tipo.equals("COMUM"))
                 {
                     cardAgendar.setAlpha(1f);
                     cardAgendar.setCardElevation(5);
                     cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
-
-
                 }
                 else
                 {
                     cardAgendar.setAlpha(.4f);
                     cardAgendar.setCardElevation(0);
                     cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
-
-
-
-
                 }
             }
             else
@@ -246,8 +231,6 @@ public class fragment_o_salao extends Fragment {
         sabS.setText(SabS);
         domE.setText(DomE);
         domS.setText(DomS);
-
-
 
        cardAgendar.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -281,8 +264,6 @@ public class fragment_o_salao extends Fragment {
     }
 
 
-
-
   /*  public void tutorial(){
         if(!tutorial.verTutorial("fragmentGerente")) {
             sv = new ShowcaseView.Builder(getActivity())
@@ -312,7 +293,5 @@ public class fragment_o_salao extends Fragment {
                     }).build();
         }
     }*/
-
-
 
 }

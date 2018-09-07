@@ -24,8 +24,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class esqueci_senha extends AppCompatActivity {
-
-
     Loading loading;
     EditText emailReset;
     Button btEnviarSenha;
@@ -36,11 +34,8 @@ public class esqueci_senha extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_esqueci_senha);
        loading = new Loading(esqueci_senha.this);
-
         emailReset = (EditText) findViewById(R.id.txt_email_recuperar);
         btEnviarSenha = (Button)findViewById(R.id.bt_enviarSenha);
-
-
         btEnviarSenha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,14 +50,8 @@ public class esqueci_senha extends AppCompatActivity {
                 {
                     Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
-
-
-
-
-
     }
 
 
@@ -89,7 +78,6 @@ public class esqueci_senha extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 loading.fechar();
-
                 if (response.isSuccessful()) {
                     qtTentativaRealizada = 0;
 
@@ -117,8 +105,6 @@ public class esqueci_senha extends AppCompatActivity {
                             }
                             break;
                     }
-
-
                 }
                 callReset.cancel();
             }
@@ -130,9 +116,7 @@ public class esqueci_senha extends AppCompatActivity {
                     EnviaNotificacao();
                 } else {
                     loading.fechar();
-                    Log.d("xex",call.request().toString());
                 }
-
             }
         });
     }

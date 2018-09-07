@@ -34,53 +34,41 @@ import retrofit2.Response;
 
 
 public class fragment_horarios_funcionario extends Fragment {
-
-
-    private OnFragmentInteractionListener mListener;
-
     ImageButton horaAlmocoIni;
     ImageButton horaAlmocoFim;
     TextInputLayout txtAlmocoIni;
     TextInputLayout txtAlmocoFim;
     ToggleButton btStatusAlmoco;
-
-
     ImageButton horaSegE;
     ImageButton horaSegS;
     TextInputLayout txtSegE;
     TextInputLayout txtSegS;
     ToggleButton btStatusSegunda;
-
     ImageButton horaTerE;
     ImageButton horaTerS;
     TextInputLayout txtTerE;
     TextInputLayout txtTerS;
     ToggleButton btStatusTerca;
-
     ImageButton horaQuaE;
     ImageButton horaQuaS;
     TextInputLayout txtQuaE;
     TextInputLayout txtQuaS;
     ToggleButton btStatusQuarta;
-
     ImageButton horaQuiE;
     ImageButton horaQuiS;
     TextInputLayout txtQuiE;
     TextInputLayout txtQuiS;
     ToggleButton btStatusQuinta;
-
     ImageButton horaSexE;
     ImageButton horaSexS;
     TextInputLayout txtSexE;
     TextInputLayout txtSexS;
     ToggleButton btStatusSexta;
-
     ImageButton horaSabE;
     ImageButton horaSabS;
     TextInputLayout txtSabE;
     TextInputLayout txtSabS;
     ToggleButton btStatusSabado;
-
     ImageButton horaDomE;
     ImageButton horaDomS;
     TextInputLayout txtDomE;
@@ -89,20 +77,16 @@ public class fragment_horarios_funcionario extends Fragment {
     View view;
     Loading loading;
     String idSalao;
-String idFuncionario;
+    String idFuncionario;
     Button salvarConfig;
-
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     int qtTentativasSalvar = 3;
     int qtTentativaRealizadaSalvar = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -118,59 +102,48 @@ String idFuncionario;
             idFuncionario = bundle.getString("idFuncionario");
         }
         salvarConfig = (Button) view.findViewById(R.id.ver_bt_salvarConfiguracao);
-
         txtAlmocoIni = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_almocoIni);
         txtAlmocoFim = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_almocoFim);
         btStatusAlmoco = (ToggleButton)view. findViewById(R.id.ver_bt_almoco);
         horaAlmocoIni = (ImageButton)view. findViewById(R.id.ver_pesquisa_hora_almocoIni);
         horaAlmocoFim = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_almocoFim);
-
-
         txtSegE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_segE);
         txtSegS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_segS);
         btStatusSegunda = (ToggleButton)view. findViewById(R.id.ver_bt_folga_seg);
         horaSegE = (ImageButton)view. findViewById(R.id.ver_pesquisa_hora_segE);
         horaSegS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_segS);
-
         txtTerE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_terE);
         txtTerS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_terS);
         btStatusTerca = (ToggleButton) view.findViewById(R.id.ver_bt_folga_ter);
         horaTerE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_terE);
         horaTerS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_terS);
-
         txtQuaE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_quaE);
         txtQuaS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_quaS);
         btStatusQuarta = (ToggleButton) view.findViewById(R.id.ver_bt_folga_qua);
         horaQuaE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_quaE);
         horaQuaS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_quaS);
-
         txtQuiE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_quiE);
         txtQuiS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_quiS);
         btStatusQuinta = (ToggleButton) view.findViewById(R.id.ver_bt_folga_qui);
         horaQuiE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_quiE);
         horaQuiS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_quiS);
-
         txtSexE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_sexE);
         txtSexS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_sexS);
         btStatusSexta = (ToggleButton) view.findViewById(R.id.ver_bt_folga_sex);
         horaSexE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_sexE);
         horaSexS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_sexS);
-
         txtSabE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_sabE);
         txtSabS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_sabS);
         btStatusSabado = (ToggleButton) view.findViewById(R.id.ver_bt_folga_sab);
         horaSabE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_sabE);
         horaSabS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_sabS);
-
         txtDomE = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_domE);
         txtDomS = (TextInputLayout) view.findViewById(R.id.txt_ver_hora_domS);
         btStatusDomingo = (ToggleButton) view.findViewById(R.id.ver_bt_folga_dom);
         horaDomE = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_domE);
         horaDomS = (ImageButton) view.findViewById(R.id.ver_pesquisa_hora_domS);
-
         txtAlmocoIni.setEnabled(false);
         txtAlmocoFim.setEnabled(false);
-
         txtSegE.setEnabled(false);
         txtSegS.setEnabled(false);
 
@@ -191,7 +164,6 @@ String idFuncionario;
 
         txtDomE.setEnabled(false);
         txtDomS.setEnabled(false);
-
 
         btStatusAlmoco.setChecked(true);
         btStatusSegunda.setChecked(true);
@@ -448,9 +420,6 @@ String idFuncionario;
             Toast.makeText(getContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
 
         }
-
-
-
         return  view;
     }
 
@@ -469,10 +438,8 @@ String idFuncionario;
                 callBuscaFuncionario.cancel();
                 switch (response.code()) {
                     case 200:
-
                         List<Funcionario> funcionario = response.body();
                             Funcionario func = funcionario.get(0);
-
 
                         if(func.getAlmocoIni()!=null && func.getAlmocoFim()!=null) {
                             muda(true, txtAlmocoIni, txtAlmocoFim, horaAlmocoIni, horaAlmocoFim, btStatusAlmoco);
@@ -484,7 +451,6 @@ String idFuncionario;
                             muda(false, txtAlmocoIni, txtAlmocoFim, horaAlmocoIni, horaAlmocoFim, btStatusAlmoco);
                             btStatusAlmoco.setChecked(false);
                         }
-
 
                         if(func.getSegE()!=null && func.getSegS()!=null) {
                             muda(true, txtSegE, txtSegS, horaSegE, horaSegS, btStatusSegunda);
@@ -564,8 +530,6 @@ String idFuncionario;
                             muda(false,txtDomE,txtDomS,horaDomE,horaDomS,btStatusDomingo);
                             btStatusDomingo.setChecked(false);
                         }
-
-
                         break;
 
 
@@ -580,7 +544,6 @@ String idFuncionario;
                                 Toast.makeText(getContext(), "Parametros incorretos !!", Toast.LENGTH_LONG).show();
                                 break;
                         }
-
                         break;
                 }
             }
@@ -594,12 +557,9 @@ String idFuncionario;
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
     //-------------------------------------------------------
 
@@ -607,34 +567,23 @@ String idFuncionario;
 
     public void editarHorarioFuncionario(String id_Salao)
     {
-
-
         RequestBody IdFuncionario = RequestBody.create(MediaType.parse("text/plain"),idFuncionario);
-
         RequestBody AlmocoIni = RequestBody.create(MediaType.parse("text/plain"),txtAlmocoIni.getEditText().getText().toString());
         RequestBody AlmocoFim = RequestBody.create(MediaType.parse("text/plain"),txtAlmocoFim.getEditText().getText().toString());
-
         RequestBody SegE = RequestBody.create(MediaType.parse("text/plain"),txtSegE.getEditText().getText().toString());
         RequestBody SegS = RequestBody.create(MediaType.parse("text/plain"),txtSegS.getEditText().getText().toString());
-
         RequestBody TerE = RequestBody.create(MediaType.parse("text/plain"),txtTerE.getEditText().getText().toString());
         RequestBody TerS = RequestBody.create(MediaType.parse("text/plain"),txtTerS.getEditText().getText().toString());
-
         RequestBody QuaE = RequestBody.create(MediaType.parse("text/plain"),txtQuaE.getEditText().getText().toString());
         RequestBody QuaS = RequestBody.create(MediaType.parse("text/plain"),txtQuaS.getEditText().getText().toString());
-
         RequestBody QuiE = RequestBody.create(MediaType.parse("text/plain"),txtQuiE.getEditText().getText().toString());
         RequestBody QuiS = RequestBody.create(MediaType.parse("text/plain"),txtQuiS.getEditText().getText().toString());
-
         RequestBody SexE = RequestBody.create(MediaType.parse("text/plain"),txtSexE.getEditText().getText().toString());
         RequestBody SexS = RequestBody.create(MediaType.parse("text/plain"),txtSexS.getEditText().getText().toString());
-
         RequestBody SabE = RequestBody.create(MediaType.parse("text/plain"),txtSabE.getEditText().getText().toString());
         RequestBody SabS = RequestBody.create(MediaType.parse("text/plain"),txtSabS.getEditText().getText().toString());
-
         RequestBody DomE = RequestBody.create(MediaType.parse("text/plain"),txtDomE.getEditText().getText().toString());
         RequestBody DomS = RequestBody.create(MediaType.parse("text/plain"),txtDomS.getEditText().getText().toString());
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callEditaConfiguracao = iApi.EditarHoraFuncionario(IdFuncionario,AlmocoIni,AlmocoFim,SegE,SegS,TerE,TerS,QuaE,QuaS,QuiE,QuiS,SexE,SexS,SabE,SabS,DomE,DomS);
         callEditaConfiguracao.enqueue(new Callback<ResponseBody>() {
@@ -661,14 +610,12 @@ String idFuncionario;
                         }
                         break;
                 }
-
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 if (qtTentativaRealizadaSalvar < qtTentativasSalvar) {
                     qtTentativaRealizadaSalvar++;
-
                     editarHorarioFuncionario(idSalao);
                 }
                 else {
@@ -714,7 +661,6 @@ String idFuncionario;
                 txtSegS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtTerE.isClickable())
@@ -723,7 +669,6 @@ String idFuncionario;
                 txtTerE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtTerS.isClickable())
@@ -732,7 +677,6 @@ String idFuncionario;
                 txtTerS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtQuaE.isClickable())
@@ -741,7 +685,6 @@ String idFuncionario;
                 txtQuaE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtQuaS.isClickable())
@@ -750,7 +693,6 @@ String idFuncionario;
                 txtQuaS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -760,7 +702,6 @@ String idFuncionario;
                 txtQuiE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -770,7 +711,6 @@ String idFuncionario;
                 txtQuiS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -780,7 +720,6 @@ String idFuncionario;
                 txtSexE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -790,7 +729,6 @@ String idFuncionario;
                 txtSexS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtSabE.isClickable())
@@ -799,7 +737,6 @@ String idFuncionario;
                 txtSabE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -809,7 +746,6 @@ String idFuncionario;
                 txtSabS.getEditText().setError("*");
                 status = false;
             }
-
         }
 
         if(txtDomE.isClickable())
@@ -818,7 +754,6 @@ String idFuncionario;
                 txtDomE.getEditText().setError("*");
                 status = false;
             }
-
         }
 
 
@@ -828,9 +763,7 @@ String idFuncionario;
                 txtDomS.getEditText().setError("*");
                 status = false;
             }
-
         }
-
 
         return status;
     }
@@ -874,34 +807,5 @@ String idFuncionario;
         tim.setId(idCampo);
         DialogFragment newFragment = tim;
         newFragment.show(getActivity().getFragmentManager(), "timePicker");
-    }
-
-
-
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

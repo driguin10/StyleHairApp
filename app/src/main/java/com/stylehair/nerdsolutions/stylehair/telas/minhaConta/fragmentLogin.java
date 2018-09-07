@@ -35,17 +35,14 @@ import retrofit2.Response;
 
 
 public class fragmentLogin extends Fragment {
-
     TextView emailCadastrado;
     TextInputLayout senhaAtual;
     TextInputLayout novaSenha;
     Button BtalterarLogin;
-
     SharedPreferences getSharedPreferences;
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     ProgressDialog dialog;
-
     Loading loading;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,10 +56,7 @@ public class fragmentLogin extends Fragment {
         senhaAtual = (TextInputLayout)v.findViewById(R.id.editSenhaAtual);
         novaSenha = (TextInputLayout)v.findViewById(R.id.editSenhaNova);
         BtalterarLogin = (Button)v.findViewById(R.id.btAlterarLogin);
-
         emailCadastrado.setText(getSharedPreferences.getString("email", ""));
-
-
         BtalterarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +73,6 @@ public class fragmentLogin extends Fragment {
         Boolean status = false;
         String VSenhaAtual =senhaAtual.getEditText().getText().toString();
         String VSenhaNova = novaSenha.getEditText().getText().toString();
-
         if(!VSenhaAtual.equals("") && !VSenhaNova.equals("") )
         {
             status = true;
@@ -94,8 +87,6 @@ public class fragmentLogin extends Fragment {
         }
         return  status;
     }
-
-
 
     public void AtualizaLogin()
     {
@@ -116,7 +107,6 @@ public class fragmentLogin extends Fragment {
             callEditarLogin.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                     loading.fechar();
                     qtTentativaRealizada = 0;
                     switch (response.code())
@@ -153,32 +143,14 @@ public class fragmentLogin extends Fragment {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-
                     if (qtTentativaRealizada < qtTentativas) {
                         qtTentativaRealizada++;
                         AtualizaLogin();
                     } else {
                         loading.fechar();
-
-                        if (t instanceof IOException) {
-                            Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else if (t instanceof IllegalStateException) {
-                            Log.d("xex", "ConversionError");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                        } else {
-                            Log.d("xex", "erro");
-                            Log.d("xex", String.valueOf(t.getCause()));
-                            Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                        }
-
                     }
-
                 }
             });
         }
     }
-
-
 }

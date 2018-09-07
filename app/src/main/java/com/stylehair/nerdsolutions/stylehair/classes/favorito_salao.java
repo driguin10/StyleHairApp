@@ -1,8 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.classes;
 
 public class favorito_salao {
-
-
     private int idFavorito;
     private int idLogin;
     private int idSalao;

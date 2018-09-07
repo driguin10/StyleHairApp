@@ -17,10 +17,8 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 public class minhaConta extends AppCompatActivity {
-
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
-
     public  boolean status = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +32,6 @@ public class minhaConta extends AppCompatActivity {
         Drawable upArrow = ContextCompat.getDrawable(minhaConta.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(minhaConta.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
@@ -51,7 +47,6 @@ public class minhaConta extends AppCompatActivity {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new fragmentUsuario(), "Usuario");
         adapter.addFragment(new fragmentLogin(), "Login");
-
         viewPager.setAdapter(adapter);
     }
 

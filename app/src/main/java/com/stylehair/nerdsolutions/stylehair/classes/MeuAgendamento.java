@@ -12,8 +12,6 @@ public class MeuAgendamento {
     private int idFuncionario;
     private String nomeFuncionario;
     private String imagemFuncionario;
-
-
     private String endereco;
     private String numero;
     private String bairro;

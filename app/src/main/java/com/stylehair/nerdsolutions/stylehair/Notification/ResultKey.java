@@ -1,8 +1,5 @@
 package com.stylehair.nerdsolutions.stylehair.Notification;
 
-/**
- * Created by Rodrigo on 20/02/2018.
- */
 
 public class ResultKey {
     public String message_id;

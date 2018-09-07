@@ -7,7 +7,6 @@ public class AvaliacaoSalao {
     private String comentario;
     private String data;
 
-
     public int getIdAvaliacao() {
         return idAvaliacao;
     }

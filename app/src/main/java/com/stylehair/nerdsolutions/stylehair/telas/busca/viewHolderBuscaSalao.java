@@ -14,14 +14,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.TopicoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.idNovoFavorito;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes.Adaptador_avaliacoes;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,7 +36,6 @@ import retrofit2.Response;
 
 
 public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickListener  {
-
     CardView card;
     CircleImageView imagem;
     TextView nomeSalao;
@@ -42,20 +43,18 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
     TextView endereco;
     CardView bt_favorito;
     ImageView coracao;
+    SharedPreferences getSharedPreferences;
 
     TextView distancia;
     CardView cardStatus;
     TextView status;
-
     Resources resources;
     Context contexto;
     BuscaSalao objeto;
     List<BuscaSalao> ListaObjeto;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
     int qtTentativaRealizadaSalvar = 0;
-
 
     public viewHolderBuscaSalao(View itemView, List<BuscaSalao> datos) {
         super(itemView);
@@ -74,6 +73,8 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
         bt_favorito.setOnClickListener(this);
         resources = itemView.getContext().getResources();
         contexto = itemView.getContext();
+        getSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(contexto);
     }
 
     @Override
@@ -82,20 +83,16 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
          objeto = ListaObjeto.get(position);
 
         if (view.getId() == bt_favorito.getId()) {
-
             if(objeto.getIdFavorito()>=0)
             {
                 excluiFavorito(String.valueOf(objeto.getIdFavorito()),position);
-
             }
             else
             {
                 SharedPreferences getSharedPreferences = PreferenceManager
                         .getDefaultSharedPreferences(contexto);
                 String idLogin = String.valueOf(getSharedPreferences.getInt("idLogin", -1));
-
                 salvaFavorito(String.valueOf(objeto.getIdSalao()),idLogin,position);
-
             }
 
         } else
@@ -104,22 +101,18 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
             Intent intent = new Intent(view.getContext(),verSalao_buscado.class);
             intent.putExtra("idSalao",String.valueOf(objeto.getIdSalao()));
             intent.putExtra("idFavorito",String.valueOf(objeto.getIdFavorito()));
-            //view.getContext().startActivity(intent);
             ((Activity)view.getContext()).startActivityForResult(intent,2);
-
         }
     }
 
 
     public void excluiFavorito( final String id, final int posicao)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callExcluiFavorito = iApi.DeletarFavorito(id);
         callExcluiFavorito.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 qtTentativaRealizada = 0;
                 switch (response.code())
                 {
@@ -128,13 +121,38 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                         atualizaCoracao(posicao,false);
                         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.removeTopico(objeto.getTopicoNotificacao());
+
+
+                        String topicos = getSharedPreferences.getString("topicosFavoritos","");
+                        ArrayList<String> arrayTopFavoritos = new ArrayList<>();
+                        Gson gson = new Gson();
+                        if(!topicos.equals("")) {
+                            arrayTopFavoritos = gson.fromJson(topicos, new TypeToken<ArrayList<String>>() {
+                            }.getType());
+                            for (int x = 0; x < arrayTopFavoritos.size(); x++) {
+                                if (arrayTopFavoritos.get(x).equals(objeto.getTopicoNotificacao())) {
+                                    arrayTopFavoritos.remove(x);
+                                }
+                            }
+
+                            String jsonTopicoFavoritos = gson.toJson(arrayTopFavoritos);
+                            SharedPreferences.Editor e = getSharedPreferences.edit();
+                            e.putString("topicosFavoritos", jsonTopicoFavoritos);
+                            e.apply();
+                            e.commit();
+                        }
+
+
+
+
+
+
                         break;
 
                     case 400:
                         Toast.makeText(contexto,"Houve um erro!!",Toast.LENGTH_LONG).show();
                         break;
                 }
-
                 callExcluiFavorito.cancel();
             }
 
@@ -143,25 +161,7 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                 if (qtTentativaRealizada < qtTentativas) {
                     qtTentativaRealizada++;
                     excluiFavorito(id,posicao);
-                } else {
-
-                    if (t instanceof IOException) {
-                        Log.d("xex", "this is an actual network failure timeout:( inform the user and possibly retry");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                    } else if (t instanceof IllegalStateException) {
-                        Log.d("xex", "ConversionError");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                    } else {
-                        Log.d("xex", "erro");
-                        Log.d("xex", String.valueOf(t.getCause()));
-                        Log.d("xex", String.valueOf(t.getLocalizedMessage()));
-                    }
-
                 }
-
-
-
-
             }
         });
     }
@@ -175,7 +175,6 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
         callSalvarFavorito.enqueue(new Callback<idNovoFavorito>() {
             @Override
             public void onResponse(Call<idNovoFavorito> call, Response<idNovoFavorito> response) {
-
                 qtTentativaRealizadaSalvar = 0;
                 switch (response.code())
                 {
@@ -186,13 +185,40 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                         atualizaCoracao(posicao,true);
                         TopicoNotificacao topicoNotificacao = new TopicoNotificacao();
                         topicoNotificacao.addTopico(objeto.getTopicoNotificacao());
+
+
+                        String topicos = getSharedPreferences.getString("topicosFavoritos","");
+                        ArrayList<String> arrayTopFavoritos = new ArrayList<>();
+                        Gson gson = new Gson();
+                        if(!topicos.equals(""))
+                        {
+                            Log.d("xex", "tem coisa");
+                            arrayTopFavoritos = gson.fromJson(topicos, new TypeToken<ArrayList<String>>(){}.getType());
+                            if(arrayTopFavoritos.size()>0)
+                            {
+                                Log.d("xex", "é maior q zero");
+                                for(int x=0;x<arrayTopFavoritos.size();x++)
+                                {
+                                    topicoNotificacao.removeTopico(arrayTopFavoritos.get(x));
+                                    Log.d("xex", "remove topic - "+ arrayTopFavoritos.get(x));
+                                }
+                            }
+                            arrayTopFavoritos.add(objeto.getTopicoNotificacao());
+                        }
+                        String jsonTopicoFavoritos = gson.toJson(arrayTopFavoritos);
+                        SharedPreferences.Editor e = getSharedPreferences.edit();
+                        e.putString("topicosFavoritos",jsonTopicoFavoritos);
+                        e.apply();
+                        e.commit();
+
+
+
                         break;
 
                     case 400:
                         Toast.makeText(contexto,"Houve um erro!!",Toast.LENGTH_LONG).show();
                         break;
                 }
-
                 callSalvarFavorito.cancel();
             }
 

@@ -45,7 +45,6 @@ public class saloesFavoritos extends AppCompatActivity {
         Drawable upArrow = ContextCompat.getDrawable(saloesFavoritos.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(saloesFavoritos.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         idLogin = String.valueOf(getSharedPreferences.getInt("idLogin", -1));
@@ -59,7 +58,6 @@ public class saloesFavoritos extends AppCompatActivity {
 
     public void getFavoritos(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<favorito_usuario>> callBuscaFavorito = iApi.BuscaFavoritoUsuario(id);
         callBuscaFavorito.enqueue(new Callback<List<favorito_usuario>>() {
@@ -72,15 +70,11 @@ public class saloesFavoritos extends AppCompatActivity {
                 {
                     case 200:
                         List<favorito_usuario> ListaFavorito = response.body();
-
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         lista.setAdapter(new Adaptador_favorito(ListaFavorito,lista));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
-                        break;
-
-                    case 400:
                         break;
                 }
             }
@@ -93,8 +87,6 @@ public class saloesFavoritos extends AppCompatActivity {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
@@ -103,13 +95,11 @@ public class saloesFavoritos extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

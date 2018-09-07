@@ -23,12 +23,8 @@ import com.stylehair.nerdsolutions.stylehair.Notification.ver_notificacao;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderNotification extends ViewHolder implements View.OnClickListener  {
-
     ImageButton excluir;
     ImageView imagem;
     TextView titulo;
@@ -36,12 +32,10 @@ public class viewHolderNotification extends ViewHolder implements View.OnClickLi
     CardView card;
     TextView hora;
     Resources resources;
-Context contexto;
+    Context contexto;
     menssagem objeto;
-
     RecyclerView Lista;
     List<menssagem> ListaObjeto;
-
     int idLogin;
 
     public viewHolderNotification(View itemView, List<menssagem> datos) {
@@ -60,10 +54,7 @@ Context contexto;
         contexto = itemView.getContext();
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(itemView.getContext());
-
         idLogin = getSharedPreferences.getInt("idLogin",-1);
-
-
     }
 
     @Override
@@ -81,7 +72,6 @@ Context contexto;
                         public void onClick(DialogInterface dialog, int which) {
                             BancoNotifyController crud = new BancoNotifyController(view.getContext());
                             crud.deletaRegistro(Integer.valueOf(objeto.get_id()));
-
                             List<menssagem> ListaObjetoAux = ListaObjeto;
                             ListaObjetoAux.remove(position);
                             Lista.setAdapter(new Adaptador_notify(ListaObjetoAux,Lista));
@@ -108,12 +98,6 @@ Context contexto;
             intent.putExtra("idLogin",idLogin);
             view.getContext().startActivity(intent);
             ((Activity)view.getContext()).finish();
-
-
         }
     }
-
-
-
-
 }

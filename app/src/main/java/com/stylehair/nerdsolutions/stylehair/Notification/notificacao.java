@@ -48,13 +48,9 @@ public class notificacao extends AppCompatActivity  {
         lista.setHasFixedSize(true);
         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
         layout.setOrientation(LinearLayoutManager.VERTICAL);
-
         BancoNotifyController crud = new BancoNotifyController(getBaseContext());
         Cursor cursor = crud.carregaDados(String.valueOf(idLogin));
         final List<menssagem> conteudo_menssagem = new ArrayList<>();
-
-
-
 
         if (cursor.moveToFirst()){
             do{
@@ -70,10 +66,6 @@ public class notificacao extends AppCompatActivity  {
         cursor.close();
         lista.setAdapter(new Adaptador_notify(conteudo_menssagem,lista));
         lista.setLayoutManager(layout);
-
-
-
-
     }
 
 
@@ -87,5 +79,4 @@ public class notificacao extends AppCompatActivity  {
         }
         return true;
     }
-
 }

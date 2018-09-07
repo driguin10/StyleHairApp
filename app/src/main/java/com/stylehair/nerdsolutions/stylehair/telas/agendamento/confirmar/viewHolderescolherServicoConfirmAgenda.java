@@ -8,7 +8,6 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import java.util.List;
 
 public class viewHolderescolherServicoConfirmAgenda extends ViewHolder  {
-
     TextView NomeServico;
     TextView valor;
     List<String> ListaServicoSalao;
@@ -19,6 +18,5 @@ public class viewHolderescolherServicoConfirmAgenda extends ViewHolder  {
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
         ListaServicoSalao = dados;
     }
-
 }
 

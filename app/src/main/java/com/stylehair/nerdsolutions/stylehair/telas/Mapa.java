@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnMapClickListener,LocationListener {
-
     private GoogleMap mMap;
     private LocationManager locationManager;
     private static final String TAG ="provider";
@@ -43,9 +42,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
     double latitude = 0;
     double longitude = 0;
     String provader;
-
     Loading loading;
-
     String Cidade;
     String Cep;
     String Estado;
@@ -58,11 +55,9 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_EnviarNotificacoes);
         loading = new Loading(Mapa.this);
         loading.abrir("Aguarde...");
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)
         {
@@ -70,12 +65,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
             nome = bundle.getString("nome","");
             latitude = Double.valueOf(bundle.getString("latitude","0"));
             longitude = Double.valueOf(bundle.getString("longitude","0"));
-
-
         }
-
-
-
 
         btSalva = (Button)findViewById(R.id.btSalva);
         btSalva.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +80,6 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
                 data.putExtra("bairro",String.valueOf(Bairro));
                 setResult(RESULT_OK, data);
                 finish();
-
             }
         });
 
@@ -109,22 +98,17 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
                     loading.fechar();
                 }catch (SecurityException s)
                 {
-
                 }
 
             }
         });
-
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-
-
         try {
-
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             provader = locationManager.getBestProvider(criteria, true);
@@ -144,24 +128,20 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
             LatLng myEndereco = new LatLng(latitude,longitude);
             mMap.addMarker(new MarkerOptions().position(myEndereco).title(nome));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myEndereco, 18.0f));
-
         }
         else
         {
-
             Geocoder geocoder = new Geocoder(Mapa.this);
             try {
                 List<Address> enderecos = geocoder.getFromLocationName(endereco, 1);
 
                 if (enderecos.size() > 0) {
-
                     LatLng myEndereco = new LatLng(enderecos.get(0).getLatitude(),enderecos.get(0).getLongitude());
                     latitude = enderecos.get(0).getLatitude();
                     longitude = enderecos.get(0).getLongitude();
                     mMap.addMarker(new MarkerOptions().position(myEndereco).title(nome));
                    // mMap.moveCamera(CameraUpdateFactory.newLatLng(myEndereco));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myEndereco, 18.0f));
-
                 }
             }catch (IOException e)
             {
@@ -196,30 +176,17 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
         mMap.addMarker(new MarkerOptions().position(latLng).title(nome));
         latitude = latLng.latitude;
         longitude = latLng.longitude;
-
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18.0f));
-       // Toast.makeText(Mapa.this,"Mapa clicado ",Toast.LENGTH_LONG).show();
-
-
         Geocoder geocoder = new Geocoder(Mapa.this);
         try {
             List<Address> enderecos = geocoder.getFromLocation(latLng.latitude,latLng.longitude,1);
 
             if (enderecos.size() > 0) {
-               /* Log.d("xex","cidade " +enderecos.get(0).getLocality());
-                Log.d("xex","bairro " + enderecos.get(0).getSubLocality());
-                Log.d("xex","sub cidade " + enderecos.get(0).getSubAdminArea());
-                Log.d("xex","endereco " + enderecos.get(0).getThoroughfare());
-                Log.d("xex","pais " + enderecos.get(0).getCountryName());
-                Log.d("xex","uf " + enderecos.get(0).getCountryCode());
-                Log.d("xex","estado " + enderecos.get(0).getAdminArea());*/
-
                if(enderecos.get(0).getLocality()!=null)
                    Cidade=enderecos.get(0).getLocality();
                else
                    if(enderecos.get(0).getSubAdminArea()!=null)
                        Cidade = enderecos.get(0).getSubAdminArea();
-
                Estado = enderecos.get(0).getAdminArea();
                Bairro = enderecos.get(0).getSubLocality();
                Endereco = enderecos.get(0).getThoroughfare();
@@ -233,12 +200,10 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
 
     @Override
     public void onLocationChanged(Location location) {
-
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
     }
 
     @Override

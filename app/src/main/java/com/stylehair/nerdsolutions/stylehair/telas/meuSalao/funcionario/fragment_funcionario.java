@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -40,20 +41,12 @@ import retrofit2.Response;
 
 
 public class fragment_funcionario extends Fragment {
-
-
     private OnFragmentInteractionListener mListener;
-
     AlertDialog alerta;
     ProgressDialog dialog;
-
-
     int qtTentativas = 3;
     int qtTentativaRealizadaLoad = 0;
     int qtTentativaRealizadaExcluir = 0;
-
-
-
     CircleImageView ImagemUser;
     TextInputLayout verNomeUser;
     TextInputLayout verApelidoUser;
@@ -67,22 +60,16 @@ public class fragment_funcionario extends Fragment {
     TextInputLayout verNascimento;
     TextInputLayout verEstadoUser;
     TextInputLayout verSexoUser;
-
     Button btExcluirFuncionario;
-
     String IdUsuario;
-
     View view;
     VerificaConexao verificaConexao;
-
     Loading loading;
     Config config;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -97,11 +84,7 @@ public class fragment_funcionario extends Fragment {
         if(bundle!=null)
         {
             IdUsuario = bundle.getString("idUsuario");
-            Log.d("xex","iii- "+IdUsuario);
-
-
         }
-
 
         verNomeUser = (TextInputLayout) view.findViewById(R.id.txt_funcNome);
         verApelidoUser = (TextInputLayout) view.findViewById(R.id.txt_funcApelido);
@@ -118,13 +101,11 @@ public class fragment_funcionario extends Fragment {
         ImagemUser = (CircleImageView) view.findViewById(R.id.verimagemFunc);
         btExcluirFuncionario = (Button) view.findViewById(R.id.btExcluirFunc);
         //--------------------------------------------------------------------
-
         if(verificaConexao.verifica(getContext())) {
             loading.abrir("Aguarde...");
             pegarFuncionario(IdUsuario);
         }
         else {
-
             Toast.makeText(getActivity(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
         }
 
@@ -136,13 +117,12 @@ public class fragment_funcionario extends Fragment {
             }
         });
 
-
         return view;
     }
 
 
 
-    //---- função para pegar dados do usuario do servidor----
+
     public void excluirFuncionario(final String idFuncionario){
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callExcluir = iApi.ExcluirFuncionario(idFuncionario);
@@ -151,19 +131,12 @@ public class fragment_funcionario extends Fragment {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 loading.fechar();
                 qtTentativaRealizadaExcluir = 0;
+
                 callExcluir.cancel();
                 switch (response.code()) {
                     case 204:
-
-                        break;
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
+                        Toast.makeText(getActivity(), "Funcionario Excluido !!!", Toast.LENGTH_SHORT).show();
+                        ((Activity)getActivity()).finish();
                         break;
                 }
             }
@@ -185,8 +158,6 @@ public class fragment_funcionario extends Fragment {
 
 
 
-
-    //---- função para pegar dados do usuario do servidor----
     public void pegarFuncionario(final String idUsuario){
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<Usuario>> callBuscaUser = iApi.BuscaUsuarioId(Integer.valueOf(idUsuario));
@@ -194,7 +165,6 @@ public class fragment_funcionario extends Fragment {
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 loading.fechar();
-
                 callBuscaUser.cancel();
                 switch (response.code()) {
                     case 200:
@@ -224,22 +194,7 @@ public class fragment_funcionario extends Fragment {
                             outputNascimento = dataFormat2.format(dataFormat.parse(user.getDataNascimento()));
                         } catch (ParseException p) {
                         }
-
                         verNascimento.getEditText().setText(outputNascimento);
-
-
-
-                        break;
-
-
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
                         break;
                 }
             }

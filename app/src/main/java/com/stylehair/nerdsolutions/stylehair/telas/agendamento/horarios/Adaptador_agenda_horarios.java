@@ -13,12 +13,8 @@ import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderServicoAgendaHorarios> {
-
     ArrayList<String> ListaHorario;
     RecyclerView lista;
     String Tempo;
@@ -33,7 +29,6 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
     ArrayList<String> vetAux = new ArrayList<>();
     ArrayList<String> ServicosLista;
     String Data;
-
     String NomeFuncionario;
     String Imagemfuncionario;
 
@@ -78,15 +73,11 @@ public class Adaptador_agenda_horarios extends RecyclerView.Adapter<viewHolderSe
          holder.idServicos = IdServicos;
          holder.NomeFuncionario = NomeFuncionario;
          holder.Imagemfuncionario = Imagemfuncionario;
-
-        LocalTime penultimoH =  LocalTime.parse(ListaHorario.get(ListaHorario.size()-1));
-        LocalTime HoraIntervalo = LocalTime.parse(Intervalo);
-       holder.ultimo = penultimoH.plusHours(HoraIntervalo.getHourOfDay())
+         LocalTime penultimoH =  LocalTime.parse(ListaHorario.get(ListaHorario.size()-1));
+         LocalTime HoraIntervalo = LocalTime.parse(Intervalo);
+         holder.ultimo = penultimoH.plusHours(HoraIntervalo.getHourOfDay())
                 .plusMinutes(HoraIntervalo.getMinuteOfHour());
 }
-
-
-
 
     @Override
     public int getItemCount() {

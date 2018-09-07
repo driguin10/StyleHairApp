@@ -49,24 +49,18 @@ import retrofit2.Response;
 
 public class ver_servico_salao extends AppCompatActivity {
     TextInputLayout servico;
-
     TextInputLayout valor;
     Spinner sexo;
     Spinner tempoServico;
-
     Button salvar;
     Loading loading;
-
-
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
     public int qtTentativaRealizadaEditar = 0;
-
     String id_Salao;
     String id_servico;
     Bundle bundle;
     String[] tempoServ = {"00:10","00:15","00:20","00:25","00:30","00:40","00:45","00:50","01:00","01:30","02:00"};
-
     AutoCompleteTextView EdtServico;
 
     @Override
@@ -81,32 +75,21 @@ public class ver_servico_salao extends AppCompatActivity {
         upArrow.setColorFilter(ContextCompat.getColor(ver_servico_salao.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
          bundle = ver_servico_salao.this.getIntent().getExtras();
-
-
-
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         id_Salao = getSharedPreferences.getString("idSalao", "");
         loading = new Loading(ver_servico_salao.this);
         servico = (TextInputLayout) findViewById(R.id.cadServico);
-
         valor = (TextInputLayout) findViewById(R.id.cadValor);
         sexo = (Spinner) findViewById(R.id.spn_cadServSexo);
-
         salvar = (Button) findViewById(R.id.bt_salvarServico);
         tempoServico = (Spinner) findViewById(R.id.spn_cadTempo);
-
-
         List<String> servicosSal =
                 Arrays.asList(getResources().getStringArray(R.array.servicos_salao));
-
         ArrayAdapter<String> adapters = new ArrayAdapter<String>(ver_servico_salao.this,
                 android.R.layout.simple_dropdown_item_1line,servicosSal);
         EdtServico = (AutoCompleteTextView) findViewById(R.id.edt_servico);
-
         EdtServico.setAdapter(adapters);
-
         salvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,16 +114,10 @@ public class ver_servico_salao extends AppCompatActivity {
                       tempoServico.setSelection(x);
                   }
               }
-
-
-
-
-
                 float valorInt = Float.valueOf(bundle.getString("valor"));
                 String valorF = String.format(Locale.getDefault(),"%.2f", valorInt);
                         valor.getEditText().setText(valorF);
                 id_servico=bundle.getString("idServico");
-
 
                 for(int i= 0; i < sexo.getAdapter().getCount(); i++)
                 {
@@ -150,7 +127,6 @@ public class ver_servico_salao extends AppCompatActivity {
                     }
                 }
             }
-
         }
         else {
             getSupportActionBar().setTitle("Cadastro de Serviços");
@@ -158,18 +134,13 @@ public class ver_servico_salao extends AppCompatActivity {
 
     }
 
-
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
                 Intent intent = new Intent(ver_servico_salao.this,servicos_salao.class);
-
-               startActivity(intent);
-               finish();
+                startActivity(intent);
+                finish();
                 break;
             default:break;
         }
@@ -183,9 +154,7 @@ public class ver_servico_salao extends AppCompatActivity {
         RequestBody Servico = RequestBody.create(MediaType.parse("text/plain"),EdtServico.getText().toString());
         RequestBody Sexo = RequestBody.create(MediaType.parse("text/plain"), sexo.getSelectedItem().toString());
         RequestBody Valor = RequestBody.create(MediaType.parse("text/plain"), valor.getEditText().getText().toString());
-
         RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"),tempoServ[tempoServico.getSelectedItemPosition()] );
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callSalvaServico = iApi.SalvarServicoSalao(IdSalao,Servico,Tempo,Sexo,Valor);
         callSalvaServico.enqueue(new Callback<ResponseBody>() {
@@ -199,8 +168,6 @@ public class ver_servico_salao extends AppCompatActivity {
                 {
                     case 204:
                         Toast.makeText(ver_servico_salao.this,"Salvo com sucesso !!! ",Toast.LENGTH_LONG).show();
-                        //Intent intent = new Intent(ver_servico_salao.this, ver_funcionario.class);
-                       // startActivity(intent);
                         finish();
                         break;
 
@@ -217,8 +184,6 @@ public class ver_servico_salao extends AppCompatActivity {
                         }
                         break;
                 }
-
-
             }
 
             @Override
@@ -240,7 +205,6 @@ public class ver_servico_salao extends AppCompatActivity {
         RequestBody Sexo = RequestBody.create(MediaType.parse("text/plain"), sexo.getSelectedItem().toString());
         RequestBody Valor = RequestBody.create(MediaType.parse("text/plain"), valor.getEditText().getText().toString());
         RequestBody Tempo = RequestBody.create(MediaType.parse("text/plain"),tempoServ[tempoServico.getSelectedItemPosition()] );
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callSalvaServico = iApi.EditarServicoSalao(IdServicoSalao,Servico,Tempo,Sexo,Valor);
         callSalvaServico.enqueue(new Callback<ResponseBody>() {
@@ -254,8 +218,6 @@ public class ver_servico_salao extends AppCompatActivity {
                 {
                     case 204:
                         Toast.makeText(ver_servico_salao.this,"Editado com sucesso !!! ",Toast.LENGTH_LONG).show();
-                        //Intent intent = new Intent(ver_servico_salao.this, ver_funcionario.class);
-                        // startActivity(intent);
                         finish();
                         break;
 
@@ -272,8 +234,6 @@ public class ver_servico_salao extends AppCompatActivity {
                         }
                         break;
                 }
-
-
             }
 
             @Override
@@ -288,5 +248,4 @@ public class ver_servico_salao extends AppCompatActivity {
             }
         });
     }
-
 }

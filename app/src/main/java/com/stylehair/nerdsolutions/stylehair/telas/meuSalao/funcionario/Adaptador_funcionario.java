@@ -14,27 +14,21 @@ import java.util.List;
 
 
 public class Adaptador_funcionario extends RecyclerView.Adapter<viewHolderFuncionario> {
-
     List<UsuarioFuncionario> ListaFuncionario;
-
-
 
     public Adaptador_funcionario(List<UsuarioFuncionario> listaFuncionario) {
         ListaFuncionario = listaFuncionario;
     }
 
-
     @Override
     public viewHolderFuncionario onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_funcionario, parent, false);
-
         return new viewHolderFuncionario(vista,ListaFuncionario);
     }
 
     @Override
     public void onBindViewHolder(viewHolderFuncionario holder, int position) {
          holder.NomeFuncionario.setText(ListaFuncionario.get(position).getNome());
-
         if(ListaFuncionario.get(position).linkImagem .equals(""))
             holder.imagemFunc.setImageDrawable(holder.contexto.getResources().getDrawable(R.drawable.img_padrao_user));
         else

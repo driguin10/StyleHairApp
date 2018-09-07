@@ -70,13 +70,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class cadastrar_funcionario extends AppCompatActivity {
-TextInputLayout LoginEmail;
-TextInputLayout LoginSenha;
+    TextInputLayout LoginEmail;
+    TextInputLayout LoginSenha;
     Button pesquisaLogin;
     Loading loading;
-
     CircleImageView ImagemUser;
-
     TextInputLayout cadNomeUser;
     TextInputLayout cadApelidoUser;
     TextInputLayout cadTelefoneUser;
@@ -87,32 +85,22 @@ TextInputLayout LoginSenha;
     TextInputLayout cadCidadeUser;
     TextInputLayout cadObsUser;
     TextInputLayout cadNascimento;
-
     TextInputLayout emailNovo;
-
     TextInputLayout senhaNova;
-
     Spinner cadEstadoUser;
     Spinner cadSexoUser;
-
     Button BtSalvar;
     Button BtCarregaImagem ;
     Button Limparcampos;
-
     ImageButton BtPesqData;
     ImageButton BtExcluirImagem;
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
-
     public int qtTentativaRealizadaLoad = 0;
     public int qtTentativaRealizadaSalvar1 = 0;
     public int qtTentativaRealizadaSalvar2 = 0;
     public int qtTentativaRealizadaSalvar3 = 0;
-
     Config config;
-
-
-
     AlertDialog alerta;
     static final int imagem_interna = 1;
     static final int imagem_camera = 0;
@@ -124,7 +112,6 @@ TextInputLayout LoginSenha;
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
     ScrollView scrollView;
     String tipoSalvar;
-
     int id_Login = -1;
     int id_Salao = -1 ;
     int id_Usuario = -1;
@@ -165,93 +152,59 @@ TextInputLayout LoginSenha;
                 LoginEmail.getEditText().setText("");
                 LoginEmail.setAlpha(.9f);
                 LoginEmail.setEnabled(true);
-
                 LoginSenha.getEditText().setText("");
                 LoginSenha.setAlpha(.9f);
                 LoginSenha.setEnabled(true);
-
                 cadNomeUser.getEditText().setText("");
                 cadNomeUser.setAlpha(.9f);
                 cadNomeUser.setEnabled(true);
-
                 emailNovo.getEditText().setText("");
                 senhaNova.getEditText().setText("");
-
                 cadApelidoUser.getEditText().setText("");
                 cadApelidoUser.setEnabled(true);
                 cadApelidoUser.setAlpha(.9f);
-
                 cadTelefoneUser.getEditText().setText("");
                 cadTelefoneUser.setEnabled(true);
                 cadTelefoneUser.setAlpha(.9f);
-
                 cadEnderecoUser.getEditText().setText("");
                 cadEnderecoUser.setEnabled(true);
                 cadEnderecoUser.setAlpha(.9f);
-
                 cadBairroUser.getEditText().setText("");
                 cadBairroUser.setEnabled(true);
                 cadBairroUser.setAlpha(.9f);
-
                 cadNumeroUser.getEditText().setText("");
                 cadNumeroUser.setEnabled(true);
                 cadNumeroUser.setAlpha(.9f);
-
                 cadCidadeUser.getEditText().setText("");
                 cadCidadeUser.setEnabled(true);
                 cadCidadeUser.setAlpha(.9f);
-
                 cadObsUser.getEditText().setText("");
                 cadObsUser.setEnabled(true);
                 cadObsUser.setAlpha(.9f);
-
                 cadCepUser.getEditText().setText("");
                 cadCepUser.setEnabled(true);
                 cadCepUser.setAlpha(.9f);
-
                 cadNascimento.getEditText().setText("");
                 cadNascimento.setAlpha(.9f);
                 cadNascimento.setEnabled(true);
-
                 cadEstadoUser.setEnabled(true);
                 cadEstadoUser.setAlpha(.9f);
-
-
                 cadSexoUser.setEnabled(true);
                 cadSexoUser.setAlpha(.9f);
-
-               BtCarregaImagem.setEnabled(true);
-               BtCarregaImagem.setAlpha(.9f);
-
-               BtExcluirImagem.setAlpha(.9f);
-               BtExcluirImagem.setEnabled(true);
-
-
+                BtCarregaImagem.setEnabled(true);
+                BtCarregaImagem.setAlpha(.9f);
+                BtExcluirImagem.setAlpha(.9f);
+                BtExcluirImagem.setEnabled(true);
                 BtPesqData.setEnabled(true);
                 BtPesqData.setAlpha(.9f);
-
-
                 emailNovo.setEnabled(true);
                 emailNovo.setAlpha(.9f);
-
                 senhaNova.setAlpha(.9f);
                 senhaNova.setEnabled(true);
-
-
-
-
-
-
-
             }
         });
 
-       scrollView = (ScrollView)findViewById(R.id.scrollCadastroFunc);
-
-
-
-
-
+        scrollView = (ScrollView)findViewById(R.id.scrollCadastroFunc);
         cadNomeUser = (TextInputLayout) findViewById(R.id.txt_NomeNovo);
         emailNovo = (TextInputLayout) findViewById(R.id.txt_EmailNovo);
         senhaNova = (TextInputLayout) findViewById(R.id.txt_SenhaNova);
@@ -305,9 +258,6 @@ TextInputLayout LoginSenha;
         BtSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             /* Log.d("xex","idSalao - "+ String.valueOf(id_Salao));
-                Log.d("xex","idUsuario - "+ String.valueOf(id_Usuario));
-                Log.d("xex","idLogin - "+ String.valueOf(id_Login));*/
                 if(!verificaCampos())
                 {
                     Toast.makeText(cadastrar_funcionario.this, "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
@@ -325,9 +275,6 @@ TextInputLayout LoginSenha;
                         salvar1();
                     }
                 }
-
-
-
             }
         });
 
@@ -379,7 +326,6 @@ TextInputLayout LoginSenha;
             public void onResponse(Call<CEP> call, Response<CEP> response) {
                 loading.fechar();
                 if (!response.isSuccessful()) {
-
                 } else {
                     CEP cep = response.body();
                     cadEnderecoUser.getEditText().setText(cep.getLogradouro());
@@ -400,7 +346,6 @@ TextInputLayout LoginSenha;
             @Override
             public void onFailure(Call<CEP> call, Throwable t) {
                 loading.fechar();
-                Log.d("xex", "erro no cep");
             }
         });
     }
@@ -409,7 +354,6 @@ TextInputLayout LoginSenha;
         RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "1");
         RequestBody idSalao = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Salao));
         RequestBody idUsuario = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Usuario) );
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<CadastroFuncionario> callCriaFunc1 = iApi.CriarFuncionario1(TipoSalvar,idSalao,idUsuario);
         callCriaFunc1.enqueue(new Callback<CadastroFuncionario>() {
@@ -418,7 +362,6 @@ TextInputLayout LoginSenha;
                 loading.fechar();
                 qtTentativaRealizadaSalvar1 = 0;
                 callCriaFunc1.cancel();
-
                 CadastroFuncionario ListcadFunc = response.body();
                 if(response.isSuccessful())
                 {
@@ -467,7 +410,6 @@ TextInputLayout LoginSenha;
         RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "2");
         RequestBody idSalao = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Salao));
         RequestBody idLogin = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Login) );
-
         RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), cadNomeUser.getEditText().getText().toString());
         RequestBody apelido = RequestBody.create(MediaType.parse("text/plain"), cadApelidoUser.getEditText().getText().toString());
         RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUser.getEditText().getText().toString());
@@ -496,7 +438,6 @@ TextInputLayout LoginSenha;
                 loading.fechar();
                 qtTentativaRealizadaSalvar2 = 0;
                 callCriaFunc2.cancel();
-
                 CadastroFuncionario ListcadFunc = response.body();
                 if(response.isSuccessful())
                 {
@@ -516,8 +457,6 @@ TextInputLayout LoginSenha;
                             intent.putExtra("idFuncionario",idfunc);
                             startActivity(intent);
                             finish();
-
-
                     }
                 }
             }
@@ -539,11 +478,8 @@ TextInputLayout LoginSenha;
         RequestBody TipoSalvar = RequestBody.create(MediaType.parse("text/plain"), "3");
         RequestBody idSalao = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Salao));
         RequestBody idLogin = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(id_Login) );
-
-
         RequestBody email = RequestBody.create(MediaType.parse("text/plain"), emailNovo.getEditText().getText().toString());
         RequestBody senha = RequestBody.create(MediaType.parse("text/plain"), senhaNova.getEditText().getText().toString());
-
         RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), cadNomeUser.getEditText().getText().toString());
         RequestBody apelido = RequestBody.create(MediaType.parse("text/plain"), cadApelidoUser.getEditText().getText().toString());
         RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUser.getEditText().getText().toString());
@@ -572,8 +508,7 @@ TextInputLayout LoginSenha;
                 loading.fechar();
                 qtTentativaRealizadaSalvar3 = 0;
                 callCriaFunc3.cancel();
-
-
+                Log.d("xex",String.valueOf(response.code()) + " - " + response.message());
                 CadastroFuncionario ListcadFunc = response.body();
 
                 if(response.isSuccessful())
@@ -581,7 +516,6 @@ TextInputLayout LoginSenha;
                     String[] ids = ListcadFunc.getId().split("#");
                     String iduser = ids[0];
                     String idfunc = ids[1];
-
                     if(iduser.equals("-2")) {
                         Toast.makeText(cadastrar_funcionario.this,"Email já existe !!" ,Toast.LENGTH_LONG).show();
                         emailNovo.getEditText().requestFocus();
@@ -625,13 +559,11 @@ TextInputLayout LoginSenha;
         });
     }
 
-
     public void logar(){
 
         final Login login = new Login();
         login.setEmail(LoginEmail.getEditText().getText().toString());
         login.setSenha(LoginSenha.getEditText().getText().toString());
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<Logar> callLoga = iApi.BuscaUsuarioFuncionario(login);
         callLoga.enqueue(new Callback<Logar>() {
@@ -639,7 +571,6 @@ TextInputLayout LoginSenha;
             public void onResponse(Call<Logar> call, Response<Logar> response) {
                 callLoga.cancel();
                 qtTentativaRealizada = 0;
-
                 if(response.isSuccessful()) {
                     Logar logar = response.body();
                     if(logar.login!=null)
@@ -649,7 +580,6 @@ TextInputLayout LoginSenha;
                             Email = log.getEmail();
                             id_Login = log.getIdLogin();
                         }
-
                         emailNovo.getEditText().setText(Email);
                         emailNovo.setEnabled(false);
                         emailNovo.setClickable(false);
@@ -669,8 +599,6 @@ TextInputLayout LoginSenha;
                 }
                 else
                 {
-
-
                     loading.fechar();
                     switch (response.code()) {
                         case 400:
@@ -682,21 +610,13 @@ TextInputLayout LoginSenha;
                             else
                             if(response.message().equals("08"))
                                 Toast.makeText(getBaseContext(), "Este usuario já é um FUNCIONÁRIO!!", Toast.LENGTH_SHORT).show();
-
                             break;
-
-
 
                         case 401:
                             Toast.makeText(getBaseContext(), "não autorizado", Toast.LENGTH_SHORT).show();
                             break;
                     }
                 }
-
-
-
-
-
             }
 
             @Override
@@ -713,8 +633,6 @@ TextInputLayout LoginSenha;
                 }
             }
         });
-
-
     }
 
     //---- função para pegar dados do usuario do servidor----
@@ -729,48 +647,35 @@ TextInputLayout LoginSenha;
                 switch (response.code()) {
                     case 200:
                         qtTentativaRealizadaLoad = 0;
-
-
                         List<Usuario> users = response.body();
                         Usuario user = users.get(0);
                         cadNomeUser.getEditText().setText(user.getNome());
                         cadNomeUser.setAlpha(.4f);
                         cadNomeUser.setEnabled(false);
-
                         cadApelidoUser.getEditText().setText(user.getApelido());
                         cadApelidoUser.setEnabled(false);
                         cadApelidoUser.setAlpha(.4f);
-
                         cadTelefoneUser.getEditText().setText(user.getTelefone());
                         cadTelefoneUser.setEnabled(false);
                         cadTelefoneUser.setAlpha(.4f);
-
                         cadEnderecoUser.getEditText().setText(user.getEndereco());
                         cadEnderecoUser.setEnabled(false);
                         cadEnderecoUser.setAlpha(.4f);
-
                         cadBairroUser.getEditText().setText(user.getBairro());
                         cadBairroUser.setEnabled(false);
                         cadBairroUser.setAlpha(.4f);
-
                         cadNumeroUser.getEditText().setText(String.valueOf(user.getNumero()));
                         cadNumeroUser.setEnabled(false);
                         cadNumeroUser.setAlpha(.4f);
-
                         cadCidadeUser.getEditText().setText(user.getCidade());
                         cadCidadeUser.setEnabled(false);
                         cadCidadeUser.setAlpha(.4f);
-
                         cadObsUser.getEditText().setText(user.getObs());
                         cadObsUser.setEnabled(false);
                         cadObsUser.setAlpha(.4f);
-
                         cadCepUser.getEditText().setText(user.getCep());
                         cadCepUser.setEnabled(false);
                         cadCepUser.setAlpha(.4f);
-
-
-
 
                         for(int i= 0; i < cadEstadoUser.getAdapter().getCount(); i++)
                         {
@@ -807,30 +712,15 @@ TextInputLayout LoginSenha;
                         cadNascimento.getEditText().setText(outputNascimento);
                         cadNascimento.setEnabled(false);
                         cadNascimento.setAlpha(.4f);
-
                         BtCarregaImagem.setEnabled(false);
                         BtCarregaImagem.setAlpha(.4f);
-
                         BtExcluirImagem.setEnabled(false);
                         BtExcluirImagem.setAlpha(.4f);
-
                         BtPesqData.setEnabled(false);
                         BtPesqData.setAlpha(.4f);
-
                         id_Usuario = Integer.valueOf(user.getIdUsuario());
-
                         break;
 
-
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
-                        break;
                 }
             }
 
@@ -845,7 +735,6 @@ TextInputLayout LoginSenha;
                 }
             }
         });
-
     }
     //-------------------------------------------------------
 
@@ -895,7 +784,6 @@ TextInputLayout LoginSenha;
         String Vtelefone = cadTelefoneUser.getEditText().getText().toString();
         String Vestado = cadEstadoUser.getSelectedItem().toString();
         String Vcidade = cadCidadeUser.getEditText().getText().toString();
-
         String Vemail  = emailNovo.getEditText().getText().toString();
         String Vsenha = senhaNova.getEditText().getText().toString();
 
@@ -932,7 +820,6 @@ TextInputLayout LoginSenha;
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
-
         alerta.dismiss();
         if(resultCode!=0)
             loading.abrir("Aguarde...");
@@ -960,8 +847,6 @@ TextInputLayout LoginSenha;
                     }
                     img64  = img.getBitmapBase64();
                     tipoImagem = img.getMime();
-
-
                     if(img.getBitmap()!=null)
                     {
                         ImagemUser.setImageBitmap(img.getBitmap());
@@ -975,7 +860,6 @@ TextInputLayout LoginSenha;
                 {
                     Image img = new Image();
                     Bitmap photo = (Bitmap) data.getExtras().get("data");
-
                     Uri uri = img.getImageUri(cadastrar_funcionario.this, photo);
                     File file = new File(img.getRealPathFromURI(cadastrar_funcionario.this,uri));
                     String pathImgCamera = file.getPath();
@@ -1017,7 +901,6 @@ TextInputLayout LoginSenha;
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-
             final Calendar c = Calendar.getInstance();
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
@@ -1035,7 +918,6 @@ TextInputLayout LoginSenha;
             }catch (ParseException p) { }
 
             ((TextInputLayout) getActivity().findViewById(R.id.txt_nascimentoNovo)).getEditText().setText(output);
-
         }
     }
     //------------------------------------------------------------

@@ -20,13 +20,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnClickListener  {
-
-
     CircleImageView imagemFunc;
     TextView NomeFuncionario;
     TextView Servicos;
@@ -36,7 +31,6 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
     Button btProsseguir;
     String idSalao;
     ArrayList<String> listaServicos;
-
     List<UsuarioFuncionarioBusca> ListaUsuario;
     UsuarioFuncionarioBusca usuarioFuncionario;
     ArrayList<String> ListaIdServ;
@@ -44,7 +38,6 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
 
     public viewHolderFuncionario_agenda(View itemView, List<UsuarioFuncionarioBusca> dados,Button bt) {
         super(itemView);
-
         imagemFunc = (CircleImageView) itemView.findViewById(R.id.img_funcionario);
         NomeFuncionario = (TextView) itemView.findViewById(R.id.nome_funcionario);
         Servicos = (TextView) itemView.findViewById(R.id.txtServicos);
@@ -60,8 +53,6 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
     public void onClick(View v) {
         int position = getAdapterPosition();
         usuarioFuncionario = ListaUsuario.get(position);
-
-
         if(v.getId() == card.getId())
         {
             for (int x = 0; x < ListaUsuario.size(); x++) {
@@ -120,8 +111,6 @@ public class viewHolderFuncionario_agenda extends ViewHolder implements View.OnC
                     }
                 }
                 //-----------------------------------------------------------------------
-
-
                 if (posIdFunc == -1) {
                     Toast.makeText(contexto, "Escolha um Funcionário.", Toast.LENGTH_LONG).show();
                 } else {

@@ -32,40 +32,31 @@ public class cadastrar_login extends AppCompatActivity {
     public int qtTentativas = 3;
     public int qtTentativaRealizada = 0;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar);
         loading = new Loading(cadastrar_login.this);
-
         txtCadEmail = (TextInputLayout) findViewById(R.id.cad_EditEmail);
         txtCadSenha = (TextInputLayout) findViewById(R.id.cad_EditSenha);
         txtCadRSenha = (TextInputLayout) findViewById(R.id.cad_EditRepSenha);
-
         btCadastroLogin = (Button) findViewById(R.id.bt_CadastraLogin);
         btCadastroLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VerificaConexao verificaConexao = new VerificaConexao();
-                if(verificaConexao.verifica(cadastrar_login.this)) {
-                 if(verificaCampos())
+            VerificaConexao verificaConexao = new VerificaConexao();
+            if(verificaConexao.verifica(cadastrar_login.this))
+                if(verificaCampos())
                  {
                      loading.abrir("Aguarde...");
                      cadastraLogin();
                  }
-                }
-                else
-                {
-                    Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
-                }
-
-                }//fim botao
-
-
-        });
-
-
+            else
+            {
+                Toast.makeText(getBaseContext(), "Sem conexão com internet !!!", Toast.LENGTH_SHORT).show();
+            }
+            }//fim botao
+    });
     }
 
 
@@ -78,39 +69,35 @@ public class cadastrar_login extends AppCompatActivity {
         callCadastroLogin.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 loading.fechar();
+                qtTentativaRealizada = 0;
 
+                switch (response.code()){
+                    case 204:
+                        Toast.makeText(cadastrar_login.this, "Cadastrado com sucesso !!", Toast.LENGTH_LONG).show();
+                        finish();
+                        break;
 
-                    qtTentativaRealizada = 0;
+                    case 400:
+                        switch (response.message())
+                        {
+                            case "03":
+                                Toast.makeText(cadastrar_login.this, "Erro ao cadastrar !! ", Toast.LENGTH_LONG).show();
+                                break;
 
-                    switch (response.code()){
-                        case 204:
-                            Toast.makeText(cadastrar_login.this, "Cadastrado com sucesso !!", Toast.LENGTH_LONG).show();
-                            finish();
-                            break;
+                            case "02":
+                                Toast.makeText(cadastrar_login.this, "Parametros incorretos !!", Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                        break;
 
-                        case 400:
-                            switch (response.message())
-                            {
-                                case "03":
-                                    Toast.makeText(cadastrar_login.this, "Erro ao cadastrar !! ", Toast.LENGTH_LONG).show();
-                                    break;
-
-                                case "02":
-                                    Toast.makeText(cadastrar_login.this, "Parametros incorretos !!", Toast.LENGTH_LONG).show();
-                                    break;
-                            }
-                            break;
-
-                        case 403:
-                            Toast.makeText(cadastrar_login.this, "usuario já existe !! ", Toast.LENGTH_LONG).show();
-                            txtCadEmail.getEditText().requestFocus();
-                            Log.d("xex","psd");
-                            break;
-                    }
+                    case 403:
+                        Toast.makeText(cadastrar_login.this, "usuario já existe !! ", Toast.LENGTH_LONG).show();
+                        txtCadEmail.getEditText().requestFocus();
+                        Log.d("xex","psd");
+                        break;
+                }
                 callCadastroLogin.cancel();
-
             }
 
             @Override
@@ -120,7 +107,6 @@ public class cadastrar_login extends AppCompatActivity {
                     cadastraLogin();
                 } else {
                     loading.fechar();
-                    Log.d("xex",call.request().toString());
                 }
             }
         });

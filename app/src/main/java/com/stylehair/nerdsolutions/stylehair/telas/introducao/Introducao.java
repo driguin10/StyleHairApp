@@ -10,14 +10,12 @@ import com.stylehair.nerdsolutions.stylehair.telas.login.logar;
 
 
 public class Introducao extends AppIntro {
-    // Please DO NOT override onCreate. Use init
+
     @Override
     public void init(Bundle savedInstanceState) {
-
         addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro1));
         addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro2));
         addSlide(AppIntroSampleSlider.newInstance(R.layout.app_intro3));
-
         // Show and Hide Skip and Done buttons
         showStatusBar(false);
         showSkipButton(false);

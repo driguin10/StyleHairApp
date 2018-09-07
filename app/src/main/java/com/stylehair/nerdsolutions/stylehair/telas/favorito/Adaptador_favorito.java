@@ -14,16 +14,10 @@ import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.avaliacoes.viewHolde
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_favorito extends RecyclerView.Adapter<viewHolderFavorito> {
-
     List<favorito_usuario> ListaFavorito;
     RecyclerView lista;
-
-
 
     public Adaptador_favorito(List<favorito_usuario> listaFavorito, RecyclerView Rlista) {
         ListaFavorito = listaFavorito;

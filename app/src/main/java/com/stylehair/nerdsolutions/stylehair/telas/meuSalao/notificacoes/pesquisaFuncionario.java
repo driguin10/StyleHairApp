@@ -34,14 +34,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class pesquisaFuncionario extends AppCompatActivity {
-
-
     RecyclerView lista;
     List<Usuario> usuarios;
     String idSalao;
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
 
     @Override
@@ -57,15 +54,11 @@ public class pesquisaFuncionario extends AppCompatActivity {
         Drawable upArrow = ContextCompat.getDrawable(pesquisaFuncionario.this, R.drawable.abc_ic_ab_back_material);
         upArrow.setColorFilter(ContextCompat.getColor(pesquisaFuncionario.this, android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
         lista = (RecyclerView) findViewById(R.id.listpesquisaFuncionarios);
         lista.setHasFixedSize(true);
-
-
         SharedPreferences getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(pesquisaFuncionario.this);
         idSalao = getSharedPreferences.getString("idSalao","-1");
-
         loading.abrir("Aguarde...");
         getFuncionarios(idSalao);
     }
@@ -84,7 +77,6 @@ public class pesquisaFuncionario extends AppCompatActivity {
 
     public void getFuncionarios(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<GetUsuarioFuncionario> callBuscaFuncionarios = iApi.buscaFuncionarios(Integer.valueOf(id));
         callBuscaFuncionarios.enqueue(new Callback<GetUsuarioFuncionario>() {
@@ -92,16 +84,12 @@ public class pesquisaFuncionario extends AppCompatActivity {
             public void onResponse(Call<GetUsuarioFuncionario> call, Response<GetUsuarioFuncionario> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaFuncionarios.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
-
                         GetUsuarioFuncionario func = response.body();
                         List<UsuarioFuncionario> funcs = new ArrayList<>();
-
                         for (UsuarioFuncionario Ufunc : func.funcionarios) {
                             int IdFuncionario = Ufunc.getIdFuncionario();
                             int IdUsuario = Ufunc.getIdUsuario();
@@ -119,14 +107,7 @@ public class pesquisaFuncionario extends AppCompatActivity {
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
@@ -138,8 +119,6 @@ public class pesquisaFuncionario extends AppCompatActivity {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });

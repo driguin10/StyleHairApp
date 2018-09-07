@@ -28,10 +28,8 @@ public class fragment_funcionarios_salao extends Fragment {
     RecyclerView lista;
     List<Usuario> usuarios;
     String IdSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
     Bundle bundle;
     @Override
@@ -58,7 +56,6 @@ public class fragment_funcionarios_salao extends Fragment {
 
     public void getFuncionarios(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<GetUsuarioFuncionario> callBuscaFuncionarios = iApi.buscaFuncionarios(Integer.valueOf(id));
         callBuscaFuncionarios.enqueue(new Callback<GetUsuarioFuncionario>() {
@@ -66,16 +63,12 @@ public class fragment_funcionarios_salao extends Fragment {
             public void onResponse(Call<GetUsuarioFuncionario> call, Response<GetUsuarioFuncionario> response) {
                 qtTentativaRealizada = 0 ;
                 callBuscaFuncionarios.cancel();
-
                 loading.fechar();
-
                 switch (response.code())
                 {
                     case 200:
-
                         GetUsuarioFuncionario func = response.body();
                         List<UsuarioFuncionario> funcs = new ArrayList<>();
-
                         for (UsuarioFuncionario Ufunc : func.funcionarios) {
                             int IdFuncionario = Ufunc.getIdFuncionario();
                             int IdUsuario = Ufunc.getIdUsuario();
@@ -93,14 +86,7 @@ public class fragment_funcionarios_salao extends Fragment {
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
@@ -112,14 +98,8 @@ public class fragment_funcionarios_salao extends Fragment {
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
-
-
-
 }

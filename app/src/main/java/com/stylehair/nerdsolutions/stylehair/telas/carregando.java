@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.stylehair.nerdsolutions.stylehair.R;
 
 public class carregando extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

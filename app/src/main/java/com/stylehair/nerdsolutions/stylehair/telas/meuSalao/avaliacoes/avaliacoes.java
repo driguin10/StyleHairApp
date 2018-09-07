@@ -29,13 +29,10 @@ public class avaliacoes extends AppCompatActivity{
     RecyclerView lista;
     List<AvaliacaoSalao> ListaAvaliacao;
     AvaliacaoSalao avaliacaoSalao;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
     String idSalao;
-
     TextView pontos;
     TextView qtComentarios;
     @Override
@@ -60,14 +57,12 @@ public class avaliacoes extends AppCompatActivity{
         lista.setHasFixedSize(true);
         loading.abrir("Aguarde...");
         getAvaliacoes(idSalao);
-
     }
 
 
 
     public void getAvaliacoes(String id)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<List<AvaliacaoSalao>> callBuscaAvaliacoes = iApi.BuscarAvaliacoes(id);
         callBuscaAvaliacoes.enqueue(new Callback<List<AvaliacaoSalao>>() {
@@ -80,7 +75,6 @@ public class avaliacoes extends AppCompatActivity{
                 {
                     case 200:
                         List<AvaliacaoSalao> ListaAvaliacoes = response.body();
-
                         for (int x=0;x<ListaAvaliacoes.size();x++)
                         {
                             if(ListaAvaliacoes.get(x).getComentario().equals(""))
@@ -88,15 +82,11 @@ public class avaliacoes extends AppCompatActivity{
                                 ListaAvaliacoes.get(x).setComentario("...............");
                             }
                         }
-
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         lista.setAdapter(new Adaptador_avaliacoes(ListaAvaliacoes,pontos,qtComentarios,lista));
                         lista.setLayoutManager(layout);
                         lista.setClickable(true);
-                        break;
-
-                    case 400:
                         break;
                 }
             }
@@ -109,12 +99,9 @@ public class avaliacoes extends AppCompatActivity{
                 }
                 else {
                     loading.fechar();
-                    Log.d("xex","erro");
-                    Log.d("xex",t.getMessage());
                 }
             }
         });
-
     }
 
     @Override

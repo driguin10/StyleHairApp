@@ -43,7 +43,6 @@ import retrofit2.Response;
 
 
 public class fragment_ferias_funcionario extends Fragment {
-
     ImageButton BTferiasIni;
     ImageButton BTferiasFim;
     TextInputLayout TXTferiasIni;
@@ -58,14 +57,12 @@ public class fragment_ferias_funcionario extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_ferias_funcionario, container, false);
-
         loading = new Loading(getActivity());
         Bundle bundle = getActivity().getIntent().getExtras();
 
@@ -73,14 +70,12 @@ public class fragment_ferias_funcionario extends Fragment {
         {
             idFuncionario = bundle.getString("idFuncionario");
         }
-
         BTsalvar = (Button) view.findViewById(R.id.bt_salvar);
         BTCancelar = (Button) view.findViewById(R.id.bt_cancelar);
         TXTferiasIni = (TextInputLayout) view.findViewById(R.id.txt_dataini);
         TXTferiasFim = (TextInputLayout) view.findViewById(R.id.txt_txt_datafim);
         BTferiasIni = (ImageButton) view. findViewById(R.id.pesquisa_dataIni);
         BTferiasFim = (ImageButton) view. findViewById(R.id.pesquisa_dataFim);
-
 
         BTferiasIni.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +97,6 @@ public class fragment_ferias_funcionario extends Fragment {
             public void onClick(View v) {
                 TXTferiasIni.getEditText().setText("");
                 TXTferiasFim.getEditText().setText("");
-
             }
         });
 
@@ -111,36 +105,31 @@ public class fragment_ferias_funcionario extends Fragment {
             public void onClick(View v) {
             String dtIni = TXTferiasIni.getEditText().getText().toString();
             String dtFim = TXTferiasFim.getEditText().getText().toString();
-if(dtIni.equals("") && !dtFim.equals("") || !dtIni.equals("") && dtFim.equals(""))
-{
-    Toast.makeText(getContext(),"Preencha os campos corretamente",Toast.LENGTH_LONG).show();
-}
-else {
-if(!dtIni.equals("")||!dtFim.equals("")) {
-    try {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        Date dateA = df.parse(TXTferiasIni.getEditText().getText().toString());
-        Date dateB = df.parse(TXTferiasFim.getEditText().getText().toString());
-
-        int compara = dateA.compareTo(dateB);
-        if (compara != 1) {
+        if(dtIni.equals("") && !dtFim.equals("") || !dtIni.equals("") && dtFim.equals(""))
+        {
+            Toast.makeText(getContext(),"Preencha os campos corretamente",Toast.LENGTH_LONG).show();
+        }
+        else {
+        if(!dtIni.equals("")||!dtFim.equals("")) {
+            try {
+                DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                Date dateA = df.parse(TXTferiasIni.getEditText().getText().toString());
+                Date dateB = df.parse(TXTferiasFim.getEditText().getText().toString());
+                int compara = dateA.compareTo(dateB);
+                if (compara != 1) {
+                    loading.abrir("Aguarde...");
+                    AtualizaFerias();
+                } else {
+                    Toast.makeText(getContext(), "Data inicial não pode ser menor que data Final!", Toast.LENGTH_LONG).show();
+                }
+            } catch (ParseException e) {
+            }
+        }else
+        {
             loading.abrir("Aguarde...");
             AtualizaFerias();
-        } else {
-            Toast.makeText(getContext(), "Data inicial não pode ser menor que data Final!", Toast.LENGTH_LONG).show();
         }
-    } catch (ParseException e) {
     }
-}else
-{
-    loading.abrir("Aguarde...");
-    AtualizaFerias();
-}
-
-
-
-}
-
             }
         });
         loading.abrir("Aguarde...");
@@ -152,20 +141,16 @@ if(!dtIni.equals("")||!dtFim.equals("")) {
 
     public void AtualizaFerias()
     {
-
             String  ini = TXTferiasIni.getEditText().getText().toString();
             String  fim = TXTferiasFim.getEditText().getText().toString();
-
             RequestBody INI = RequestBody.create(MediaType.parse("text/plain"),ini);
             RequestBody FIm = RequestBody.create(MediaType.parse("text/plain"),fim);
             RequestBody IDFuncionario = RequestBody.create(MediaType.parse("text/plain"),idFuncionario);
-
             IApi iApi = IApi.retrofit.create(IApi.class);
             final Call<ResponseBody> callFerias = iApi.FeriasFuncionario(IDFuncionario,INI,FIm);
             callFerias.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                     loading.fechar();
                     qtTentativaRealizada = 0;
                     callFerias.cancel();
@@ -200,8 +185,6 @@ if(!dtIni.equals("")||!dtFim.equals("")) {
                     }
                 }
             });
-
-
         }
 
 
@@ -212,7 +195,6 @@ if(!dtIni.equals("")||!dtFim.equals("")) {
         callFerias.enqueue(new Callback<FeriasFuncionario>() {
             @Override
             public void onResponse(Call<FeriasFuncionario> call, Response<FeriasFuncionario> response) {
-
                 loading.fechar();
                 qtTentativaBusca = 0;
                 callFerias.cancel();
@@ -227,8 +209,6 @@ if(!dtIni.equals("")||!dtFim.equals("")) {
                         String[] feriasF = feriasFuncionario.getFeriasFim().split("-");
                         TXTferiasFim.getEditText().setText(feriasF[2]+"-"+feriasF[1]+"-"+feriasF[0]);
                     }
-
-
                 }
                 else {
                     switch (response.code())

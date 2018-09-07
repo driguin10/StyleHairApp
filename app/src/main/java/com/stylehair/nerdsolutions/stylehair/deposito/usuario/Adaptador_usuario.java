@@ -11,14 +11,9 @@ import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 
 import java.util.List;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
 
 public class Adaptador_usuario extends RecyclerView.Adapter<viewHolderUsuario> {
-
     List<Usuario> ListaUsuario;
-
 
     public Adaptador_usuario(List<Usuario> listaUsuario) {
         ListaUsuario = listaUsuario;
@@ -27,7 +22,6 @@ public class Adaptador_usuario extends RecyclerView.Adapter<viewHolderUsuario> {
     @Override
     public viewHolderUsuario onCreateViewHolder(ViewGroup parent, int viewType) {
         View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_funcionario, parent, false);
-
         return new viewHolderUsuario(vista,ListaUsuario);
     }
 

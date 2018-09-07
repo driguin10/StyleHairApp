@@ -36,10 +36,8 @@ public class escolherFuncionario extends AppCompatActivity {
     String idSalao;
     RecyclerView listaFunc;
     List<Usuario> usuarios;
-
     int qtTentativas = 3;
     int qtTentativaRealizada = 0;
-
     Loading loading;
     String idsServicos="";
     Button BTprosseguir;
@@ -62,7 +60,6 @@ public class escolherFuncionario extends AppCompatActivity {
         {
             listaServicos = bundle.getStringArrayList("escolhas");//servico que o cliente escolheu
             idSalao = bundle.getString("idSalao");
-
         }
 
         // pega a lista de serviços selecionados e monta a string com os ID
@@ -77,8 +74,6 @@ public class escolherFuncionario extends AppCompatActivity {
         codigoChar[idsServicos.length() -1] = ' ';//retirar a ultima virgula
         idsServicos = String.valueOf(codigoChar);
         //----------------------------------------------------------------
-
-
         listaFunc = (RecyclerView) findViewById(R.id.listaFunc);
         listaFunc.setHasFixedSize(true);
         loading.abrir("Atualizando...");
@@ -87,7 +82,6 @@ public class escolherFuncionario extends AppCompatActivity {
 
     public void getFuncionarios(String id,String servicos)
     {
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<GetUsuarioFuncionarioBusca> callBuscaFuncionarios = iApi.buscaFuncionariosBusca(Integer.valueOf(id),servicos);
         callBuscaFuncionarios.enqueue(new Callback<GetUsuarioFuncionarioBusca>() {
@@ -100,11 +94,9 @@ public class escolherFuncionario extends AppCompatActivity {
                 switch (response.code())
                 {
                     case 200:
-
                         GetUsuarioFuncionarioBusca func = response.body();
                         List<UsuarioFuncionarioBusca> funcs = new ArrayList<>();
                         List<UsuarioFuncionarioBusca> funcsAux = new ArrayList<>();
-
                         for (UsuarioFuncionarioBusca Ufunc : func.funcionarios) {
                             int IdFuncionario = Ufunc.getIdFuncionario();
                             int IdUsuario = Ufunc.getIdUsuario();
@@ -136,8 +128,6 @@ public class escolherFuncionario extends AppCompatActivity {
                                 else
                                 {
                                     String concatena =funcsAux.get(pos).getServico() +"#" + funcs.get(x).getServico();
-
-
                                     funcsAux.get(pos).setServico(concatena);
                                     pos = -1;
                                 }
@@ -148,22 +138,13 @@ public class escolherFuncionario extends AppCompatActivity {
                             }
                         }
 
-
-
                         LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext());
                         layout.setOrientation(LinearLayoutManager.VERTICAL);
                         listaFunc.setAdapter(new Adaptador_funcionario_agenda(funcsAux,listaFunc,BTprosseguir,idSalao,listaServicos));
                         listaFunc.setLayoutManager(layout);
                         listaFunc.setClickable(true);
                         break;
-
-                    case 400:
-
-                        break;
                 }
-
-
-
             }
 
             @Override
@@ -178,12 +159,10 @@ public class escolherFuncionario extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {

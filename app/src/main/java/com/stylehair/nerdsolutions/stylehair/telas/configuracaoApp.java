@@ -38,10 +38,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class configuracaoApp extends AppCompatActivity {
-Button btEncerrarConta;
-
-  String typeUserApp;
-
+    Button btEncerrarConta;
+    String typeUserApp;
     int qtTentativas = 3;
     int qtTentativaRealizadaComum = 0;
     int qtTentativaRealizadaUsuario = 0;
@@ -111,26 +109,21 @@ Button btEncerrarConta;
                             }
                         })
                         .show();
-
-
             }
         });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
         if(id == android.R.id.home)
         {
             finish();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
     public void encerrarContaComum(final String id_login){
-
         RequestBody IdLogin = RequestBody.create(MediaType.parse("text/plain"),id_login);
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callExcluiConta = iApi.EncerrarUsuarioComum(IdLogin);
@@ -165,7 +158,6 @@ Button btEncerrarConta;
     public void encerrarContaUsuario(final String id_login,final String id_usuario){
         RequestBody IdLogin = RequestBody.create(MediaType.parse("text/plain"),id_login);
         RequestBody IdUsuario = RequestBody.create(MediaType.parse("text/plain"),id_usuario);
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<ResponseBody> callExcluiContaUsuario = iApi.EncerrarUsuario(IdLogin,IdUsuario);
         callExcluiContaUsuario.enqueue(new Callback<ResponseBody>() {
@@ -267,6 +259,4 @@ Button btEncerrarConta;
         });
 
     }
-    //-------------------------------------------------------
-
 }

@@ -27,8 +27,8 @@ public class lista_servi_escolhido extends AppCompatActivity {
     Float vlTotal = 0f;
     Button btInfo;
     ImageButton sair;
-
     ArrayList<String> listNova = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +89,6 @@ public class lista_servi_escolhido extends AppCompatActivity {
         listaServicos.setLayoutManager(layout);
         listaServicos.setClickable(true);
         btInfo.setText("Volor Total R$ " + String.format(Locale.getDefault(),"%.2f", vlTotal));
-
     }
 
 

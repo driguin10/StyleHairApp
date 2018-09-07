@@ -44,18 +44,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Notificacao extends AppCompatActivity {
-
     TextView enviarP;
     CardView btCLientes;
     CardView btFuncionarios;
     TextInputLayout tituloNot;
     TextInputLayout menssagemNotify;
     Button btEnviar;
-
     String topico;
     Loading loading;
-
-
     int qtTentativas = 3;
     int qtTentativaRealizadaSalvar = 0;
     int qtTentativaRealizadaUsuario = 0;
@@ -82,22 +78,18 @@ public class Notificacao extends AppCompatActivity {
         IdUsuario = getSharedPreferences.getString("idUsuario", "");
         //-
         loading = new Loading(Notificacao.this);
-
         enviarP = (TextView) findViewById(R.id.txtEnviarP);
         btCLientes = (CardView) findViewById(R.id.card_btClientes);
         btFuncionarios = (CardView) findViewById(R.id.card_btFuncionarios);
         tituloNot = (TextInputLayout) findViewById(R.id.txt_mensTitulo);
         menssagemNotify = (TextInputLayout) findViewById(R.id.txt_mensTexto);
         btEnviar = (Button) findViewById(R.id.bt_enviarNotificacao);
-
-
         btEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String tit = tituloNot.getEditText().getText().toString();
                 String men = menssagemNotify.getEditText().getText().toString();
-
-             loading.abrir("Aguarde...");
+                loading.abrir("Aguarde...");
                 EnviarNotificacao(tit,men,NomeSalao,topico);
             }
         });
@@ -125,14 +117,10 @@ public class Notificacao extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-
                 String[] teste = data.getData().toString().split("#");
-
                 enviarP.setText(teste[0]);
                 IdUsuarioEscolhido = teste[1];
                 pegarUsuario(Integer.valueOf(IdUsuarioEscolhido));
-
-
             }
         }
     }
@@ -141,10 +129,7 @@ public class Notificacao extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
         Date date = new Date();
         String horaMen = dateFormat.format(date);
-
-
         Notification notification = new Notification(menssagem,titulo);
-
         Dataa dataa=new Dataa(nomeSalao,horaMen);
         Sender sender = new Sender(notification, "/topics/"+topico,dataa);
         INotification iNotification = INotification.retrofit.create(INotification.class);
@@ -179,21 +164,6 @@ public class Notificacao extends AppCompatActivity {
                         TopicoSalao = salao.getTopicoNotificacao();
                         NomeSalao = salao.getNome();
                         break;
-
-
-                    case 400:
-                        switch (response.message())
-                        {
-                            case "04":
-                               // Toast.makeText(editar_salao.this, "Erra ao editar !!", Toast.LENGTH_LONG).show();
-                                break;
-
-                            case "02":
-                               // Toast.makeText(editar_salao.this, "Parametros incorretos !!", Toast.LENGTH_LONG).show();
-                                break;
-                        }
-
-                        break;
                 }
             }
 
@@ -225,25 +195,10 @@ public class Notificacao extends AppCompatActivity {
                 callBuscaUser.cancel();
                 switch (response.code()) {
                     case 200:
-
-
-
                         List<Usuario> users = response.body();
                         Usuario user = users.get(0);
 
                         topico = user.getTopicoNotificacao();
-
-                        break;
-
-
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
                         break;
                 }
             }

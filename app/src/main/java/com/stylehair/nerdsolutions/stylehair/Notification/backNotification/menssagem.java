@@ -1,8 +1,5 @@
 package com.stylehair.nerdsolutions.stylehair.Notification.backNotification;
 
-/**
- * Created by Rodrigo on 22/03/2018.
- */
 
 public class menssagem {
     String _id;

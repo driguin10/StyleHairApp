@@ -13,16 +13,10 @@ import com.stylehair.nerdsolutions.stylehair.classes.ServicoSalao;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by dherrera on 15/03/2017.
- */
-
 public class Adaptador_servico_salao_agendado extends RecyclerView.Adapter<viewHolderServicoSalaoAgendado> {
-
     List<ServicoSalao> ListaServicoSalao;
     RecyclerView Lista;
     TextView vlTotal;
-
 
     public Adaptador_servico_salao_agendado(List<ServicoSalao> listaServicoSalao, RecyclerView lista,TextView VlTotal) {
         ListaServicoSalao = listaServicoSalao;
@@ -42,16 +36,11 @@ public class Adaptador_servico_salao_agendado extends RecyclerView.Adapter<viewH
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
          holder.valor.setText("R$ "+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
          holder.tempo.setText("Tempo "+ListaServicoSalao.get(position).getTempo().substring(0,5));
-
-        float vlCampo = 0;
+         float vlCampo = 0;
          if(!vlTotal.getText().toString().equals(""))
          vlCampo = Float.valueOf(vlTotal.getText().toString());
-
-
          float vlPeca = ListaServicoSalao.get(position).getValor();
-
-        vlTotal.setText(String.format(Locale.getDefault(),"%.2f", vlCampo + vlPeca));
-
+         vlTotal.setText(String.format(Locale.getDefault(),"%.2f", vlCampo + vlPeca));
 }
     @Override
     public int getItemCount() {

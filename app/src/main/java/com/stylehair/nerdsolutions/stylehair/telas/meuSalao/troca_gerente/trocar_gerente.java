@@ -103,7 +103,6 @@ public class trocar_gerente extends AppCompatActivity {
         escolherUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(!id_Usuario.equals("")) {
                     Intent intent = new Intent(trocar_gerente.this, senha_gerente.class);
                     intent.putExtra("idSalao", idSalao);
@@ -119,14 +118,10 @@ public class trocar_gerente extends AppCompatActivity {
     }
 
 
-
-
     public boolean verificaCampos(){
         Boolean status = false;
         String Email = LoginEmail.getEditText().getText().toString();
         String Senha =LoginSenha.getEditText().getText().toString();
-
-
         if(!Email.equals("") && !Senha.equals(""))
         {
             if(!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
@@ -179,11 +174,9 @@ public class trocar_gerente extends AppCompatActivity {
     }
 
     public void logar(){
-
         final Login login = new Login();
         login.setEmail(LoginEmail.getEditText().getText().toString());
         login.setSenha(LoginSenha.getEditText().getText().toString());
-
         IApi iApi = IApi.retrofit.create(IApi.class);
         final Call<Logar> callLoga = iApi.BuscaUsuarioGerente(login);
         callLoga.enqueue(new Callback<Logar>() {
@@ -261,8 +254,6 @@ public class trocar_gerente extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
 
@@ -291,18 +282,6 @@ public class trocar_gerente extends AppCompatActivity {
                         }
 
                         id_Usuario = String.valueOf(user.getIdUsuario());
-
-                        break;
-
-
-                    case 400:
-                        if (response.message().equals("1")) {
-
-                        }
-                        if (response.message().equals("2")) {
-
-                            //paramentros incorretos
-                        }
                         break;
                 }
             }
@@ -321,5 +300,4 @@ public class trocar_gerente extends AppCompatActivity {
 
     }
     //-------------------------------------------------------
-
 }
