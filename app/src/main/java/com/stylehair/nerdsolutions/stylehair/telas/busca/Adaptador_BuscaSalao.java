@@ -32,16 +32,24 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
 
     @Override
     public void onBindViewHolder(viewHolderBuscaSalao holder, int position) {
-         Resources r = holder.resources;
-         holder.nomeSalao.setText(ListaObjeto.get(position).getNome());
-         holder.endereco.setText(ListaObjeto.get(position).getEndereco()+","+ListaObjeto.get(position).getNumero()+","+ListaObjeto.get(position).getCidade());
-        float distanc = ListaObjeto.get(position).getDistancia();
         NumberFormat format = NumberFormat.getInstance();
         format.setMaximumFractionDigits(1);
         format.setMinimumFractionDigits(1);
         format.setMaximumIntegerDigits(2);
         format.setRoundingMode(RoundingMode.HALF_UP);
-         holder.distancia.setText(format.format(distanc)+"km");
+         Resources r = holder.resources;
+         holder.nomeSalao.setText(ListaObjeto.get(position).getNome());
+         holder.endereco.setText(ListaObjeto.get(position).getEndereco()+","+ListaObjeto.get(position).getNumero()+","+ListaObjeto.get(position).getCidade());
+
+         float distanc = 0;
+         if(ListaObjeto.get(position).getDistancia()!=null) {
+             distanc = ListaObjeto.get(position).getDistancia();
+             holder.distancia.setText(format.format(distanc) + "km");
+         }
+         else
+         {
+             holder.distancia.setText("---");
+         }
          if(ListaObjeto.get(position).getLinkImagem().equals(""))
 
             holder.imagem.setImageDrawable(r.getDrawable(R.drawable.img_padrao_user));

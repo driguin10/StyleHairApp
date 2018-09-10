@@ -70,6 +70,9 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     int inicioAUX = 0; // guarda o periodo inicial da atualizacao
     int fimAUX = 0; // guarda o periodo final da atualizacao
 
+
+
+    int filtro = 0; // 0= lat_long , 1= cidade
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,21 +110,25 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(busca_salao.this,Filtros.class);
+                intent.putExtra("kilometro",kilometro);
+                intent.putExtra("cidade",cidade);
                 startActivityForResult(intent,1);
             }
         });
         busca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude,idLogin);
-
                 loading.abrir("Aguarde...");
+                minhaPosicao();
+                if(filtro==0)
+                    getBusca(kilometro,nome.getText().toString(),"",latitude,longitude,idLogin);
+                else
+                    getBusca(kilometro,nome.getText().toString(),cidade,0,0,idLogin);
             }
         });
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        minhaPosicao();
         lista.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -143,7 +150,8 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
 
             }
         });
-
+        minhaPosicao();
+        busca.callOnClick();
     }
 
 
@@ -184,7 +192,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                 latitude = -20.52717426;
                 longitude = -47.42805847;
             }
-            busca.callOnClick();
+           // busca.callOnClick();
         }
         catch (SecurityException seg)
         { }
@@ -194,9 +202,24 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     {
         RequestBody Kilometro = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(kilometro));
         RequestBody IDLOGIN = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(IdLogin));
-        RequestBody Latitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(latitude));
-        RequestBody Longitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longitude));
-        RequestBody Cidade = RequestBody.create(MediaType.parse("text/plain"), cidade);
+
+        RequestBody Latitude;
+        if(latitude != 0)
+            Latitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(latitude));
+        else
+             Latitude = RequestBody.create(MediaType.parse("text/plain"), "");
+
+        RequestBody Longitude;
+        if(longitude!=0)
+            Longitude = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(longitude));
+        else
+            Longitude = RequestBody.create(MediaType.parse("text/plain"),"");
+
+        RequestBody Cidade;
+        if(!cidade.equals(""))
+            Cidade = RequestBody.create(MediaType.parse("text/plain"), cidade);
+        else
+            Cidade = RequestBody.create(MediaType.parse("text/plain"), "");
         RequestBody Nome = RequestBody.create(MediaType.parse("text/plain"), nome);
         RequestBody Pagina = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(0));
         RequestBody QtResultados = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(QTRESULT));
@@ -277,7 +300,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
         });
     }
 
-    //--------- quando escolhe uma imagem---------------------------------
+
     @Override
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
@@ -290,13 +313,21 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
               kilometro =  Integer.valueOf(data.getStringExtra("kilometro"));
               if(kilometro == 0 && !cidade.equals(""))
               {
+                  filtro = 1;
                   kilometroRedor.setText("cidade : " + cidade);
+                  getBusca(kilometro,nome.getText().toString(),cidade,0,0,idLogin);
+                  loading.abrir("Aguarde...");
               }
               else {
+                  filtro = 0;
                   kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você");
+                  getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude,idLogin);
+                  loading.abrir("Aguarde...");
               }
 
-              busca.callOnClick();
+
+
+
           }
       }
 

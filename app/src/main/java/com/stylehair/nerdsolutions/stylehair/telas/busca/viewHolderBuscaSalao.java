@@ -192,15 +192,13 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                         Gson gson = new Gson();
                         if(!topicos.equals(""))
                         {
-                            Log.d("xex", "tem coisa");
+
                             arrayTopFavoritos = gson.fromJson(topicos, new TypeToken<ArrayList<String>>(){}.getType());
                             if(arrayTopFavoritos.size()>0)
                             {
-                                Log.d("xex", "é maior q zero");
                                 for(int x=0;x<arrayTopFavoritos.size();x++)
                                 {
                                     topicoNotificacao.removeTopico(arrayTopFavoritos.get(x));
-                                    Log.d("xex", "remove topic - "+ arrayTopFavoritos.get(x));
                                 }
                             }
                             arrayTopFavoritos.add(objeto.getTopicoNotificacao());
@@ -210,9 +208,6 @@ public class viewHolderBuscaSalao extends ViewHolder implements View.OnClickList
                         e.putString("topicosFavoritos",jsonTopicoFavoritos);
                         e.apply();
                         e.commit();
-
-
-
                         break;
 
                     case 400:

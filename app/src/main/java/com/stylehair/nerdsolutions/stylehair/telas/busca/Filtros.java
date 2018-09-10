@@ -35,10 +35,10 @@ public class Filtros extends AppCompatActivity {
         fechar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent data = new Intent();
+               /* Intent data = new Intent();
                 data.putExtra("cidade","");
                 data.putExtra("kilometro","5");
-                setResult(RESULT_OK, data);
+                setResult(RESULT_OK, data);*/
                 finish();
             }
         });
@@ -87,5 +87,14 @@ public class Filtros extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+            String cid = bundle.getString("cidade","");
+            int distancia = bundle.getInt("kilometro",5);
+            cidade.setText(cid);
+            seekDistancia.setProgress(distancia);
+        }
     }
 }
