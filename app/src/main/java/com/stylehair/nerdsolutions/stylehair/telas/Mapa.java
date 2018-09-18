@@ -71,6 +71,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
         btSalva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent data = new Intent();
                 data.putExtra("latitude",String.valueOf(latitude));
                 data.putExtra("longitude",String.valueOf(longitude));
@@ -92,6 +93,8 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
                     mMap.clear();
                     Location location = locationManager.getLastKnownLocation(provader);
                     LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
                     mMap.addMarker(new MarkerOptions().position(userLocation).title(nome));
                     //mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 18.0f));
@@ -118,6 +121,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
             mMap.setMinZoomPreference(15);
             mMap.setOnMapClickListener(this);
 
+
         }catch (SecurityException e)
         {
             Log.e(TAG,"erro"+ e);
@@ -131,23 +135,31 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
         }
         else
         {
-            Geocoder geocoder = new Geocoder(Mapa.this);
-            try {
-                List<Address> enderecos = geocoder.getFromLocationName(endereco, 1);
 
-                if (enderecos.size() > 0) {
-                    LatLng myEndereco = new LatLng(enderecos.get(0).getLatitude(),enderecos.get(0).getLongitude());
-                    latitude = enderecos.get(0).getLatitude();
-                    longitude = enderecos.get(0).getLongitude();
-                    mMap.addMarker(new MarkerOptions().position(myEndereco).title(nome));
-                   // mMap.moveCamera(CameraUpdateFactory.newLatLng(myEndereco));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myEndereco, 18.0f));
-                }
-            }catch (IOException e)
+            if(!endereco.equals(""))
             {
+                Geocoder geocoder = new Geocoder(Mapa.this);
+                try {
+                    List<Address> enderecos = geocoder.getFromLocationName(endereco, 1);
 
+                    if (enderecos.size() > 0) {
+                        LatLng myEndereco = new LatLng(enderecos.get(0).getLatitude(),enderecos.get(0).getLongitude());
+                        latitude = enderecos.get(0).getLatitude();
+                        longitude = enderecos.get(0).getLongitude();
+                        mMap.addMarker(new MarkerOptions().position(myEndereco).title(nome));
+                       // mMap.moveCamera(CameraUpdateFactory.newLatLng(myEndereco));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myEndereco, 18.0f));
+                    }
+                }catch (IOException e)
+                {
+
+                }
             }
+
+
+
         }
+        pegaMypos.callOnClick();
         loading.fechar();
     }
 
@@ -192,6 +204,7 @@ public class Mapa extends FragmentActivity implements OnMapReadyCallback,GoogleM
                Endereco = enderecos.get(0).getThoroughfare();
 
             }
+
         }catch (IOException e)
         {
 

@@ -91,7 +91,7 @@ public class cadastroSalao extends AppCompatActivity {
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
-    int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
+    int percentImgArq = 99; //compressao da imagem vinda do arquivo interno
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
     Image image;
     String ImageAntiga="";
@@ -100,8 +100,8 @@ public class cadastroSalao extends AppCompatActivity {
     String LinkImagem = "";
     Loading loading;
     Switch agendar;
-    String latitude="";
-    String longitude="";
+    String latitude="0";
+    String longitude="0";
     Button pegarPosicao;
     Tutorial tutorial;
     ShowcaseView sv;
@@ -216,8 +216,8 @@ public class cadastroSalao extends AppCompatActivity {
                 Intent intent = new Intent(cadastroSalao.this, Mapa.class);
                 intent .putExtra("nome",nome);
                 intent.putExtra("endereco",saida);
-                intent.putExtra("latitude",0);
-                intent.putExtra("longitude",0);
+                intent.putExtra("latitude",Double.valueOf(latitude));
+                intent.putExtra("longitude",Double.valueOf(longitude));
                 startActivityForResult(intent,mapa);
             }
         });
@@ -243,7 +243,7 @@ public class cadastroSalao extends AppCompatActivity {
         String VnomeSalao =NomeSalao.getEditText().getText().toString();
         String VTelefone1Salao = Telefone1Salao.getEditText().getText().toString();
         String VTelefone2Salao = Telefone2Salao.getEditText().getText().toString();
-        String VCepSalao = CepSalao.getEditText().getText().toString();
+
         String VEnderecoSalao = EnderecoSalao.getEditText().getText().toString();
         String VBairroSalao = BairroSalao.getEditText().getText().toString();
         String VNumeroSalao = NumeroSalao.getEditText().getText().toString();
@@ -252,7 +252,7 @@ public class cadastroSalao extends AppCompatActivity {
         String VEstadoSalao = EstadoSalao.getSelectedItem().toString();
 
 
-        if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
+        if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("")  && !VBairroSalao.equals("")
                 && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
         {
             if(verificaTelefone(VTelefone1Salao))
@@ -275,9 +275,6 @@ public class cadastroSalao extends AppCompatActivity {
             else
             if(VBairroSalao.equals(""))
                 BairroSalao.getEditText().requestFocus();
-            else
-            if(VCepSalao.equals(""))
-                CepSalao.getEditText().requestFocus();
             else
             if(VNumeroSalao.equals(""))
                 NumeroSalao.getEditText().requestFocus();
@@ -451,6 +448,21 @@ public class cadastroSalao extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     latitude = data.getStringExtra("latitude");
                     longitude = data.getStringExtra("longitude");
+                    EnderecoSalao.getEditText().setText(data.getStringExtra("endereco"));
+                    CidadeSalao.getEditText().setText(data.getStringExtra("cidade"));
+                    BairroSalao.getEditText().setText(data.getStringExtra("bairro"));
+
+                    for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
+                    {
+                        if(EstadoSalao.getAdapter().getItem(i).toString().contains(data.getStringExtra("estado")))
+                        {
+                            EstadoSalao.setSelection(i);
+                        }
+                    }
+
+
+
+
                 }
                 break;
         }//fim switch

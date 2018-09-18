@@ -108,7 +108,7 @@ public class cadastrar_funcionario extends AppCompatActivity {
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
-    int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
+    int percentImgArq = 99; //compressao da imagem vinda do arquivo interno
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
     ScrollView scrollView;
     String tipoSalvar;

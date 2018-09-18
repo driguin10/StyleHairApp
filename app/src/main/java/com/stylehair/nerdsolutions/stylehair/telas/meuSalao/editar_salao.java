@@ -258,7 +258,7 @@ public class editar_salao extends AppCompatActivity {
         String VnomeSalao =NomeSalao.getEditText().getText().toString();
         String VTelefone1Salao = Telefone1Salao.getEditText().getText().toString();
         String VTelefone2Salao = Telefone2Salao.getEditText().getText().toString();
-        String VCepSalao = CepSalao.getEditText().getText().toString();
+
         String VEnderecoSalao = EnderecoSalao.getEditText().getText().toString();
         String VBairroSalao = BairroSalao.getEditText().getText().toString();
         String VNumeroSalao = NumeroSalao.getEditText().getText().toString();
@@ -266,7 +266,7 @@ public class editar_salao extends AppCompatActivity {
         String VEmailSalao = EmailSalao.getEditText().getText().toString();
         String VEstadoSalao = EstadoSalao.getSelectedItem().toString();
 
-        if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("") && !VCepSalao.equals("") && !VBairroSalao.equals("")
+        if(!VnomeSalao.equals("") && !VTelefone1Salao.equals("") && !VEnderecoSalao.equals("")  && !VBairroSalao.equals("")
                 && !VNumeroSalao.equals("")&& !VCidadeSalao.equals("")&& !VEmailSalao.equals("")&& !VEstadoSalao.equals(""))
         {
             if(verificaTelefone(VTelefone1Salao)) {
@@ -291,9 +291,7 @@ public class editar_salao extends AppCompatActivity {
             else
             if(VBairroSalao.equals(""))
                 BairroSalao.getEditText().requestFocus();
-            else
-            if(VCepSalao.equals(""))
-                CepSalao.getEditText().requestFocus();
+
             else
             if(VNumeroSalao.equals(""))
                 NumeroSalao.getEditText().requestFocus();
@@ -358,6 +356,7 @@ public class editar_salao extends AppCompatActivity {
     public void onActivityResult(int requestCode,int resultCode,Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case imagem_interna:
                 if (resultCode == RESULT_OK) {
@@ -415,12 +414,13 @@ public class editar_salao extends AppCompatActivity {
 
             case mapa:
                 if (resultCode == RESULT_OK) {
+
                     latitude = data.getStringExtra("latitude");
                     longitude = data.getStringExtra("longitude");
                     EnderecoSalao.getEditText().setText(data.getStringExtra("endereco"));
                     CidadeSalao.getEditText().setText(data.getStringExtra("cidade"));
                     BairroSalao.getEditText().setText(data.getStringExtra("bairro"));
-                    Log.d("xex",data.getStringExtra("estado"));
+
                     for(int i= 0; i < EstadoSalao.getAdapter().getCount(); i++)
                     {
                         if(EstadoSalao.getAdapter().getItem(i).toString().contains(data.getStringExtra("estado")))

@@ -69,16 +69,11 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     int CURRENTRESULT = 0; //  guarda a pagina que ja foi solicitada na atualizacao
     int inicioAUX = 0; // guarda o periodo inicial da atualizacao
     int fimAUX = 0; // guarda o periodo final da atualizacao
-
-
-
     int filtro = 0; // 0= lat_long , 1= cidade
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busca_salao);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_busca);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
