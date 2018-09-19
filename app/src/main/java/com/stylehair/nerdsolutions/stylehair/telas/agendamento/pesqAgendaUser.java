@@ -82,6 +82,7 @@ public class pesqAgendaUser extends AppCompatActivity {
     TextInputLayout nomeUsuario;
     TextInputLayout cadApelidoUser;
     TextInputLayout cadTelefoneUser;
+    TextInputLayout cadTelefoneUserAnonimo;
     TextInputLayout cadCepUser;
     TextInputLayout cadEnderecoUser;
     TextInputLayout cadBairroUser;
@@ -100,22 +101,25 @@ public class pesqAgendaUser extends AppCompatActivity {
     TextInputLayout LoginSenha;
     TextInputLayout cadEmailNovo;
     TextInputLayout cadSenhaNova;
-    Button pesquisaLogin;
+    ImageButton pesquisaLogin;
     Button escolherUser;
+    Button btAnonimo;
+    Button bt_cadAnonimo;
     Loading loading;
-    Button Limparcampos;
+    ImageButton Limparcampos;
     int IdLogin;
     String filepath; // caminho da imagem
     String img64 =""; // base64 da imagem
     String tipoImagem=""; // extensao da imagem
-    int percentImgArq = 20; //compressao da imagem vinda do arquivo interno
+    int percentImgArq = 99; //compressao da imagem vinda do arquivo interno
     int percentImgCam = 99; //compressao da imagem vinda do arquivo interno
     int id_Login = -1;
     String id_Usuario="";
     Config config;
     String LinkImagem = "";
     String idSalao;
-    boolean flagCadastro = false;
+    boolean flagCadastro, flagAnonimo= false;
+
     Drawable bitmapPadrao;//guarda a imagem padrao do usuario
     LinearLayout LayBtsImagem;
     LinearLayout LayCampos;
@@ -145,9 +149,11 @@ public class pesqAgendaUser extends AppCompatActivity {
         config = new Config();
         LoginEmail = (TextInputLayout) findViewById(R.id.procuraLoginEmail);
         LoginSenha = (TextInputLayout) findViewById(R.id.procuraLoginSenha);
-        pesquisaLogin = (Button) findViewById(R.id.bt_pesquisaLogin);
+        pesquisaLogin = (ImageButton) findViewById(R.id.bt_pesquisaLogin);
         escolherUser = (Button) findViewById(R.id.bt_Confirmar);
-        Limparcampos = (Button) findViewById(R.id.bt_limparLogin);
+        btAnonimo = (Button) findViewById(R.id.bt_anonimo);
+        bt_cadAnonimo = (Button) findViewById(R.id.bt_cadAnonimo);
+        Limparcampos = (ImageButton) findViewById(R.id.bt_limparLogin);
         LayBtsImagem = (LinearLayout) findViewById(R.id.layout_bts_imagem);
         LayCampos = (LinearLayout) findViewById(R.id.layout_campos);
         cadEmailNovo = (TextInputLayout) findViewById(R.id.txt_EmailNovo);
@@ -155,6 +161,7 @@ public class pesqAgendaUser extends AppCompatActivity {
         nomeUsuario = (TextInputLayout) findViewById(R.id.txt_userNome);
         cadApelidoUser = (TextInputLayout) findViewById(R.id.txt_usrApelido);
         cadTelefoneUser = (TextInputLayout) findViewById(R.id.txt_usrTelefone);
+        cadTelefoneUserAnonimo = (TextInputLayout) findViewById(R.id.txt_usrTelefoneAnonimo);
         cadEnderecoUser = (TextInputLayout) findViewById(R.id.txt_usrEndereco);
         cadBairroUser = (TextInputLayout) findViewById(R.id.txt_usrBairro);
         cadNumeroUser = (TextInputLayout) findViewById(R.id.txt_usrNumero);
@@ -196,6 +203,48 @@ public class pesqAgendaUser extends AppCompatActivity {
             }
         });
 
+
+        btAnonimo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!flagAnonimo) {
+                    flagAnonimo =true;
+                    flagCadastro=false;
+                    nomeUsuario.setVisibility(View.VISIBLE);
+                    cadTelefoneUserAnonimo.setVisibility(View.VISIBLE);
+                    bt_cadAnonimo.setVisibility(View.VISIBLE);
+
+                    LoginEmail.getEditText().setEnabled(false);
+                    LoginSenha.getEditText().setEnabled(false);
+                    pesquisaLogin.setEnabled(false);
+                  //  pesquisaLogin.setAlpha(.4f);
+                    Limparcampos.setEnabled(false);
+                   // Limparcampos.setAlpha(.4f);
+                    imagem.setVisibility(View.GONE);
+                    LayBtsImagem.setVisibility(View.GONE);
+                    LayCampos.setVisibility(View.GONE);
+                    BtSalvar.setVisibility(View.VISIBLE);
+
+                }
+                else
+                {
+                    flagAnonimo =false;
+                    flagCadastro=true;
+                    nomeUsuario.setVisibility(View.GONE);
+                    cadTelefoneUserAnonimo.setVisibility(View.GONE);
+                    BtSalvar.setVisibility(View.GONE);
+                    bt_cadAnonimo.setVisibility(View.GONE);
+                    LoginEmail.getEditText().setEnabled(true);
+                    LoginSenha.getEditText().setEnabled(true);
+                    pesquisaLogin.setEnabled(true);
+                   // pesquisaLogin.setAlpha(1);
+                    Limparcampos.setEnabled(true);
+                   // Limparcampos.setAlpha(1);
+
+                }
+            }
+        });
+
         //----- exclui a imagem selecionada do usuario-------------------
         BtExcluirImagem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,37 +281,102 @@ public class pesqAgendaUser extends AppCompatActivity {
             public void onClick(View v) {
                 if(!flagCadastro)
                 {
+                    nomeUsuario.setVisibility(View.GONE);
+                    cadTelefoneUserAnonimo.setVisibility(View.GONE);
+                    bt_cadAnonimo.setVisibility(View.GONE);
+
                     LoginEmail.getEditText().setEnabled(false);
                     LoginSenha.getEditText().setEnabled(false);
                     pesquisaLogin.setEnabled(false);
-                    pesquisaLogin.setAlpha(.4f);
+                   // pesquisaLogin.setAlpha(.4f);
                     Limparcampos.setEnabled(false);
-                    Limparcampos.setAlpha(.4f);
+                   // Limparcampos.setAlpha(.4f);
                     escolherUser.setVisibility(View.GONE);
                     imagem.setVisibility(View.VISIBLE);
                     LayBtsImagem.setVisibility(View.VISIBLE);
                     nomeUsuario.setVisibility(View.VISIBLE);
                     LayCampos.setVisibility(View.VISIBLE);
                     flagCadastro = true;
+                    flagAnonimo =false;
                     nomeUsuario.getEditText().setEnabled(true);
                 }
                 else
                 {
+                    cadTelefoneUserAnonimo.setVisibility(View.GONE);
+                    bt_cadAnonimo.setVisibility(View.GONE);
                     LoginEmail.getEditText().setEnabled(true);
                     LoginSenha.getEditText().setEnabled(true);
                     pesquisaLogin.setEnabled(true);
-                    pesquisaLogin.setAlpha(1);
+                   // pesquisaLogin.setAlpha(1);
                     Limparcampos.setEnabled(true);
-                    Limparcampos.setAlpha(1);
+                   // Limparcampos.setAlpha(1);
                     imagem.setVisibility(View.GONE);
                     LayBtsImagem.setVisibility(View.GONE);
                     nomeUsuario.setVisibility(View.GONE);
                     LayCampos.setVisibility(View.GONE);
                     flagCadastro = false;
+                    flagAnonimo =true;
                 }
             }
         });
 
+        bt_cadAnonimo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loading.abrir("Aguarde...");
+                if(nomeUsuario.getEditText().getText().toString().equals("") && cadTelefoneUserAnonimo.getEditText().getText().toString().equals(""))
+                {
+                    loading.fechar();
+                    Toast.makeText(pesqAgendaUser.this, "Preencha os campos necessarios !!", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    RequestBody nome = RequestBody.create(MediaType.parse("text/plain"), nomeUsuario.getEditText().getText().toString());
+                    RequestBody telefone = RequestBody.create(MediaType.parse("text/plain"), cadTelefoneUserAnonimo.getEditText().getText().toString());
+                    IApi iApi = IApi.retrofit.create(IApi.class);
+                    final Call<IdNovoUsuario> callSalvaUser = iApi.salvarUsuarioAnonimo(nome,telefone);
+                    callSalvaUser.enqueue(new Callback<IdNovoUsuario>() {
+                        @Override
+                        public void onResponse(Call<IdNovoUsuario> call, Response<IdNovoUsuario> response) {
+                            Log.d("xex",String.valueOf(response.code())+ " - "+ response.message());
+                            loading.fechar();
+                            if (response.isSuccessful()) {
+                                switch (response.code())
+                                {
+                                    case 200:
+                                        Toast.makeText(pesqAgendaUser.this, "Usuario Criado !! ", Toast.LENGTH_LONG).show();
+                                        IdNovoUsuario idNovoUsuario = response.body();
+                                        Intent intent = new Intent(pesqAgendaUser.this, escolherServico.class);
+                                        intent.putExtra("idSalao", idSalao);
+                                        SharedPreferences.Editor e = getSharedPreferences.edit();
+                                        e.putString("idUserAgendamento",String.valueOf(idNovoUsuario.getIdUsuario()));
+                                        e.apply();
+                                        e.commit();
+                                        startActivity(intent);
+                                        break;
+                                }
+                            }
+                            callSalvaUser.cancel();
+                        }
+
+                        @Override
+                        public void onFailure(Call<IdNovoUsuario> call, Throwable t) {
+
+                                loading.fechar();
+
+                        }
+                    });
+
+
+
+
+
+
+
+                }
+
+            }
+        });
         pesquisaLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -673,6 +787,39 @@ public class pesqAgendaUser extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+
+                Log.d("xex","home");
+                if(!getSharedPreferences.getString("idUserAgendamento","").equals(""))
+                {
+                    Log.d("xex","tem");
+                    IApi iApi = IApi.retrofit.create(IApi.class);
+                    final Call<ResponseBody> callDeletaser = iApi.ExcluirUsuarioAnonimo(getSharedPreferences.getString("idUserAgendamento",""));
+                    callDeletaser.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            Log.d("xex","algo" + String.valueOf(response.code()));
+                            if(response.isSuccessful())
+                            {
+                                Log.d("xex","sucesso");
+                                switch (response.code()) {
+                                    case 204:
+                                        Log.d("xex","apagou");
+                                        SharedPreferences.Editor e = getSharedPreferences.edit();
+                                        e.remove("idUserAgendamento");
+                                        e.apply();
+                                        e.commit();
+                                        finish();
+                                        break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            Log.d("xex","falha");
+                        }
+                    });
+                }
                 SharedPreferences.Editor e = getSharedPreferences.edit();
                 e.remove("idUserAgendamento");
                 e.apply();
@@ -683,6 +830,47 @@ public class pesqAgendaUser extends AppCompatActivity {
         }
         return true;
     }
+
+    //bt voltar
+    //para aapgar
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(!getSharedPreferences.getString("idUserAgendamento","").equals(""))
+        {
+            Log.d("xex","tem");
+            IApi iApi = IApi.retrofit.create(IApi.class);
+            final Call<ResponseBody> callDeletaser = iApi.ExcluirUsuarioAnonimo(getSharedPreferences.getString("idUserAgendamento",""));
+            callDeletaser.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    Log.d("xex","algo" + String.valueOf(response.code()));
+                    if(response.isSuccessful())
+                    {
+                        Log.d("xex","sucesso");
+                        switch (response.code()) {
+                            case 204:
+                                Log.d("xex","apagou");
+                                SharedPreferences.Editor e = getSharedPreferences.edit();
+                                e.remove("idUserAgendamento");
+                                e.apply();
+                                e.commit();
+                                finish();
+                                break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Log.d("xex","falha");
+                }
+            });
+        }
+    }
+
+
 
     public void logar(){
         final Login login = new Login();

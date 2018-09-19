@@ -43,7 +43,7 @@
                     android:layout_weight="1"
                     android:layout_margin="7dp"
                     app:cardCornerRadius="8dp"
-                    app:cardElevation="0dp"
+                    app:cardElevation="5dp"
                     android:id="@+id/cardAgendar">
                     <TextView
                         android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                android:textAlignment="center"
                android:textSize="18dp"
                android:textStyle="bold"
-               android:text="Sobre O Salão"/>
+               android:text="Sobre o salão"/>
             <TextView
                 android:id="@+id/txt_SobreSalao"
                 android:layout_width="match_parent"

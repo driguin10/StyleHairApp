@@ -40,7 +40,8 @@ public class Adaptador_servico_salao_agendado extends RecyclerView.Adapter<viewH
          if(!vlTotal.getText().toString().equals(""))
          vlCampo = Float.valueOf(vlTotal.getText().toString());
          float vlPeca = ListaServicoSalao.get(position).getValor();
-         vlTotal.setText(String.format(Locale.getDefault(),"%.2f", vlCampo + vlPeca));
+       //  vlTotal.setText(String.format(Locale.getDefault(),"%.2f", vlCampo + vlPeca));
+        vlTotal.setText(String.valueOf(vlCampo + vlPeca));
 }
     @Override
     public int getItemCount() {

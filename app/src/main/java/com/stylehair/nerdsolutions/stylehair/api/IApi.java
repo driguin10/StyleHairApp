@@ -33,6 +33,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -49,6 +50,7 @@ public interface IApi {
     //************ config API **********************************
     String chave = "R20p1g8S7m85ar92t";
     String WebService = "http://stylehair.xyz/";
+    String WebService2 = "localhost/api/";
     String versao = "v1";
     //**********************************************************
 
@@ -97,6 +99,12 @@ public interface IApi {
 
     @Headers("apiKey:" + chave)
     @Multipart
+    @POST("v1/usuarios/anonimo/salvar/")
+    Call<IdNovoUsuario> salvarUsuarioAnonimo(@Part("nome") RequestBody nome,
+                                     @Part("telefone") RequestBody telefone);
+
+    @Headers("apiKey:" + chave)
+    @Multipart
     @POST("v1/usuarios/editar/")
     Call<ResponseBody> EditarUsuario(@Part("uploaded_file") RequestBody image64,
                                      @Part("mine_file") RequestBody tipoImg,
@@ -114,6 +122,11 @@ public interface IApi {
                                      @Part("cidade") RequestBody cidade,
                                      @Part("obs") RequestBody obs,
                                      @Part("imagemAntiga") RequestBody imagemAntiga);
+
+
+    @Headers("apiKey:" + chave)
+    @DELETE("v1/usuarios/anonimo/deletar/{id}")
+    Call<ResponseBody> ExcluirUsuarioAnonimo(@Path("id") String id);
 
     @Headers("apiKey:" + chave)
     @GET("v1/usuarios/{id}")

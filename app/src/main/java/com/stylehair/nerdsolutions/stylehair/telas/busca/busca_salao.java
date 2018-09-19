@@ -65,11 +65,13 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     ProgressBar progressoMais;
     LinearLayoutManager layout;
     List<BuscaSalao> ListaSalao;
-    int QTRESULT = 10; // quantidade de registros que ira trazer do banco a cada atualização
+    int QTRESULT = 15; // quantidade de registros que ira trazer do banco a cada atualização
     int CURRENTRESULT = 0; //  guarda a pagina que ja foi solicitada na atualizacao
     int inicioAUX = 0; // guarda o periodo inicial da atualizacao
     int fimAUX = 0; // guarda o periodo final da atualizacao
     int filtro = 0; // 0= lat_long , 1= cidade
+
+    boolean carrego =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +98,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
          layout = new LinearLayoutManager(getApplicationContext());
         lista = (RecyclerView) findViewById(R.id.listBuscaSaloes);
         lista.setHasFixedSize(true);
+
         busca = (ImageButton) findViewById(R.id.bt_encontrar);
         nome = (EditText) findViewById(R.id.txt_query);
         nome.setText(query);
@@ -134,17 +137,33 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+
                 currentitem = layout.findLastVisibleItemPosition();
-                totalItemCount = layout.getItemCount();
+
+               // totalItemCount = layout.getItemCount();
+                totalItemCount = lista.getLayoutManager().getItemCount();
+
+
+
                 firstVisibleItem = layout.findFirstVisibleItemPosition();
-                if(isScrolling && (currentitem + firstVisibleItem == totalItemCount) )
+
+                Log.d("xex",String.valueOf(currentitem) + " - " + String.valueOf(firstVisibleItem) + " - " + String.valueOf(totalItemCount)+ " - " );
+
+                if(!carrego && isScrolling && (currentitem + firstVisibleItem -2 == totalItemCount) )
                 {
+                    carrego = true;
                     isScrolling = false;
+                    Log.d("xex","carrega");
                     carregarMais();
                 }
 
             }
         });
+
+        layout.setOrientation(LinearLayoutManager.VERTICAL);
+        lista.setLayoutManager(layout);
+        lista.setClickable(true);
         minhaPosicao();
         busca.callOnClick();
     }
@@ -230,10 +249,10 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                 {
                     case 200:
                         ListaSalao = response.body();
-                        layout.setOrientation(LinearLayoutManager.VERTICAL);
+
                         lista.setAdapter(new Adaptador_BuscaSalao(ListaSalao));
-                        lista.setLayoutManager(layout);
-                        lista.setClickable(true);
+
+
                         CURRENTRESULT = CURRENTRESULT + QTRESULT;
                         break;
                 }

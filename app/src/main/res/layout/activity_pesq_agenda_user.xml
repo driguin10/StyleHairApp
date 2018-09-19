@@ -94,6 +94,36 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="right">
+
+
+                        <ImageButton
+                            android:id="@+id/bt_pesquisaLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/icone_pesquisa"
+                            android:backgroundTint="@color/corToobar"/>
+                        <ImageButton
+                            android:id="@+id/bt_limparLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/icone_delete_preto"
+
+                            android:backgroundTint="@color/corToobar"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <Button
+                            android:id="@+id/bt_anonimo"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bt_fragment"
+                            android:text="Anonimo"
+                            android:textColor="#fff" />
                         <Button
                             android:id="@+id/bt_cadastrar"
                             android:layout_width="100dp"
@@ -101,20 +131,6 @@
                             android:background="@drawable/bt_fragment"
                             android:text="Cadastrar"
                             android:textColor="#fff" />
-                        <Button
-                            android:id="@+id/bt_limparLogin"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bt_fragment_carregar"
-                            android:text="Limpar"
-                            android:textColor="#fff" />
-                        <Button
-                            android:id="@+id/bt_pesquisaLogin"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="Pesquisar"
-                            android:textColor="#fff"
-                            android:background="@drawable/bt_fragment"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -184,6 +200,32 @@
                     android:textColor="#000000"
                     android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/txt_usrTelefoneAnonimo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:layout_marginRight="8dp"
+                android:theme="@style/estiloImputCad"
+                android:hint="Telefone *"
+                android:textColorHint="#000000"
+                android:visibility="gone">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000"
+                    android:inputType="number"/>
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:id="@+id/bt_cadAnonimo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="Cadastrar Usuario"
+                android:textColor="#fff"
+                android:background="@drawable/bt_fragment"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/layout_campos"
