@@ -63,16 +63,19 @@ public class Adaptador_BuscaSalao extends RecyclerView.Adapter<viewHolderBuscaSa
          {
              holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corAberto));
              holder.status.setText("ABERTO");
+             holder.imagem.setBorderColor(r.getColor(R.color.corAberto));
          }
          else
          if(ListaObjeto.get(position).getStatus() == 0){
              holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corFechado));
              holder.status.setText("FECHADO");
+             holder.imagem.setBorderColor(r.getColor(R.color.corFechado));
          }
          else
          {
              holder.cardStatus.setCardBackgroundColor(r.getColor(R.color.corAlmoco));
              holder.status.setText("ALMOÇO");
+             holder.imagem.setBorderColor(r.getColor(R.color.corAlmoco));
          }
 
         if(ListaObjeto.get(position).getIdFavorito()>=0)

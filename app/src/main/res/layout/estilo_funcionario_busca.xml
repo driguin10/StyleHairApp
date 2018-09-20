@@ -34,8 +34,8 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="2dp"
-                app:civ_border_width="0dp"
-                app:civ_border_color="#fffefe"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#fff"
                 android:src="@drawable/img_padrao_user"
                 />
 

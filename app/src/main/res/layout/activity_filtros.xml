@@ -74,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:max="100"
                     android:progress="5"
+                    android:thumb="@drawable/icone_place"
 
                     android:progressTint="@color/corToobar"
                     android:thumbTint="#ffffff"

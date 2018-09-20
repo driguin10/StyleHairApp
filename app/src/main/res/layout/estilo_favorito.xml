@@ -33,7 +33,10 @@
             android:src="@drawable/icone_minha_conta"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#fff"
+            />
 
         <TextView
             android:id="@+id/nome_salao"

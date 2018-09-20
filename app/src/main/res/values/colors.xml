@@ -13,7 +13,7 @@
     <color name="corCalendarioPrincipalEscuro">#ee791c15</color>
 
 
-    <color name="corAberto">#ee50bc2f</color>
-    <color name="corFechado">#eebf281d</color>
-    <color name="corAlmoco">#eee6920b</color>
+    <color name="corAberto">#50bc2f</color>
+    <color name="corFechado">#bf281d</color>
+    <color name="corAlmoco">#e6920b</color>
 </resources>

@@ -22,9 +22,10 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                app:civ_border_width="1dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#fff"
                 android:elevation="5dp"
-                app:civ_border_color="#fffefe"
+
                 android:src="@drawable/img_padrao_user"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"/>

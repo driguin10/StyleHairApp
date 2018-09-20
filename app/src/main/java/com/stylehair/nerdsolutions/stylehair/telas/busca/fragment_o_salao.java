@@ -76,9 +76,8 @@ public class fragment_o_salao extends Fragment {
     TextView txtTelefones;
     TextView txtEmail;
     TextView txtCnpj;
-    TextView txtStatus;
-    CardView cardStatus;
-    CardView cardAgendar;
+
+   // CardView cardAgendar;
     String idSalao;
     String tipo;
     SharedPreferences getSharedPreferencesL;
@@ -104,9 +103,8 @@ public class fragment_o_salao extends Fragment {
         txtTelefones=(TextView) view.findViewById(R.id.txtTelefones);
         txtEmail=(TextView) view.findViewById(R.id.txtEmail);
         txtCnpj=(TextView) view.findViewById(R.id.txtCnpj);
-        txtStatus=(TextView) view.findViewById(R.id.txtStatus);
-        cardStatus=(CardView) view.findViewById(R.id.cardStatus);
-        cardAgendar=(CardView) view.findViewById(R.id.cardAgendar);
+
+       // cardAgendar=(CardView) view.findViewById(R.id.cardAgendar);
         segE=(TextView) view.findViewById(R.id.txtSegE);
         segS=(TextView) view.findViewById(R.id.txtSegS);
         terE=(TextView) view.findViewById(R.id.txtTerE);
@@ -177,24 +175,9 @@ public class fragment_o_salao extends Fragment {
             if(bundle.getString("domS")!=null)
             DomS = bundle.getString("domS").substring(0,5);
 
-            if(bundle.getString("status").equals("2"))
-            {
-                txtStatus.setText("Almoço");
-                cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corAlmoco));
-            }
-            else
-            if(bundle.getString("status").equals("1"))
-            {
-               txtStatus.setText("Salão Aberto");
-               cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
-            }
-            else
-            {
-                txtStatus.setText("Salão Fechado");
-                cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
-            }
 
-            if(bundle.getString("agendamento").equals("1"))
+
+            /*if(bundle.getString("agendamento").equals("1"))
             {
                 if(!tipo.equals("COMUM"))
                 {
@@ -215,6 +198,8 @@ public class fragment_o_salao extends Fragment {
                 cardAgendar.setCardElevation(0);
                 cardAgendar.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
             }
+
+            */
         }
 
         segE.setText(SegE);
@@ -232,7 +217,7 @@ public class fragment_o_salao extends Fragment {
         domE.setText(DomE);
         domS.setText(DomS);
 
-       cardAgendar.setOnClickListener(new View.OnClickListener() {
+       /*cardAgendar.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
                if(!tipo.equals("COMUM")) {
@@ -259,7 +244,8 @@ public class fragment_o_salao extends Fragment {
                            .show();
                }
            }
-       });
+       });*/
+
         return  view;
     }
 

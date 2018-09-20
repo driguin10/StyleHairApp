@@ -8,91 +8,102 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/imagemUser"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                app:civ_border_width="1dp"
-                android:elevation="5dp"
-                app:civ_border_color="#fffefe"
-                android:src="@drawable/img_padrao_user"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:elevation="5dp"
+
+                android:src="@drawable/img_padrao_user"
+                app:civ_border_color="@color/corToobar"
+                app:civ_border_width="2dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
+                android:layout_marginRight="8dp"
+                android:orientation="horizontal">
+
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
+
                 <Button
                     android:id="@+id/bt_caregaImg"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:text="Carregar"
-                    android:textColor="#fff"
+                    android:background="@drawable/bt_fragment"
                     android:elevation="12dp"
+                    android:text="Carregar"
 
-                    android:background="@drawable/bt_fragment"/>
+                    android:textColor="#fff" />
+
                 <ImageButton
                     android:id="@+id/bt_excluiImg"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="4dp"
-                    android:backgroundTint="@color/corToobar"
-                    android:background="@drawable/icone_sair" />
+                    android:background="@drawable/icone_sair"
+                    android:backgroundTint="@color/corToobar" />
+
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_userNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:theme="@style/estiloImputCad"
                 android:hint="Nome *"
-                android:textColorHint="#000000">
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_usrApelido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:theme="@style/estiloImputCad"
                 android:hint="Apelido"
-                android:textColorHint="#000000">
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp">
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/spn_usrSexo"
@@ -114,28 +125,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:theme="@style/estiloImputCad"
                     android:hint="Data Nascimento"
                     android:textColorHint="#000000"
-                    >
+                    android:theme="@style/estiloImputCad">
+
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:textColor="#000000" />
                 </android.support.design.widget.TextInputLayout>
+
                 <ImageButton
                     android:id="@+id/pesquisa_data"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-
                     android:layout_alignBottom="@+id/id_search_EditText"
+
                     android:layout_alignRight="@+id/id_search_EditText"
                     android:layout_alignTop="@+id/id_search_EditText"
-                    android:backgroundTint="@color/corToobar"
-                    android:background="@drawable/icone_calendario" />
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/icone_calendario"
+                    android:backgroundTint="@color/corToobar" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -147,66 +160,71 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
                     android:layout_marginRight="8dp"
-                    android:theme="@style/estiloImputCad"
+                    android:layout_weight="1"
                     android:hint="Telefone *"
-                    android:textColorHint="#000000">
+                    android:textColorHint="#000000"
+                    android:theme="@style/estiloImputCad">
+
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:textColor="#000000" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/txt_usrCep"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
-                    android:theme="@style/estiloImputCad"
+                    android:layout_weight="1"
                     android:hint="Cep"
-                    android:textColorHint="#000000">
+                    android:textColorHint="#000000"
+                    android:theme="@style/estiloImputCad">
+
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:textColor="#000000" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_usrEndereco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:theme="@style/estiloImputCad"
                 android:hint="Endereço"
-                android:textColorHint="#000000">
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
+
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_usrBairro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:theme="@style/estiloImputCad"
                 android:hint="Bairro"
-                android:textColorHint="#000000">
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
-
 
 
             <LinearLayout
@@ -217,21 +235,20 @@
                 android:orientation="horizontal">
 
 
-
-
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/txt_usrNumero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:theme="@style/estiloImputCad"
                     android:hint="Número"
-                    android:textColorHint="#000000">
+                    android:textColorHint="#000000"
+                    android:theme="@style/estiloImputCad">
+
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#000000"
-                        android:inputType="number"/>
+                        android:inputType="number"
+                        android:textColor="#000000" />
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -250,23 +267,22 @@
             </LinearLayout>
 
 
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/txt_usrCidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:theme="@style/estiloImputCad"
                 android:hint="Cidade *"
-                android:textColorHint="#000000">
+                android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
-
 
 
             <android.support.design.widget.TextInputLayout
@@ -275,17 +291,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:theme="@style/estiloImputCad"
-                app:counterOverflowTextAppearance="@style/estiloImputCadOverflow"
                 android:hint="Observações"
                 android:textColorHint="#000000"
+                android:theme="@style/estiloImputCad"
                 app:counterEnabled="true"
-                app:counterMaxLength="140">
+                app:counterMaxLength="140"
+                app:counterOverflowTextAppearance="@style/estiloImputCadOverflow">
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:inputType="textMultiLine"/>
+                    android:inputType="textMultiLine"
+                    android:textColor="#000000" />
             </android.support.design.widget.TextInputLayout>
 
 
@@ -293,13 +310,13 @@
                 android:id="@+id/bt_salvarUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Salvar"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="12dp"
                 android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/bt_fragment"
+                android:text="Salvar"
                 android:textColor="#fff"
-                android:textSize="20dp"
-                android:background="@drawable/bt_fragment"/>
+                android:textSize="20dp" />
 
 
         </LinearLayout>

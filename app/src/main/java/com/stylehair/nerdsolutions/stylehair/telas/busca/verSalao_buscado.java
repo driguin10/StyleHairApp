@@ -1,5 +1,7 @@
 package com.stylehair.nerdsolutions.stylehair.telas.busca;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -7,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,10 +47,12 @@ import com.stylehair.nerdsolutions.stylehair.classes.Salao;
 import com.stylehair.nerdsolutions.stylehair.classes.Usuario;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.VerSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.idNovoFavorito;
+import com.stylehair.nerdsolutions.stylehair.telas.agendamento.servicos_agenda.escolherServico;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_avaliacao.Adaptador_avaliacoes_comentario;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_funcionario.fragment_funcionarios_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.busca.busca_servicos.fragment_servicos_do_salao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.SectionsPageAdapter;
+import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -87,7 +93,10 @@ public class verSalao_buscado extends AppCompatActivity {
     TabLayout tabLayout;
     Salao salao;
     SectionsPageAdapter adapter;
-
+    FloatingActionButton btAgendar;
+    String tipo;
+    CardView cardStatus;
+    TextView txtStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +104,8 @@ public class verSalao_buscado extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(verSalao_buscado.this);
+
+        tipo = getSharedPreferences.getString("typeUserApp","COMUM");
         if(bundle!=null)
         {
             idSalao =bundle.getString("idSalao");
@@ -110,11 +121,49 @@ public class verSalao_buscado extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         myToolbar.bringToFront();
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        btAgendar = (FloatingActionButton) findViewById(R.id.floatAgendar);
         mViewPager = (ViewPager) findViewById(R.id.container_salaoBuscado);
         tabLayout = (TabLayout) findViewById(R.id.tabs_salaoBuscado);
         avaliacao = (Button) findViewById(R.id.btAvaliar);
         btFavorito = (ImageButton) findViewById(R.id.btFavorito);
         imgFundo = (ImageView) findViewById(R.id.img_fundo_salao);
+        loading = new Loading(this);
+        config = new Config();
+        nomeSalao = (TextView) findViewById(R.id.txt_nomeSalao_buscado);
+        imagemSalao = (CircleImageView) findViewById(R.id.imagemSalao_buscado);
+
+        txtStatus = (TextView) findViewById(R.id.txtStatus);
+        cardStatus = (CardView) findViewById(R.id.cardStatus);
+
+        btAgendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!tipo.equals("COMUM")) {
+                    Intent intent = new Intent(verSalao_buscado.this, escolherServico.class);
+                    intent.putExtra("idSalao", idSalao);
+                    startActivity(intent);
+                } else {
+                    new AlertDialog.Builder(verSalao_buscado.this)
+                            .setTitle("Deseja concluir seu cadastro?")
+                            .setMessage("Para efetuar agendamentos é necessario concluir seu cadastro.")
+                            .setIcon(R.drawable.icone_funcionario_preto)
+                            .setPositiveButton("sim", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(verSalao_buscado.this, minhaConta.class);
+                                    startActivityForResult(intent, 0);
+                                }
+                            })
+                            .setNegativeButton("não", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                }
+            }
+        });
+
+
         avaliacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,11 +206,8 @@ public class verSalao_buscado extends AppCompatActivity {
             }
         });
 
-        loading = new Loading(this);
-        config = new Config();
-        nomeSalao = (TextView) findViewById(R.id.txt_nomeSalao_buscado);
-        imagemSalao = (CircleImageView) findViewById(R.id.imagemSalao_buscado);
-        loading.abrir("Aguarde...");
+
+
         if(idFavorito.equals("-1"))
         {
             btFavorito.setBackgroundResource(R.drawable.icone_favorito_of);
@@ -186,6 +232,7 @@ public class verSalao_buscado extends AppCompatActivity {
                 }
             }
         });
+        loading.abrir("Aguarde...");
         pegarSalao(idSalao);
     }
 
@@ -285,6 +332,7 @@ public class verSalao_buscado extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(getResources().getDrawable(R.drawable.icone_home_branco));
         tabLayout.getTabAt(1).setIcon(getResources().getDrawable(R.drawable.icone_servicos_branco));
         tabLayout.getTabAt(2).setIcon(getResources().getDrawable(R.drawable.icone_funcionario_branco));
+       tabLayout.getTabAt(1).select();
     }
 
     @Override
@@ -322,6 +370,38 @@ public class verSalao_buscado extends AppCompatActivity {
                             Picasso.with(verSalao_buscado.this).load(config.getWebService() + salao.getLinkImagem()).centerCrop().resize(250, 250).into(imagemSalao);
 
                         }
+
+                        if(salao.getStatus() == 1)
+                        {
+                            imagemSalao.setBorderColor(getResources().getColor(R.color.corAberto));
+                            cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corAberto));
+                            txtStatus.setText("ABERTO");
+                            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.corAberto));
+                        }else
+                        if(salao.getStatus() == 0)
+                        {
+                            cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corFechado));
+                            imagemSalao.setBorderColor(getResources().getColor(R.color.corFechado));
+                            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.corFechado));
+                            txtStatus.setText("FECHADO");
+                        }else
+                        {
+                            cardStatus.setCardBackgroundColor(getResources().getColor(R.color.corAlmoco));
+                            imagemSalao.setBorderColor(getResources().getColor(R.color.corAlmoco));
+                            tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.corAlmoco));
+                            txtStatus.setText("ALMOÇO");
+                        }
+
+
+                        if(salao.getAgendamento() == 1)
+                            btAgendar.setVisibility(View.VISIBLE);
+
+                        if(tipo.equals("COMUM"))
+                        {
+                            btAgendar.setAlpha(1f);
+                            btAgendar.setClickable(false);
+                        }
+
                         setupViewPager(mViewPager,salao);
                         break;
                 }
