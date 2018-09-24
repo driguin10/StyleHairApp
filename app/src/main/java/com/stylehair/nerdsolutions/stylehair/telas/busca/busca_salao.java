@@ -57,7 +57,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     EditText nome;
     TextView kilometroRedor;
     String cidade="";
-    String cidadeGpg;
+    String cidadeGpg="";
     double latitude;
     double longitude;
     int kilometro = 5;
@@ -122,7 +122,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             public void onClick(View v) {
                 loading.abrir("Aguarde...");
                 minhaPosicao();
-                if(filtro==0)
+                if(filtro==0)//pegando pela localização do aparelho
                     getBusca(kilometro,nome.getText().toString(),"",latitude,longitude,idLogin);
                 else
                     getBusca(kilometro,nome.getText().toString(),cidade,0,0,idLogin);
@@ -212,6 +212,9 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
                 else
                 if(enderecos.get(0).getSubAdminArea()!=null)
                     cidadeGpg = enderecos.get(0).getSubAdminArea();
+
+                if(!cidadeGpg.equals(""))
+                kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você(" + cidadeGpg+")");
             }
             else
             {
@@ -348,7 +351,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
               }
               else {
                   filtro = 0;
-                  kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você");
+                  kilometroRedor.setText("Até " + String.valueOf(kilometro) + "km de você(" + cidadeGpg+")");
                   getBusca(kilometro,nome.getText().toString(),cidade,latitude,longitude,idLogin);
                   loading.abrir("Aguarde...");
               }
