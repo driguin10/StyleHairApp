@@ -39,6 +39,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,10 +59,13 @@ public class Notificacao extends AppCompatActivity {
     int qtTentativaRealizadaSalvar = 0;
     int qtTentativaRealizadaUsuario = 0;
     int qtTentativaRealizadaSalao = 0;
-    String IdUsuario;
+    String IdUsuario,IdSalao;
     String IdUsuarioEscolhido;
     String TopicoSalao;
     String NomeSalao;
+    String quem ="0";
+    String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +96,11 @@ public class Notificacao extends AppCompatActivity {
                 String tit = tituloNot.getEditText().getText().toString();
                 String men = menssagemNotify.getEditText().getText().toString();
                 loading.abrir("Aguarde...");
-                EnviarNotificacao(tit,men,NomeSalao,topico);
+               // EnviarNotificacao(tit,men,NomeSalao,topico);
+                if(quem.equals("0"))
+                    enviarNotificacao("0",IdSalao,tit,men,NomeSalao);
+                else
+                    enviarNotificacao("1",id,tit,men,NomeSalao);
             }
         });
 
@@ -99,6 +109,7 @@ public class Notificacao extends AppCompatActivity {
             public void onClick(View v) {
                 topico = TopicoSalao;
                 enviarP.setText("Todos os Clientes");
+                quem = "0";
             }
         });
 
@@ -148,6 +159,37 @@ public class Notificacao extends AppCompatActivity {
         });
     }
 
+    public void enviarNotificacao(String quem,String id,String titulo, String menssagem, String nomeSalao){
+
+        RequestBody QUEM = RequestBody.create(MediaType.parse("text/plain"), quem);
+        RequestBody ID = RequestBody.create(MediaType.parse("text/plain"), id);
+        RequestBody TITULO = RequestBody.create(MediaType.parse("text/plain"), titulo);
+        RequestBody MENSSAGEM = RequestBody.create(MediaType.parse("text/plain"), menssagem);
+        RequestBody NOME_SALAO = RequestBody.create(MediaType.parse("text/plain"), nomeSalao);
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callEnvia = iApi.EnviarNotificacao(QUEM,ID,TITULO,MENSSAGEM,NOME_SALAO);
+        callEnvia.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                switch (response.code()) {
+                    case 204:
+                        Toast.makeText(Notificacao.this,"Enviado...",Toast.LENGTH_SHORT).show();
+                        loading.fechar();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+
+    }
+
+
     public void pegarSalao(final String idUsuario){
 
         IApi iApi = IApi.retrofit.create(IApi.class);
@@ -163,6 +205,7 @@ public class Notificacao extends AppCompatActivity {
                         Salao salao = saloes.get(0);
                         TopicoSalao = salao.getTopicoNotificacao();
                         NomeSalao = salao.getNome();
+                        IdSalao =String.valueOf(salao.getIdSalao());
                         break;
                 }
             }
@@ -199,6 +242,8 @@ public class Notificacao extends AppCompatActivity {
                         Usuario user = users.get(0);
 
                         topico = user.getTopicoNotificacao();
+                        quem = "1";
+                        id = String.valueOf(user.getIdLogin());
                         break;
                 }
             }

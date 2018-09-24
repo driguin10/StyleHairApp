@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -23,7 +24,7 @@ import static android.app.Activity.RESULT_OK;
 public class viewHolderFuncionarioNotif extends ViewHolder implements View.OnClickListener  {
     CircleImageView imagemFunc;
     TextView NomeFuncionario;
-    CardView card;
+    LinearLayout card;
     Context contexto;
     List<UsuarioFuncionario> ListaUsuario;
     UsuarioFuncionario usuarioFuncionario;
@@ -33,7 +34,7 @@ public class viewHolderFuncionarioNotif extends ViewHolder implements View.OnCli
         super(itemView);
         imagemFunc = (CircleImageView) itemView.findViewById(R.id.img_funcionario);
         NomeFuncionario = (TextView) itemView.findViewById(R.id.nome_funcionario);
-        card = (CardView) itemView.findViewById(R.id.cardsFunc);
+        card = (LinearLayout) itemView.findViewById(R.id.cardsFunc);
         card.setOnClickListener(this);
         ListaUsuario = dados;
         contexto = itemView.getContext();

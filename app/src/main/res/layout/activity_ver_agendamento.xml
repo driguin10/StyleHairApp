@@ -18,106 +18,124 @@
         app:titleTextColor="@color/corTextos">
 
     </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="8dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Horario : "/>
+                    android:text="Horario : " />
+
                 <TextView
                     android:id="@+id/txtHorario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="11:00 as 12:00"/>
+                    android:text="11:00 as 12:00" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Data : "/>
+                    android:text="Data : " />
+
                 <TextView
                     android:id="@+id/txtData"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="11/06/2018"/>
+                    android:text="11/06/2018" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status : "/>
+                    android:text="Status : " />
+
                 <TextView
                     android:id="@+id/txtStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Aguardando Atendimento"/>
+                    android:text="Aguardando Atendimento" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line" />
 
             <LinearLayout
                 android:id="@+id/lay_funcionario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Funcionário"
-                android:textAlignment="center"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imagemFuncionario"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:civ_border_color="@color/corToobar"
-                    app:civ_border_width="2dp"
-                    android:src="@drawable/img_padrao_user"/>
                 <TextView
-                    android:id="@+id/txtNomeFuncionario"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:text="Rodrigo Pereira"
-                    android:gravity="center|left"/>
-            </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:text="Funcionário"
+                    android:textAlignment="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/imagemFuncionario"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/img_padrao_user"
+                        app:civ_border_color="@color/corToobar"
+                        app:civ_border_width="2dp" />
+
+                    <TextView
+                        android:id="@+id/txtNomeFuncionario"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center|left"
+                        android:text="Rodrigo Pereira" />
+                </LinearLayout>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line" />
+
             <TextView
                 android:id="@+id/txt_salao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Salão"
-                android:textAlignment="center"/>
+                android:textAlignment="center" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,92 +145,106 @@
                     android:id="@+id/imagemSalao"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
+                    android:src="@drawable/img_padrao_user"
                     app:civ_border_color="@color/corToobar"
-                    app:civ_border_width="2dp"
-                    android:src="@drawable/img_padrao_user"/>
+                    app:civ_border_width="2dp" />
+
                 <TextView
                     android:id="@+id/txtNomeSalao"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
-                    android:text="Salão teste"
-                    android:gravity="center|left"/>
+                    android:gravity="center|left"
+                    android:text="Salão teste" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/txtLabelEndereco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtLabelEndereco"
-                    android:text="Endereço : "/>
+                    android:text="Endereço : " />
+
                 <TextView
                     android:id="@+id/txtEndereco"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=""/>
+                    android:text="" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/listaServicos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </android.support.v7.widget.RecyclerView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/txt_vlTotal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@color/corAberto"
+                    android:text=""
                     android:textAlignment="center"
-                    android:text=""/>
+                    android:textColor="@color/corAberto"
+                    android:textSize="25sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Valor Total"/>
+                    android:text="Valor Total"
+                    android:textAlignment="center" />
             </LinearLayout>
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="15dp"
-                android:background="@drawable/line"/>
+                android:background="@drawable/line"
+                android:layout_marginBottom="20dp"/>
+
             <Button
                 android:id="@+id/btFinalizar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bt_folga_on"
-                android:visibility="gone"
+                android:text="Finalizar Agendamento"
                 android:textColor="#ffffff"
-                android:text="Finalizar Agendamento"/>
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/btCancelar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bt_fragment"
                 android:text="Cancelar Agendamento"
                 android:textColor="#ffffff" />
+
             <Button
                 android:id="@+id/btExcluir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/bt_cor_toolbar"
+                android:text="Excluir Agendamento"
                 android:textColor="#ffffff"
-                android:text="Excluir Agendamento"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

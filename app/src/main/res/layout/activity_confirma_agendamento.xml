@@ -20,10 +20,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginEnd="7dp"
-        android:layout_marginStart="7dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/bt_Confirmar"
+        app:layout_constraintBottom_toTopOf="@+id/layButtom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_confirmar_agenda">
@@ -31,126 +29,206 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
             android:orientation="vertical">
 
-
-            <TextView
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Funcionario"
-                android:textAlignment="center"
-                android:textColor="@color/corToobar"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@drawable/line" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:cardCornerRadius="5dp">
+                 <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_funcionario"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="15dp"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#fff"
-                    android:src="@drawable/img_padrao_user" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_funcionario"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginLeft="15dp"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#fff"
+                android:src="@drawable/img_padrao_user" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/corToobar"
+                    android:text="Funcionário"
+                    android:textSize="12dp"/>
 
                 <TextView
                     android:id="@+id/txtNomeFuncionario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="Nome do Funcionario"
+                    android:text="Nome"
                     android:textSize="20dp"
+                    android:textColor="#313131"
+                    android:textStyle="bold"
                     />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Serviços"
-                android:textAlignment="center"
-                android:textColor="@color/corToobar"
-                android:textStyle="bold" />
 
+
+        </LinearLayout>
+            </android.support.v7.widget.CardView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@drawable/line">
 
             </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/ListaServicosAgenda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-
-
-            <TextView
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Horario"
-                android:textAlignment="center"
-                android:textColor="@color/corToobar"
-                android:textStyle="bold" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:cardCornerRadius="5dp">
+                <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Serviços"
+        android:textAlignment="center"
+        android:textSize="12dp"
+        android:textColor="@color/corToobar"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ListaServicosAgenda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
 
+            </android.support.v7.widget.CardView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@drawable/line" />
 
-            <TextView
-                android:id="@+id/txtData"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="dia 22/05/2018 \n 10:00 as 11:00"
-                android:textAlignment="center"
-                android:textSize="24dp" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                app:cardCornerRadius="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/icone_calendario"/>
+                        <TextView
+                            android:id="@+id/txtData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="22/05/2018"
+                            android:textAlignment="center"
+                            android:textColor="#000000"
+                            android:textSize="20dp" />
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/icone_time"/>
+                        <TextView
+                            android:id="@+id/txtHora"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="11:30"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:textSize="20dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Valor Total"
-                android:textAlignment="center"
-                android:textColor="@color/corToobar"
-                android:textStyle="bold" />
+                    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@drawable/line" />
 
-            <TextView
-                android:id="@+id/txtValorTotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/corAberto"
-                android:textAlignment="center"
-                android:textSize="24dp" />
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/corToobar">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Valor Total"
+                            android:textAlignment="center"
+                            android:textColor="#fff"
+
+                            android:textSize="12dp"/>
+                        <TextView
+                            android:id="@+id/txtValorTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="#fff"
+                            android:textAlignment="center"
+                            android:textSize="24dp" />
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
 
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        android:id="@+id/bt_Confirmar"
+    <LinearLayout
+        android:id="@+id/layButtom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/corTextos"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/bt_fragment"
-        android:text="Confirmar Agendamento"
+        android:orientation="horizontal"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/corToobar">
+        <Button
+            android:id="@+id/bt_Confirmar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/corTextos"
+            android:background="@drawable/bt_fragment_carregar"
+            android:text="Confirmar Agendamento" />
+        <Button
+            android:id="@+id/bt_Cancelar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:textColor="@color/corTextos"
+            android:background="@drawable/bt_folga_off"
+            android:text="Cancelar" />
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

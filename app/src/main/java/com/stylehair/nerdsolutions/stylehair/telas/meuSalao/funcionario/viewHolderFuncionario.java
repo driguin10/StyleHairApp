@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
@@ -23,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class viewHolderFuncionario extends ViewHolder implements View.OnClickListener  {
     CircleImageView imagemFunc;
     TextView NomeFuncionario;
-    CardView card;
+    LinearLayout card;
     Context contexto;
     List<UsuarioFuncionario> ListaUsuario;
     UsuarioFuncionario usuarioFuncionario;
@@ -32,7 +33,7 @@ public class viewHolderFuncionario extends ViewHolder implements View.OnClickLis
         super(itemView);
         imagemFunc = (CircleImageView) itemView.findViewById(R.id.img_funcionario);
         NomeFuncionario = (TextView) itemView.findViewById(R.id.nome_funcionario);
-        card = (CardView) itemView.findViewById(R.id.cardsFunc);
+        card = (LinearLayout) itemView.findViewById(R.id.cardsFunc);
         card.setOnClickListener(this);
         ListaUsuario = dados;
         contexto = itemView.getContext();

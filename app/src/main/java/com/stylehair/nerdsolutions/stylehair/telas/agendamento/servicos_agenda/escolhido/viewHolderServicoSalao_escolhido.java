@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public class viewHolderServicoSalao_escolhido extends ViewHolder implements View.OnClickListener  {
     TextView NomeServico;
     TextView valor;
-    CardView card;
+    LinearLayout card;
     Context contexto;
     ImageButton excluir;
     List<ServicoSalao> ListaServicoSalao;
@@ -38,7 +39,7 @@ public class viewHolderServicoSalao_escolhido extends ViewHolder implements View
         super(itemView);
         NomeServico = (TextView) itemView.findViewById(R.id.nome_servico);
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
-        card = (CardView) itemView.findViewById(R.id.cardsServico);
+        card = (LinearLayout) itemView.findViewById(R.id.cardsServico);
         excluir = (ImageButton) itemView.findViewById(R.id.bt_excluir_servico);
         card.setOnClickListener(this);
         excluir.setOnClickListener(this);

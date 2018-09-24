@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -109,10 +110,20 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
         SimpleDateFormat formataDataCalendario = new SimpleDateFormat("yyyy-MM-dd");
         Date dataCalend = dateSelected.toDate();
         String dataCalendarioFormatada = formataDataCalendario.format(dataCalend);
-        atualizaHorarios(dataCalendarioFormatada,id,tipo);
+       // atualizaHorarios(dataCalendarioFormatada,id,tipo);
+       // loading.abrir("Aguarde...");
+
+        dataSelecionada = formataDataCalendario.format(dataCalend);
+
+        atualiza(dataSelecionada);
+    }
+
+    public void atualiza(String data){
+        atualizaHorarios(data,id,tipo);
         loading.abrir("Aguarde...");
     }
 
+    String dataSelecionada;
     public void atualizaHorarios(final String data ,final String id, final String who)
     {
         IApi iApi = IApi.retrofit.create(IApi.class);
@@ -160,4 +171,11 @@ public class minha_agenda extends AppCompatActivity implements DatePickerListene
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int ResultCode, Intent intent)
+    {
+        if(requestCode==1)
+            atualiza(dataSelecionada);
+    }
 }

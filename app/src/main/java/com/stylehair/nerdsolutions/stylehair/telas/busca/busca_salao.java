@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -29,6 +31,7 @@ import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
+import com.stylehair.nerdsolutions.stylehair.telas.Mapa;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 
 import java.util.ArrayList;
@@ -54,6 +57,7 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
     EditText nome;
     TextView kilometroRedor;
     String cidade="";
+    String cidadeGpg;
     double latitude;
     double longitude;
     int kilometro = 5;
@@ -200,6 +204,14 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
             if(myLocation!=null) {
                 latitude = myLocation.getLatitude();
                 longitude = myLocation.getLongitude();
+                Geocoder geocoder = new Geocoder(busca_salao.this);
+                List<Address> enderecos = geocoder.getFromLocation(latitude,longitude,1);
+
+                if(enderecos.get(0).getLocality()!=null)
+                    cidadeGpg=enderecos.get(0).getLocality();
+                else
+                if(enderecos.get(0).getSubAdminArea()!=null)
+                    cidadeGpg = enderecos.get(0).getSubAdminArea();
             }
             else
             {
@@ -209,6 +221,8 @@ public class busca_salao extends AppCompatActivity implements LocationListener {
            // busca.callOnClick();
         }
         catch (SecurityException seg)
+        { }
+        catch (Exception e)
         { }
     }
 

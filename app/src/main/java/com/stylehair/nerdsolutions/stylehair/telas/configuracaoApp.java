@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
@@ -45,8 +47,12 @@ public class configuracaoApp extends AppCompatActivity {
     int qtTentativaRealizadaUsuario = 0;
     int qtTentativaRealizadaFuncionario = 0;
     int qtTentativaRealizadaGerente = 0;
+
+    boolean recebeNotify;
     Loading loading;
+    ToggleButton btReceberNotify;
     SharedPreferences getSharedPreferences;
+    SharedPreferences.Editor e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +68,31 @@ public class configuracaoApp extends AppCompatActivity {
          getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
 
+         e = getSharedPreferences.edit();
+
         typeUserApp =getSharedPreferences.getString("typeUserApp","");
+        recebeNotify = getSharedPreferences.getBoolean("recebeNotify",true);
         loading = new Loading(this);
         btEncerrarConta=(Button) findViewById(R.id.bt_deletar_conta);
+        btReceberNotify=(ToggleButton) findViewById(R.id.tgNotificações);
+
+
+
+        btReceberNotify.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                e.putBoolean("recebeNotify",isChecked);
+                e.commit();
+                e.apply();
+
+                if(isChecked)
+                    btReceberNotify.setBackground(getResources().getDrawable(R.drawable.bt_folga_on));
+                else
+                    btReceberNotify.setBackground(getResources().getDrawable(R.drawable.bt_folga_off));
+            }
+        });
+
+        btReceberNotify.setChecked(recebeNotify);
         btEncerrarConta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

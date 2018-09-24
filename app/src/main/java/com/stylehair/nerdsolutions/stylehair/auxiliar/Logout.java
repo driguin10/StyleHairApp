@@ -48,7 +48,6 @@ public class Logout {
                 for(int x=0;x<arrayTopFavoritos.size();x++)
                 {
                     topicoNotificacao.removeTopico(arrayTopFavoritos.get(x));
-                    Log.d("xex", "remove topic - "+ arrayTopFavoritos.get(x));
                 }
             }
         }
@@ -68,6 +67,7 @@ public class Logout {
         e.remove("idFuncionario");
         e.remove("idUserAgendamento");
         e.remove("topicoNotificacao");
+        e.remove("recebeNotify");
         e.putBoolean("firstStart",false);
         e.apply();
         e.commit();

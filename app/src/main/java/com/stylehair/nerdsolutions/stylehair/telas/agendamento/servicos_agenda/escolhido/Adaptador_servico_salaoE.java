@@ -34,6 +34,7 @@ public class Adaptador_servico_salaoE extends RecyclerView.Adapter<viewHolderSer
     @Override
     public void onBindViewHolder(viewHolderServicoSalao_escolhido holder, int position) {
          holder.NomeServico.setText(ListaServicoSalao.get(position).getServico());
+         holder.NomeServico.setTextColor(holder.contexto.getResources().getColor(R.color.corTextos));
          holder.valor.setText("R$ "+String.format(Locale.getDefault(),"%.2f", ListaServicoSalao.get(position).getValor()));
          holder.Rlista = Rlista;
          holder.btinfo = BtInfo;

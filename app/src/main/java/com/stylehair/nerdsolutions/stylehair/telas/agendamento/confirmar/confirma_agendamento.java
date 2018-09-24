@@ -55,6 +55,7 @@ public class confirma_agendamento extends AppCompatActivity {
     RecyclerView lista;
     TextView txtValorTotal;
     TextView txtData;
+    TextView txtHora;
     String nomeFuncionario;
     String imagemfuncionario;
     CircleImageView imageFunc;
@@ -75,6 +76,7 @@ public class confirma_agendamento extends AppCompatActivity {
         txtValorTotal = (TextView) findViewById(R.id.txtValorTotal);
         nomeFunc = (TextView) findViewById(R.id.txtNomeFuncionario);
         txtData = (TextView) findViewById(R.id.txtData);
+        txtHora = (TextView) findViewById(R.id.txtHora);
         imageFunc = (CircleImageView) findViewById(R.id.img_funcionario);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
@@ -114,8 +116,8 @@ public class confirma_agendamento extends AppCompatActivity {
         lista.setHasFixedSize(true);
         lista.setAdapter(new Adaptador_servicoConfirmAgenda(ServicosLista,txtValorTotal));
         lista.setLayoutManager(layout);
-        String horarioAux = "Dia "+Data+"\n"+ "ás " +horaIni;
-        txtData.setText(horarioAux);
+        txtData.setText(Data);
+        txtHora.setText(horaIni);
         Picasso.with(this).load("http://stylehair.xyz/" + imagemfuncionario).into(imageFunc);
         nomeFunc.setText(nomeFuncionario);
         btConfirmar.setOnClickListener(new View.OnClickListener() {

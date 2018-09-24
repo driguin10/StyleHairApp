@@ -10,14 +10,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -30,12 +28,9 @@ import android.widget.ToggleButton;
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
-import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.VerificaConexao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.timerPick;
 import com.stylehair.nerdsolutions.stylehair.classes.Salao;
-import com.stylehair.nerdsolutions.stylehair.telas.configuracaoApp;
-import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.troca_gerente.trocar_gerente;
 
 import java.util.List;
@@ -116,6 +111,43 @@ public class configuracaoSalao extends AppCompatActivity {
         salvarConfig = (Button) findViewById(R.id.bt_salvarConfiguracao);
         trocarGerente = (Button) findViewById(R.id.btTrocaGerente);
         excluirSalao = (Button) findViewById(R.id.bt_deletar_salao);
+
+        txtSegE = (TextInputLayout) findViewById(R.id.txt_ver_hora_segE);
+        txtSegS = (TextInputLayout) findViewById(R.id.txt_ver_hora_segS);
+        btStatusSegunda = (ToggleButton) findViewById(R.id.ver_bt_folga_seg);
+        horaSegE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_segE);
+        horaSegS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_segS);
+        txtTerE = (TextInputLayout) findViewById(R.id.txt_ver_hora_terE);
+        txtTerS = (TextInputLayout) findViewById(R.id.txt_ver_hora_terS);
+        btStatusTerca = (ToggleButton) findViewById(R.id.ver_bt_folga_ter);
+        horaTerE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_terE);
+        horaTerS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_terS);
+        txtQuaE = (TextInputLayout) findViewById(R.id.txt_ver_hora_quaE);
+        txtQuaS = (TextInputLayout) findViewById(R.id.txt_ver_hora_quaS);
+        btStatusQuarta = (ToggleButton)findViewById(R.id.ver_bt_folga_qua);
+        horaQuaE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_quaE);
+        horaQuaS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_quaS);
+        txtQuiE = (TextInputLayout) findViewById(R.id.txt_ver_hora_quiE);
+        txtQuiS = (TextInputLayout) findViewById(R.id.txt_ver_hora_quiS);
+        btStatusQuinta = (ToggleButton) findViewById(R.id.ver_bt_folga_qui);
+        horaQuiE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_quiE);
+        horaQuiS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_quiS);
+        txtSexE = (TextInputLayout) findViewById(R.id.txt_ver_hora_sexE);
+        txtSexS = (TextInputLayout) findViewById(R.id.txt_ver_hora_sexS);
+        btStatusSexta = (ToggleButton) findViewById(R.id.ver_bt_folga_sex);
+        horaSexE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_sexE);
+        horaSexS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_sexS);
+        txtSabE = (TextInputLayout) findViewById(R.id.txt_ver_hora_sabE);
+        txtSabS = (TextInputLayout) findViewById(R.id.txt_ver_hora_sabS);
+        btStatusSabado = (ToggleButton) findViewById(R.id.ver_bt_folga_sab);
+        horaSabE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_sabE);
+        horaSabS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_sabS);
+        txtDomE = (TextInputLayout) findViewById(R.id.txt_ver_hora_domE);
+        txtDomS = (TextInputLayout) findViewById(R.id.txt_ver_hora_domS);
+        btStatusDomingo = (ToggleButton) findViewById(R.id.ver_bt_folga_dom);
+        horaDomE = (ImageButton) findViewById(R.id.ver_pesquisa_hora_domE);
+        horaDomS = (ImageButton) findViewById(R.id.ver_pesquisa_hora_domS);
+        /*
         txtSegE = (TextInputLayout) findViewById(R.id.txt_hora_segE);
         txtSegS = (TextInputLayout) findViewById(R.id.txt_hora_segS);
         btStatusSegunda = (ToggleButton) findViewById(R.id.bt_folga_seg);
@@ -151,6 +183,8 @@ public class configuracaoSalao extends AppCompatActivity {
         btStatusDomingo = (ToggleButton) findViewById(R.id.bt_folga_dom);
         horaDomE = (ImageButton) findViewById(R.id.pesquisa_hora_domE);
         horaDomS = (ImageButton) findViewById(R.id.pesquisa_hora_domS);
+        */
+
         intervaloAgenda = (Spinner) findViewById(R.id.spn_intervalo_agenda);
         tempoMinimo = (Spinner) findViewById(R.id.spn_min_agenda);
 
@@ -203,7 +237,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaSegE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_segE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_segE);
                 txtSegE.getEditText().setError(null);
             }
         });
@@ -211,7 +245,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaSegS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_segS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_segS);
                 txtSegS.getEditText().setError(null);
             }
         });
@@ -219,7 +253,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaTerE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_terE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_terE);
                 txtTerE.getEditText().setError(null);
             }
         });
@@ -227,7 +261,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaTerS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_terS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_terS);
                 txtTerS.getEditText().setError(null);
             }
         });
@@ -235,7 +269,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaQuaE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_quaE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_quaE);
                 txtQuaE.getEditText().setError(null);
             }
         });
@@ -243,7 +277,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaQuaS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_quaS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_quaS);
                 txtQuaS.getEditText().setError(null);
             }
         });
@@ -251,7 +285,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaQuiE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_quiE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_quiE);
                 txtQuiE.getEditText().setError(null);
             }
         });
@@ -259,7 +293,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaQuiS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_quiS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_quiS);
                 txtQuiS.getEditText().setError(null);
             }
         });
@@ -267,7 +301,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaSexE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_sexE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_sexE);
                 txtSexE.getEditText().setError(null);
             }
         });
@@ -275,7 +309,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaSexS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_sexS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_sexS);
                 txtSexS.getEditText().setError(null);
             }
         });
@@ -283,7 +317,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaSabE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_sabE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_sabE);
                 txtSabE.getEditText().setError(null);
             }
         });
@@ -291,7 +325,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaSabS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_sabS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_sabS);
                 txtSabS.getEditText().setError(null);
             }
         });
@@ -299,7 +333,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaDomE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_domE);
+                showTimePickerDialog(v,R.id.txt_ver_hora_domE);
                 txtDomE.getEditText().setError(null);
             }
         });
@@ -307,7 +341,7 @@ public class configuracaoSalao extends AppCompatActivity {
         horaDomS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v,R.id.txt_hora_domS);
+                showTimePickerDialog(v,R.id.txt_ver_hora_domS);
                 txtDomS.getEditText().setError(null);
             }
         });

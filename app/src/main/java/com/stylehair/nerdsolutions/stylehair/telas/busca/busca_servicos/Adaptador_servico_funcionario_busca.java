@@ -23,7 +23,7 @@ public class Adaptador_servico_funcionario_busca extends RecyclerView.Adapter<vi
 
     @Override
     public viewHolderServicoFuncionario_busca onCreateViewHolder(ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_servico_agenda, parent, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_servico_agenda2, parent, false);
         return new viewHolderServicoFuncionario_busca(vista,ListaServicoSalao);
     }
 

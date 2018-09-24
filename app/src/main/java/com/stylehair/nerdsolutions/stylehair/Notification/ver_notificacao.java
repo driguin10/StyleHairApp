@@ -13,10 +13,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stylehair.nerdsolutions.stylehair.R;
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.BancoNotifyController;
+import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.funcionario.funcionarios;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ver_notificacao extends AppCompatActivity {
     String id;
@@ -75,10 +84,33 @@ public class ver_notificacao extends AppCompatActivity {
                         .setIcon(R.drawable.icone_delete)
                         .setPositiveButton("sim", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                crud.deletaRegistro(Integer.valueOf(id));
-                                Intent intent = new Intent(ver_notificacao.this,notificacao.class);
-                                startActivity(intent);
-                                finish();
+
+
+                                IApi iApi = IApi.retrofit.create(IApi.class);
+                                final Call<ResponseBody> callExcluiNotificacao = iApi.ExcluirNotificacao(Integer.valueOf(id));
+                                callExcluiNotificacao.enqueue(new Callback<ResponseBody>() {
+                                    @Override
+                                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                        switch (response.code()) {
+                                            case 204:
+                                                Toast.makeText(ver_notificacao.this,"Excluido",Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(ver_notificacao.this,notificacao.class);
+                                                startActivity(intent);
+                                                finish();
+                                                break;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                                    }
+                                });
+
+
+
+
+
                             }
                         })
                         .setNegativeButton("não", new DialogInterface.OnClickListener() {
@@ -90,7 +122,9 @@ public class ver_notificacao extends AppCompatActivity {
                         .show();
             }
         });
-        crud.alteraRegistro(Integer.valueOf(id),Btitulo,Btexto,Bhora,"1",Bnome_salao);
+       // crud.alteraRegistro(Integer.valueOf(id),Btitulo,Btexto,Bhora,"1",Bnome_salao);
+
+        mudaStatus();
     }
 
     @Override
@@ -104,5 +138,27 @@ public class ver_notificacao extends AppCompatActivity {
             default:break;
         }
         return true;
+    }
+
+
+    public void mudaStatus(){
+
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<ResponseBody> callExcluiNotificacao = iApi.alteraNotificacaoVisualizacao(id,1);
+        callExcluiNotificacao.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                switch (response.code()) {
+                    case 204:
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -21,6 +21,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
+
+    <ToggleButton
+        android:id="@+id/tgNotificações"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:textOff="não receber notificações"
+        android:textOn="receber notificações"
+        android:text="ToggleButton"
+        android:textColor="#fff"
+        android:textSize="20dp"
+        android:background="@drawable/bt_folga_off"/>
+
     <Button
         android:id="@+id/bt_deletar_conta"
         android:layout_width="match_parent"
@@ -31,6 +45,7 @@
         android:textColor="#fff"
         android:textSize="20dp"
         android:background="@drawable/bt_fragment"/>
+
 </LinearLayout>
 
 

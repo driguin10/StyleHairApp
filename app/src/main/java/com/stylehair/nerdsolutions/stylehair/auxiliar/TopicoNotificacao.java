@@ -1,5 +1,6 @@
 package com.stylehair.nerdsolutions.stylehair.auxiliar;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class TopicoNotificacao {
@@ -12,5 +13,6 @@ public class TopicoNotificacao {
     {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topico);
     }
+
 
 }

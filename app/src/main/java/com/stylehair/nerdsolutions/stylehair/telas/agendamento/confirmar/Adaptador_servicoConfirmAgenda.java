@@ -36,7 +36,7 @@ public class Adaptador_servicoConfirmAgenda extends RecyclerView.Adapter<viewHol
 
     @Override
     public viewHolderescolherServicoConfirmAgenda onCreateViewHolder(ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_servico_agenda, parent, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_servico_agenda_confirmar, parent, false);
         return new viewHolderescolherServicoConfirmAgenda(vista,ListaServicoSalao);
     }
 

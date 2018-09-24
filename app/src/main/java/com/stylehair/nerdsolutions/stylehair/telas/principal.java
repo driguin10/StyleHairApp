@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -13,7 +14,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -28,6 +31,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.stylehair.nerdsolutions.stylehair.R;
+import com.stylehair.nerdsolutions.stylehair.api.IApi;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Loading;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Logout;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.Permissoes;
@@ -37,6 +41,7 @@ import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.Banc
 import com.stylehair.nerdsolutions.stylehair.Notification.bancoNotificacoes.CriaBancoNotificacao;
 import com.stylehair.nerdsolutions.stylehair.Notification.notificacao;
 import com.stylehair.nerdsolutions.stylehair.auxiliar.AtualizaInfos;
+import com.stylehair.nerdsolutions.stylehair.classes.Notificacoes;
 import com.stylehair.nerdsolutions.stylehair.telas.favorito.saloesFavoritos;
 import com.stylehair.nerdsolutions.stylehair.telas.meuSalao.meuSalao;
 import com.stylehair.nerdsolutions.stylehair.telas.minhaAgenda.minha_agenda;
@@ -44,6 +49,9 @@ import com.stylehair.nerdsolutions.stylehair.telas.minhaConta.minhaConta;
 import java.util.ArrayList;
 import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class principal extends AppCompatActivity
@@ -60,7 +68,7 @@ public class principal extends AppCompatActivity
     VerificaConexao verificaConexao;
     String nomeUsuario = "";
     String linkImagem ="";
-    String qtNotificacoes;
+    int qtNotificacoes;
     TextView notificacoes;
      CircleImageView imgUser;
      Permissoes permissoes;
@@ -68,6 +76,8 @@ public class principal extends AppCompatActivity
     Loading loading;
     AtualizaInfos atualizaInfos ;
     SharedPreferences getSharedPreferences;
+    int qtNotificacao;
+    SharedPreferences.Editor e;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,14 +91,31 @@ public class principal extends AppCompatActivity
          atualizaInfos = new AtualizaInfos(principal.this);
          getSharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(getBaseContext());
+        e = getSharedPreferences.edit();
         idLogin = getSharedPreferences.getInt("idLogin", -1);
         typeUser = getSharedPreferences.getString("typeUserApp","COMUM");
         nomeUsuario = getSharedPreferences.getString("nomeUser","");
         linkImagem = getSharedPreferences.getString("linkImagem","");
+        qtNotificacoes = getSharedPreferences.getInt("qtNotificacao", 0);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getNotificacoes();
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+        };
         drawer.addDrawerListener(toggle);
+
+
+
         toggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -98,10 +125,11 @@ public class principal extends AppCompatActivity
         men.findItem(R.id.nav_meuSalao).setVisible(false);
         men.findItem(R.id.nav_agendamento).setVisible(false);
         men.findItem(R.id.nav_meu_agendamento).setVisible(false);
-        qtNotificacoes = atualizaNotificacoes();
+
         notificacoes=(TextView) MenuItemCompat.getActionView(navigationView.getMenu().
               findItem(R.id.nav_notificacoes));
-        initializeCountDrawer(qtNotificacoes);
+
+
         EmailDrawerr = (TextView) headerView.findViewById(R.id.txtemaildrawer);
         EmailDrawerr.setText(getSharedPreferences.getString("email","..."));
         NomeDrawer = (TextView) headerView.findViewById(R.id.nomeuser);
@@ -130,33 +158,16 @@ public class principal extends AppCompatActivity
     }
 
 
-    public String atualizaNotificacoes(){
-        BancoNotifyController crud = new BancoNotifyController(getBaseContext());
-        Cursor cursor = crud.carregaQuantidade(String.valueOf(idLogin));
-        final List<menssagem> conteudo_menssagem = new ArrayList<>();
-        if (cursor.moveToFirst()){
-            do{
-                String id = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.ID));
-                String titulo = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.TITULO));
-                String texto = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.TEXTO));
-                String hora = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.HORA));
-                String visualizacao = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.VISUALIZACAO));
-                String nome_salao = cursor.getString(cursor.getColumnIndex(CriaBancoNotificacao.NOME_SALAO));
-                conteudo_menssagem.add(new menssagem(id, titulo, texto, visualizacao,hora,nome_salao));
-            }while(cursor.moveToNext());
-        }
-        cursor.close();
-        return  String.valueOf(conteudo_menssagem.size());
-    }
 
-    public void initializeCountDrawer(String qt){
+
+    public void initializeCountDrawer(int qt){
         notificacoes.setGravity(Gravity.CENTER);
         notificacoes.setTypeface(null, Typeface.BOLD);
-        notificacoes.setTextColor(getResources().getColor(R.color.corToobar));
-        if(qt.equals("0"))
+        notificacoes.setTextColor(getResources().getColor(R.color.corTextos));
+        if(qt == 0)
             notificacoes.setText("");
         else
-            notificacoes.setText(qt);
+            notificacoes.setText(String.valueOf(qt));
         notificacoes.setTextSize(15);
     }
 
@@ -174,10 +185,13 @@ public class principal extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+     //getNotificacoes();
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -331,7 +345,7 @@ public class principal extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int ResultCode, Intent intent)
     {
-        initializeCountDrawer(atualizaNotificacoes());
+        //initializeCountDrawer(atualizaNotificacoes());
         atualizaInfos.atualizatipo(true);
     }
 
@@ -339,6 +353,38 @@ public class principal extends AppCompatActivity
     public void onResume(){
         super.onResume();
       //  Appodeal.onResume(principal.this, Appodeal.BANNER_BOTTOM);
+    }
+
+    public void getNotificacoes()
+    {
+        qtNotificacao = getSharedPreferences.getInt("qtNotificacao", 0);
+        IApi iApi = IApi.retrofit.create(IApi.class);
+        final Call<List<Notificacoes>> callBuscaNotificacao = iApi.BuscaNotificacao(idLogin);
+        callBuscaNotificacao.enqueue(new Callback<List<Notificacoes>>() {
+            @Override
+            public void onResponse(Call<List<Notificacoes>> call, Response<List<Notificacoes>> response) {
+
+                switch (response.code())
+                {
+                    case 200:
+                        List<Notificacoes> ListaNotificacao = response.body();
+                        int qt = 0;
+                        for(int x=0;x<ListaNotificacao.size();x++){
+                            if(ListaNotificacao.get(x).getVisualizado() == 0){
+                                qt++;
+                            }
+                        }
+
+                        initializeCountDrawer(qt);
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Notificacoes>> call, Throwable t) {
+            }
+        });
+
     }
 
 }

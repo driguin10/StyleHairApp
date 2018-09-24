@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import java.util.List;
 public class viewHolderescolherServicoSalao extends ViewHolder implements View.OnLongClickListener,View.OnClickListener  {
     TextView NomeServico;
     TextView valor;
-    CardView card;
+    LinearLayout card;
     Context contexto;
     TextView qtServicosEscolhido;
     List<ServicoSalao> ListaServicoSalao;
@@ -44,7 +45,7 @@ public class viewHolderescolherServicoSalao extends ViewHolder implements View.O
         btListaServicos = bt_ListaServicos;
         NomeServico = (TextView) itemView.findViewById(R.id.nome_servico);
         valor = (TextView) itemView.findViewById(R.id.valor_servico);
-        card = (CardView) itemView.findViewById(R.id.cardsServico);
+        card = (LinearLayout) itemView.findViewById(R.id.cardsServico);
         card.setOnLongClickListener(this);
         card.setOnClickListener(this);
         ListaServicoSalao = dados;

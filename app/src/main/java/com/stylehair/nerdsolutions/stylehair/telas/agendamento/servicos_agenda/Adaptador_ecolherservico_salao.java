@@ -31,7 +31,7 @@ public class Adaptador_ecolherservico_salao extends RecyclerView.Adapter<viewHol
 
     @Override
     public viewHolderescolherServicoSalao onCreateViewHolder(ViewGroup parent, int viewType) {
-        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_servico_agenda, parent, false);
+        View vista = LayoutInflater.from(parent.getContext()).inflate(R.layout.estilo_servico_agenda2, parent, false);
         return new viewHolderescolherServicoSalao(vista,ListaServicoSalao,bt_Prosseguir,bt_ListaServicos);
     }
 

@@ -7,6 +7,7 @@ import com.stylehair.nerdsolutions.stylehair.classes.GetUsuarioFuncionarioBusca;
 import com.stylehair.nerdsolutions.stylehair.classes.HorariosAgenda;
 import com.stylehair.nerdsolutions.stylehair.classes.IdNovoUsuario;
 import com.stylehair.nerdsolutions.stylehair.classes.MeuAgendamento;
+import com.stylehair.nerdsolutions.stylehair.classes.Notificacoes;
 import com.stylehair.nerdsolutions.stylehair.classes.buscaSalao.BuscaSalao;
 import com.stylehair.nerdsolutions.stylehair.classes.CadastroFuncionario;
 import com.stylehair.nerdsolutions.stylehair.classes.Funcionario;
@@ -165,6 +166,33 @@ public interface IApi {
 
     //----------------------------------------------------------------------------
 
+
+    //--------notificacao------------
+    @Headers("apiKey:" + chave)
+    @GET("v1/notificacoes/{id}")
+    Call <List<Notificacoes>> BuscaNotificacao(@Path("id") int id);
+
+    @Headers("apiKey:" + chave)
+    @DELETE("v1/notificacoes/excluir/{id}")
+    Call <ResponseBody> ExcluirNotificacao(@Path("id") int id);
+
+    @Headers("apiKey:" + chave)
+    @GET("v1/notificacoes/alterar/{idNotificacao}/{visualizado}")
+    Call <ResponseBody> alteraNotificacaoVisualizacao(@Path("idNotificacao") String idNotificacao,
+                                                       @Path("visualizado") int visualizado );
+
+
+
+    @Headers("apiKey:" + chave)
+    @Multipart
+    @POST("v1/notificacoes/enviar/")
+    Call<ResponseBody> EnviarNotificacao(@Part("quem") RequestBody quem,
+                                         @Part("id") RequestBody id,
+                                         @Part("titulo") RequestBody titulo,
+                                         @Part("menssagem") RequestBody menssagem,
+                                         @Part("nomeSalao") RequestBody nomeSalao);
+
+    //---------------------------
 
 
     //---------------------------------- SALAO-------------------------------------
